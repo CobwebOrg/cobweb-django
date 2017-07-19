@@ -7,7 +7,7 @@ class Institution(models.Model):
     description = models.TextField('Description', null=True, blank=True)
     # sector = ???
     # type = ???
-    address = models.CharField('Address', max_length=1000)
+    address = models.CharField('Address', max_length=1000, null=True, blank=True)
     # country = ???
     # identifier = ???
     created = models.DateTimeField('Date Created', auto_now_add=True)
@@ -34,7 +34,7 @@ class Agent(models.Model):
 
 class Project(models.Model):
     name = models.CharField('Name', max_length=200)
-    description = models.TextField('Description')
+    description = models.TextField('Description', null=True, blank=True)
 #    keywords ## Separate data type w/ many-to-many relationship??? ##
 #    descriptor
     created = models.DateTimeField('Date Created', auto_now_add=True)
@@ -47,7 +47,7 @@ class Project(models.Model):
 
 class Seed(models.Model):
     url = models.URLField()
-    description = models.TextField('Description')
+    description = models.TextField('Description', null=True, blank=True)
     # keywords
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
