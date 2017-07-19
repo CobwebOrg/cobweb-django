@@ -8,7 +8,7 @@ class SeedInline(admin.TabularInline):
     model = Seed
     extra = 0
 
-    readonly_fields = [ 'url', 'description', 'changeform_link' ]
+    readonly_fields = [ 'changeform_link' ]
     
     def changeform_link(self, instance):
         if instance.id:
@@ -22,7 +22,7 @@ class SeedInline(admin.TabularInline):
     changeform_link.allow_tags = True
     changeform_link.short_description = ''   # omit column header
     
-    fields = [ 'changeform_link', 'url', 'description', ]
+    fields = [ 'changeform_link', 'url', 'nominated_by', 'description', ]
     
 class ClaimInline(admin.TabularInline):
     model = Claim
@@ -72,3 +72,5 @@ admin.site.register(Institution)
 admin.site.register(Agent)
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Seed, SeedAdmin)
+admin.site.register(Claim)
+admin.site.register(Holding)
