@@ -67,7 +67,7 @@ class Claim(models.Model):
     # host_limit = ???
     time_limit = models.DurationField('Time Limit', null=True, blank=True)
     document_limit = models.IntegerField('Document Limit', null=True, blank=True)
-    data_limit = models.IntegerField('Data Limit (GB)') # Allow fractional GB????
+    data_limit = models.IntegerField('Data Limit (GB)', null=True, blank=True) # Allow fractional GB????
     robot_exclusion_override = models.BooleanField('Override Robot Exclusion?', default=False)
     # capture_software = ???
     created = models.DateTimeField('Date Created', auto_now_add=True)
