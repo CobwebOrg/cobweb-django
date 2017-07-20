@@ -62,7 +62,8 @@ class HoldingInline(admin.TabularInline):
 
 
 class ProjectAdmin(admin.ModelAdmin):
-    inlines = [ SeedInline ]
+    # inlines = [ SeedInline ]
+    pass
 
 class SeedAdmin(admin.ModelAdmin):
     inlines = [ ClaimInline, HoldingInline ]

@@ -52,7 +52,7 @@ class Seed(models.Model):
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    project_set = models.ManyToManyField(Project)
     nominated_by = models.ForeignKey(Agent, on_delete=models.PROTECT)
     
     def __str__(self):

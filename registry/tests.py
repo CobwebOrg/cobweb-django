@@ -1,3 +1,5 @@
+import ipdb
+
 from django.test import TestCase
 from django.utils import timezone
 
@@ -10,15 +12,17 @@ def create_institution(name="UCLA"):
 def create_agent(name="Andy"):
     return Agent.objects.create(name=name)
 
-def create_project(name="Test Project"):
-    return Project.objects.create(name=name, established_by=create_agent())
+def create_project(name="Test Project", established_by=False):
+    if not established_by:
+        established_by = create_agent()
+        established_by.save()
+    return Project.objects.create(name=name, established_by=established_by)
 
-def create_seed(url="twitter.com"):
-    return Seed.objects.create(
-        url=url,
-        project = create_project(),
-        nominated_by = create_agent(),
-    )
+def create_seed(url="twitter.com", nominated_by=False):
+    if not nominated_by:
+        nominated_by = create_agent()
+        nominated_by.save()
+    return Seed.objects.create(url=url, nominated_by = nominated_by,)
 
 def create_claim():
     return Claim.objects.create(
@@ -71,6 +75,32 @@ class SeedModelTests(TestCase):
         t = create_seed()
         self.assertTrue(isinstance(t, Seed))
         self.assertEqual(str(t), t.url)
+    
+    def test_seed_in_multiple_projects(self):
+        """Tests that there is a many-to-many relationship between projects and seeds."""
+        
+        project_1 = create_project(name="Project 1")
+        project_2 = create_project(name="Project 2")
+        seed_1 = create_seed(url="twitter.com")
+        seed_2 = create_seed(url="nytimes.com")
+        project_1.save()
+        project_2.save()
+        seed_1.save()
+        seed_2.save()
+
+        project_1.seed_set.add(seed_1)
+        project_1.seed_set.add(seed_2)
+        seed_2.project_set.add(project_2)
+        
+        self.assertIn(seed_1, project_1.seed_set.all())
+        self.assertIn(seed_2, project_1.seed_set.all())
+        self.assertNotIn(seed_1, project_2.seed_set.all())
+        self.assertIn(seed_2, project_2.seed_set.all())
+        
+        self.assertIn(project_1, seed_1.project_set.all())
+        self.assertNotIn(project_2, seed_1.project_set.all())
+        self.assertIn(project_1, seed_2.project_set.all())
+        self.assertIn(project_2, seed_2.project_set.all())
 
 class ClaimModelTests(TestCase):
     
