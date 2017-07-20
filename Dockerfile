@@ -1,5 +1,5 @@
 FROM python:3
-RUN apt-get update && apt-get upgrade
+RUN apt-get update && apt-get -y upgrade
 ENV PYTHONUNBUFFERED 1
 RUN mkdir /code
 WORKDIR /code
