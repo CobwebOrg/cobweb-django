@@ -2,4 +2,4 @@ sudo: required
 services:
   - docker
 script:
-  - 'python3 manage.py test'
+  - 'docker-compose up -d && docker-compose run python3 manage.py test'
