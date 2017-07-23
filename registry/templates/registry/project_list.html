@@ -1,0 +1,13 @@
+{% load static %}
+
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" /> -->
+
+{% if project_list %}
+    <ul>
+    {% for project in project_list %}
+		<li><a href="{% url 'registry:project_detail' project.id %}">{{ project.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No projects are available.</p>
+{% endif %}
