@@ -1,3 +1,14 @@
-<h1>{{ project.name }}</h1>
+{% extends "base.html" %}
+{% load static %}
 
-<p>{{ project.description }}</p>
+{% block title %}{{ object.name }}{% endblock %}
+
+{% block content %}
+<div class="jumbotron"><h1>{{ object.name }}</h1></div>
+    
+<div> <p>
+	Description: {{ object.description }}
+	Established by: {{ object.established_by.name }}
+</div>
+    
+{% endblock %}

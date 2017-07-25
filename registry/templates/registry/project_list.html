@@ -1,13 +1,17 @@
+{% extends "base.html" %}
 {% load static %}
 
-<!-- <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" /> -->
+{% block title %}Cobweb Project Index{% endblock %}
 
+{% block content %}
+<div><h1>Projects</h1></div>
 {% if project_list %}
-    <ul>
+    
     {% for project in project_list %}
-		<li><a href="{% url 'registry:project_detail' project.id %}">{{ project.name }}</a></li>
+		<p><a href="{% url 'registry:object_view' model_name='project' pk=project.id %}">{{ project.name }}</a></p>
     {% endfor %}
-    </ul>
+    
 {% else %}
     <p>No projects are available.</p>
 {% endif %}
+{% endblock %}
