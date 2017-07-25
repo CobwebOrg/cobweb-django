@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}registry Project Index{% endblock %}
+
+{% block content %}
+<div><h1>{{ request.model_name }}</h1></div>
+
+{% for object in object_list %}
+	<p><a href="{% url 'object_view' model_name=request.model_name pk=object.id %}">{{ object.name }}</a></p>
+{% endfor %}
+<p><a href="{% url 'object_view' model_name=request.model_name pk='new' %}">create new {{ request.model_name }}</a></p>
+
+
+<p><pre> {% filter force_escape %} {% debug %} {% endfilter %} </pre>
+
+{% endblock %}
