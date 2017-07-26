@@ -8,7 +8,7 @@
             "name": "db"
         },
         {
-            "image": "andrewwallace/cobweb:latest",
+            "image": "andrewwallace/cobweb_web:latest",
 			"memory": 128,
             "command": [
                 "python3",
