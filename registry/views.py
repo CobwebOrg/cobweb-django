@@ -22,7 +22,7 @@ def object_view(request, model_name, pk):
         model=model, 
         template_name='registry/object_form.html',
         fields=[field.name for field in model._meta.fields[1:] if field.editable],
-        success_url=reverse('object_list', kwargs={'model_name': model_name}),   
+        success_url=reverse('registry:object_list', kwargs={'model_name': model_name}),   
     )
     end_arguments = dict()
     if pk == "new":
