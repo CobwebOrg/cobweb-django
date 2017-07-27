@@ -36,16 +36,16 @@
   <body>
 
     <div class="container">
-      <!-- <div class="header clearfix">
+      <div class="header clearfix">
+        <h3 class="text-muted pull-left">Cobweb</h3>
         <nav>
           <ul class="nav nav-pills pull-right">
             <li role="presentation" class="active"><a href="#">Home</a></li>
-            <li role="presentation"><a href="#">About</a></li>
-            <li role="presentation"><a href="#">Contact</a></li>
+            <li role="presentation"><a href="{% url 'registry:object_list' model_name='project' %}">Projects</a></li>
+            <li role="presentation"><a href="#">Login</a></li>
           </ul>
         </nav>
-        <h3 class="text-muted">Cobweb</h3>
-      </div> -->
+      </div>
 	  
 	  {% block content %}
       
@@ -56,6 +56,9 @@
       </footer> -->
 
     </div> <!-- /container -->
+	
+
+	<br><br><br><br><br><br><br><br><br><br><p style='{padding-top: 3cm}'><pre> {% filter force_escape %} {% debug %} {% endfilter %} </pre>
 
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
