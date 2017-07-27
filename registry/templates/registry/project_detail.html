@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ object.name }}{% endblock %}
+
+{% block content %}
+<div><h1>{{ object.name }}</h1></div>
+
+<p>Description: {{ object.description }}
+
+<p>Date created: {{ object.created }}
+
+<p>Owner: {{ object.established_by }}
+
+<p>
+<table class="table table-hover">
+	<caption>Seeds</caption>
+	<tr>
+		<th>URL</th>
+		<th>Description</th>
+		<th>Date Created</th>
+		<th>Nominated By</th>
+	</tr>
+	{% for seed in object.seed_set.all %}
+	<tr>
+		<td>{{ seed.url }}</td>
+		<td>{{ seed.description }}</td>
+		<td>{{ seed.created }}</td>
+		<td>{{ seed.nominated_by }}</td>
+	</tr>
+	{% endfor %}	
+</table>
+
+{% endblock %}
