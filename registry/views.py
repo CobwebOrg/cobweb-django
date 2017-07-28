@@ -1,13 +1,14 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.http import Http404
 from django.views import generic
 from django.apps import apps
 from django.urls import reverse
+from django.template.loader import render_to_string
 
 from . import models
 
-def field_as_cell():
-    pass
+class ProjectIndexView(generic.ListView):
+    model = models.Project
 
 class ProjectDetailView(generic.DetailView):
     model = models.Project
@@ -17,20 +18,6 @@ def object_list_view(request, model_name):
     request.model_name = model_name
     request.verbose_name_plural = model._meta.verbose_name_plural
     return generic.ListView.as_view(model=model, template_name='registry/object_list.html')(request)
-
-def object_detail_view(request, model_name, pk):
-    try:
-        model = apps.get_model('registry', model_name)
-    except:
-        raise Http404("{model_name}: no such model.".format(model_name=model_name))
-    
-    as_view_arguments = dict(
-        model=model, 
-        template_name='registry/object_detail.html',
-        # fields=model.display_order,
-        # success_url=reverse('registry:object_list', kwargs={'model_name': model_name}),
-    )   
-    return generic.DetailView.as_view(**as_view_arguments)(request, pk=pk)
 
 def object_view(request, model_name, pk):
     try:

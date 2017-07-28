@@ -1,34 +1,20 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}{{ object.name }}{% endblock %}
 
 {% block content %}
 <div><h1>{{ object.name }}</h1></div>
 
-<p>Description: {{ object.description }}
-
-<p>Date created: {{ object.created }}
-
-<p>Owner: {{ object.established_by }}
-
 <p>
-<table class="table table-hover">
-	<caption>Seeds</caption>
-	<tr>
-		<th>URL</th>
-		<th>Description</th>
-		<th>Date Created</th>
-		<th>Nominated By</th>
-	</tr>
-	{% for seed in object.seed_set.all %}
-	<tr>
-		<td>{{ seed.url }}</td>
-		<td>{{ seed.description }}</td>
-		<td>{{ seed.created }}</td>
-		<td>{{ seed.nominated_by }}</td>
-	</tr>
-	{% endfor %}	
-</table>
+	Created {{ object.created|naturaltime }} by 
+  <a href="{% url 'registry:agent_detail' pk=object.established_by.pk %}">{{ object.established_by }}</a>
+</p>
+
+<p>{{ object.description }}</p>
+
+<p>{% include "registry/seed_table.html" with seeds=object.seed_set.all  %}</p>
+
 
 {% endblock %}
