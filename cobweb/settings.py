@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'django.contrib.humanize',
+    'django_tables2',
     
     'registry.apps.RegistryConfig',
 ]

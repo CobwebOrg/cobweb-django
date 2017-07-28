@@ -1,15 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
+{% load django_tables2 %}
 
 {% block title %}Cobweb: {{ request.model_name }} Index{% endblock %}
 
 {% block content %}
 <div><h1>{{ request.model_name | capfirst }} Index</h1></div>
 
-{% for object in object_list %}
-	<p><a href="{% url 'registry:object_view' model_name=request.model_name pk=object.id %}">{{ object.name }}</a></p>
-{% endfor %}
-
-{# <p>{% include "registry/new_button.html" %}</p> #}
+{% render_table request.table %}
 
 {% endblock %}
