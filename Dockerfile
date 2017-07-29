@@ -6,4 +6,5 @@ WORKDIR /code
 ADD requirements.txt /code/
 RUN pip install -r requirements.txt
 ADD . /code/
-CMD ["/code/production.sh"]
+EXPOSE 8000
+CMD ["/code/production_.sh"]
