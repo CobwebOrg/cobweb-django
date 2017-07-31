@@ -32,6 +32,10 @@ class ProjectIndexView(generic.ListView):
 
 class ProjectDetailView(generic.DetailView):
     model = models.Project
+    
+    def get_seed_table(self):
+        return tables.SeedTable( self.get_object().seed_set.all() )
+    
 
 def object_list_view(request, model_name):
     model = apps.get_model('registry', model_name)
@@ -62,3 +66,4 @@ def object_view(request, model_name, pk):
     return generic_view_object.as_view(**as_view_arguments)(request, **view_function_arguments)
         # except:
             # raise Http404("Can't find {model_name} {pk}.".format(model_name=model_name, pk=pk))
+

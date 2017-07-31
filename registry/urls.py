@@ -23,7 +23,7 @@ urlpatterns = [
     
     # Detail Views
     url(r'^agent/(?P<pk>\d+)/?$', views.object_view, {'model_name': 'agent'}, name='agent_detail'),
-    url(r'^project/(?P<pk>\d+)/?$', views.ProjectDetailView.as_view(), {'model_name': 'project'}, name='project_detail'),
+    url(r'^project/(?P<pk>\d+)/?$', views.ProjectDetailView.as_view(), name='project_detail'),
     url(r'^seed/(?P<pk>\d+)/?$', views.object_view, {'model_name': 'seed'}, name='seed_detail'),
     
     # generic views using introspection -- replace these later

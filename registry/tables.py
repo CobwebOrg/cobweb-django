@@ -34,6 +34,9 @@ class ProjectTable(django_tables2.Table):
         fields = ('name', 'description')
 
 class SeedTable(django_tables2.Table):
+    # use default Column instead of URL render as a clickable link
+    url = django_tables2.Column()
+    
     class Meta:
         model = models.Seed
         attrs = {'class': 'table table-hover'}

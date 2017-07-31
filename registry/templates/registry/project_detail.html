@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
+{% load django_tables2 %}
 
 {% block title %}{{ object.name }}{% endblock %}
 
@@ -14,7 +15,8 @@
 
 <p>{{ object.description }}</p>
 
-<p>{% include "registry/seed_table.html" with seeds=object.seed_set.all  %}</p>
+{% render_table view.get_seed_table %}
+{# <p>{% include "registry/seed_table.html" with seeds=object.seed_set.all  %}</p> #}
 
 
 {% endblock %}
