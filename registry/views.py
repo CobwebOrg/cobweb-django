@@ -5,57 +5,22 @@ from django.apps import apps
 from django.urls import reverse
 from django.template.loader import render_to_string
 
-from django_tables2 import Table, Column
-
-from . import models
+from . import models, tables
 
 
 #
 #   Inline Views
 #
         
-class InstitutionTable(Table):
-    class Meta:
-        model = models.Institution
-        
-class AgentTable(Table):
-    class Meta:
-        model = models.Agent
-        
-class ProjectTable(Table):
-    class Meta:
-        model = models.Project
-        attrs = {'class': 'table table-hover'}
-        fields = ('name', 'description')
-    
-    def render_name(self, record, value):
-        # print(">>> ", record, dir(record))
-        return '<a href="{url}">{name}</a>'.format(
-            name=value,
-            url=reverse('registry:project_detail', kwargs={'pk': record.pk})
-        )
 
-class SeedTable(Table):
-    class Meta:
-        model = models.Seed
-        attrs = {'class': 'table table-hover'}
-        fields = ('url', 'description', 'created', 'nominated_by')
-        
-class ClaimTable(Table):
-    class Meta:
-        model = models.Claim
-        
-class HoldingTable(Table):
-    class Meta:
-        model = models.Holding
         
 table_class_key = {
-    models.Institution: InstitutionTable,
-    models.Agent: AgentTable,
-    models.Project: ProjectTable,
-    models.Seed: SeedTable,
-    models.Claim: ClaimTable,
-    models.Holding: HoldingTable,
+    models.Institution: tables.InstitutionTable,
+    models.Agent: tables.AgentTable,
+    models.Project: tables.ProjectTable,
+    models.Seed: tables.SeedTable,
+    models.Claim: tables.ClaimTable,
+    models.Holding: tables.HoldingTable,
 }
 
 #
