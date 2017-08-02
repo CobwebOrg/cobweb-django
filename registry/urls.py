@@ -6,10 +6,10 @@ from . import models, views
 
 app_name = 'registry'
 urlpatterns = [
-    url(r'^$', RedirectView.as_view(url=reverse_lazy('registry:project_list')), name='front_page'),
+    url(r'^$', views.object_list_view, {'model_name': 'project'}, name='front_page'),
     
     # List Views
-    url(r'^project/?$', views.object_list_view, {'model_name': 'project'}, name='project_list'),
+    url(r'^projects/?$', views.object_list_view, {'model_name': 'project'}, name='project_list'),
     
     # Create Views
     url(r'^agent/new/?$', views.object_view, {'model_name': 'agent', 'pk': 'new'}, name='agent_create'),
@@ -27,6 +27,6 @@ urlpatterns = [
     url(r'^seed/(?P<pk>\d+)/?$', views.object_view, {'model_name': 'seed'}, name='seed_detail'),
     
     # generic views using introspection -- replace these later
-    url(r'^(?P<model_name>\w+)/?$', views.object_list_view, name='object_list'),
+    url(r'^(?P<model_name>\w+)s/?$', views.object_list_view, name='object_list'),
     url(r'^(?P<model_name>\w+)/(?P<pk>\d+)$/?$', views.object_view, name='object_view'),
 ]

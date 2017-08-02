@@ -40,6 +40,14 @@ def create_holding():
     )
 
 
+
+class ProjectTests(TestCase):
+
+    def test_homepage(self):
+        """Root URL '/' should return HTTP status 200 (i.e. success)."""
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, 200)
+        
 class InstitutionModelTests(TestCase):
     
     def test_institution_creation(self):
@@ -119,3 +127,39 @@ class HoldingModelTests(TestCase):
         t = create_holding()
         self.assertTrue(isinstance(t, Holding))
         self.assertEqual(str(t), "UCLA has twitter.com")
+
+class ProjectIndexViewTests(TestCase):
+    fixtures = ['testdata.json']
+    
+    def test_links_to_all_projects(self):
+        response = self.client.get('/projects/')
+        self.assertTemplateUsed('base.html')
+        # self.assertTemplateUsed('registry/project_index.html')
+        self.assertContains(response, 'Boring Project')
+        self.assertContains(response, 'Exciting Project')
+        self.assertContains(response, 'Other Project')
+
+class ProjectDetailViewTests(TestCase):
+    fixtures = ['testdata.json']
+    
+    def setUp(self):
+        self.project = Project.objects.get(name="Boring Project")
+        self.response = self.client.get(self.project.get_absolute_url())
+    
+    def test_detail_view(self):
+        self.assertTemplateUsed(self.response, 'base.html')
+        self.assertTemplateUsed(self.response, 'registry/project_detail.html')
+        self.assertEqual(self.response.status_code, 200)
+        self.assertContains(self.response, 'Boring Project')
+    
+    def test_seed_list(self):
+        all_seeds = Seed.objects.all()
+        project_seeds = self.project.seed_set.all()
+        for seed in all_seeds:
+            if seed in project_seeds:
+                self.assertContains(self.response, seed.url)
+            else:
+                self.assertNotContains(self.response, seed.url)
+    
+    def test_no_link_to_seed_url(self):
+        self.assertNotContains(self.response, 'href="http://nytimes.com"')

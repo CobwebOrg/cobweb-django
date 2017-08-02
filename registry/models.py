@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
     
@@ -44,6 +45,9 @@ class Project(models.Model):
     
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse('registry:project_detail', kwargs={'pk': self.pk})
 
 class Seed(models.Model):
     url = models.URLField()
