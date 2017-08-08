@@ -7,4 +7,4 @@ ADD requirements.txt /code/
 RUN pip install -r requirements.txt
 ADD . /code/
 EXPOSE 8000
-ENTRYPOINT ["/code/start-eb.sh"]
+CMD ["/code/start-eb.sh"]

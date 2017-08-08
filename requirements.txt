@@ -1,10 +1,6 @@
-Django>=1.8,<2.0
-psycopg2
-django_tables2
-# boto>=2.40.0
-
-uWSGI>=2.0.13.1
-
-
-# coverage
-# ipdb
+Django==1.11.4
+django-tables2==1.10.0
+psycopg2==2.7.3
+pytz==2017.2
+uWSGI==2.0.15
+whitenoise==3.3.0
