@@ -25,7 +25,7 @@ SECRET_KEY = '0+i0#su8em*jpun1hnys3ll-6kedb=-rq%2^=8&o8r8oacxz4g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS =  ['cobweb-dev.xvkpjfy2kp.us-west-2.elasticbeanstalk.com', 'localhost', '127.0.0.1', '[::1]']
 
 
 # Application definition
