@@ -15,8 +15,14 @@
 
 <p>{{ object.description }}</p>
 
-{% render_table view.get_seed_table %}
-{# <p>{% include "registry/seed_table.html" with seeds=object.seed_set.all  %}</p> #}
+{# {% render_table view.get_seed_table %} #}
+
+<ul>
+{% for seed in object.seed_set.all %}
+  <li>{{seed.url}}
+{% endfor %}
+</ul>
+
 
 
 {% endblock %}
