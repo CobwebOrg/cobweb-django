@@ -5,7 +5,10 @@ script:
   - 'docker-compose run web python3 manage.py test'
 # deploy:
 #   provider: elasticbeanstalk
-#   region: "us-east-2"
-#   app: "Cobweb Test"
-#   env: "CobwebTest-env"
-#   bucket_name: "andrewwallace-cobweb"
+#   access_key_id: AKIAJA2G5N4KDXNQ6TSQ
+#   secret_access_key:
+#     secure: "Encypted <secret-access-key>="
+#   region: "us-west-2"
+#   app: "cobweb"
+#   env: "cobweb-dev"
+#   bucket_name: "cobweb-dev"
