@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     
     'django.contrib.humanize',
     'django_tables2',
+    'django_extensions',
     
     'registry.apps.RegistryConfig',
 ]
