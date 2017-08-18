@@ -18,7 +18,7 @@ table_class_key = {
     models.Institution: tables.InstitutionTable,
     models.Agent: tables.AgentTable,
     models.Project: tables.ProjectTable,
-    models.Seed: tables.SeedTable,
+    # models.Seed: tables.SeedTable,
     models.Claim: tables.ClaimTable,
     models.Holding: tables.HoldingTable,
 }
@@ -33,8 +33,8 @@ class ProjectIndexView(generic.ListView):
 class ProjectDetailView(generic.DetailView):
     model = models.Project
     
-    def get_seed_table(self):
-        return tables.SeedTable( self.get_object().seed_set.all() )
+    # def get_seed_table(self):
+    #     return tables.SeedTable( self.get_object().seed_set.all() )
     
 
 def object_list_view(request, model_name):

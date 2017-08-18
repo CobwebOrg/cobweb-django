@@ -33,12 +33,12 @@ class ProjectTable(django_tables2.Table):
         attrs = {'class': 'table table-hover'}
         fields = ('name', 'description')
 
-class SeedTable(django_tables2.Table):
+class NominationTable(django_tables2.Table):
     # use default Column instead of URL render as a clickable link
     url = django_tables2.Column()
     
     class Meta:
-        model = models.Seed
+        model = models.Nomination
         attrs = {'class': 'table table-hover'}
         fields = ('url', 'description', 'created', 'nominated_by')
         
