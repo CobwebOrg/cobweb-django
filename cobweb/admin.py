@@ -15,7 +15,7 @@ class NominationInline(admin.TabularInline):
             # Replace "myapp" with the name of the app containing
             # your Certificate model:
             changeform_url = reverse(
-                'admin:registry_nomination_change', args=(instance.id,)
+                'admin:nomination_change', args=(instance.id,)
             )
             return u'<a href="%s" target="_blank">Edit</a>' % changeform_url
         return u''

@@ -38,23 +38,23 @@ class ProjectDetailView(generic.DetailView):
     
 
 def object_list_view(request, model_name):
-    model = apps.get_model('registry', model_name)
+    model = apps.get_model('cobweb', model_name)
     request.model_name = model_name
     request.verbose_name_plural = model._meta.verbose_name_plural
     request.table = table_class_key[model](model.objects.all())
-    return generic.ListView.as_view(model=model, template_name='registry/object_list.html')(request)
+    return generic.ListView.as_view(model=model, template_name='object_list.html')(request)
 
 def object_view(request, model_name, pk):
     try:
-        model = apps.get_model('registry', model_name)
+        model = apps.get_model('cobweb', model_name)
     except:
         raise Http404("{model_name}: no such model.".format(model_name=model_name))
     
     as_view_arguments = dict(
         model=model, 
-        template_name='registry/object_form.html',
+        template_name='object_form.html',
         fields=[field.name for field in model._meta.fields[1:] if field.editable],
-        success_url=reverse('registry:object_list', kwargs={'model_name': model_name}),   
+        success_url=reverse('object_list', kwargs={'model_name': model_name}),   
     )
     view_function_arguments = dict()
     if pk == "new":

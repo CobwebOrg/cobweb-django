@@ -10,7 +10,7 @@
 
 <p>
 	Created {{ object.created|naturaltime }} by 
-  <a href="{% url 'registry:agent_detail' pk=object.established_by.pk %}">{{ object.established_by }}</a>
+  <a href="{% url 'agent_detail' pk=object.established_by.pk %}">{{ object.established_by }}</a>
 </p>
 
 <p>{{ object.description }}</p>

@@ -25,6 +25,7 @@ SECRET_KEY = '0+i0#su8em*jpun1hnys3ll-6kedb=-rq%2^=8&o8r8oacxz4g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+INTERNAL_IPS = ['127.0.0.1']
 ALLOWED_HOSTS =  ['cobweb-dev.xvkpjfy2kp.us-west-2.elasticbeanstalk.com', 'localhost', '127.0.0.1', '[::1]']
 
 
@@ -41,13 +42,16 @@ INSTALLED_APPS = [
     
     'django.contrib.humanize',
     'django_tables2',
-    # 'django_extensions',
+    'django_extensions',
     
-    'registry.apps.RegistryConfig',
+    'cobweb.apps.CobwebConfig',
+
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -75,7 +79,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'cobweb.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 
 # Database
@@ -141,6 +145,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_ROOT = '/static' #os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [ os.path.join(BASE_DIR, "static"), ]

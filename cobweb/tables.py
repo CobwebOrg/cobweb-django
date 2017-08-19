@@ -16,7 +16,7 @@ class AgentTable(django_tables2.Table):
         
 class ProjectTable(django_tables2.Table):
     name = django_tables2.TemplateColumn(
-        """<a href="{% url 'registry:project_detail' pk=record.id %}">
+        """<a href="{% url 'project_detail' pk=record.id %}">
             {{ record.name }}
         </a>"""
     )
@@ -26,7 +26,7 @@ class ProjectTable(django_tables2.Table):
         row_attrs = {
             'class': 'clickable-row',
             'data-href': lambda record: reverse(
-                'registry:project_detail',
+                'project_detail',
                 kwargs={'pk': record.pk}
             )
         }

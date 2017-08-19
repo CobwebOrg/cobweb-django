@@ -76,7 +76,7 @@ class Project(models.Model):
         return self.name
     
     def get_absolute_url(self):
-        return reverse('registry:project_detail', kwargs={'pk': self.pk})
+        return reverse('project_detail', kwargs={'pk': self.pk})
 
 class ProjectMD(models.Model):
     describes = models.ForeignKey(Project, on_delete=models.CASCADE)
@@ -98,8 +98,8 @@ class CollectionMD(models.Model):
 class Resource(models.Model):
     root_url = models.URLField()
 
-class CollectionMD(models.Model):
-    describes = models.ForeignKey(Collection, on_delete=models.CASCADE)
+class ResourceMD(models.Model):
+    describes = models.ForeignKey(Resource, on_delete=models.CASCADE)
     asserted_by = models.ForeignKey(Agent, on_delete=models.CASCADE)
 
     class Meta:

@@ -14,14 +14,16 @@
     <title>{% block title %}Cobweb{% endblock %}</title>
 
     <!-- Bootstrap core CSS -->
-    {# <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"> #}
-    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" crossorigin="anonymous">
+
+    {# <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}" /> #}
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <!-- <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet"> -->
 
     <!-- Custom styles for this template -->
-    <link href="{% static 'css/jumbotron-narrow.css' %}" rel="stylesheet">
+    {# <link href="{% static 'css/cobweb.css' %}" rel="stylesheet"> #}
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- [if lt IE 9]>
@@ -45,7 +47,7 @@
     <div class="container">
       <div class="header clearfix">
         <h3 class="text-muted pull-left">
-					<a href="{% url 'registry:front_page' %}">
+					<a href="{% url 'front_page' %}">
 						Cobweb
 					</a>
 				</h3>
@@ -53,7 +55,7 @@
           <ul class="nav nav-pills pull-right">
             <li role="presentation"><a href="#">About</a></li>
             <li role="presentation"><a href="#">Contact</a></li>
-            <li role="presentation"><a href="{% url 'registry:project_list' %}">Projects</a></li>
+            <li role="presentation"><a href="{% url 'project_list' %}">Projects</a></li>
             <li role="presentation"><a href="#">Login</a></li>
           </ul>
         </nav>
