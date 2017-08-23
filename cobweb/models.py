@@ -10,7 +10,7 @@ class Agent(models.Model):
     # type = ???
     name = models.CharField('Name', max_length=200)
     
-    user = models.OneToOneField(auth.models.User, on_delete=models.CASCADE)
+    user = models.OneToOneField(auth.models.User, on_delete=models.CASCADE, null=True, blank=True)
     
     description = models.TextField('Description', null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
@@ -61,16 +61,20 @@ class InstitutionMD(models.Model):
     
     class Meta:
         unique_together = ("describes", "asserted_by")
+           
+    def __str__(self):
+        return ','.join(self.describes, self.asserted_by)
 
 class Project(models.Model):
     name = models.CharField('Name', max_length=200)
+    established_by = models.ForeignKey(Agent, on_delete=models.PROTECT)
+
     description = models.TextField('Description', null=True, blank=True)
 #    keywords ## Separate data type w/ many-to-many relationship??? ##
 #    descriptor
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
 
-    established_by = models.ForeignKey(Agent, on_delete=models.PROTECT)
     
     def __str__(self):
         return self.name
@@ -84,9 +88,16 @@ class ProjectMD(models.Model):
     
     class Meta:
         unique_together = ("describes", "asserted_by")
+           
+    def __str__(self):
+        return ','.join(self.describes, self.asserted_by)
 
 class Collection(models.Model):
+    name = models.CharField('Name', max_length=200)
     institution = models.ForeignKey(Institution, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.name
 
 class CollectionMD(models.Model):
     describes = models.ForeignKey(Collection, on_delete=models.CASCADE)
@@ -94,26 +105,35 @@ class CollectionMD(models.Model):
     
     class Meta:
         unique_together = ("describes", "asserted_by")
+           
+    def __str__(self):
+        return ','.join(self.describes, self.asserted_by)
 
 class Resource(models.Model):
     root_url = models.URLField()
+    
+    def __str__(self):
+        return self.root_url
 
 class ResourceMD(models.Model):
     describes = models.ForeignKey(Resource, on_delete=models.CASCADE)
     asserted_by = models.ForeignKey(Agent, on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = ("describes", "asserted_by")
+        unique_together = ("describes", "asserted_by") 
+           
+    def __str__(self):
+        return ','.join(self.describes, self.asserted_by)
 
 class Nomination(models.Model):
     resource = models.ForeignKey(Resource)
+    project = models.ForeignKey(Project)
+    nominated_by = models.ForeignKey(Agent, on_delete=models.PROTECT)
+    
     description = models.TextField('Description', null=True, blank=True)
     # keywords
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
-    
-    project = models.ForeignKey(Project)
-    nominated_by = models.ForeignKey(Agent, on_delete=models.PROTECT)
     
     def __str__(self):
         return ','.join(self.resource, self.collection)
@@ -128,6 +148,7 @@ class Nomination(models.Model):
 class Claim(models.Model):
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
     collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
+    asserted_by = models.ForeignKey(Agent, on_delete=models.PROTECT)
     
     # scope = ???
     start_date = models.DateField('Starting Date')
@@ -143,17 +164,17 @@ class Claim(models.Model):
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
-    asserted_by = models.ForeignKey(Agent, on_delete=models.PROTECT)
-    
     def __str__(self):
         return ','.join(self.resource, self.collection)
 
-class ClaimMD(models.Model):
-    describes = models.ForeignKey(Claim, on_delete=models.CASCADE)
-    asserted_by = models.ForeignKey(Agent, on_delete=models.CASCADE)
-    
-    class Meta:
-        unique_together = ("describes", "asserted_by")
+# class ClaimMD(models.Model):
+#     describes = models.ForeignKey(Claim, on_delete=models.CASCADE)
+#     asserted_by = models.ForeignKey(Agent, on_delete=models.CASCADE)
+#
+#     class Meta:
+#         unique_together = ("describes", "asserted_by")
+#     def __str__(self):
+#         return ','.join(self.describes, self.asserted_by)
 
 class Holding(models.Model):
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
@@ -174,3 +195,6 @@ class HoldingMD(models.Model):
     
     class Meta:
         unique_together = ("describes", "asserted_by")
+    
+    def __str__(self):
+        return ','.join(self.describes, self.asserted_by)
