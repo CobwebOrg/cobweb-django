@@ -32,6 +32,7 @@ class ProjectIndexView(generic.ListView):
 
 class ProjectDetailView(generic.DetailView):
     model = models.Project
+    template_name = "project_detail.html"
     
     # def get_seed_table(self):
     #     return tables.SeedTable( self.get_object().seed_set.all() )
