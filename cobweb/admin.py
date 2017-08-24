@@ -12,67 +12,84 @@ class NominationInline(admin.TabularInline):
     
     def changeform_link(self, instance):
         if instance.id:
-            # Replace "myapp" with the name of the app containing
-            # your Certificate model:
-            changeform_url = reverse(
-                'admin:nomination_change', args=(instance.id,)
+            changeform_url = reverse('admin:cobweb_nomination_change', args=(instance.id,))
+            return '<a href="{changeform_url}" target="_blank">Edit</a>'.format(
+                changeform_url = changeform_url,
             )
-            return u'<a href="%s" target="_blank">Edit</a>' % changeform_url
-        return u''
+        else:
+            return u''
     changeform_link.allow_tags = True
     changeform_link.short_description = ''   # omit column header
     
-    fields = [ 'changeform_link', 'url', 'nominated_by', 'description', ]
+    fields = [ 'changeform_link', 'resource', 'nominated_by', 'project', ]
     
 class ClaimInline(admin.TabularInline):
     model = models.Claim
     extra = 0
     
-    readonly_fields = [ 'created' ]
+    readonly_fields = [ 'changeform_link' ]
+    
+    def changeform_link(self, instance):
+        if instance.id:
+            changeform_url = reverse('admin:cobweb_claim_change', args=(instance.id,))
+            return '<a href="{changeform_url}" target="_blank">Edit</a>'.format(
+                changeform_url = changeform_url,
+            )
+        else:
+            return u''
+    changeform_link.allow_tags = True
+    changeform_link.short_description = ''   # omit column header
+    
     fields = [ 
-        'asserted_by', 
+        'changeform_link', 
         'resource', 
-        'institution', 
+        'collection', 
+        'asserted_by',
         'start_date', 
         'end_date', 
-        # frequency, 
-        'max_links', 
-        # host_limit, 
-        'time_limit', 
-        'document_limit', 
-        'data_limit', 
-        'robot_exclusion_override', 
-        # capture_software, 
-        'created', 
-        'deprecated', 
     ]
        
 class HoldingInline(admin.TabularInline):
     model = models.Holding
     extra = 0
+
     
-    readonly_fields = [ 'created' ]
+    readonly_fields = [ 'changeform_link' ]
+    
+    def changeform_link(self, instance):
+        if instance.id:
+            changeform_url = reverse('admin:cobweb_holding_change', args=(instance.id,))
+            return '<a href="{changeform_url}" target="_blank">Edit</a>'.format(
+                changeform_url = changeform_url,
+            )
+        else:
+            return u''
+    changeform_link.allow_tags = True
+    changeform_link.short_description = ''   # omit column header
+    
     fields = [
-        'asserted_by', 
+        'changeform_link', 
         'resource', 
-        'institution', 
-        'created', 
-        'deprecated', 
+        'collection',
+        'asserted_by',
     ]
 
 
-# class ProjectAdmin(admin.ModelAdmin):
-#     inlines = [ NominationInline ]
-#
-# class NominationAdmin(admin.ModelAdmin):
-#     inlines = [ ClaimInline, HoldingInline ]
+class ProjectAdmin(admin.ModelAdmin):
+    inlines = [ NominationInline ]
+    
+class CollectionAdmin(admin.ModelAdmin):
+    inlines = [ ClaimInline, HoldingInline ]
+
+class ResourceAdmin(admin.ModelAdmin):
+    inlines = [ NominationInline, ClaimInline, HoldingInline ]
 
 
 admin.site.register(models.Institution)
 admin.site.register(models.Agent)
-admin.site.register(models.Project) #, ProjectAdmin)
-admin.site.register(models.Collection)
-admin.site.register(models.Resource)
-admin.site.register(models.Nomination) #, NominationAdmin)
+admin.site.register(models.Project, ProjectAdmin)
+admin.site.register(models.Collection, CollectionAdmin)
+admin.site.register(models.Resource, ResourceAdmin)
+admin.site.register(models.Nomination)
 admin.site.register(models.Claim)
 admin.site.register(models.Holding)
