@@ -74,6 +74,14 @@ class HoldingInline(admin.TabularInline):
         'asserted_by',
     ]
 
+class AgentIdentifierInline(admin.TabularInline):
+    model = models.AgentIdentifier
+    extra = 0
+    fields = ['id_type', 'value']
+
+
+class AgentAdmin(admin.ModelAdmin):
+    inlines = [ AgentIdentifierInline ]
 
 class ProjectAdmin(admin.ModelAdmin):
     inlines = [ NominationInline ]
@@ -86,7 +94,7 @@ class ResourceAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.Institution)
-admin.site.register(models.Agent)
+admin.site.register(models.Agent, AgentAdmin)
 admin.site.register(models.Project, ProjectAdmin)
 admin.site.register(models.Collection, CollectionAdmin)
 admin.site.register(models.Resource, ResourceAdmin)

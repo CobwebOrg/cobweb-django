@@ -1,3 +1,4 @@
+from bidict import bidict
 from django.db import models
 from django.urls import reverse
 from django.contrib import auth
@@ -5,7 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
-   
+
 class Agent(models.Model):
     # type = ???
     name = models.CharField('Name', max_length=200)
@@ -31,13 +32,22 @@ def create_user_agent(sender, instance, created, **kwargs):
 @receiver(post_save, sender=auth.models.User)
 def save_user_agent(sender, instance, **kwargs):
     instance.agent.save()
-
-# class AgentMD(models.Model):
-#     describes = models.ForeignKey(Agent)
-#     asserted_by = models.ForeignKey(Agent)
-#
-#     class Meta:
-#         unique_together = ("describes", "asserted_by")
+    
+class AgentIdentifier(models.Model):
+    agent = models.ForeignKey('Agent', on_delete=models.CASCADE)
+    AGENT_IDENTIFIER_TYPES = bidict(
+        ORC = 'ORCID',
+        RID = 'ResearcherID',
+        SCO = 'Scopus',
+        TWI = 'Twitter Handle',
+        OTH = 'Other',
+    )
+    id_type = models.CharField(
+        'Type',
+        max_length=3,
+        choices=[(k, v) for k,v in AGENT_IDENTIFIER_TYPES.items()]
+    )
+    value = models.CharField('Value', max_length=200)
     
 class Institution(models.Model):
     name = models.CharField('Name', max_length=200)

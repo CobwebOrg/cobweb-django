@@ -9,3 +9,4 @@ sqlparse==0.2.3
 uWSGI==2.0.15
 whitenoise==3.3.0
 ipdb
+bidict
