@@ -79,6 +79,13 @@ class AgentIdentifierInline(admin.TabularInline):
     extra = 0
     fields = ['id_type', 'value']
 
+class InstitutionMDInline(admin.StackedInline):
+    model = models.InstitutionMD
+    extra = 0
+    
+
+class InstitutionAdmin(admin.ModelAdmin):
+    inlines = [ InstitutionMDInline ]
 
 class AgentAdmin(admin.ModelAdmin):
     inlines = [ AgentIdentifierInline ]
@@ -93,7 +100,7 @@ class ResourceAdmin(admin.ModelAdmin):
     inlines = [ NominationInline, ClaimInline, HoldingInline ]
 
 
-admin.site.register(models.Institution)
+admin.site.register(models.Institution, InstitutionAdmin)
 admin.site.register(models.Agent, AgentAdmin)
 admin.site.register(models.Project, ProjectAdmin)
 admin.site.register(models.Collection, CollectionAdmin)

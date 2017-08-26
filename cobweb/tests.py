@@ -11,14 +11,14 @@ def get_user(**kwargs):
     kwargs.setdefault('password', 'cobweb')
     kwargs.setdefault('is_superuser', True)
     return auth.models.User.objects.get_or_create(**kwargs)[0]
-    
+
 def get_agent(**kwargs):
     kwargs.setdefault('name', 'Andy')
     return models.Agent.objects.get_or_create(**kwargs)[0]
 
 # def get_agentMD(**kwargs)
 #     pass
-    
+
 def get_institution(**kwargs):
     kwargs.setdefault('name', 'UCLA')
     return models.Institution.objects.get_or_create(**kwargs)[0]
@@ -39,8 +39,8 @@ def get_resource(**kwargs):
 
 def get_nomination(**kwargs):
     kwargs.setdefault('resource', get_resource())
-    kwargs.setdefault('project', get_project()) 
-    kwargs.setdefault('nominated_by', get_agent()) 
+    kwargs.setdefault('project', get_project())
+    kwargs.setdefault('nominated_by', get_agent())
     return models.Nomination.objects.get_or_create(**kwargs)[0]
 
 def get_claim(**kwargs):
@@ -53,7 +53,8 @@ def get_claim(**kwargs):
 def get_holding(**kwargs):
     kwargs.setdefault('resource', get_resource())
     kwargs.setdefault('collection', get_collection())
-    return models.Claim.objects.get_or_create(**kwargs)[0]
+    kwargs.setdefault('asserted_by', get_agent())
+    return models.Holding.objects.get_or_create(**kwargs)[0]
 
 
 
@@ -63,17 +64,17 @@ class ModelTests(TestCase):
 
 
 class AgentModelTests(ModelTests):
-    
+
     def test_agent_creation(self):
         """Tests creation of Agent objects"""
-        
+
         t = get_agent()
         self.assertTrue(isinstance(t, models.Agent))
         self.assertEqual(str(t), t.name)
-    
+
     def test_user_creation(self):
         """Tests that creating a User also creates an Agent"""
-        
+
         t = get_user()
         self.assertTrue(isinstance(t, auth.models.User))
         user_agent = models.Agent.objects.get(user=t)
@@ -100,9 +101,6 @@ class ProjectModelTests(ModelTests):
         self.assertTrue(isinstance(t, models.Project))
         self.assertEqual(str(t), t.name)
 
-class ProjectMDModelTests(ModelTests):
-    pass
-
 class CollectionModelTests(ModelTests):
 
     def test_collection_creation(self):
@@ -110,11 +108,8 @@ class CollectionModelTests(ModelTests):
         self.assertTrue(isinstance(t, models.Collection))
         self.assertEqual(str(t), t.name)
 
-class CollectionMDModelTests(ModelTests):
-    pass
-    
 class ResourceModelTests(ModelTests):
-    
+
     def test_resource_creation(self):
         t = get_resource()
         self.assertTrue(isinstance(t, models.Resource))
@@ -124,7 +119,7 @@ class ResourceMDModelTests(ModelTests):
     pass
 
 class NominationModelTests(ModelTests):
-    
+
     def test_nomination_creation(self):
         t = get_nomination()
         self.assertTrue(isinstance(t, models.Nomination))
@@ -139,57 +134,59 @@ class ClaimModelTests(ModelTests):
         self.assertTrue(isinstance(t, models.Claim))
         # self.assertEqual(str(t), ",")
 
-# class HoldingModelTests(ModelTests):
-#
-#     def test_holding_creation(self):
-#         """Tests creation of Holding objects"""
-#
-#         t = get_holding()
-#         self.assertTrue(isinstance(t, models.Holding))
-#         # self.assertEqual(str(t), "UCLA has twitter.com")
-#
-# class HoldingMDModelTests(ModelTests):
-#     pass
+class HoldingModelTests(ModelTests):
 
-# class ProjectTests(TestCase):
-#
-#     def test_homepage(self):
-#         """Root URL '/' should return HTTP status 200 (i.e. success)."""
-#         response = self.client.get('/')
-#         self.assertEqual(response.status_code, 200)
+    def test_holding_creation(self):
+        """Tests creation of Holding objects"""
 
-# class ProjectIndexViewTests(TestCase):
-#     fixtures = ['testdata.json']
-#
-#     def test_links_to_all_projects(self):
-#         response = self.client.get('/projects/')
-#         self.assertTemplateUsed('base.html')
-#         # self.assertTemplateUsed('project_index.html')
-#         self.assertContains(response, 'Boring Project')
-#         self.assertContains(response, 'Exciting Project')
-#         self.assertContains(response, 'Other Project')
-#
-# class ProjectDetailViewTests(TestCase):
-#     fixtures = ['testdata.json']
-#
-#     def setUp(self):
-#         self.project = Project.objects.get(name="Boring Project")
-#         self.response = self.client.get(self.project.get_absolute_url())
-#
-#     def test_detail_view(self):
-#         self.assertTemplateUsed(self.response, 'base.html')
-#         self.assertTemplateUsed(self.response, 'project_detail.html')
-#         self.assertEqual(self.response.status_code, 200)
-#         self.assertContains(self.response, 'Boring Project')
-#
-#     def test_seed_list(self):
-#         all_seeds = Seed.objects.all()
-#         project_seeds = self.project.seed_set.all()
-#         for seed in all_seeds:
-#             if seed in project_seeds:
-#                 self.assertContains(self.response, seed.url)
-#             else:
-#                 self.assertNotContains(self.response, seed.url)
-#
-#     def test_no_link_to_seed_url(self):
-#         self.assertNotContains(self.response, 'href="http://nytimes.com"')
+        t = get_holding()
+        self.assertTrue(isinstance(t, models.Holding))
+        # self.assertEqual(str(t), "UCLA has twitter.com")
+
+
+
+class ProjectTests(TestCase):
+
+    def test_homepage(self):
+        """Root URL '/' should return HTTP status 200 (i.e. success)."""
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, 200)
+
+class ProjectIndexViewTests(TestCase):
+    
+    def setUp(self):
+        get_project(name="Boring Project")
+        get_project(name="Exciting Project")
+        get_project(name="Other Project")
+        self.response = self.client.get('/projects/')
+
+    def test_links_to_all_projects(self):
+        self.assertTemplateUsed(self.response, 'base.html')
+        # self.assertTemplateUsed(self.response, 'project_list.html')
+        self.assertContains(self.response, 'Boring Project')
+        self.assertContains(self.response, 'Exciting Project')
+        self.assertContains(self.response, 'Other Project')
+
+class ProjectDetailViewTests(TestCase):
+
+    def setUp(self):
+        self.project = get_project(name="Boring Project")
+        self.response = self.client.get(self.project.get_absolute_url())
+
+    def test_detail_view(self):
+        self.assertTemplateUsed(self.response, 'base.html')
+        self.assertTemplateUsed(self.response, 'project_detail.html')
+        self.assertEqual(self.response.status_code, 200)
+        self.assertContains(self.response, 'Boring Project')
+
+    # def test_seed_list(self):
+    #     all_seeds = Seed.objects.all()
+    #     project_seeds = self.project.seed_set.all()
+    #     for seed in all_seeds:
+    #         if seed in project_seeds:
+    #             self.assertContains(self.response, seed.url)
+    #         else:
+    #             self.assertNotContains(self.response, seed.url)
+    #
+    # def test_no_link_to_seed_url(self):
+    #     self.assertNotContains(self.response, 'href="http://nytimes.com"')

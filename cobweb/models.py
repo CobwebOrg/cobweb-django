@@ -1,4 +1,4 @@
-from bidict import bidict
+from enum import Enum
 from django.db import models
 from django.urls import reverse
 from django.contrib import auth
@@ -8,14 +8,19 @@ from django.dispatch import receiver
 
 
 class Agent(models.Model):
-    # type = ???
     name = models.CharField('Name', max_length=200)
     
+    class AGENT_TYPES(Enum):
+        auto = ('a', 'Automated')
+        person = ('p', 'Person')
+    agent_type = models.CharField('Type', max_length=3,
+        choices = [x.value for x in AGENT_TYPES])
+        
     user = models.OneToOneField(auth.models.User, on_delete=models.CASCADE, null=True, blank=True)
     
     description = models.TextField('Description', null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
-    # identifier = ???
+    
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
@@ -27,7 +32,7 @@ class Agent(models.Model):
 @receiver(post_save, sender=auth.models.User)
 def create_user_agent(sender, instance, created, **kwargs):
     if created:
-        Agent.objects.create(user=instance)
+        Agent.objects.create(user=instance, agent_type=Agent.AGENT_TYPES.person.value[0])
 
 @receiver(post_save, sender=auth.models.User)
 def save_user_agent(sender, instance, **kwargs):
@@ -35,32 +40,21 @@ def save_user_agent(sender, instance, **kwargs):
     
 class AgentIdentifier(models.Model):
     agent = models.ForeignKey('Agent', on_delete=models.CASCADE)
-    AGENT_IDENTIFIER_TYPES = bidict(
-        ORC = 'ORCID',
-        RID = 'ResearcherID',
-        SCO = 'Scopus',
-        TWI = 'Twitter Handle',
-        OTH = 'Other',
-    )
-    id_type = models.CharField(
-        'Type',
-        max_length=3,
-        choices=[(k, v) for k,v in AGENT_IDENTIFIER_TYPES.items()]
-    )
+    class AGENT_IDENTIFIER_TYPES(Enum):
+        orcid = ('ORC', 'ORCID')
+        researcherid = ('RID', 'ResearcherID')
+        scopus = ('SCO', 'Scopus')
+        twitter = ('TWI', 'Twitter Handle')
+        other = ('OTH', 'Other')
+    id_type = models.CharField('Type', max_length=3,
+        choices=[x.value for x in AGENT_IDENTIFIER_TYPES])
     value = models.CharField('Value', max_length=200)
     
 class Institution(models.Model):
     name = models.CharField('Name', max_length=200)
-    description = models.TextField('Description', null=True, blank=True)
-    # sector = ???
-    # type = ???
-    address = models.CharField('Address', max_length=1000, null=True, blank=True)
-    # country = ???
-    # identifier = ???
-    created = models.DateTimeField('Date Created', auto_now_add=True)
-    deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
-    
     parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
+        
+    address = models.CharField('Address', max_length=1000, null=True, blank=True)
     
     def __str__(self):
         return self.name
@@ -69,11 +63,51 @@ class InstitutionMD(models.Model):
     describes = models.ForeignKey(Institution)
     asserted_by = models.ForeignKey(Agent)
     
+    description = models.TextField('Description', null=True, blank=True)
+
+    class SECTORS(Enum):
+        academic = ('a', 'Academic')
+        corporate = ('c', 'Corporate')
+        government = ('g', 'Government')
+        nonprofit = ('n', 'Non-Profit')
+        other = ('o', 'Other')
+    sector = models.CharField('Sector', max_length=1, null=True, blank=True,
+        choices = [x.value for x in SECTORS])
+        
+    class INSTITUTION_TYPES(Enum):
+        archive = ('arc', 'Archive')
+        datacenter = ('dat', 'Datacenter')
+        department = ('dpt', 'Department')
+        division = ('div', 'Division')
+        laboratory = ('lab', 'Laboratory')
+        library = ('lib', 'Library')
+        museum = ('mus', 'Museum')
+        project = ('pro', 'Project')
+        other = ('oth', 'Other')
+    institution_type = models.CharField('Type', max_length=3, null=True, blank=True,
+        choices=[x.value for x in INSTITUTION_TYPES])
+        
+    # country = ???
+    created = models.DateTimeField('Date Created', auto_now_add=True)
+    deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
+    
     class Meta:
         unique_together = ("describes", "asserted_by")
            
     def __str__(self):
         return ','.join(map(str, (self.describes, self.asserted_by)))
+
+class InstitutionIdentifier(models.Model):
+    institution = models.ForeignKey(InstitutionMD, on_delete=models.CASCADE)
+    
+    class INSTITUTION_IDENTIFIER_TYPES(Enum):
+        isni = ('i', 'ISNI')
+        ringgold = ('r', 'Ringgold')
+        other = ('o', 'Other')
+    id_type = models.CharField('Type', max_length=3,
+        choices=[x.value for x in INSTITUTION_IDENTIFIER_TYPES])
+    
+    value = models.CharField('Value', max_length=200)
 
 class Project(models.Model):
     name = models.CharField('Name', max_length=200)
@@ -92,32 +126,15 @@ class Project(models.Model):
     def get_absolute_url(self):
         return reverse('project_detail', kwargs={'pk': self.pk})
 
-class ProjectMD(models.Model):
-    describes = models.ForeignKey(Project, on_delete=models.CASCADE)
-    asserted_by = models.ForeignKey(Agent, on_delete=models.CASCADE)
-    
-    class Meta:
-        unique_together = ("describes", "asserted_by")
-           
-    def __str__(self):
-        return ','.join(map(str, (self.describes, self.asserted_by)))
-
 class Collection(models.Model):
     name = models.CharField('Name', max_length=200)
     institution = models.ForeignKey(Institution, on_delete=models.CASCADE)
     
+    created = models.DateTimeField('Date Created', auto_now_add=True)
+    deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
+    
     def __str__(self):
         return self.name
-
-class CollectionMD(models.Model):
-    describes = models.ForeignKey(Collection, on_delete=models.CASCADE)
-    asserted_by = models.ForeignKey(Agent, on_delete=models.CASCADE)
-    
-    class Meta:
-        unique_together = ("describes", "asserted_by")
-           
-    def __str__(self):
-        return ','.join(map(str, (self.describes, self.asserted_by)))
 
 class Resource(models.Model):
     root_url = models.URLField()
@@ -125,15 +142,15 @@ class Resource(models.Model):
     def __str__(self):
         return self.root_url
 
-class ResourceMD(models.Model):
-    describes = models.ForeignKey(Resource, on_delete=models.CASCADE)
-    asserted_by = models.ForeignKey(Agent, on_delete=models.CASCADE)
-
-    class Meta:
-        unique_together = ("describes", "asserted_by") 
-           
-    def __str__(self):
-        return ','.join(map(str, (self.describes, self.asserted_by)))
+# class ResourceMD(models.Model):
+#     describes = models.ForeignKey(Resource, on_delete=models.CASCADE)
+#     asserted_by = models.ForeignKey(Agent, on_delete=models.CASCADE)
+#
+#     class Meta:
+#         unique_together = ("describes", "asserted_by")
+#
+#     def __str__(self):
+#         return ','.join(map(str, (self.describes, self.asserted_by)))
 
 class Nomination(models.Model):
     resource = models.ForeignKey(Resource)

@@ -3,10 +3,7 @@ django-debug-toolbar==1.8
 django-extensions==1.8.1
 django-tables2==1.10.0
 psycopg2==2.7.3
-pytz==2017.2
-six==1.10.0
-sqlparse==0.2.3
 uWSGI==2.0.15
 whitenoise==3.3.0
 ipdb
-bidict
+
