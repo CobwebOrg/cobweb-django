@@ -1,12 +1,11 @@
 from django.apps import apps
 from django.contrib import auth
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.views import generic
-
 
 from . import forms, models
 
@@ -44,9 +43,16 @@ class ProjectDetailView(generic.DetailView):
 
 class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
     model = models.Project
-    template_name='generic_form.html'
-    form_class=forms.ProjectForm
-    
+    template_name = 'generic_form.html'
+    form_class = forms.ProjectForm
+
+    def form_valid(self, form):
+        candidate = form.save(commit=False)
+        # user = auth.models.User.objects.get(user=self.request.user)
+        # candidate.established_by = models.Agent.objects.get(user=self.request.user)
+        candidate.established_by = user=self.request.user.agent
+        candidate.save()
+        return super().form_valid(form)
 
 def object_list_view(request, model_name):
     model = apps.get_model('cobweb', model_name)

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     
     'django.contrib.humanize',
     'django_extensions',
+    'crispy_forms',
     
     'cobweb.apps.CobwebConfig',
 ]
@@ -74,6 +75,8 @@ TEMPLATES = [
         },
     },
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 WSGI_APPLICATION = 'wsgi.application'
 
