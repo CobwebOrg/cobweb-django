@@ -88,7 +88,13 @@ local_settings.py
 .env
 db.sqlite3
 
-# Elastic Beanstalk Files
+
+### Elastic Beanstalk Files ###
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+
+### Sublime Text ###
+cobweb-django.sublime-project
+cobweb-django.sublime-workspace

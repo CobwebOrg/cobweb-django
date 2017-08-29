@@ -1,12 +1,16 @@
 {% extends "base.html" %}
 {% load static %}
-{% load django_tables2 %}
+{#{% load django_tables2 %}#}
 
 {% block title %}Cobweb: {{ request.model_name }} Index{% endblock %}
 
 {% block content %}
 <div><h1>{{ request.model_name | capfirst }} Index</h1></div>
 
-{% render_table request.table %}
+<ul>
+  {% for object in object_list %}
+    <li><a href="{{ object.get_absolute_url }}">{{ object }}</a></li>
+  {% endfor %}
+</ul>
 
 {% endblock %}

@@ -1,11 +1,14 @@
-from django.shortcuts import get_object_or_404
-from django.http import Http404
-from django.views import generic
 from django.apps import apps
-from django.urls import reverse
+from django.contrib import auth
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import Http404
+from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
+from django.urls import reverse
+from django.views import generic
 
-from . import models, tables
+
+from . import forms, models
 
 
 #
@@ -14,35 +17,41 @@ from . import models, tables
         
 
         
-table_class_key = {
-    models.Institution: tables.InstitutionTable,
-    models.Agent: tables.AgentTable,
-    models.Project: tables.ProjectTable,
-    # models.Seed: tables.SeedTable,
-    models.Claim: tables.ClaimTable,
-    models.Holding: tables.HoldingTable,
-}
+
 
 #
 #   Page Views
 #
 
+class UserCreateView(generic.CreateView):
+    model = auth.models.User
+    template_name = "generic_form.html"
+    fields = [
+        'username',
+        'password',
+        'first_name',
+        'last_name',
+        'email',
+    ]
+
 class ProjectIndexView(generic.ListView):
     model = models.Project
+    template_name = "project_list.html"
 
 class ProjectDetailView(generic.DetailView):
     model = models.Project
     template_name = "project_detail.html"
-    
-    # def get_seed_table(self):
-    #     return tables.SeedTable( self.get_object().seed_set.all() )
+
+class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
+    model = models.Project
+    template_name='generic_form.html'
+    form_class=forms.ProjectForm
     
 
 def object_list_view(request, model_name):
     model = apps.get_model('cobweb', model_name)
     request.model_name = model_name
     request.verbose_name_plural = model._meta.verbose_name_plural
-    request.table = table_class_key[model](model.objects.all())
     return generic.ListView.as_view(model=model, template_name='object_list.html')(request)
 
 def object_view(request, model_name, pk):

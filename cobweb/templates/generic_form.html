@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div><h1>{{ Register }}</h1></div>
+
+<form action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save" />
+</form>
+
+
+
+{% endblock %}

@@ -1,9 +1,9 @@
-Django==1.11.4
-django-debug-toolbar==1.8
-django-extensions==1.8.1
-django-tables2==1.10.0
-psycopg2==2.7.3
-uWSGI==2.0.15
-whitenoise==3.3.0
-ipdb
+Django~=1.11.4
+psycopg2~=2.7.3
+whitenoise~=3.3.0
+django-crispy-forms~=1.6.1
 
+uWSGI~=2.0.15
+
+django-extensions~=1.8.1
+ipdb

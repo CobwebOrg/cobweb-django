@@ -152,6 +152,7 @@ class ProjectTests(TestCase):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
 
+
 class ProjectIndexViewTests(TestCase):
     
     def setUp(self):
@@ -190,3 +191,14 @@ class ProjectDetailViewTests(TestCase):
     #
     # def test_no_link_to_seed_url(self):
     #     self.assertNotContains(self.response, 'href="http://nytimes.com"')
+
+class ProjectCreateViewTests(TestCase):
+
+    def setUp(self):
+        pass
+
+    def test_anonymous_cant_create_project(self):
+        pass
+
+    def test_user_creates_project(self):
+        pass
