@@ -152,6 +152,29 @@ class ProjectTests(TestCase):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
 
+class UserIndexViewTests(TestCase):
+
+    def setUp(self):
+        pass
+
+    def test_user_index_view(self):
+        pass
+
+class UserCreateViewTests(TestCase):
+
+    def setUp(self):
+        pass
+
+    def test_user_create_view_fields(self):
+        pass
+
+class UserUpdateViewTests(TestCase):
+
+    def setUp(self):
+        pass
+
+    def test_user_update_view_fields(self):
+        pass
 
 class ProjectIndexViewTests(TestCase):
     

@@ -22,16 +22,18 @@ from . import forms, models
 #   Page Views
 #
 
+class UserIndexView(generic.ListView):
+    model = auth.models.User
+    template_name = "user_list.html"
+
+class UserDetailView(generic.DetailView):
+    model = auth.models.User
+    template_name = "user_detail.html"
+
 class UserCreateView(generic.CreateView):
     model = auth.models.User
     template_name = "generic_form.html"
-    fields = [
-        'username',
-        'password',
-        'first_name',
-        'last_name',
-        'email',
-    ]
+    form_class = forms.UserForm
 
 class ProjectIndexView(generic.ListView):
     model = models.Project

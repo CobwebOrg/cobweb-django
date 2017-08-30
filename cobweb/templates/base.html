@@ -41,7 +41,7 @@
             <a class="nav-item nav-link disabled" href="#">{{ user.get_username }}</a>
             <a class="nav-item nav-link" href="{% url 'logout' %}?next={{request.path}}">Logout</a>
           {% else %}
-            <a class="nav-item nav-link" href="{% url 'register' %}?next={{request.path}}">Register</a>
+            <a class="nav-item nav-link" href="{% url 'user_create' %}?next={{request.path}}">Sign Up</a>
             <a class="nav-item nav-link" href="{% url 'login' %}?next={{request.path}}">Login</a>
           {% endif %}
         </div>
