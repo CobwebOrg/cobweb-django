@@ -1,6 +1,6 @@
 FROM python:3.5
 ENV PYTHONUNBUFFERED 1
-RUN apt-get purge git 		# to prevent accidentally using git w/in container
+RUN apt-get purge -y git 		# to prevent accidentally using git w/in container
 RUN apt-get clean
 RUN mkdir /code
 WORKDIR /code
