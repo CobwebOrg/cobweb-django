@@ -1,5 +1,6 @@
 import ipdb
 from django.contrib import auth
+from django.db import IntegrityError
 from django.test import TestCase
 from django.utils import timezone
 
@@ -108,22 +109,23 @@ class CollectionModelTests(ModelTests):
         self.assertTrue(isinstance(t, models.Collection))
         self.assertEqual(str(t), t.name)
 
-class ResourceModelTests(ModelTests):
-
-    def test_resource_creation(self):
-        t = get_resource()
-        self.assertTrue(isinstance(t, models.Resource))
-        self.assertEqual(str(t), t.root_url)
-
-class ResourceMDModelTests(ModelTests):
-    pass
-
 class NominationModelTests(ModelTests):
 
     def test_nomination_creation(self):
         t = get_nomination()
         self.assertTrue(isinstance(t, models.Nomination))
         # self.assertEqual(str(t), '...')
+
+    def test_uniquetogether(self):
+        """Each combination of Project, Resource, and Nominated_by is unique."""
+        with self.assertRaisesRegex(IntegrityError, r'duplicate key value violates unique constraint'):
+            t = get_nomination()
+            models.Nomination.objects.create(
+                resource = t.resource,
+                project = t.project,
+                nominated_by = t.nominated_by,
+            )
+
 
 class ClaimModelTests(ModelTests):
 
@@ -191,6 +193,11 @@ class ProjectIndexViewTests(TestCase):
         self.assertContains(self.response, 'Exciting Project')
         self.assertContains(self.response, 'Other Project')
 
+    def test_new_project_link(self):
+        """A 'new project' link should be shown if logged-in user is authorized,
+        otherwise hidden."""
+        pass
+
 class ProjectDetailViewTests(TestCase):
 
     def setUp(self):
@@ -202,6 +209,16 @@ class ProjectDetailViewTests(TestCase):
         self.assertTemplateUsed(self.response, 'project_detail.html')
         self.assertEqual(self.response.status_code, 200)
         self.assertContains(self.response, 'Boring Project')
+
+    def test_edit_project_link(self):
+        """An 'edit project' link should be shown if logged-in user is authorized,
+        otherwise hidden."""
+        pass
+
+    def test_new_nomination_link(self):
+        """A 'new project' link should be shown if logged-in user is authorized,
+        otherwise hidden."""
+        pass
 
     # def test_seed_list(self):
     #     all_seeds = Seed.objects.all()
@@ -224,4 +241,27 @@ class ProjectCreateViewTests(TestCase):
         pass
 
     def test_user_creates_project(self):
+        """...
+        Should autmatically set: User"""
+        pass
+
+class NominationCreateViewTests(TestCase):
+
+    def setUp(self):
+        pass
+
+    def test_anonymous_cannot_nominate_to_restricted_project(self):
+        pass
+
+    def test_user_creates_project(self):
+        """...
+        Should autmatically set: User"""
+        pass
+
+class NominationFormTests(TestCase):
+
+    def SetUp(self):
+        pass
+
+    def test_nomination_form_links_to_resource(self):
         pass

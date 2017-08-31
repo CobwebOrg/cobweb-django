@@ -19,12 +19,16 @@
 
 <h2>Nominations</h2>
 <ul>
+{% if user.is_authenticated %}
+	<li><a class="" href="{% url 'nominate' %}?project_id={{ object.pk }}">+ Add a nomination.</a></li>
+{% endif %}
 {% for nomination in object.nomination_set.all %}
   <li>
-    <a href="{% url 'resource_detail' pk=nomination.resource.pk %}">{{nomination.resource}}</a>
+    <a href="{% url 'nomination_detail' pk=nomination.pk %}">{{nomination.resource}}</a>
     nominated by
     <a href="{% url 'agent_detail' pk=nomination.nominated_by.pk %}">{{nomination.nominated_by}}</a>
 {% endfor %}
+
 </ul>
 
 

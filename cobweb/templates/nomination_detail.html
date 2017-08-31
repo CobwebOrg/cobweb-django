@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Cobweb Nomination: {{ object }}{% endblock %}
+
+{% block content %}
+
+<h1>{{ object.resource }}</h1>
+
+<p>
+  Nominated to 
+  <a href="{% url 'project_detail' pk=object.project.pk %}">
+    {{ object.project }}
+  </a>
+  by
+  <a href="{% url 'agent_detail' pk=object.nominated_by.pk %}">
+    {{ object.nominated_by }}
+  </a>
+</p>
+
+<p>{{ object.description }}
+
+{% endblock %}

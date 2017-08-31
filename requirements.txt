@@ -2,6 +2,7 @@ Django~=1.11.4
 psycopg2~=2.7.3
 whitenoise~=3.3.0
 django-crispy-forms~=1.6.1
+django_guardian~=1.4.9
 
 uWSGI~=2.0.15
 

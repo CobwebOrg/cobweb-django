@@ -30,6 +30,10 @@ class UserDetailView(generic.DetailView):
     model = auth.models.User
     template_name = "user_detail.html"
 
+class AgentDetailView(generic.DetailView):
+    model = models.Agent
+    template_name = "user_detail.html"
+
 class UserCreateView(generic.CreateView):
     model = auth.models.User
     template_name = "generic_form.html"
@@ -50,9 +54,26 @@ class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         candidate = form.save(commit=False)
-        # user = auth.models.User.objects.get(user=self.request.user)
-        # candidate.established_by = models.Agent.objects.get(user=self.request.user)
-        candidate.established_by = user=self.request.user.agent
+        candidate.established_by = self.request.user.agent
+        candidate.save()
+        return super().form_valid(form)
+
+class NominationDetailView(generic.DetailView):
+    model = models.Nomination
+    template_name = 'nomination_detail.html'
+
+class NominationCreateView(generic.CreateView):
+    model = models.Nomination
+    template_name = 'generic_form.html'
+    form_class = forms.NominationForm
+    project_id = -1
+
+    def form_valid(self, form):
+        print(self.request.path)
+        candidate = form.save(commit=False)
+        candidate.project = models.Project.objects.get(pk=self.request.GET.get('project_id'))
+        self.success_url = candidate.project.get_absolute_url()
+        candidate.nominated_by = self.request.user.agent
         candidate.save()
         return super().form_valid(form)
 
@@ -62,26 +83,4 @@ def object_list_view(request, model_name):
     request.verbose_name_plural = model._meta.verbose_name_plural
     return generic.ListView.as_view(model=model, template_name='object_list.html')(request)
 
-def object_view(request, model_name, pk):
-    try:
-        model = apps.get_model('cobweb', model_name)
-    except:
-        raise Http404("{model_name}: no such model.".format(model_name=model_name))
-    
-    as_view_arguments = dict(
-        model=model, 
-        template_name='object_form.html',
-        fields=[field.name for field in model._meta.fields[1:] if field.editable],
-        success_url=reverse('object_list', kwargs={'model_name': model_name}),   
-    )
-    view_function_arguments = dict()
-    if pk == "new":
-        generic_view_object = generic.CreateView
-    else:
-        generic_view_object = generic.UpdateView
-        view_function_arguments['pk'] = pk
-        
-    return generic_view_object.as_view(**as_view_arguments)(request, **view_function_arguments)
-        # except:
-            # raise Http404("Can't find {model_name} {pk}.".format(model_name=model_name, pk=pk))
 

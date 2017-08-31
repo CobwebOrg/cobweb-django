@@ -14,29 +14,28 @@ urlpatterns = [
     url(r'^$', views.ProjectIndexView.as_view(), name='front_page'),
     
     # User
-    url('^users/', views.UserIndexView.as_view(), name='user_list'),
-    url('^users/(?P<pk>\d+)/?$', views.UserDetailView.as_view(), name='user_detail'),
-    url('^users/new/?$', views.UserCreateView.as_view(), name='user_create'),
-    # url('^users/(?P<pk>\d+)/update/?$', views.UserUpdateView.as_view(), name='user_update'),
+    url(r'^users/', views.UserIndexView.as_view(), name='user_list'),
+    url(r'^user/(?P<pk>\d+)/?$', views.UserDetailView.as_view(), name='user_detail'),
+    url(r'^user/new/?$', views.UserCreateView.as_view(), name='user_create'),
+    # url(r'^users/(?P<pk>\d+)/update/?$', views.UserUpdateView.as_view(), name='user_update'),
 
-    url(r'^agent/(?P<pk>\d+)/update/?$', views.object_view, {'model_name': 'agent'}, name='agent_update'),
-    url(r'^agent/(?P<pk>\d+)/?$', views.object_view, {'model_name': 'agent'}, name='agent_detail'),
+    # Agent
+    url(r'^agent/(?P<pk>\d+)/?$', views.AgentDetailView.as_view(), name='agent_detail'),
 
     # Project
     url(r'^projects/?$', views.ProjectIndexView.as_view(), name='project_list'),
     url(r'^project/(?P<pk>\d+)/?$', views.ProjectDetailView.as_view(), name='project_detail'),
     url(r'^project/new/?$', views.ProjectCreateView.as_view(), name='project_create'),
-    url(r'^project/(?P<pk>\d+)/update/?$', views.object_view, {'model_name': 'project'}, name='project_update'),
+    # url(r'^project/(?P<pk>\d+)/update/?$', views.ProjectUpdateView.as_view(), name='project_update'),
     
+    # Nomination
+    url(r'^nomination/(?P<pk>\d+)/', views.NominationDetailView.as_view(), name='nomination_detail'),
+    url(r'^nominate/', views.NominationCreateView.as_view(), name='nominate'),
+
     # Resource
-    url(r'^resource/(?P<pk>\d+)/?$', views.object_view, {'model_name': 'resource'}, name='resource_detail'),
 
     # Auth
-    url('^', include('django.contrib.auth.urls')),
-    
-    # generic views using introspection -- replace these later
-    # url(r'^(?P<model_name>\w+)s/?$', views.object_list_view, name='object_list'),
-    # url(r'^(?P<model_name>\w+)/(?P<pk>\d+)$/?$', views.object_view, name='object_view'),
+    url(r'^', include('django.contrib.auth.urls')),
 ]
 
 

@@ -119,7 +119,6 @@ class Project(models.Model):
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
 
-    
     def __str__(self):
         return self.name
     
@@ -138,19 +137,15 @@ class Collection(models.Model):
 
 class Resource(models.Model):
     root_url = models.URLField()
+
+    nominated_projects = models.ManyToManyField(
+        'Project',
+        through='Nomination',
+        related_name='nominated_resources'
+    )
     
     def __str__(self):
         return self.root_url
-
-# class ResourceMD(models.Model):
-#     describes = models.ForeignKey(Resource, on_delete=models.CASCADE)
-#     asserted_by = models.ForeignKey(Agent, on_delete=models.CASCADE)
-#
-#     class Meta:
-#         unique_together = ("describes", "asserted_by")
-#
-#     def __str__(self):
-#         return ','.join(map(str, (self.describes, self.asserted_by)))
 
 class Nomination(models.Model):
     resource = models.ForeignKey(Resource)
@@ -162,18 +157,14 @@ class Nomination(models.Model):
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
+    class Meta:
+        unique_together = ('resource', 'project', 'nominated_by')
+
     def __str__(self):
         return ','.join(map(str, (self.resource, self.project, self.nominated_by)))
 
-# class NominationMD(models.Model):
-#     describes = models.ForeignKey(Nomination)
-#     asserted_by = models.ForeignKey(Agent)
-#
-#     class Meta:
-#         unique_together = ("describes", "asserted_by")
-
 class Claim(models.Model):
-    resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
+    resource = models.ForeignKey(Resource)
     collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
     asserted_by = models.ForeignKey(Agent, on_delete=models.PROTECT)
     
@@ -192,19 +183,10 @@ class Claim(models.Model):
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
     def __str__(self):
-        return ','.join(map(str, (self.resource, self.collection)))
-
-# class ClaimMD(models.Model):
-#     describes = models.ForeignKey(Claim, on_delete=models.CASCADE)
-#     asserted_by = models.ForeignKey(Agent, on_delete=models.CASCADE)
-#
-#     class Meta:
-#         unique_together = ("describes", "asserted_by")
-#     def __str__(self):
-#         return ','.join(map(str, (self.describes, self.asserted_by)))
+        return ','.join(map(str, (self.resource, self.collection, self.asserted_by)))
 
 class Holding(models.Model):
-    resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
+    resource = models.ForeignKey(Resource)
     collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
     asserted_by = models.ForeignKey(Agent, on_delete=models.PROTECT)
     
@@ -214,14 +196,4 @@ class Holding(models.Model):
     
     
     def __str__(self):
-        return ','.join(map(str, (self.resource, self.collection)))
-
-class HoldingMD(models.Model):
-    describes = models.ForeignKey(Holding, on_delete=models.CASCADE)
-    asserted_by = models.ForeignKey(Agent, on_delete=models.CASCADE)
-    
-    class Meta:
-        unique_together = ("describes", "asserted_by")
-    
-    def __str__(self):
-        return ','.join(map(str, (self.describes, self.asserted_by)))
+        return ','.join(map(str, (self.resource, self.collection, self.asserted_by)))

@@ -1,3 +1,4 @@
+
 from django.urls import reverse
 from django.contrib import admin
 
@@ -96,15 +97,15 @@ class ProjectAdmin(admin.ModelAdmin):
 class CollectionAdmin(admin.ModelAdmin):
     inlines = [ ClaimInline, HoldingInline ]
 
-class ResourceAdmin(admin.ModelAdmin):
-    inlines = [ NominationInline, ClaimInline, HoldingInline ]
+# class ResourceAdmin(admin.ModelAdmin):
+#     inlines = [ NominationInline, ClaimInline, HoldingInline ]
 
 
 admin.site.register(models.Institution, InstitutionAdmin)
 admin.site.register(models.Agent, AgentAdmin)
 admin.site.register(models.Project, ProjectAdmin)
 admin.site.register(models.Collection, CollectionAdmin)
-admin.site.register(models.Resource, ResourceAdmin)
+# admin.site.register(models.Resource, ResourceAdmin)
 admin.site.register(models.Nomination)
 admin.site.register(models.Claim)
 admin.site.register(models.Holding)
