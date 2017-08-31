@@ -98,3 +98,7 @@ db.sqlite3
 ### Sublime Text ###
 cobweb-django.sublime-project
 cobweb-django.sublime-workspace
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
