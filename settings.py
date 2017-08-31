@@ -32,13 +32,13 @@ ALLOWED_HOSTS =  ['cobweb-dev.xvkpjfy2kp.us-west-2.elasticbeanstalk.com', 'local
 # Application definition
 
 INSTALLED_APPS = [
-    'whitenoise.runserver_nostatic',
+    # 'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    # 'django.contrib.staticfiles',
     
     'django.contrib.humanize',
     'django_extensions',
