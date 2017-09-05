@@ -2,9 +2,11 @@ import ipdb
 from django.contrib import auth
 from django.db import IntegrityError
 from django.test import TestCase
+from django.urls import reverse
 from django.utils import timezone
+from django.forms import Form
 
-from . import models
+from . import forms, models
 
 
 def get_user(**kwargs):
@@ -16,9 +18,6 @@ def get_user(**kwargs):
 def get_agent(**kwargs):
     kwargs.setdefault('name', 'Andy')
     return models.Agent.objects.get_or_create(**kwargs)[0]
-
-# def get_agentMD(**kwargs)
-#     pass
 
 def get_institution(**kwargs):
     kwargs.setdefault('name', 'UCLA')
@@ -59,12 +58,11 @@ def get_holding(**kwargs):
 
 
 
-class ModelTests(TestCase):
-    pass
 
+class ModelTestsMixin():
+    # 
 
-
-class AgentModelTests(ModelTests):
+class AgentModelTests(TestCase):
 
     def test_agent_creation(self):
         """Tests creation of Agent objects"""
@@ -81,7 +79,7 @@ class AgentModelTests(ModelTests):
         user_agent = models.Agent.objects.get(user=t)
         self.assertEqual(t, user_agent.user)
 
-class InstitutionModelTests(ModelTests):
+class InstitutionModelTests(TestCase):
 
     def test_institution_creation(self):
         """Tests creation of Institution objects"""
@@ -90,10 +88,7 @@ class InstitutionModelTests(ModelTests):
         self.assertTrue(isinstance(t, models.Institution))
         self.assertEqual(str(t), t.name)
 
-class InstitutionMDModelTests(ModelTests):
-    pass
-
-class ProjectModelTests(ModelTests):
+class ProjectModelTests(TestCase):
 
     def test_project_creation(self):
         """Tests creation of Project objects"""
@@ -102,14 +97,14 @@ class ProjectModelTests(ModelTests):
         self.assertTrue(isinstance(t, models.Project))
         self.assertEqual(str(t), t.name)
 
-class CollectionModelTests(ModelTests):
+class CollectionModelTests(TestCase):
 
     def test_collection_creation(self):
         t = get_collection()
         self.assertTrue(isinstance(t, models.Collection))
         self.assertEqual(str(t), t.name)
 
-class NominationModelTests(ModelTests):
+class NominationModelTests(TestCase):
 
     def test_nomination_creation(self):
         t = get_nomination()
@@ -127,7 +122,7 @@ class NominationModelTests(ModelTests):
             )
 
 
-class ClaimModelTests(ModelTests):
+class ClaimModelTests(TestCase):
 
     def test_claim_creation(self):
         """Tests creation of Claim objects"""
@@ -136,7 +131,7 @@ class ClaimModelTests(ModelTests):
         self.assertTrue(isinstance(t, models.Claim))
         # self.assertEqual(str(t), ",")
 
-class HoldingModelTests(ModelTests):
+class HoldingModelTests(TestCase):
 
     def test_holding_creation(self):
         """Tests creation of Holding objects"""
@@ -188,7 +183,7 @@ class ProjectIndexViewTests(TestCase):
 
     def test_links_to_all_projects(self):
         self.assertTemplateUsed(self.response, 'base.html')
-        # self.assertTemplateUsed(self.response, 'project_list.html')
+        self.assertTemplateUsed(self.response, 'project_list.html')
         self.assertContains(self.response, 'Boring Project')
         self.assertContains(self.response, 'Exciting Project')
         self.assertContains(self.response, 'Other Project')
@@ -196,12 +191,18 @@ class ProjectIndexViewTests(TestCase):
     def test_new_project_link(self):
         """A 'new project' link should be shown if logged-in user is authorized,
         otherwise hidden."""
-        pass
+        self.client.logout()
+        self.assertNotContains(self.client.get('/projects/'), 'Create new project')
+        self.assertNotContains(self.client.get('/projects/'), reverse('project_create'))
+        self.client.force_login(get_user())
+        self.assertContains(self.client.get('/projects/'), 'Create new project')
+        self.assertContains(self.client.get('/projects/'), reverse('project_create'))
 
 class ProjectDetailViewTests(TestCase):
 
     def setUp(self):
-        self.project = get_project(name="Boring Project")
+        self.user = get_user()
+        self.project = get_project(name="Boring Project", established_by=self.user.agent)
         self.response = self.client.get(self.project.get_absolute_url())
 
     def test_detail_view(self):
@@ -213,12 +214,22 @@ class ProjectDetailViewTests(TestCase):
     def test_edit_project_link(self):
         """An 'edit project' link should be shown if logged-in user is authorized,
         otherwise hidden."""
+
         pass
 
     def test_new_nomination_link(self):
         """A 'new project' link should be shown if logged-in user is authorized,
         otherwise hidden."""
-        pass
+
+        self.client.logout()
+        response = self.client.get(self.project.get_absolute_url())
+        self.assertNotContains(response, 'Add a nomination')
+        self.assertNotContains(response, reverse('nominate', kwargs={'project_id': self.project.pk}))
+
+        self.client.force_login(self.user)
+        response = self.client.get(self.project.get_absolute_url())
+        self.assertContains(response, 'Add a nomination')
+        self.assertContains(response, reverse('nominate', kwargs={'project_id': self.project.pk}))
 
     # def test_seed_list(self):
     #     all_seeds = Seed.objects.all()
@@ -258,10 +269,49 @@ class NominationCreateViewTests(TestCase):
         Should autmatically set: User"""
         pass
 
-class NominationFormTests(TestCase):
 
-    def SetUp(self):
-        pass
+
+class FormTestsMixin:
+
+    def test_init(self):
+        self.form_class()
+
+    # def test_init_without_entry(self):
+    #     with self.assertRaises(KeyError):
+    #         self.form_class()
+
+    def test_with_data(self):
+        for (data, valid) in self.test_data:
+            form = self.form_class(data)
+            self.assertEqual(form.is_valid(), valid)
+      
+class NominationFormTests(FormTestsMixin, TestCase):
+
+    def setUp(self):
+        self.test_object = get_nomination()
+        self.form_class = forms.NominationForm
+
+        self.test_data = [
+            # ({test_data}, is_valid)
+            ({'wrong_field': 'wrong info'}, False),
+            ({'resource': 'twitter.com'}, True),
+            ({'resource': 'http://nytimes.com', 'Description': 'NYT'}, True),
+        ]
 
     def test_nomination_form_links_to_resource(self):
-        pass
+        form = forms.NominationForm({
+            'resource': 'http://twitter.com',
+            'project': get_project(),
+            'user': get_user(),
+            })
+        self.assertTrue(form.is_valid())
+        self.assertIsInstance(form.cleaned_data['resource'], models.Resource)
+
+    def test_nomination_form_normalizes_url(self):
+        form = forms.NominationForm({
+            'resource': 'twitter.com',
+            'project': get_project(),
+            'user': get_user(),
+            })
+        self.assertTrue(form.is_valid())
+        self.assertEqual(form.cleaned_data['resource'], get_resource(root_url="http://twitter.com"))

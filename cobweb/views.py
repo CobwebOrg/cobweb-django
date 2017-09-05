@@ -66,12 +66,12 @@ class NominationCreateView(generic.CreateView):
     model = models.Nomination
     template_name = 'generic_form.html'
     form_class = forms.NominationForm
-    project_id = -1
 
     def form_valid(self, form):
         print(self.request.path)
+        print(self.kwargs)
         candidate = form.save(commit=False)
-        candidate.project = models.Project.objects.get(pk=self.request.GET.get('project_id'))
+        candidate.project = models.Project.objects.get(pk=self.kwargs['project_id'])
         self.success_url = candidate.project.get_absolute_url()
         candidate.nominated_by = self.request.user.agent
         candidate.save()

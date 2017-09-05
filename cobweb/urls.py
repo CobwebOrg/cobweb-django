@@ -30,7 +30,7 @@ urlpatterns = [
     
     # Nomination
     url(r'^nomination/(?P<pk>\d+)/', views.NominationDetailView.as_view(), name='nomination_detail'),
-    url(r'^nominate/', views.NominationCreateView.as_view(), name='nominate'),
+    url(r'^project/(?P<project_id>\d+)/nominate/', views.NominationCreateView.as_view(), name='nominate'),
 
     # Resource
 

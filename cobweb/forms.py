@@ -1,11 +1,12 @@
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
+from crispy_forms import bootstrap, layout
 from django import forms 
 from django.contrib import auth
 from django.contrib.auth import forms as authforms
 from . import models
 
 class UserForm(authforms.UserCreationForm):
+
     email = forms.EmailField(required=True)
     # first_name
     # last_name
@@ -13,7 +14,7 @@ class UserForm(authforms.UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-        self.helper.add_input(Submit('submit', 'Submit'))
+        self.helper.add_input(layout.Submit('submit', 'Submit'))
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -27,10 +28,11 @@ class UserForm(authforms.UserCreationForm):
         fields = ("username", "email", "password1", "password2")
 
 class ProjectForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-        self.helper.add_input(Submit('submit', 'Submit'))
+        self.helper.add_input(layout.Submit('submit', 'Submit'))
 
     class Meta:
         model = models.Project
@@ -42,12 +44,12 @@ class NominationForm(forms.ModelForm):
         model = models.Nomination
         fields = ['resource', 'description']
 
-    resource = forms.CharField(widget=forms.TextInput) 
+    resource = forms.URLField(widget=forms.URLInput, initial='http://') 
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-        self.helper.add_input(Submit('submit', 'Submit'))
+        self.helper.add_input(layout.Submit('submit', 'Submit'))
 
     def clean_resource(self):
         root_url = self.cleaned_data.get("resource")

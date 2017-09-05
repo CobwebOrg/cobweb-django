@@ -20,7 +20,7 @@
 <h2>Nominations</h2>
 <ul>
 {% if user.is_authenticated %}
-	<li><a class="" href="{% url 'nominate' %}?project_id={{ object.pk }}">+ Add a nomination.</a></li>
+	<li><a class="" href="{% url 'nominate' project_id=object.pk %}">+ Add a nomination.</a></li>
 {% endif %}
 {% for nomination in object.nomination_set.all %}
   <li>
