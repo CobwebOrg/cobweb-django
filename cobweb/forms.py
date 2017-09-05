@@ -1,6 +1,7 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms import bootstrap, layout
 from django import forms 
+from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth import forms as authforms
 from . import models
@@ -24,7 +25,7 @@ class UserForm(authforms.UserCreationForm):
         return user
 
     class Meta:
-        model = auth.models.User
+        model = auth.get_user_model()
         fields = ("username", "email", "password1", "password2")
 
 class ProjectForm(forms.ModelForm):

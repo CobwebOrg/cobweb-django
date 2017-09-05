@@ -1,4 +1,5 @@
 from django.apps import apps
+from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404, HttpResponseRedirect
@@ -23,11 +24,11 @@ from . import forms, models
 #
 
 class UserIndexView(generic.ListView):
-    model = auth.models.User
+    model = settings.AUTH_USER_MODEL
     template_name = "user_list.html"
 
 class UserDetailView(generic.DetailView):
-    model = auth.models.User
+    model = settings.AUTH_USER_MODEL
     template_name = "user_detail.html"
 
 class AgentDetailView(generic.DetailView):
@@ -35,7 +36,7 @@ class AgentDetailView(generic.DetailView):
     template_name = "user_detail.html"
 
 class UserCreateView(generic.CreateView):
-    model = auth.models.User
+    model = settings.AUTH_USER_MODEL
     template_name = "generic_form.html"
     form_class = forms.UserForm
 

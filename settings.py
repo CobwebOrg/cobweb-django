@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django_extensions',
     'crispy_forms',
-    'guardian',
+    # 'guardian',
     
     'cobweb.apps.CobwebConfig',
 ]
@@ -129,8 +129,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend', # default
-    'guardian.backends.ObjectPermissionBackend',
+    # 'guardian.backends.ObjectPermissionBackend',
 )
+
+AUTH_USER_MODEL = 'cobweb.User'
 
 
 # Internationalization

@@ -1,11 +1,16 @@
 from enum import Enum
 from django.db import models
 from django.urls import reverse
+from django.conf import settings
 from django.contrib import auth
+from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
+
+class User(AbstractUser):
+    pass
 
 class Agent(models.Model):
     name = models.CharField('Name', max_length=200)
@@ -16,7 +21,7 @@ class Agent(models.Model):
     agent_type = models.CharField('Type', max_length=3,
         choices = [x.value for x in AGENT_TYPES])
         
-    user = models.OneToOneField(auth.models.User, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     
     description = models.TextField('Description', null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
@@ -29,12 +34,12 @@ class Agent(models.Model):
     def __str__(self):
         return self.name
 
-@receiver(post_save, sender=auth.models.User)
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_user_agent(sender, instance, created, **kwargs):
     if created:
         Agent.objects.create(user=instance, agent_type=Agent.AGENT_TYPES.person.value[0])
 
-@receiver(post_save, sender=auth.models.User)
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def save_user_agent(sender, instance, **kwargs):
     instance.agent.save()
     

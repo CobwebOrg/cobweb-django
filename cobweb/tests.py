@@ -13,7 +13,7 @@ def get_user(**kwargs):
     kwargs.setdefault('username', 'andy')
     kwargs.setdefault('password', 'cobweb')
     kwargs.setdefault('is_superuser', True)
-    return auth.models.User.objects.get_or_create(**kwargs)[0]
+    return auth.get_user_model().objects.get_or_create(**kwargs)[0]
 
 def get_agent(**kwargs):
     kwargs.setdefault('name', 'Andy')
@@ -60,7 +60,12 @@ def get_holding(**kwargs):
 
 
 class ModelTestsMixin():
-    # 
+    pass
+
+class UserModelTests(ModelTestsMixin, TestCase):
+
+    def setUp(self):
+        self.model_class = auth.get_user_model()
 
 class AgentModelTests(TestCase):
 
@@ -75,7 +80,7 @@ class AgentModelTests(TestCase):
         """Tests that creating a User also creates an Agent"""
 
         t = get_user()
-        self.assertTrue(isinstance(t, auth.models.User))
+        self.assertTrue(isinstance(t, auth.get_user_model()))
         user_agent = models.Agent.objects.get(user=t)
         self.assertEqual(t, user_agent.user)
 
