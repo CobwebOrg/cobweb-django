@@ -1,10 +1,14 @@
 
 from django.urls import reverse
-from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
+from django.contrib import admin, auth
 
 from . import models
 
+
+class AgentInline(admin.TabularInline):
+    model = models.Agent
+    extra = 0
+    fields = [ 'user', 'software', ]
 
 class NominationInline(admin.TabularInline):
     model = models.Nomination
@@ -76,21 +80,24 @@ class HoldingInline(admin.TabularInline):
         'asserted_by',
     ]
 
-class AgentIdentifierInline(admin.TabularInline):
-    model = models.AgentIdentifier
-    extra = 0
-    fields = ['id_type', 'value']
+# class AgentIdentifierInline(admin.TabularInline):
+#     model = models.AgentIdentifier
+#     extra = 0
+#     fields = ['id_type', 'value']
 
 class InstitutionMDInline(admin.StackedInline):
     model = models.InstitutionMD
     extra = 0
     
 
+class UserAdmin(auth.admin.UserAdmin):
+    inlines = [ AgentInline ]
+
+class SoftwareAdmin(admin.ModelAdmin):
+    inlines = [ AgentInline ]
+
 class InstitutionAdmin(admin.ModelAdmin):
     inlines = [ InstitutionMDInline ]
-
-class AgentAdmin(admin.ModelAdmin):
-    inlines = [ AgentIdentifierInline ]
 
 class ProjectAdmin(admin.ModelAdmin):
     inlines = [ NominationInline ]
@@ -102,9 +109,12 @@ class ResourceAdmin(admin.ModelAdmin):
     inlines = [ NominationInline, ClaimInline, HoldingInline ]
 
 
+
+admin.site.unregister(auth.models.Group)
+
 admin.site.register(models.User, UserAdmin)
+admin.site.register(models.Software, SoftwareAdmin)
 admin.site.register(models.Institution, InstitutionAdmin)
-admin.site.register(models.Agent, AgentAdmin)
 admin.site.register(models.Project, ProjectAdmin)
 admin.site.register(models.Collection, CollectionAdmin)
 admin.site.register(models.Resource, ResourceAdmin)

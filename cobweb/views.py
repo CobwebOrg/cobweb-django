@@ -1,5 +1,4 @@
 from django.apps import apps
-from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404, HttpResponseRedirect
@@ -24,21 +23,21 @@ from . import forms, models
 #
 
 class UserIndexView(generic.ListView):
-    model = settings.AUTH_USER_MODEL
+    model = auth.get_user_model()
     template_name = "user_list.html"
 
 class UserDetailView(generic.DetailView):
-    model = settings.AUTH_USER_MODEL
+    model = auth.get_user_model()
     template_name = "user_detail.html"
+
+class UserCreateView(generic.CreateView):
+    model = auth.get_user_model()
+    template_name = "generic_form.html"
+    form_class = forms.UserForm
 
 class AgentDetailView(generic.DetailView):
     model = models.Agent
     template_name = "user_detail.html"
-
-class UserCreateView(generic.CreateView):
-    model = settings.AUTH_USER_MODEL
-    template_name = "generic_form.html"
-    form_class = forms.UserForm
 
 class ProjectIndexView(generic.ListView):
     model = models.Project

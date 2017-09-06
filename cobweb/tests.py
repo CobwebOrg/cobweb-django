@@ -11,12 +11,19 @@ from . import forms, models
 
 def get_user(**kwargs):
     kwargs.setdefault('username', 'andy')
-    kwargs.setdefault('password', 'cobweb')
+    kwargs.setdefault('password', 'cobweb123')
     kwargs.setdefault('is_superuser', True)
     return auth.get_user_model().objects.get_or_create(**kwargs)[0]
 
+def get_software(**kwargs):
+    if kwargs:
+        return models.Software.objects.get_or_create(**kwargs)[0]
+    else:
+        return models.Software.current_website_software()
+
 def get_agent(**kwargs):
-    kwargs.setdefault('name', 'Andy')
+    kwargs.setdefault('user', get_user())
+    kwargs.setdefault('software', get_software())
     return models.Agent.objects.get_or_create(**kwargs)[0]
 
 def get_institution(**kwargs):
@@ -59,30 +66,51 @@ def get_holding(**kwargs):
 
 
 
-class ModelTestsMixin():
-    pass
+class ModelTestsMixin:
+
+    def test_creation(self):
+        self.assertTrue(isinstance(self.test_instance, self.model_class))
+
+    def test_str(self):
+        self.assertEqual(str(self.test_instance), self.test_instance.name)
 
 class UserModelTests(ModelTestsMixin, TestCase):
 
     def setUp(self):
         self.model_class = auth.get_user_model()
+        self.test_instance = get_user()
 
-class AgentModelTests(TestCase):
+    def test_str(self):
+        self.assertEqual(
+            str(self.test_instance), 
+            self.test_instance.get_full_name() or self.test_instance.username
+        )
 
-    def test_agent_creation(self):
-        """Tests creation of Agent objects"""
-
-        t = get_agent()
-        self.assertTrue(isinstance(t, models.Agent))
-        self.assertEqual(str(t), t.name)
-
-    def test_user_creation(self):
+    def test_user_default_agent_creation(self):
         """Tests that creating a User also creates an Agent"""
+        user_agent = models.Agent.objects.get(
+            user=self.test_instance,
+            software=models.Software.current_website_software(),
+        )
+        self.assertEqual(self.test_instance, user_agent.user)
 
-        t = get_user()
-        self.assertTrue(isinstance(t, auth.get_user_model()))
-        user_agent = models.Agent.objects.get(user=t)
-        self.assertEqual(t, user_agent.user)
+class SoftwareModelTests(ModelTestsMixin, TestCase):
+
+    def setUp(self):
+        self.model_class = models.Software
+        self.test_instance = get_software()
+
+class AgentModelTests(ModelTestsMixin, TestCase):
+
+    def setUp(self):
+        self.model_class = models.Agent
+        self.test_instance = get_agent()
+
+    def test_str(self):
+        self.assertEqual(
+            str(self.test_instance),
+            ', '.join([str(self.test_instance.user), str(self.test_instance.software)])
+        )
 
 class InstitutionModelTests(TestCase):
 
@@ -147,20 +175,58 @@ class HoldingModelTests(TestCase):
 
 
 
-class ProjectTests(TestCase):
+class ViewTestsMixin:
+
+    def test_load(self):
+        self.assertEqual(self.test_response.status_code, 200)
+        for template in self.templates:
+            self.assertTemplateUsed(self.test_response, template)
+
+class IndexViewTestsMixin(ViewTestsMixin):
+
+    def test_list(self):
+        """Index Views should list  *all* instances of a class
+        (This test will have to change when we introduce pagination.)"""
+        for instance in self.list_class.objects.all():
+            self.assertContains(self.test_response, str(instance))
+            self.assertContains(self.test_response, instance.get_absolute_url())
+
+class DetailViewTestsMixin(ViewTestsMixin):
+
+    def test_absolute_url_method(self):
+        self.assertTrue(callable(self.test_instance.get_absolute_url))
+
+    def test_included_fields(self):
+        for field in self.fields:
+            self.assertContains(self.test_response, getattr(self.test_instance, field))
+
+    def test_update_link(self):
+        pass
+
+class HomePageTests(TestCase):
 
     def test_homepage(self):
         """Root URL '/' should return HTTP status 200 (i.e. success)."""
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
 
-class UserIndexViewTests(TestCase):
+class UserIndexViewTests(IndexViewTestsMixin, TestCase):
 
     def setUp(self):
-        pass
+        self.list_class = models.User
+        self.list_class.objects.get_or_create(username="testuser1")
+        self.list_class.objects.get_or_create(username="testuser2")
+        self.list_class.objects.get_or_create(username="testuser3")
+        self.templates = [ 'base.html', 'user_list.html' ]
+        self.test_response = self.client.get('/users/')
 
-    def test_user_index_view(self):
-        pass
+class UserDetailViewTests(DetailViewTestsMixin, TestCase):
+
+    def setUp(self):
+        self.test_instance = get_user()
+        self.fields = [ 'username' ]
+        self.templates = [ 'base.html', 'user_detail.html' ]
+        self.test_response = self.client.get(self.test_instance.get_absolute_url())
 
 class UserCreateViewTests(TestCase):
 
@@ -206,8 +272,8 @@ class ProjectIndexViewTests(TestCase):
 class ProjectDetailViewTests(TestCase):
 
     def setUp(self):
-        self.user = get_user()
-        self.project = get_project(name="Boring Project", established_by=self.user.agent)
+        self.agent = get_agent()
+        self.project = get_project(name="Boring Project", established_by=self.agent)
         self.response = self.client.get(self.project.get_absolute_url())
 
     def test_detail_view(self):
@@ -231,7 +297,7 @@ class ProjectDetailViewTests(TestCase):
         self.assertNotContains(response, 'Add a nomination')
         self.assertNotContains(response, reverse('nominate', kwargs={'project_id': self.project.pk}))
 
-        self.client.force_login(self.user)
+        self.client.force_login(self.agent.user)
         response = self.client.get(self.project.get_absolute_url())
         self.assertContains(response, 'Add a nomination')
         self.assertContains(response, reverse('nominate', kwargs={'project_id': self.project.pk}))
