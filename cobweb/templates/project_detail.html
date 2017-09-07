@@ -10,10 +10,14 @@
 
 <p>
 	Created {{ object.created|naturaltime }} by 
-  <a href="{% url 'agent_detail' pk=object.established_by.pk %}">{{ object.established_by }}</a>
+  <a href="{% url 'user_detail' pk=object.established_by.user.pk %}">{{ object.established_by.user }}</a>
 </p>
 
-<p>{{ object.description }}</p>
+{% if object.description %}
+	<p>{{ object.description }}</p>
+{% else %}
+	<p>No Description</p>
+{% endif %}
 
 {# {% render_table view.get_seed_table %} #}
 
@@ -22,11 +26,11 @@
 {% if user.is_authenticated %}
 	<li><a class="" href="{% url 'nominate' project_id=object.pk %}">+ Add a nomination.</a></li>
 {% endif %}
-{% for nomination in object.nomination_set.all %}
+{% for resource in object.nominated_resources.distinct %}
   <li>
-    <a href="{% url 'nomination_detail' pk=nomination.pk %}">{{nomination.resource}}</a>
-    nominated by
-    <a href="{% url 'agent_detail' pk=nomination.nominated_by.pk %}">{{nomination.nominated_by}}</a>
+    {#<a href="{% url 'nomination_detail' pk=1 %}">#}
+    {{resource}}
+    {#</a> nominated by <a href="{% url 'agent_detail' pk=nomination.nominated_by.pk %}">{{nomination.nominated_by}}</a>#}
 {% endfor %}
 
 </ul>
