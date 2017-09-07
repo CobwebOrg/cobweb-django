@@ -229,7 +229,7 @@ class UserDetailViewTests(DetailViewTestsMixin, TestCase):
         self.templates = [ 'base.html', 'user_detail.html' ]
         self.test_response = self.client.get(self.test_instance.get_absolute_url())
 
-class UserCreateViewTests(TestCase):
+class UserCreateViewTests(CreateViewTestsMixin, TestCase):
 
     def setUp(self):
         pass

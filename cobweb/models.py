@@ -11,6 +11,7 @@ from django.dispatch import receiver
 
 class User(AbstractUser):
 
+    description = models.TextField('Description', null=True, blank=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
     def __str__(self):
