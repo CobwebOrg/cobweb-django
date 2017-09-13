@@ -14,6 +14,10 @@ MDTYPE = models.MetadataType.objects.get_or_create(
     name = "Archive-It OAI-PMH oai_dc",
     url = "https://support.archive-it.org/hc/en-us/articles/210510506-Access-web-archives-with-the-OAI-PMH-metadata-feed",
     )[0]
+PROTOCOL = models.APIProtocol.objects.get_or_create(
+    name = "OAI-PMH",
+    uri = "https://support.archive-it.org/hc/en-us/articles/210510506-Access-web-archives-with-the-OAI-PMH-metadata-feed",
+    )[0]
 
 # def ait_partner_records(organization_id):
 #     return "https://archive-it.org/oai/organizations/{:04d}".format(organization_id)
@@ -83,6 +87,13 @@ class Command(BaseCommand):
             )[0]
 
             collection.institution.archiveit_identifier = institution_uri
+
+
+            models.APIEndpoint.objects.get_or_create(
+                institution = collection.institution,
+                url = institution_api,
+                protocol = PROTOCOL,
+            )
 
             collection.metadata_records.get_or_create(
                 asserted_by=AGENT,
