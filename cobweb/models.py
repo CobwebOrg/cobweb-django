@@ -35,12 +35,19 @@ class MetadataRecord(models.Model):
             self.asserted_by,
         )
 
+class Tag(models.Model):
+    name = models.TextField(max_length=200, unique=True)
+
+    def __str__(self):
+        return self.name
+
 class User(AbstractUser):
 
     description = models.TextField('Description', null=True, blank=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
     metadata_records = GenericRelation(MetadataRecord)
+    tags = models.ManyToManyField(Tag)
 
     def __str__(self):
         return self.get_full_name() or self.username
@@ -57,6 +64,7 @@ class Software(models.Model):
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
     metadata_records = GenericRelation(MetadataRecord)
+    tags = models.ManyToManyField(Tag)
 
     class Meta:
         verbose_name_plural = "Software"
@@ -89,8 +97,6 @@ def create_user_agent(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def save_user_agent(sender, instance, **kwargs):
-    print(instance)
-    print(Software.current_website_software())
     Agent.objects.get(user=instance, software=Software.current_website_software()).save()
     
 # class AgentIdentifier(models.Model):
@@ -140,6 +146,7 @@ class Institution(models.Model):
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
     metadata_records = GenericRelation(MetadataRecord)
+    tags = models.ManyToManyField(Tag)
            
     def __str__(self):
         return self.name
@@ -167,6 +174,7 @@ class Project(models.Model):
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
     metadata_records = GenericRelation(MetadataRecord)
+    tags = models.ManyToManyField(Tag)
 
     def __str__(self):
         return self.name
@@ -182,6 +190,7 @@ class Collection(models.Model):
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
     metadata_records = GenericRelation(MetadataRecord)
+    tags = models.ManyToManyField(Tag)
     
     def __str__(self):
         return self.name
@@ -196,6 +205,7 @@ class Resource(models.Model):
     )
     
     metadata_records = GenericRelation(MetadataRecord)
+    tags = models.ManyToManyField(Tag)
     
     def __str__(self):
         return self.root_url
@@ -211,6 +221,7 @@ class Nomination(models.Model):
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
     metadata_records = GenericRelation(MetadataRecord)
+    tags = models.ManyToManyField(Tag)
     
     class Meta:
         unique_together = ('resource', 'project', 'nominated_by')
@@ -238,6 +249,7 @@ class Claim(models.Model):
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
     metadata_records = GenericRelation(MetadataRecord)
+    tags = models.ManyToManyField(Tag)
     
     def __str__(self):
         return ','.join(map(str, (self.resource, self.collection, self.asserted_by)))
@@ -248,6 +260,7 @@ class Holding(models.Model):
     asserted_by = models.ForeignKey(Agent, on_delete=models.PROTECT)
     
     metadata_records = GenericRelation(MetadataRecord)
+    tags = models.ManyToManyField(Tag)
     
     # scope = ???
     created = models.DateTimeField('Date Created', auto_now_add=True)

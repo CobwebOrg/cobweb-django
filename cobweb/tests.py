@@ -120,12 +120,12 @@ class TagModelTests(ModelTestsMixin, TestCase):
         self.test_instance = get_tag()
 
     def test_name_is_unique(self):
-        with self.assertRaises(KeyError):
-            doppeltag = models.Tag.create(name=self.test_instance.name)
+        with self.assertRaises(IntegrityError):
+            doppeltag = models.Tag.objects.create(name=self.test_instance.name)
             doppeltag.save()
 
     def test_adding_to_objects(self):
-        othertag = models.Tag.create(name='other')
+        othertag = models.Tag.objects.create(name='other')
         institution = get_institution()
         othertag.institution_set.add(institution)
 
@@ -141,10 +141,11 @@ class TagModelTests(ModelTestsMixin, TestCase):
             get_holding(),
         ]
         for tagobject in objects_to_tag:
-            tagobject.tag_set.add(self.test_instance, othertag)
-            self.assertIn(self.test_instance, tagobject.tag_set)
+            tagobject.tags.add(self.test_instance, othertag)
+        for tagobject in objects_to_tag:
+            self.assertIn(self.test_instance, tagobject.tags.all())
 
-        self.assertIn(tagobject, othertag.institution_set)
+        self.assertIn(institution, othertag.institution_set.all())
 
 
 class UserModelTests(ModelTestsMixin, TestCase):
