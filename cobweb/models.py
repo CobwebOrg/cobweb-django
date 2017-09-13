@@ -36,10 +36,32 @@ class MetadataRecord(models.Model):
         )
 
 class Tag(models.Model):
-    name = models.TextField(max_length=200, unique=True)
+    tag_property = models.TextField(null=True, blank=True)
+    tag_value = models.TextField(max_length=200, unique=False)
+
+    def __str__(self):
+        if self.tag_property:
+            return "{}:{}".format(self.tag_property, self.tag_value)
+        else:
+            return self.tag_value
+
+    class Meta:
+        unique_together = ("tag_property", "tag_value")
+
+class APIProtocol(models.Model):
+    name = models.CharField(max_length=200, unique=True)
+    uri = models.URLField(max_length=200, unique=True, null=True)
 
     def __str__(self):
         return self.name
+
+class APIEndpoint(models.Model):
+    url = models.URLField(max_length=200, unique=True)
+    institution = models.ForeignKey('Institution')
+    protocol = models.ForeignKey(APIProtocol)
+
+    def __str__(self):
+        return self.url
 
 class User(AbstractUser):
 
@@ -78,8 +100,8 @@ class Software(models.Model):
 
 class Agent(models.Model):
         
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    software = models.ForeignKey(Software, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    software = models.ForeignKey(Software, on_delete=models.PROTECT)
     
     class Meta:
         unique_together = ("user", "software")
@@ -112,7 +134,7 @@ def save_user_agent(sender, instance, **kwargs):
 #     value = models.CharField('Value', max_length=200)
     
 class Institution(models.Model):
-    name = models.CharField('Name', max_length=200)
+    name = models.CharField('Name', max_length=200, null=True)
     parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
         
     address = models.CharField('Address', max_length=1000, null=True, blank=True)
@@ -147,12 +169,15 @@ class Institution(models.Model):
     
     metadata_records = GenericRelation(MetadataRecord)
     tags = models.ManyToManyField(Tag)
+
+    archiveit_identifier = models.URLField("Archive-It.org Identifier",
+        null=True, blank=True, unique=True, editable=False)
            
     def __str__(self):
         return self.name
 
 class InstitutionIdentifier(models.Model):
-    institution = models.ForeignKey(Institution, on_delete=models.CASCADE)
+    institution = models.ForeignKey(Institution, on_delete=models.PROTECT)
     
     class INSTITUTION_IDENTIFIER_TYPES(Enum):
         isni = ('i', 'ISNI')
@@ -183,14 +208,17 @@ class Project(models.Model):
         return reverse('project_detail', kwargs={'pk': self.pk})
 
 class Collection(models.Model):
-    name = models.CharField('Name', max_length=200)
-    institution = models.ForeignKey(Institution, on_delete=models.CASCADE)
+    name = models.CharField('Name', max_length=200, unique=False)
+    institution = models.ForeignKey(Institution, on_delete=models.PROTECT, null=True)
     
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
     metadata_records = GenericRelation(MetadataRecord)
     tags = models.ManyToManyField(Tag)
+
+    archiveit_identifier = models.URLField("Archive-It.org Identifier",
+        null=True, blank=True, unique=True, editable=False)
     
     def __str__(self):
         return self.name
