@@ -36,7 +36,7 @@ class MetadataRecord(models.Model):
         )
 
 class Tag(models.Model):
-    tag_property = models.TextField(null=True, blank=True)
+    tag_property = models.TextField(null=False, blank=False, default='tag')
     tag_value = models.TextField(max_length=200, unique=False)
 
     def __str__(self):

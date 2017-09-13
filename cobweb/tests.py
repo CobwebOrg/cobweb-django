@@ -1,6 +1,6 @@
 import ipdb
 from django.contrib import auth
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
@@ -27,7 +27,7 @@ def get_metadata_record(**kwargs):
     return test_object
 
 def get_tag(**kwargs):
-    kwargs.setdefault('name', 'test')
+    kwargs.setdefault('tag_property', 'test')
     return models.Tag.objects.get_or_create(**kwargs)[0]
 
 def get_user(**kwargs):
@@ -117,15 +117,21 @@ class TagModelTests(ModelTestsMixin, TestCase):
     
     def setUp(self):
         self.model_class = models.Tag
-        self.test_instance = get_tag()
+        self.test_kwargs = {'tag_property': 'test', 'tag_value': 'test'}
+        self.test_instance = get_tag(**self.test_kwargs)
 
-    def test_name_is_unique(self):
+    def test_str(self):
+        string_representation = str(self.test_instance)
+        self.assertIn(self.test_instance.tag_property, string_representation)
+        self.assertIn(self.test_instance.tag_value, string_representation)
+
+    def test_unique(self):
         with self.assertRaises(IntegrityError):
-            doppeltag = models.Tag.objects.create(name=self.test_instance.name)
+            doppeltag = models.Tag.objects.create(**self.test_kwargs)
             doppeltag.save()
 
     def test_adding_to_objects(self):
-        othertag = models.Tag.objects.create(name='other')
+        othertag = models.Tag.objects.create(tag_value='other')
         institution = get_institution()
         othertag.institution_set.add(institution)
 
