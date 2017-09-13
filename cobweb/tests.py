@@ -26,6 +26,10 @@ def get_metadata_record(**kwargs):
     test_object.save()
     return test_object
 
+def get_tag(**kwargs):
+    kwargs.setdefault('name', 'test')
+    return models.Tag.objects.get_or_create(**kwargs)[0]
+
 def get_user(**kwargs):
     kwargs.setdefault('username', 'andy')
     kwargs.setdefault('password', 'cobweb123')
@@ -108,6 +112,40 @@ class MetadataRecordModelTests(ModelTestsMixin, TestCase):
         self.assertIn(str(self.test_instance.object_described), string_representation)
         self.assertIn(str(self.test_instance.metadata_type), string_representation)
         self.assertIn(str(self.test_instance.asserted_by), string_representation)
+
+class TagModelTests(ModelTestsMixin, TestCase):
+    
+    def setUp(self):
+        self.model_class = models.Tag
+        self.test_instance = get_tag()
+
+    def test_name_is_unique(self):
+        with self.assertRaises(KeyError):
+            doppeltag = models.Tag.create(name=self.test_instance.name)
+            doppeltag.save()
+
+    def test_adding_to_objects(self):
+        othertag = models.Tag.create(name='other')
+        institution = get_institution()
+        othertag.institution_set.add(institution)
+
+        objects_to_tag = [ 
+            institution,
+            get_user(),
+            get_software(),
+            get_project(),
+            get_nomination(),
+            get_resource(),
+            get_collection(),
+            get_claim(),
+            get_holding(),
+        ]
+        for tagobject in objects_to_tag:
+            tagobject.tag_set.add(self.test_instance, othertag)
+            self.assertIn(self.test_instance, tagobject.tag_set)
+
+        self.assertIn(tagobject, othertag.institution_set)
+
 
 class UserModelTests(ModelTestsMixin, TestCase):
 
