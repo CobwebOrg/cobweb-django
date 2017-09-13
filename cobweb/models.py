@@ -79,13 +79,6 @@ class Institution(models.Model):
         
     address = models.CharField('Address', max_length=1000, null=True, blank=True)
     
-    def __str__(self):
-        return self.name
-
-class InstitutionMD(models.Model):
-    describes = models.ForeignKey(Institution)
-    asserted_by = models.ForeignKey(Agent)
-    
     description = models.TextField('Description', null=True, blank=True)
 
     class SECTORS(Enum):
@@ -114,14 +107,12 @@ class InstitutionMD(models.Model):
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
-    class Meta:
-        unique_together = ("describes", "asserted_by")
            
     def __str__(self):
-        return ','.join(map(str, (self.describes, self.asserted_by)))
+        return self.name
 
 class InstitutionIdentifier(models.Model):
-    institution = models.ForeignKey(InstitutionMD, on_delete=models.CASCADE)
+    institution = models.ForeignKey(Institution, on_delete=models.CASCADE)
     
     class INSTITUTION_IDENTIFIER_TYPES(Enum):
         isni = ('i', 'ISNI')

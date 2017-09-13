@@ -84,10 +84,6 @@ class HoldingInline(admin.TabularInline):
 #     model = models.AgentIdentifier
 #     extra = 0
 #     fields = ['id_type', 'value']
-
-class InstitutionMDInline(admin.StackedInline):
-    model = models.InstitutionMD
-    extra = 0
     
 
 class UserAdmin(auth.admin.UserAdmin):
@@ -97,7 +93,7 @@ class SoftwareAdmin(admin.ModelAdmin):
     inlines = [ AgentInline ]
 
 class InstitutionAdmin(admin.ModelAdmin):
-    inlines = [ InstitutionMDInline ]
+    pass
 
 class ProjectAdmin(admin.ModelAdmin):
     inlines = [ NominationInline ]
