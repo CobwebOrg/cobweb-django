@@ -42,11 +42,9 @@ class Agent(models.Model):
         
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     software = models.ForeignKey(Software, on_delete=models.CASCADE)
-
-    description = models.TextField('Description', null=True, blank=True)
     
-    created = models.DateTimeField('Date Created', auto_now_add=True)
-    deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
+    class Meta:
+        unique_together = ("user", "software")
     
     def __str__(self):
         return ', '.join([str(self.user), str(self.software)])
