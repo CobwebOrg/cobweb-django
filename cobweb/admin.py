@@ -5,7 +5,7 @@ from django.contrib import admin, auth, contenttypes
 from . import models
 
 
-class MetadataRecordAdmin(contenttypes.admin.GenericStackedInline):
+class MetadataRecordInline(contenttypes.admin.GenericStackedInline):
     model = models.MetadataRecord
     extra = 0
     fields = [ 'asserted_by', 'metadata_type', 'metadata' ]
@@ -98,17 +98,20 @@ class SoftwareAdmin(admin.ModelAdmin):
     inlines = [ AgentInline ]
 
 class InstitutionAdmin(admin.ModelAdmin):
-    inlines = [ MetadataRecordAdmin ]
+    inlines = [ MetadataRecordInline ]
 
 class ProjectAdmin(admin.ModelAdmin):
-    inlines = [ NominationInline, MetadataRecordAdmin ]
+    inlines = [ NominationInline, MetadataRecordInline ]
     
 class CollectionAdmin(admin.ModelAdmin):
-    inlines = [ ClaimInline, HoldingInline, MetadataRecordAdmin ]
+    inlines = [ ClaimInline, HoldingInline, MetadataRecordInline ]
 
 class ResourceAdmin(admin.ModelAdmin):
-    inlines = [ NominationInline, ClaimInline, HoldingInline, MetadataRecordAdmin ]
+    inlines = [ NominationInline, ClaimInline, HoldingInline, MetadataRecordInline ]
 
+class TagAdmin(admin.ModelAdmin):
+    pass
+    
 
 
 admin.site.unregister(auth.models.Group)
@@ -126,3 +129,4 @@ admin.site.register(models.Holding)
 admin.site.register(models.Agent)
 admin.site.register(models.MetadataRecord)
 admin.site.register(models.MetadataType)
+admin.site.register(models.Tag, TagAdmin)
