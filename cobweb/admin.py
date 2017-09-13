@@ -1,9 +1,14 @@
 
 from django.urls import reverse
-from django.contrib import admin, auth
+from django.contrib import admin, auth, contenttypes
 
 from . import models
 
+
+class MetadataRecordAdmin(contenttypes.admin.GenericStackedInline):
+    model = models.MetadataRecord
+    extra = 0
+    fields = [ 'asserted_by', 'metadata_type', 'metadata' ]
 
 class AgentInline(admin.TabularInline):
     model = models.Agent
@@ -93,16 +98,16 @@ class SoftwareAdmin(admin.ModelAdmin):
     inlines = [ AgentInline ]
 
 class InstitutionAdmin(admin.ModelAdmin):
-    pass
+    inlines = [ MetadataRecordAdmin ]
 
 class ProjectAdmin(admin.ModelAdmin):
-    inlines = [ NominationInline ]
+    inlines = [ NominationInline, MetadataRecordAdmin ]
     
 class CollectionAdmin(admin.ModelAdmin):
-    inlines = [ ClaimInline, HoldingInline ]
+    inlines = [ ClaimInline, HoldingInline, MetadataRecordAdmin ]
 
 class ResourceAdmin(admin.ModelAdmin):
-    inlines = [ NominationInline, ClaimInline, HoldingInline ]
+    inlines = [ NominationInline, ClaimInline, HoldingInline, MetadataRecordAdmin ]
 
 
 
@@ -117,3 +122,7 @@ admin.site.register(models.Resource, ResourceAdmin)
 admin.site.register(models.Nomination)
 admin.site.register(models.Claim)
 admin.site.register(models.Holding)
+
+admin.site.register(models.Agent)
+admin.site.register(models.MetadataRecord)
+admin.site.register(models.MetadataType)

@@ -4,16 +4,44 @@ from django.urls import reverse
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.models import AbstractUser
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from django.contrib.contenttypes.models import ContentType
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
+
+class MetadataType(models.Model):
+    name = models.CharField(max_length=200, unique=True, default='unknown')
+    url = models.URLField(null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+class MetadataRecord(models.Model):
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    object_described = GenericForeignKey('content_type', 'object_id')
+
+    asserted_by = models.ForeignKey('Agent')
+
+    metadata_type = models.ForeignKey(MetadataType)
+    metadata = models.TextField()
+
+    def __str__(self):
+        return "{}, {}, {}". format(
+            self.object_described,
+            self.metadata_type,
+            self.asserted_by,
+        )
 
 class User(AbstractUser):
 
     description = models.TextField('Description', null=True, blank=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
+    metadata_records = GenericRelation(MetadataRecord)
+
     def __str__(self):
         return self.get_full_name() or self.username
 
@@ -27,6 +55,8 @@ class Software(models.Model):
     
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
+    
+    metadata_records = GenericRelation(MetadataRecord)
 
     class Meta:
         verbose_name_plural = "Software"
@@ -52,13 +82,15 @@ class Agent(models.Model):
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_user_agent(sender, instance, created, **kwargs):
     if created:
-        Agent.objects.create(
+        Agent.objects.get_or_create(
             user=instance, 
             software=Software.current_website_software()
         )
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def save_user_agent(sender, instance, **kwargs):
+    print(instance)
+    print(Software.current_website_software())
     Agent.objects.get(user=instance, software=Software.current_website_software()).save()
     
 # class AgentIdentifier(models.Model):
@@ -107,6 +139,7 @@ class Institution(models.Model):
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
+    metadata_records = GenericRelation(MetadataRecord)
            
     def __str__(self):
         return self.name
@@ -132,6 +165,8 @@ class Project(models.Model):
 #    descriptor
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
+    
+    metadata_records = GenericRelation(MetadataRecord)
 
     def __str__(self):
         return self.name
@@ -146,6 +181,8 @@ class Collection(models.Model):
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
+    metadata_records = GenericRelation(MetadataRecord)
+    
     def __str__(self):
         return self.name
 
@@ -157,6 +194,8 @@ class Resource(models.Model):
         through='Nomination',
         related_name='nominated_resources'
     )
+    
+    metadata_records = GenericRelation(MetadataRecord)
     
     def __str__(self):
         return self.root_url
@@ -170,6 +209,8 @@ class Nomination(models.Model):
     # keywords
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
+    
+    metadata_records = GenericRelation(MetadataRecord)
     
     class Meta:
         unique_together = ('resource', 'project', 'nominated_by')
@@ -196,6 +237,8 @@ class Claim(models.Model):
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
+    metadata_records = GenericRelation(MetadataRecord)
+    
     def __str__(self):
         return ','.join(map(str, (self.resource, self.collection, self.asserted_by)))
 
@@ -203,6 +246,8 @@ class Holding(models.Model):
     resource = models.ForeignKey(Resource)
     collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
     asserted_by = models.ForeignKey(Agent, on_delete=models.PROTECT)
+    
+    metadata_records = GenericRelation(MetadataRecord)
     
     # scope = ???
     created = models.DateTimeField('Date Created', auto_now_add=True)

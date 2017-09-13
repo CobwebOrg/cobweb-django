@@ -9,6 +9,23 @@ from django.forms import Form
 from . import forms, models
 
 
+def get_metadata_type(**kwargs):
+    return models.MetadataType.objects.get_or_create(**kwargs)[0]
+
+def get_metadata_record(**kwargs):
+    # try:
+    #     object_described = kwargs.pop('object_described')
+    # except KeyError:
+    #     kwargs.setdefault('content_type', models.Collection)
+
+    kwargs.setdefault('object_described', get_collection())
+    kwargs.setdefault('asserted_by', get_agent())
+    kwargs.setdefault('metadata_type', get_metadata_type())
+    kwargs.setdefault('metadata', 'this: that\tthese: those')
+    test_object = models.MetadataRecord(**kwargs)
+    test_object.save()
+    return test_object
+
 def get_user(**kwargs):
     kwargs.setdefault('username', 'andy')
     kwargs.setdefault('password', 'cobweb123')
@@ -73,6 +90,24 @@ class ModelTestsMixin:
 
     def test_str(self):
         self.assertEqual(str(self.test_instance), self.test_instance.name)
+
+class MetadataTypeModelTests(ModelTestsMixin, TestCase):
+
+    def setUp(self):
+        self.model_class = models.MetadataType
+        self.test_instance = get_metadata_type()
+
+class MetadataRecordModelTests(ModelTestsMixin, TestCase):
+
+    def setUp(self):
+        self.model_class = models.MetadataRecord
+        self.test_instance = get_metadata_record()
+
+    def test_str(self):
+        string_representation = str(self.test_instance)
+        self.assertIn(str(self.test_instance.object_described), string_representation)
+        self.assertIn(str(self.test_instance.metadata_type), string_representation)
+        self.assertIn(str(self.test_instance.asserted_by), string_representation)
 
 class UserModelTests(ModelTestsMixin, TestCase):
 
@@ -229,7 +264,7 @@ class UserDetailViewTests(DetailViewTestsMixin, TestCase):
         self.templates = [ 'base.html', 'user_detail.html' ]
         self.test_response = self.client.get(self.test_instance.get_absolute_url())
 
-class UserCreateViewTests(CreateViewTestsMixin, TestCase):
+class UserCreateViewTests(TestCase):
 
     def setUp(self):
         pass

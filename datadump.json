@@ -1,35 +1,5 @@
 [
 {
-  "model": "cobweb.project",
-  "pk": 1,
-  "fields": {
-    "name": "LTS Library Projects Group",
-    "established_by": 4,
-    "description": "Test project for Harvard's Library Technology Services' Library Projects Group.  Scope TBD. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.",
-    "created": "2017-09-05T17:39:17.964Z",
-    "deprecated": null
-  }
-},
-{
-  "model": "cobweb.resource",
-  "pk": 1,
-  "fields": {
-    "root_url": "Library Technology Services"
-  }
-},
-{
-  "model": "cobweb.nomination",
-  "pk": 1,
-  "fields": {
-    "resource": 1,
-    "project": 1,
-    "nominated_by": 4,
-    "description": "LTS homepage.  At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-    "created": "2017-09-05T17:40:41.491Z",
-    "deprecated": null
-  }
-},
-{
   "model": "cobweb.user",
   "pk": 1,
   "fields": {
@@ -43,6 +13,8 @@
     "is_staff": false,
     "is_active": true,
     "date_joined": "2017-08-31T19:55:55.208Z",
+    "description": null,
+    "deprecated": null,
     "groups": [],
     "user_permissions": []
   }
@@ -52,7 +24,7 @@
   "pk": 2,
   "fields": {
     "password": "pbkdf2_sha256$36000$zvNoxHnAPuaM$goGyHgNDTtOQh3cmbNWJYiJ1UihyI6BKDj5/agyMZuc=",
-    "last_login": "2017-09-06T16:36:28.771Z",
+    "last_login": "2017-09-13T03:29:45.150Z",
     "is_superuser": true,
     "username": "admin",
     "first_name": "",
@@ -61,6 +33,8 @@
     "is_staff": true,
     "is_active": true,
     "date_joined": "2017-08-31T22:27:58.916Z",
+    "description": null,
+    "deprecated": null,
     "groups": [],
     "user_permissions": []
   }
@@ -79,6 +53,8 @@
     "is_staff": false,
     "is_active": true,
     "date_joined": "2017-08-31T23:50:09.350Z",
+    "description": null,
+    "deprecated": null,
     "groups": [],
     "user_permissions": []
   }
@@ -94,10 +70,11 @@
     "first_name": "Janet",
     "last_name": "Taylor",
     "email": "janet_taylor@harvard.edu",
-    "description": "Library Technology Services at Harvard University",
     "is_staff": false,
     "is_active": true,
     "date_joined": "2017-09-05T17:36:48.783Z",
+    "description": "Library Technology Services at Harvard University",
+    "deprecated": null,
     "groups": [],
     "user_permissions": []
   }
@@ -107,7 +84,19 @@
   "pk": 1,
   "fields": {
     "name": "Cobweb",
-    "created": "2017-08-31T19:55:55.208Z"
+    "description": null,
+    "created": "2017-08-31T19:55:55.208Z",
+    "deprecated": null
+  }
+},
+{
+  "model": "cobweb.software",
+  "pk": 2,
+  "fields": {
+    "name": "Cobweb Website",
+    "description": null,
+    "created": "2017-09-13T00:55:21.710Z",
+    "deprecated": null
   }
 },
 {
@@ -115,8 +104,7 @@
   "pk": 1,
   "fields": {
     "user": 1,
-    "software": 1,
-    "created": "2017-08-31T19:55:55.208Z"
+    "software": 1
   }
 },
 {
@@ -124,17 +112,7 @@
   "pk": 2,
   "fields": {
     "user": 2,
-    "software": 1,
-    "created": "2017-08-31T19:55:55.208Z"
-  }
-},
-{
-  "model": "cobweb.agent",
-  "pk": 3,
-  "fields": {
-    "user": 3,
-    "software": 1,
-    "created": "2017-08-31T19:55:55.208Z"
+    "software": 1
   }
 },
 {
@@ -142,8 +120,76 @@
   "pk": 4,
   "fields": {
     "user": 4,
-    "software": 1,
-    "created": "2017-08-31T19:55:55.208Z"
+    "software": 1
+  }
+},
+{
+  "model": "cobweb.agent",
+  "pk": 8,
+  "fields": {
+    "user": 3,
+    "software": 1
+  }
+},
+{
+  "model": "cobweb.project",
+  "pk": 1,
+  "fields": {
+    "name": "LTS Library Projects Group",
+    "established_by": 4,
+    "description": "Test project for Harvard's Library Technology Services' Library Projects Group.  Scope TBD. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.",
+    "created": "2017-09-05T17:39:17.964Z",
+    "deprecated": null
+  }
+},
+{
+  "model": "cobweb.resource",
+  "pk": 1,
+  "fields": {
+    "root_url": "Library Technology Services"
+  }
+},
+{
+  "model": "cobweb.resource",
+  "pk": 2,
+  "fields": {
+    "root_url": "http://ucla.edu"
+  }
+},
+{
+  "model": "cobweb.nomination",
+  "pk": 1,
+  "fields": {
+    "resource": 1,
+    "project": 1,
+    "nominated_by": 4,
+    "description": "LTS homepage.  At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+    "created": "2017-09-05T17:40:41.491Z",
+    "deprecated": null
+  }
+},
+{
+  "model": "cobweb.nomination",
+  "pk": 2,
+  "fields": {
+    "resource": 2,
+    "project": 1,
+    "nominated_by": 1,
+    "description": "",
+    "created": "2017-09-07T19:09:14.062Z",
+    "deprecated": null
+  }
+},
+{
+  "model": "cobweb.nomination",
+  "pk": 3,
+  "fields": {
+    "resource": 1,
+    "project": 1,
+    "nominated_by": 2,
+    "description": "",
+    "created": "2017-09-07T19:14:05.384Z",
+    "deprecated": null
   }
 }
 ]
