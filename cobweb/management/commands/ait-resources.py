@@ -1,5 +1,4 @@
 from django.core.management.base import BaseCommand, CommandError
-from ipdb import set_trace
 from math import inf
 from sickle import Sickle
 from sys import stderr
@@ -46,7 +45,6 @@ def parse_wayback_url(wayback_url):
     try:
         return wayback_url_parser.match(wayback_url).groups()[0]
     except:
-        set_trace()
         return wayback_url    
 
 class Command(BaseCommand):
