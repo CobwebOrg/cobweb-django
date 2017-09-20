@@ -110,16 +110,16 @@ class Command(BaseCommand):
             except Exception as ex:
                 eprint(ex, type(ex))
 
-            for tag_property, tag_values in record.metadata.items():
-                for tag_value in tag_values:
-                    try:
-                        collection.tags.add(
-                            models.Tag.objects.get_or_create(
-                                tag_property=tag_property,
-                                tag_value=tag_value
-                            )[0]
-                        )
-                    except Exception as ex:
-                        eprint(ex, type(ex))
+            # for tag_property, tag_values in record.metadata.items():
+            #     for tag_value in tag_values:
+            #         try:
+            #             collection.tags.add(
+            #                 models.Tag.objects.get_or_create(
+            #                     tag_property=tag_property,
+            #                     tag_value=tag_value
+            #                 )[0]
+            #             )
+            #         except Exception as ex:
+            #             eprint(ex, type(ex))
 
             collection.save()

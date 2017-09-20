@@ -35,18 +35,18 @@ class MetadataRecord(models.Model):
             self.asserted_by,
         )
 
-class Tag(models.Model):
-    tag_property = models.TextField(null=False, blank=False, default='tag')
-    tag_value = models.TextField(max_length=200, unique=False)
+# class Tag(models.Model):
+#     tag_property = models.TextField(null=False, blank=False, default='tag')
+#     tag_value = models.TextField(max_length=200, unique=False)
 
-    def __str__(self):
-        if self.tag_property:
-            return "{}:{}".format(self.tag_property, self.tag_value)
-        else:
-            return self.tag_value
+#     def __str__(self):
+#         if self.tag_property:
+#             return "{}:{}".format(self.tag_property, self.tag_value)
+#         else:
+#             return self.tag_value
 
-    class Meta:
-        unique_together = ("tag_property", "tag_value")
+#     class Meta:
+#         unique_together = ("tag_property", "tag_value")
 
 class APIProtocol(models.Model):
     name = models.CharField(max_length=200, unique=True)
@@ -69,7 +69,7 @@ class User(AbstractUser):
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
     metadata_records = GenericRelation(MetadataRecord)
-    tags = models.ManyToManyField(Tag)
+    # tags = models.ManyToManyField(Tag)
 
     def __str__(self):
         return self.get_full_name() or self.username
@@ -86,7 +86,7 @@ class Software(models.Model):
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
     metadata_records = GenericRelation(MetadataRecord)
-    tags = models.ManyToManyField(Tag)
+    # tags = models.ManyToManyField(Tag)
 
     class Meta:
         verbose_name_plural = "Software"
@@ -168,7 +168,7 @@ class Institution(models.Model):
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
     metadata_records = GenericRelation(MetadataRecord)
-    tags = models.ManyToManyField(Tag)
+    # tags = models.ManyToManyField(Tag)
 
     archiveit_identifier = models.URLField("Archive-It.org Identifier",
         null=True, blank=True, unique=True, editable=False)
@@ -199,7 +199,7 @@ class Project(models.Model):
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
     metadata_records = GenericRelation(MetadataRecord)
-    tags = models.ManyToManyField(Tag)
+    # tags = models.ManyToManyField(Tag)
 
     def __str__(self):
         return self.name
@@ -215,7 +215,7 @@ class Collection(models.Model):
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
     metadata_records = GenericRelation(MetadataRecord)
-    tags = models.ManyToManyField(Tag)
+    # tags = models.ManyToManyField(Tag)
 
     archiveit_identifier = models.URLField("Archive-It.org Identifier",
         null=True, blank=True, unique=True, editable=False)
@@ -233,7 +233,7 @@ class Resource(models.Model):
     )
     
     metadata_records = GenericRelation(MetadataRecord)
-    tags = models.ManyToManyField(Tag)
+    # tags = models.ManyToManyField(Tag)
     
     def __str__(self):
         return self.root_url
@@ -249,7 +249,7 @@ class Nomination(models.Model):
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
     metadata_records = GenericRelation(MetadataRecord)
-    tags = models.ManyToManyField(Tag)
+    # tags = models.ManyToManyField(Tag)
     
     class Meta:
         unique_together = ('resource', 'project', 'nominated_by')
@@ -277,7 +277,7 @@ class Claim(models.Model):
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
     metadata_records = GenericRelation(MetadataRecord)
-    tags = models.ManyToManyField(Tag)
+    # tags = models.ManyToManyField(Tag)
     
     def __str__(self):
         return ','.join(map(str, (self.resource, self.collection, self.asserted_by)))
@@ -288,7 +288,7 @@ class Holding(models.Model):
     asserted_by = models.ForeignKey(Agent, on_delete=models.PROTECT)
     
     metadata_records = GenericRelation(MetadataRecord)
-    tags = models.ManyToManyField(Tag)
+    # tags = models.ManyToManyField(Tag)
     
     # scope = ???
     created = models.DateTimeField('Date Created', auto_now_add=True)
