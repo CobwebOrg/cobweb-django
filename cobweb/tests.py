@@ -87,6 +87,7 @@ def get_holding(**kwargs):
 
 
 
+
 class ModelTestsMixin:
 
     def test_creation(self):
@@ -212,10 +213,16 @@ class ProjectModelTests(TestCase):
 
 class CollectionModelTests(TestCase):
 
+    def setUp(self):
+        self.test_instance = get_collection(archiveit_identifier="https://testurl.test/test")
+        self.test_instance.full_clean()
+
     def test_collection_creation(self):
-        t = get_collection()
-        self.assertTrue(isinstance(t, models.Collection))
-        self.assertEqual(str(t), t.name)
+        self.assertTrue(isinstance(self.test_instance, models.Collection))
+        self.assertEqual(str(self.test_instance), self.test_instance.name)
+
+    def test_https_becomes_http(self):
+        self.assertEqual('http://', self.test_instance.archiveit_identifier[:7])
 
 class NominationModelTests(TestCase):
 

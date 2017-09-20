@@ -8,7 +8,30 @@ from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelatio
 from django.contrib.contenttypes.models import ContentType
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+import re
+import ipdb
 
+
+
+def nocrypto_url(url):
+    return( url
+        .replace('https://', 'http://')
+        .replace('sftp://', 'ftp://')
+    )
+
+
+class NocryptoURLField(models.URLField):
+    """Subclass of URLField that maps https to http and sftp to ftp."""
+    def clean(self, value, model_instance):
+        return super().clean(nocrypto_url(value), model_instance)
+
+class ModelValidationMixin(object):
+    """Django currently doesn't force validation on the model level
+    for compatibility reasons. We enforce here, that on each save,
+    a full valdation run will be done the for model instance"""
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
 
 
 class MetadataType(models.Model):
@@ -207,9 +230,9 @@ class Project(models.Model):
     def get_absolute_url(self):
         return reverse('project_detail', kwargs={'pk': self.pk})
 
-class Collection(models.Model):
+class Collection(ModelValidationMixin, models.Model):
     name = models.CharField('Name', max_length=200, unique=False)
-    institution = models.ForeignKey(Institution, on_delete=models.PROTECT, null=True)
+    institution = models.ForeignKey(Institution, on_delete=models.PROTECT, null=True, blank=True)
     
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
@@ -217,11 +240,13 @@ class Collection(models.Model):
     metadata_records = GenericRelation(MetadataRecord)
     # tags = models.ManyToManyField(Tag)
 
-    archiveit_identifier = models.URLField("Archive-It.org Identifier",
-        null=True, blank=True, unique=True, editable=False)
+    archiveit_identifier = NocryptoURLField("Archive-It.org Identifier",
+        null=True, blank=True, unique=True)
     
     def __str__(self):
         return self.name
+
+
 
 class Resource(models.Model):
     root_url = models.URLField()

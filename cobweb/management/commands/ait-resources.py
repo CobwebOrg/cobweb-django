@@ -27,7 +27,7 @@ def eprint(*args, **kwargs):
 def get_collection(record):
     if len(record.header.setSpecs) == 1 and record.header.setSpecs[0][:11] == 'collection:':
         id_number = record.header.setSpecs[0][11:] # actually should be string
-        uri = "https://archive-it.org/collections/{}".format(id_number)
+        uri = "http://archive-it.org/collections/{}".format(id_number)
         return uri
     else:
         eprint(record.header.identifier, record.header.setSpecs)
@@ -43,7 +43,11 @@ def only_one(list_object):
 wayback_url_parser = re.compile('http\:\/\/wayback\.archive\-it\.org\/\d+\/\*/(https?\:\/\/.*)')
 def parse_wayback_url(wayback_url):
     try:
-        return wayback_url_parser.match(wayback_url).groups()[0]
+        return models.nocrypto_url( 
+            wayback_url_parser
+            .match(wayback_url)
+            .groups()[0] 
+        )
     except:
         return wayback_url    
 
@@ -55,6 +59,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         for api in PROTOCOL.apiendpoint_set.filter(url__startswith=APIROOT):
+            print(api)
             self.harvest_organization(api)
 
     def harvest_organization(self, api):
@@ -63,7 +68,6 @@ class Command(BaseCommand):
             records = ait.ListRecords(metadataPrefix='oai_dc')
             for record in records:
                 root_url = parse_wayback_url(record.header.identifier)
-                print(root_url)
                 
                 collection_uri = get_collection(record)
                 collection = models.Collection.objects.get_or_create(
@@ -82,10 +86,13 @@ class Command(BaseCommand):
                     asserted_by=AGENT,
                 )[0]
 
-                holding.metadata_records.get_or_create(
+                metadata_record = holding.metadata_records.get_or_create(
                     asserted_by=AGENT,
                     metadata_type=MDTYPE,
-                )[0].metadata = record.raw
+                )[0]
+                metadata_record.metadata = record.raw
+                metadata_record.full_clean()
+                metadata_record.save()
 
                 # for tag_property, tag_values in record.metadata.items():
                 #     for tag_value in tag_values:
@@ -99,6 +106,7 @@ class Command(BaseCommand):
                 #         except Exception as ex:
                 #             eprint(ex, type(ex))
 
+                holding.full_clean()
                 holding.save()
         except Exception as ex:
             eprint(type(ex), ex)
