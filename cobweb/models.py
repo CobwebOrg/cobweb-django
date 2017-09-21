@@ -194,8 +194,7 @@ class Collection(ModelValidationMixin, models.Model):
     
     raw_metadata = models.TextField(null=True, blank=True)
 
-    identifier = NocryptoURLField("Archive-It.org Identifier",
-        null=True, blank=True, unique=True)
+    identifier = NocryptoURLField(null=True, blank=True, unique=True)
     
     def __str__(self):
         return self.name
@@ -203,7 +202,7 @@ class Collection(ModelValidationMixin, models.Model):
 
 
 class Resource(models.Model):
-    root_url = models.URLField()
+    location = NocryptoURLField(null=False, blank=False, unique=True)
 
     nominated_projects = models.ManyToManyField(
         'Project',
@@ -212,7 +211,7 @@ class Resource(models.Model):
     )
     
     def __str__(self):
-        return self.root_url
+        return self.location
 
 class Nomination(models.Model):
     resource = models.ForeignKey(Resource)

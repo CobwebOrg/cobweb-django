@@ -42,7 +42,7 @@ def get_collection(**kwargs):
     return models.Collection.objects.get_or_create(**kwargs)[0]
 
 def get_resource(**kwargs):
-    kwargs.setdefault('root_url', 'testproject.com')
+    kwargs.setdefault('location', 'testproject.com')
     return models.Resource.objects.get_or_create(**kwargs)[0]
 
 def get_nomination(**kwargs):
@@ -299,7 +299,7 @@ class ProjectDetailViewTests(DetailViewTestsMixin, TestCase):
                 get_nomination(
                     project=self.test_instance,
                     nominated_by=get_agent(user=get_user(username=username)),
-                    resource=get_resource(root_url=url),
+                    resource=get_resource(location=url),
                 )
 
 
@@ -418,4 +418,4 @@ class NominationFormTests(FormTestsMixin, TestCase):
             'user': get_user(),
             })
         self.assertTrue(form.is_valid())
-        self.assertEqual(form.cleaned_data['resource'], get_resource(root_url="http://twitter.com"))
+        self.assertEqual(form.cleaned_data['resource'], get_resource(location="http://twitter.com"))

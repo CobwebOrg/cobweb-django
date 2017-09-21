@@ -73,7 +73,8 @@ class Command(BaseCommand):
                     }
                 )[0]
 
-                resource = models.Resource.objects.get_or_create(root_url=root_url)[0]
+                resource = models.Resource.objects.get_or_create(
+                    location=models.nocrypto_url(root_url)[0]
 
                 holding = models.Holding.objects.get_or_create(
                     resource=resource,

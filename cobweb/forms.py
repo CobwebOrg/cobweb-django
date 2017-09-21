@@ -53,9 +53,9 @@ class NominationForm(forms.ModelForm):
         self.helper.add_input(layout.Submit('submit', 'Submit'))
 
     def clean_resource(self):
-        root_url = self.cleaned_data.get("resource")
-        if not root_url:
+        location = self.cleaned_data.get("resource")
+        if not location:
             raise forms.ValidationError("Please enter a URL.")
         else:
-            return models.Resource.objects.get_or_create(root_url = root_url)[0]
+            return models.Resource.objects.get_or_create(location = location)[0]
 
