@@ -106,6 +106,29 @@ class CollectionAdmin(admin.ModelAdmin):
 class ResourceAdmin(admin.ModelAdmin):
     inlines = [ NominationInline, ClaimInline, HoldingInline ]
 
+class HoldingAdmin(admin.ModelAdmin):
+    readonly_fields = [ 'resource_link', 'created' ]
+    
+    def resource_link(self, instance):
+        if instance.id:
+            changeform_url = reverse('admin:cobweb_resource_change', args=(instance.resource.id,))
+            return '<a href="{changeform_url}" target="_blank">{resource}</a>'.format(
+                changeform_url = changeform_url,
+                resource = instance.resource,
+            )
+        else:
+            return u''
+    resource_link.allow_tags = True
+    resource_link.short_description = 'Resource'
+    
+    fields = [
+        'resource_link', 
+        'collection',
+        'asserted_by',
+        'raw_metadata',
+        'created',
+        'deprecated',
+    ]
     
 
 
@@ -116,7 +139,7 @@ admin.site.register(models.APIEndpoint)
 admin.site.register(models.APIProtocol)
 admin.site.register(models.Claim)
 admin.site.register(models.Collection, CollectionAdmin)
-admin.site.register(models.Holding)
+admin.site.register(models.Holding, HoldingAdmin)
 admin.site.register(models.Institution, InstitutionAdmin)
 admin.site.register(models.Nomination)
 admin.site.register(models.Project, ProjectAdmin)
