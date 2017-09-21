@@ -9,26 +9,6 @@ from django.forms import Form
 from . import forms, models
 
 
-def get_metadata_type(**kwargs):
-    return models.MetadataType.objects.get_or_create(**kwargs)[0]
-
-def get_metadata_record(**kwargs):
-    # try:
-    #     object_described = kwargs.pop('object_described')
-    # except KeyError:
-    #     kwargs.setdefault('content_type', models.Collection)
-
-    kwargs.setdefault('object_described', get_collection())
-    kwargs.setdefault('asserted_by', get_agent())
-    kwargs.setdefault('metadata_type', get_metadata_type())
-    kwargs.setdefault('metadata', 'this: that\tthese: those')
-    test_object = models.MetadataRecord(**kwargs)
-    test_object.save()
-    return test_object
-
-# def get_tag(**kwargs):
-#     kwargs.setdefault('tag_property', 'test')
-#     return models.Tag.objects.get_or_create(**kwargs)[0]
 
 def get_user(**kwargs):
     kwargs.setdefault('username', 'andy')
@@ -95,64 +75,6 @@ class ModelTestsMixin:
 
     def test_str(self):
         self.assertEqual(str(self.test_instance), self.test_instance.name)
-
-class MetadataTypeModelTests(ModelTestsMixin, TestCase):
-
-    def setUp(self):
-        self.model_class = models.MetadataType
-        self.test_instance = get_metadata_type()
-
-class MetadataRecordModelTests(ModelTestsMixin, TestCase):
-
-    def setUp(self):
-        self.model_class = models.MetadataRecord
-        self.test_instance = get_metadata_record()
-
-    def test_str(self):
-        string_representation = str(self.test_instance)
-        self.assertIn(str(self.test_instance.object_described), string_representation)
-        self.assertIn(str(self.test_instance.metadata_type), string_representation)
-        self.assertIn(str(self.test_instance.asserted_by), string_representation)
-
-# class TagModelTests(ModelTestsMixin, TestCase):
-    
-#     def setUp(self):
-#         self.model_class = models.Tag
-#         self.test_kwargs = {'tag_property': 'test', 'tag_value': 'test'}
-#         self.test_instance = get_tag(**self.test_kwargs)
-
-#     def test_str(self):
-#         string_representation = str(self.test_instance)
-#         self.assertIn(self.test_instance.tag_property, string_representation)
-#         self.assertIn(self.test_instance.tag_value, string_representation)
-
-#     def test_unique(self):
-#         with self.assertRaises(IntegrityError):
-#             doppeltag = models.Tag.objects.create(**self.test_kwargs)
-#             doppeltag.save()
-
-#     def test_adding_to_objects(self):
-#         othertag = models.Tag.objects.create(tag_value='other')
-#         institution = get_institution()
-#         othertag.institution_set.add(institution)
-
-#         objects_to_tag = [ 
-#             institution,
-#             get_user(),
-#             get_software(),
-#             get_project(),
-#             get_nomination(),
-#             get_resource(),
-#             get_collection(),
-#             get_claim(),
-#             get_holding(),
-#         ]
-#         for tagobject in objects_to_tag:
-#             tagobject.tags.add(self.test_instance, othertag)
-#         for tagobject in objects_to_tag:
-#             self.assertIn(self.test_instance, tagobject.tags.all())
-
-#         self.assertIn(institution, othertag.institution_set.all())
 
 
 class UserModelTests(ModelTestsMixin, TestCase):

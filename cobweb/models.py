@@ -34,42 +34,6 @@ class ModelValidationMixin(object):
         super().save(*args, **kwargs)
 
 
-class MetadataType(models.Model):
-    name = models.CharField(max_length=200, unique=True, default='unknown')
-    identifier = models.URLField(null=True, blank=True)
-
-    def __str__(self):
-        return self.name
-
-class MetadataRecord(models.Model):
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    object_described = GenericForeignKey('content_type', 'object_id')
-
-    asserted_by = models.ForeignKey('Agent')
-
-    metadata_type = models.ForeignKey(MetadataType)
-    metadata = models.TextField()
-
-    def __str__(self):
-        return "{}, {}, {}". format(
-            self.object_described,
-            self.metadata_type,
-            self.asserted_by,
-        )
-
-# class Tag(models.Model):
-#     tag_property = models.TextField(null=False, blank=False, default='tag')
-#     tag_value = models.TextField(max_length=200, unique=False)
-
-#     def __str__(self):
-#         if self.tag_property:
-#             return "{}:{}".format(self.tag_property, self.tag_value)
-#         else:
-#             return self.tag_value
-
-#     class Meta:
-#         unique_together = ("tag_property", "tag_value")
 
 class APIProtocol(models.Model):
     name = models.CharField(max_length=200, unique=True)
@@ -91,9 +55,6 @@ class User(AbstractUser):
     description = models.TextField('Description', null=True, blank=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
-    # metadata_records = GenericRelation(MetadataRecord)
-    # tags = models.ManyToManyField(Tag)
-
     def __str__(self):
         return self.get_full_name() or self.username
 
@@ -107,9 +68,6 @@ class Software(models.Model):
     
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
-    
-    # metadata_records = GenericRelation(MetadataRecord)
-    # tags = models.ManyToManyField(Tag)
 
     class Meta:
         verbose_name_plural = "Software"
@@ -190,7 +148,6 @@ class Institution(models.Model):
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
-    metadata_records = GenericRelation(MetadataRecord)
     raw_metadata = models.TextField(null=True, blank=True)
     # tags = models.ManyToManyField(Tag)
 
@@ -222,9 +179,6 @@ class Project(models.Model):
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
-    # metadata_records = GenericRelation(MetadataRecord)
-    # tags = models.ManyToManyField(Tag)
-
     def __str__(self):
         return self.name
     
@@ -238,9 +192,7 @@ class Collection(ModelValidationMixin, models.Model):
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
-    metadata_records = GenericRelation(MetadataRecord)
     raw_metadata = models.TextField(null=True, blank=True)
-    # tags = models.ManyToManyField(Tag)
 
     identifier = NocryptoURLField("Archive-It.org Identifier",
         null=True, blank=True, unique=True)
@@ -259,9 +211,6 @@ class Resource(models.Model):
         related_name='nominated_resources'
     )
     
-    # metadata_records = GenericRelation(MetadataRecord)
-    # tags = models.ManyToManyField(Tag)
-    
     def __str__(self):
         return self.root_url
 
@@ -274,9 +223,6 @@ class Nomination(models.Model):
     # keywords
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
-    
-    # metadata_records = GenericRelation(MetadataRecord)
-    # tags = models.ManyToManyField(Tag)
     
     class Meta:
         unique_together = ('resource', 'project', 'nominated_by')
@@ -303,9 +249,6 @@ class Claim(models.Model):
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
-    # metadata_records = GenericRelation(MetadataRecord)
-    # tags = models.ManyToManyField(Tag)
-    
     def __str__(self):
         return ','.join(map(str, (self.resource, self.collection, self.asserted_by)))
 
@@ -314,9 +257,7 @@ class Holding(models.Model):
     collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
     asserted_by = models.ForeignKey(Agent, on_delete=models.PROTECT)
     
-    metadata_records = GenericRelation(MetadataRecord)
     raw_metadata = models.TextField(null=True, blank=True)
-    # tags = models.ManyToManyField(Tag)
     
     # scope = ???
     created = models.DateTimeField('Date Created', auto_now_add=True)

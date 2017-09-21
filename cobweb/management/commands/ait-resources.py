@@ -10,10 +10,6 @@ SOFTWARE = models.Software.objects.get_or_create(name="Archive-It Importer")[0]
 USER = models.User.objects.get_or_create(username="admin")[0]
 AGENT = models.Agent.objects.get_or_create(user=USER, software=SOFTWARE)[0]
 APIROOT = 'https://archive-it.org/oai/organizations/'
-MDTYPE = models.MetadataType.objects.get_or_create(
-    name = "Archive-It OAI-PMH oai_dc",
-    identifier = "https://support.archive-it.org/hc/en-us/articles/210510506-Access-web-archives-with-the-OAI-PMH-metadata-feed",
-    )[0]
 PROTOCOL = models.APIProtocol.objects.get_or_create(
     name = "OAI-PMH",
     identifier = "https://support.archive-it.org/hc/en-us/articles/210510506-Access-web-archives-with-the-OAI-PMH-metadata-feed",
@@ -85,13 +81,7 @@ class Command(BaseCommand):
                     asserted_by=AGENT,
                 )[0]
 
-                metadata_record = holding.metadata_records.get_or_create(
-                    asserted_by=AGENT,
-                    metadata_type=MDTYPE,
-                )[0]
-                metadata_record.metadata = record.raw
-                metadata_record.full_clean()
-                metadata_record.save()
+                holding.raw_metadata = record.raw
 
                 # for tag_property, tag_values in record.metadata.items():
                 #     for tag_value in tag_values:
