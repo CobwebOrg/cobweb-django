@@ -214,15 +214,15 @@ class ProjectModelTests(TestCase):
 class CollectionModelTests(TestCase):
 
     def setUp(self):
-        self.test_instance = get_collection(archiveit_identifier="https://testurl.test/test")
+        self.test_instance = get_collection(identifier="https://testurl.test/test")
         self.test_instance.full_clean()
 
     def test_collection_creation(self):
-        self.assertTrue(isinstance(self.test_instance, models.Collection))
-        self.assertEqual(str(self.test_instance), self.test_instance.name)
+        self.assertTrue( isinstance(self.test_instance, models.Collection) )
+        self.assertEqual( str(self.test_instance), self.test_instance.name )
 
     def test_https_becomes_http(self):
-        self.assertEqual('http://', self.test_instance.archiveit_identifier[:7])
+        self.assertTrue( self.test_instance.identifier.startswith('http://') )
 
 class NominationModelTests(TestCase):
 

@@ -193,7 +193,7 @@ class Institution(models.Model):
     metadata_records = GenericRelation(MetadataRecord)
     # tags = models.ManyToManyField(Tag)
 
-    archiveit_identifier = models.URLField("Archive-It.org Identifier",
+    identifier = models.URLField("Archive-It.org Identifier",
         null=True, blank=True, unique=True, editable=False)
            
     def __str__(self):
@@ -240,7 +240,7 @@ class Collection(ModelValidationMixin, models.Model):
     metadata_records = GenericRelation(MetadataRecord)
     # tags = models.ManyToManyField(Tag)
 
-    archiveit_identifier = NocryptoURLField("Archive-It.org Identifier",
+    identifier = NocryptoURLField("Archive-It.org Identifier",
         null=True, blank=True, unique=True)
     
     def __str__(self):
