@@ -12,11 +12,11 @@ AGENT = models.Agent.objects.get_or_create(user=USER, software=SOFTWARE)[0]
 APIROOT = 'https://archive-it.org/oai/organizations/'
 MDTYPE = models.MetadataType.objects.get_or_create(
     name = "Archive-It OAI-PMH oai_dc",
-    url = "https://support.archive-it.org/hc/en-us/articles/210510506-Access-web-archives-with-the-OAI-PMH-metadata-feed",
+    identifier = "https://support.archive-it.org/hc/en-us/articles/210510506-Access-web-archives-with-the-OAI-PMH-metadata-feed",
     )[0]
 PROTOCOL = models.APIProtocol.objects.get_or_create(
     name = "OAI-PMH",
-    uri = "https://support.archive-it.org/hc/en-us/articles/210510506-Access-web-archives-with-the-OAI-PMH-metadata-feed",
+    identifier = "https://support.archive-it.org/hc/en-us/articles/210510506-Access-web-archives-with-the-OAI-PMH-metadata-feed",
     )[0]
 
 
@@ -27,8 +27,7 @@ def eprint(*args, **kwargs):
 def get_collection(record):
     if len(record.header.setSpecs) == 1 and record.header.setSpecs[0][:11] == 'collection:':
         id_number = record.header.setSpecs[0][11:] # actually should be string
-        uri = "http://archive-it.org/collections/{}".format(id_number)
-        return uri
+        return "http://archive-it.org/collections/{}".format(id_number)
     else:
         eprint(record.header.identifier, record.header.setSpecs)
         raise ValueError("Can't find collection from setspecs.")
@@ -64,7 +63,7 @@ class Command(BaseCommand):
 
     def harvest_organization(self, api):
         try:
-            ait = Sickle(api.url)
+            ait = Sickle(api.identifier)
             records = ait.ListRecords(metadataPrefix='oai_dc')
             for record in records:
                 root_url = parse_wayback_url(record.header.identifier)

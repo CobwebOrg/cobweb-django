@@ -36,7 +36,7 @@ class ModelValidationMixin(object):
 
 class MetadataType(models.Model):
     name = models.CharField(max_length=200, unique=True, default='unknown')
-    url = models.URLField(null=True, blank=True)
+    identifier = models.URLField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -73,18 +73,18 @@ class MetadataRecord(models.Model):
 
 class APIProtocol(models.Model):
     name = models.CharField(max_length=200, unique=True)
-    uri = models.URLField(max_length=200, unique=True, null=True)
+    identifier = models.URLField(max_length=200, unique=True, null=True)
 
     def __str__(self):
         return self.name
 
 class APIEndpoint(models.Model):
-    url = models.URLField(max_length=200, unique=True)
+    location = models.URLField(max_length=200, unique=True)
     institution = models.ForeignKey('Institution')
     protocol = models.ForeignKey(APIProtocol)
 
     def __str__(self):
-        return self.url
+        return self.location
 
 class User(AbstractUser):
 
