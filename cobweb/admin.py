@@ -1,8 +1,9 @@
 
 from django.urls import reverse
 from django.contrib import admin, auth, contenttypes
+from reversion.admin import VersionAdmin
 
-from . import models
+from cobweb import models
 
 
 
@@ -84,28 +85,57 @@ class HoldingInline(admin.TabularInline):
 #     model = models.AgentIdentifier
 #     extra = 0
 #     fields = ['id_type', 'value']
-    
 
-class UserAdmin(auth.admin.UserAdmin):
+
+@admin.register(models.Agent)
+class AgentAdmin(VersionAdmin):
+    pass
+
+@admin.register(models.APIEndpoint)
+class APIEndpointAdmin(VersionAdmin):
+    pass
+
+@admin.register(models.APIProtocol)
+class APIProtocolAdmin(VersionAdmin):
+    pass
+
+admin.site.unregister(auth.models.Group)
+
+@admin.register(models.User)
+class UserAdmin(VersionAdmin, auth.admin.UserAdmin):
     inlines = [ AgentInline ]
 
-class SoftwareAdmin(admin.ModelAdmin):
+@admin.register(models.Software)
+class SoftwareAdmin(VersionAdmin):
     inlines = [ AgentInline ]
 
-class InstitutionAdmin(admin.ModelAdmin):
+@admin.register(models.Institution)
+class InstitutionAdmin(VersionAdmin):
     # inlines = [  ]
     pass
 
-class ProjectAdmin(admin.ModelAdmin):
-    inlines = [ NominationInline ]
-    
-class CollectionAdmin(admin.ModelAdmin):
-    inlines = [ ClaimInline, HoldingInline ]
-
-class ResourceAdmin(admin.ModelAdmin):
+@admin.register(models.Resource)
+class ResourceAdmin(VersionAdmin):
     inlines = [ NominationInline, ClaimInline, HoldingInline ]
 
-class HoldingAdmin(admin.ModelAdmin):
+@admin.register(models.Project)
+class ProjectAdmin(VersionAdmin):
+    inlines = [ NominationInline ]
+
+@admin.register(models.Nomination)
+class NominationAdmin(VersionAdmin):
+    pass
+
+@admin.register(models.Collection)  
+class CollectionAdmin(VersionAdmin):
+    inlines = [ ClaimInline, HoldingInline ]
+
+@admin.register(models.Claim)
+class ClaimAdmin(VersionAdmin):
+    pass
+
+@admin.register(models.Holding)
+class HoldingAdmin(VersionAdmin):
     readonly_fields = [ 'resource_link', 'created' ]
     
     def resource_link(self, instance):
@@ -128,20 +158,3 @@ class HoldingAdmin(admin.ModelAdmin):
         'created',
         'deprecated',
     ]
-    
-
-
-admin.site.unregister(auth.models.Group)
-
-admin.site.register(models.Agent)
-admin.site.register(models.APIEndpoint)
-admin.site.register(models.APIProtocol)
-admin.site.register(models.Claim)
-admin.site.register(models.Collection, CollectionAdmin)
-admin.site.register(models.Holding, HoldingAdmin)
-admin.site.register(models.Institution, InstitutionAdmin)
-admin.site.register(models.Nomination)
-admin.site.register(models.Project, ProjectAdmin)
-admin.site.register(models.Resource, ResourceAdmin)
-admin.site.register(models.Software, SoftwareAdmin)
-admin.site.register(models.User, UserAdmin)

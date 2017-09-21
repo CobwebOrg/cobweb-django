@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.forms import Form
 
-from . import forms, models
+from cobweb import forms, models
 
 
 

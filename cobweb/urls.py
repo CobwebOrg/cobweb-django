@@ -5,7 +5,7 @@ from django.forms import ModelForm
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, RedirectView
 
-from . import models, views
+from cobweb import models, views
 
 
 urlpatterns = [

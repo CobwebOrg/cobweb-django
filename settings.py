@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django_extensions',
     'crispy_forms',
+    'reversion',
     # 'guardian',
     
     'cobweb.apps.CobwebConfig',
