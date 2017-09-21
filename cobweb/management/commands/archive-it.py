@@ -10,10 +10,6 @@ AIT_COLLECTIONS_API = "https://archive-it.org/oai"
 SOFTWARE = models.Software.objects.get_or_create(name="Archive-It Importer")[0]
 USER = models.User.objects.get_or_create(username="admin")[0]
 AGENT = models.Agent.objects.get_or_create(user=USER, software=SOFTWARE)[0]
-MDTYPE = models.MetadataType.objects.get_or_create(
-    name = "Archive-It OAI-PMH oai_dc",
-    url = "https://support.archive-it.org/hc/en-us/articles/210510506-Access-web-archives-with-the-OAI-PMH-metadata-feed",
-    )[0]
 PROTOCOL = models.APIProtocol.objects.get_or_create(
     name = "OAI-PMH",
     uri = "https://support.archive-it.org/hc/en-us/articles/210510506-Access-web-archives-with-the-OAI-PMH-metadata-feed",
@@ -90,13 +86,7 @@ class Command(BaseCommand):
                 protocol = PROTOCOL,
             )
 
-            metadata_record = collection.metadata_records.get_or_create(
-                asserted_by=AGENT,
-                metadata_type=MDTYPE,
-            )[0]
-            metadata_record.metadata = record.raw
-            metadata_record.full_clean()
-            metadata_record.save()
+            collection.raw_metadata = record.raw
 
             try:
                 collection.name = ' / '.join( record.metadata.pop('title') )

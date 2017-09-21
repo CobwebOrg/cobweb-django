@@ -49,7 +49,6 @@ class ClaimInline(admin.TabularInline):
         'changeform_link', 
         'resource', 
         'collection', 
-        'asserted_by',
         'start_date', 
         'end_date', 
     ]
@@ -77,7 +76,6 @@ class HoldingInline(admin.TabularInline):
         'changeform_link', 
         'resource', 
         'collection',
-        'asserted_by',
     ]
     readonly_fields = fields
 
@@ -153,7 +151,6 @@ class HoldingAdmin(VersionAdmin):
     fields = [
         'resource_link', 
         'collection',
-        'asserted_by',
         'raw_metadata',
         'created',
         'deprecated',

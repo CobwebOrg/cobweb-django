@@ -79,7 +79,6 @@ class Command(BaseCommand):
                 holding = models.Holding.objects.get_or_create(
                     resource=resource,
                     collection=collection,
-                    asserted_by=AGENT,
                 )[0]
 
                 holding.raw_metadata = record.raw

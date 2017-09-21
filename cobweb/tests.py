@@ -54,14 +54,12 @@ def get_nomination(**kwargs):
 def get_claim(**kwargs):
     kwargs.setdefault('resource', get_resource())
     kwargs.setdefault('collection', get_collection())
-    kwargs.setdefault('asserted_by', get_agent())
     kwargs.setdefault('start_date', timezone.now())
     return models.Claim.objects.get_or_create(**kwargs)[0]
 
 def get_holding(**kwargs):
     kwargs.setdefault('resource', get_resource())
     kwargs.setdefault('collection', get_collection())
-    kwargs.setdefault('asserted_by', get_agent())
     return models.Holding.objects.get_or_create(**kwargs)[0]
 
 

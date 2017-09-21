@@ -232,7 +232,6 @@ class Nomination(models.Model):
 class Claim(models.Model):
     resource = models.ForeignKey(Resource)
     collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
-    asserted_by = models.ForeignKey(Agent, on_delete=models.PROTECT)
     
     # scope = ???
     start_date = models.DateField('Starting Date')
@@ -249,12 +248,11 @@ class Claim(models.Model):
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
     def __str__(self):
-        return ','.join(map(str, (self.resource, self.collection, self.asserted_by)))
+        return ','.join(map(str, (self.resource, self.collection)))
 
 class Holding(models.Model):
     resource = models.ForeignKey(Resource)
     collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
-    asserted_by = models.ForeignKey(Agent, on_delete=models.PROTECT)
     
     raw_metadata = models.TextField(null=True, blank=True)
     
@@ -264,4 +262,4 @@ class Holding(models.Model):
     
     
     def __str__(self):
-        return ','.join(map(str, (self.resource, self.collection, self.asserted_by)))
+        return ','.join(map(str, (self.resource, self.collection)))
