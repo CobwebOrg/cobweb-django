@@ -14,8 +14,6 @@ class AgentInline(admin.TabularInline):
 class NominationInline(admin.TabularInline):
     model = models.Nomination
     extra = 0
-
-    readonly_fields = [ 'changeform_link' ]
     
     def changeform_link(self, instance):
         if instance.id:
@@ -28,13 +26,12 @@ class NominationInline(admin.TabularInline):
     changeform_link.allow_tags = True
     changeform_link.short_description = ''   # omit column header
     
-    fields = [ 'changeform_link', 'resource', 'nominated_by', 'project', ]
+    fields = [ 'changeform_link', 'resource', 'project', 'nominated_by' ]
+    readonly_fields = fields
     
 class ClaimInline(admin.TabularInline):
     model = models.Claim
     extra = 0
-    
-    readonly_fields = [ 'changeform_link' ]
     
     def changeform_link(self, instance):
         if instance.id:
@@ -55,6 +52,7 @@ class ClaimInline(admin.TabularInline):
         'start_date', 
         'end_date', 
     ]
+    readonly_fields = fields
        
 class HoldingInline(admin.TabularInline):
     model = models.Holding
@@ -80,6 +78,7 @@ class HoldingInline(admin.TabularInline):
         'collection',
         'asserted_by',
     ]
+    readonly_fields = fields
 
 # class AgentIdentifierInline(admin.TabularInline):
 #     model = models.AgentIdentifier
