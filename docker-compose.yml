@@ -14,3 +14,10 @@ services:
       - "8000:8000"
     depends_on:
       - db
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile-test
+    volumes:
+      - .:/code
+    command: ['bash', 'start-test.sh']

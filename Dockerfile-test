@@ -7,7 +7,7 @@ RUN mkdir /code
 WORKDIR /code
 ADD requirements.txt /code/
 RUN pip install -r requirements.txt
-RUN pip freeze > requirements-frozen.txt
+RUN apt-get install -y graphviz
+ADD requirements-test.txt /code/
+RUN pip install -r requirements-test.txt
 ADD . /code/
-EXPOSE 8000
-CMD ["/code/start-eb.sh"]

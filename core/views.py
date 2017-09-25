@@ -1,5 +1,5 @@
 from django.apps import apps
-from django.contrib import auth
+from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
@@ -7,82 +7,31 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from django.views import generic
 
-from cobweb import forms, models
+from core.forms import UserForm
+from core.models import Agent
 
-
-#
-#   Inline Views
-#
-        
-
-        
-
-
-#
-#   Page Views
-#
 
 class UserIndexView(generic.ListView):
-    model = auth.get_user_model()
+    model = get_user_model()
     template_name = "user_list.html"
 
 class UserDetailView(generic.DetailView):
-    model = auth.get_user_model()
+    model = get_user_model()
     template_name = "user_detail.html"
 
 class UserCreateView(generic.CreateView):
-    model = auth.get_user_model()
+    model = get_user_model()
     template_name = "generic_form.html"
-    form_class = forms.UserForm
+    form_class = UserForm
+
+class UserUpdateView(generic.UpdateView):
+    model = get_user_model()
+    template_name = "generic_form.html"
+    form_class = UserForm
 
 class AgentDetailView(generic.DetailView):
-    model = models.Agent
+    model = Agent
     template_name = "user_detail.html"
-
-class ProjectIndexView(generic.ListView):
-    model = models.Project
-    template_name = "project_list.html"
-
-class ProjectDetailView(generic.DetailView):
-    model = models.Project
-    template_name = "project_detail.html"
-
-class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
-    model = models.Project
-    template_name = 'generic_form.html'
-    form_class = forms.ProjectForm
-
-    def form_valid(self, form):
-        candidate = form.save(commit=False)
-        candidate.established_by = models.Agent.objects.get(
-            user=self.request.user,
-            software=models.Software.current_website_software(),
-        )
-
-        candidate.save()
-        return super().form_valid(form)
-
-class NominationDetailView(generic.DetailView):
-    model = models.Nomination
-    template_name = 'nomination_detail.html'
-
-class NominationCreateView(generic.CreateView):
-    model = models.Nomination
-    template_name = 'generic_form.html'
-    form_class = forms.NominationForm
-
-    def form_valid(self, form):
-        print(self.request.path)
-        print(self.kwargs)
-        candidate = form.save(commit=False)
-        candidate.project = models.Project.objects.get(pk=self.kwargs['project_id'])
-        self.success_url = candidate.project.get_absolute_url()
-        candidate.nominated_by = models.Agent.objects.get(
-            user=self.request.user,
-            software=models.Software.current_website_software(),
-        )
-        candidate.save()
-        return super().form_valid(form)
 
 def object_list_view(request, model_name):
     model = apps.get_model('cobweb', model_name)

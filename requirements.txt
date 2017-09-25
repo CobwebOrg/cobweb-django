@@ -9,6 +9,3 @@ Sickle~=0.6.2
 surt~=0.3.0
 
 uWSGI~=2.0.15
-
-django-extensions~=1.8.1
-ipdb

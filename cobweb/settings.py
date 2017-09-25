@@ -46,7 +46,11 @@ INSTALLED_APPS = [
     'reversion',
     # 'guardian',
     
-    'cobweb.apps.CobwebConfig',
+    'core',
+    'projects',
+    'archives',
+    'datasources',
+    'webresources',
 ]
 
 MIDDLEWARE = [
@@ -133,7 +137,7 @@ AUTHENTICATION_BACKENDS = (
     # 'guardian.backends.ObjectPermissionBackend',
 )
 
-AUTH_USER_MODEL = 'cobweb.User'
+AUTH_USER_MODEL = 'core.User'
 
 
 # Internationalization
