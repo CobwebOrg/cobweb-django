@@ -15,9 +15,7 @@ services:
     depends_on:
       - db
   test:
-    build:
-      context: .
-      dockerfile: Dockerfile-test
+    build: .
     volumes:
       - .:/code
     command: ['bash', 'start-test.sh']
