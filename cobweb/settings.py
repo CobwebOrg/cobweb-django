@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'archives',
     'datasources',
     'webresources',
+    'metadata',
 ]
 
 MIDDLEWARE = [

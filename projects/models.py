@@ -1,19 +1,24 @@
+from enum import Enum
 from django.db import models
 from django.urls import reverse
 
-
+from cobweb import settings
 
 
 
 class Project(models.Model):
     name = models.CharField('Name', max_length=200)
-    established_by = models.ForeignKey('core.Agent', on_delete=models.PROTECT)
+    administered_by = models.ManyToManyField(settings.AUTH_USER_MODEL)
 
     description = models.TextField('Description', null=True, blank=True)
-#    keywords ## Separate data type w/ many-to-many relationship??? ##
-#    descriptor
-    created = models.DateTimeField('Date Created', auto_now_add=True)
-    deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
+    keywords = models.ManyToManyField('metadata.Keyword')
+
+    class STATUS(Enum):
+        academic = ('a', 'Active')
+        corporate = ('i', 'Inactive')
+        government = ('d', 'Deleted')
+    status = models.CharField(max_length=1, default='a',
+        choices = [x.value for x in STATUS])
     
     def __str__(self):
         return self.name or 'Project {}'.format(self.pk)

@@ -20,10 +20,10 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         candidate = form.save(commit=False)
-        candidate.established_by = models.Agent.objects.get(
+        candidate.administered_by.add(models.Agent.objects.get(
             user=self.request.user,
             software=models.Software.current_website_software(),
-        )
+        ))
 
         candidate.save()
         return super().form_valid(form)

@@ -12,7 +12,6 @@ class ProjectFactory(DjangoModelFactory):
         # django_get_or_create = ( 'name' )
 
     name = Faker('sentence')
-    established_by = SubFactory(AgentFactory)
 
 class NominationFactory(DjangoModelFactory):
     class Meta:

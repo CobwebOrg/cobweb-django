@@ -100,7 +100,7 @@ class ProjectDetailViewTests(DetailViewTestsMixin, TestCase):
         self.assertNotContains(response, 'Add a nomination')
         self.assertNotContains(response, reverse('nominate', kwargs={'project_id': self.test_instance.pk}))
 
-        self.client.force_login(self.test_instance.established_by.user)
+        self.client.force_login(self.test_instance.administered_by.objects.get.user)
         response = self.client.get(self.test_instance.get_absolute_url())
         self.assertContains(response, 'Add a nomination')
         self.assertContains(response, reverse('nominate', kwargs={'project_id': self.test_instance.pk}))
