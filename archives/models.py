@@ -13,6 +13,7 @@ class Collection(ModelValidationMixin, models.Model):
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
+    metadata = models.ManyToManyField('metadata.Metadatum')
     raw_metadata = models.TextField(null=True, blank=True)
 
     identifier = NocryptoURLField(null=True, blank=True, unique=True)
@@ -38,6 +39,7 @@ class Claim(models.Model):
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
+    metadata = models.ManyToManyField('metadata.Metadatum')
     def __str__(self):
         return '{} in {}'.format(self.resource, self.collection)
 
@@ -45,6 +47,7 @@ class Holding(models.Model):
     resource = models.ForeignKey('webresources.Resource', on_delete=models.CASCADE)
     collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
     
+    metadata = models.ManyToManyField('metadata.Metadatum')
     raw_metadata = models.TextField(null=True, blank=True)
     
     # scope = ???

@@ -11,12 +11,12 @@ class Project(models.Model):
     administered_by = models.ManyToManyField(settings.AUTH_USER_MODEL)
 
     description = models.TextField('Description', null=True, blank=True)
-    keywords = models.ManyToManyField('metadata.Keyword')
+    # keywords = models.ManyToManyField('metadata.Keyword')
 
     class STATUS(Enum):
-        academic = ('a', 'Active')
-        corporate = ('i', 'Inactive')
-        government = ('d', 'Deleted')
+        active = ('a', 'Active')
+        inactive = ('i', 'Inactive')
+        deleted = ('d', 'Deleted')
     status = models.CharField(max_length=1, default='a',
         choices = [x.value for x in STATUS])
     

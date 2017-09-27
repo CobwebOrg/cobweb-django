@@ -95,6 +95,8 @@ class Organization(models.Model):
     
     description = models.TextField('Description', null=True, blank=True)
 
+    metadata = models.ManyToManyField('metadata.Metadatum')
+
     class SECTORS(Enum):
         academic = ('a', 'Academic')
         corporate = ('c', 'Corporate')
@@ -114,8 +116,8 @@ class Organization(models.Model):
         museum = ('mus', 'Museum')
         project = ('pro', 'Project')
         other = ('oth', 'Other')
-    organization_type = models.CharField('Type', max_length=3, null=True, blank=True,
-        choices=[x.value for x in ORGANIZATION_TYPES])
+    organization_type = models.CharField('Type', max_length=3, null=True, 
+        blank=True, choices=[x.value for x in ORGANIZATION_TYPES])
         
     # country = ???
     created = models.DateTimeField('Date Created', auto_now_add=True)

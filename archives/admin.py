@@ -9,37 +9,17 @@ from archives import models
 class CollectionInline(admin.TabularInline):
     model = models.Collection
     extra = 0
-    def changeform_link(self, instance):
-        if instance.id:
-            return '<a href="{changeform_url}" target="_blank">{name}</a>'.format(
-                changeform_url = reverse('admin:archives_collection_change', args=(instance.id,)),
-                name = str(instance),
-            )
-        else:
-            return u''
-    changeform_link.allow_tags = True
-    changeform_link.short_description = 'Collection'
+    show_change_link = True
 
-    fields = [ 'changeform_link', 'identifier' ]
+    fields = [ 'name', 'identifier' ]
     readonly_fields = fields
 
 class ClaimInline(admin.TabularInline):
     model = models.Claim
     extra = 0
-    
-    def changeform_link(self, instance):
-        if instance.id:
-            changeform_url = reverse('admin:archives_claim_change', args=(instance.id,))
-            return '<a href="{changeform_url}" target="_blank">Edit</a>'.format(
-                changeform_url = changeform_url,
-            )
-        else:
-            return u''
-    changeform_link.allow_tags = True
-    changeform_link.short_description = ''   # omit column header
+    show_change_link = True
     
     fields = [ 
-        'changeform_link', 
         'resource', 
         'collection', 
         'start_date', 
@@ -50,23 +30,9 @@ class ClaimInline(admin.TabularInline):
 class HoldingInline(admin.TabularInline):
     model = models.Holding
     extra = 0
-
-    
-    readonly_fields = [ 'changeform_link' ]
-    
-    def changeform_link(self, instance):
-        if instance.id:
-            changeform_url = reverse('admin:archives_holding_change', args=(instance.id,))
-            return '<a href="{changeform_url}" target="_blank">Edit</a>'.format(
-                changeform_url = changeform_url,
-            )
-        else:
-            return u''
-    changeform_link.allow_tags = True
-    changeform_link.short_description = ''   # omit column header
+    show_change_link = True
     
     fields = [
-        'changeform_link', 
         'resource', 
         'collection',
     ]
@@ -76,14 +42,16 @@ class HoldingInline(admin.TabularInline):
 
 @admin.register(models.Collection)  
 class CollectionAdmin(VersionAdmin):
+    filter_horizontal = [ 'metadata' ]
     inlines = [ ClaimInline, HoldingInline ]
 
 @admin.register(models.Claim)
 class ClaimAdmin(VersionAdmin):
-    pass
+    filter_horizontal = [ 'metadata' ]
 
 @admin.register(models.Holding)
 class HoldingAdmin(VersionAdmin):
+    filter_horizontal = [ 'metadata' ]
     readonly_fields = [ 'resource_link', 'created' ]
     
     def resource_link(self, instance):

@@ -2,6 +2,8 @@ from django.contrib import admin, auth
 from reversion.admin import VersionAdmin
 
 from archives.admin import CollectionInline
+from metadata.admin import MetadatumInline
+
 from core import models
 
 
@@ -35,5 +37,5 @@ class SoftwareAdmin(VersionAdmin):
 
 @admin.register(models.Organization)
 class OrganizationAdmin(VersionAdmin):
-	# fields = ['name', 'address']
+    filter_horizontal = [ 'metadata' ]
     inlines = [ CollectionInline ]

@@ -1,10 +1,26 @@
-from factory import DjangoModelFactory, Faker
+from factory import DjangoModelFactory, SubFactory, Faker
 
-from metadata.models import Keyword
+from metadata.models import Metadatum, MDProperty, MDVocabulary
 
 
-class KeywordFactory(DjangoModelFactory):
-	class Meta:
-		model = Keyword
+class MDVocabularyFactory(DjangoModelFactory):
+    class Meta:
+        model = MDVocabulary
 
-	name = Faker('word')
+    name = Faker('word')
+
+class MDPropertyFactory(DjangoModelFactory):
+    class Meta:
+        model = MDProperty
+
+    vocabulary = SubFactory(MDVocabularyFactory)
+    name = Faker('word')
+
+class MetadatumFactory(DjangoModelFactory):
+    class Meta:
+        model = Metadatum
+        exclude = ['vocabulary']
+
+    md_property = SubFactory(MDPropertyFactory)
+    name = Faker('word')
+    
