@@ -12,7 +12,7 @@
     {{ object.project }}
   </a>
   by
-  <a href="{% url 'agent_detail' pk=object.nominated_by.pk %}">
+  <a href="{% url 'user_detail' pk=object.nominated_by.pk %}">
     {{ object.nominated_by }}
   </a>
 </p>

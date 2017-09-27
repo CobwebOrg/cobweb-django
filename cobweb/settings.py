@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'crispy_forms',
     'reversion',
+    # 'mptt',
     # 'guardian',
     
     'core',

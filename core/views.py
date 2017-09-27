@@ -8,8 +8,6 @@ from django.urls import reverse
 from django.views import generic
 
 from core.forms import UserForm
-from core.models import Agent
-
 
 class UserIndexView(generic.ListView):
     model = get_user_model()
@@ -28,10 +26,6 @@ class UserUpdateView(generic.UpdateView):
     model = get_user_model()
     template_name = "generic_form.html"
     form_class = UserForm
-
-class AgentDetailView(generic.DetailView):
-    model = Agent
-    template_name = "user_detail.html"
 
 def object_list_view(request, model_name):
     model = apps.get_model('cobweb', model_name)

@@ -4,15 +4,13 @@ from sickle import Sickle
 from sys import stderr
 
 from archives.models import Collection
-from core.models import Agent, Organization, User, Software
+from core.models import Organization, User
 from datasources.models import APIEndpoint, APIProtocol
 from webresources.models import nocrypto_url
 
 
 AIT_COLLECTIONS_API = "https://archive-it.org/oai"
-SOFTWARE = Software.objects.get_or_create(name="Archive-It Importer")[0]
 USER = User.objects.get_or_create(username="admin")[0]
-AGENT = Agent.objects.get_or_create(user=USER, software=SOFTWARE)[0]
 PROTOCOL = APIProtocol.objects.get_or_create(
     name = "OAI-PMH",
     identifier = "https://support.archive-it.org/hc/en-us/articles/210510506-Access-web-archives-with-the-OAI-PMH-metadata-feed",

@@ -3,7 +3,6 @@ from django.test import TestCase
 from django.urls import reverse
 from factory import DjangoModelFactory, Faker
 
-from core.tests import AgentFactory
 from webresources.models import Resource
 from webresources.tests import ResourceFactory
 

@@ -3,7 +3,6 @@ from django.test import TestCase
 from django.urls import reverse
 from factory import DjangoModelFactory, Faker
 
-from core.tests import AgentFactory
 from webresources.models import Resource
 from webresources.tests import ResourceFactory
 
@@ -67,7 +66,7 @@ class ProjectDetailViewTests(DetailViewTestsMixin, TestCase):
             for username in users:
                 get_nomination(
                     project=self.test_instance,
-                    nominated_by=get_agent(user=get_user(username=username)),
+                    nominated_by=get_user(username=username),
                     resource=get_resource(location=url),
                 )
 
@@ -105,16 +104,6 @@ class ProjectDetailViewTests(DetailViewTestsMixin, TestCase):
         self.assertContains(response, 'Add a nomination')
         self.assertContains(response, reverse('nominate', kwargs={'project_id': self.test_instance.pk}))
 
-    def test_username_not_agent_str(self):
-        """'Created by' lists string representation of User, not Agent."""
-        self.assertContains(
-            self.test_response, 
-            self.test_instance.established_by.user.get_full_name()
-        )
-        self.assertNotContains(
-            self.test_response, 
-            str(self.test_instance.established_by)
-        )
 
 class ProjectCreateViewTests(TestCase):
 

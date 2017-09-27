@@ -29,7 +29,8 @@ class Project(models.Model):
 class Nomination(models.Model):
     resource = models.ForeignKey('webresources.Resource')
     project = models.ForeignKey(Project)
-    nominated_by = models.ForeignKey('core.Agent', on_delete=models.PROTECT)
+    nominated_by = models.ForeignKey(settings.AUTH_USER_MODEL,
+        on_delete=models.PROTECT)
     
     description = models.TextField('Description', null=True, blank=True)
     # keywords

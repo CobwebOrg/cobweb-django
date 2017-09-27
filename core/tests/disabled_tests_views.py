@@ -5,13 +5,13 @@ from django.test import TestCase
 from django.urls import reverse
 
 from core import forms
-from core.models import Agent, Software, Organization
+from core.models import Organization
 
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
-from core.models import Agent, Software, Organization
-from core.tests import UserFactory, SoftwareFactory, AgentFactory, OrganizationFactory
+from core.models import Organization
+from core.tests import UserFactory, OrganizationFactory
 
 
 class ViewTestsMixin:

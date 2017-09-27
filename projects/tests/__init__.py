@@ -1,6 +1,6 @@
 from factory import DjangoModelFactory, Faker, SubFactory
 
-from core.tests import AgentFactory
+from core.tests import UserFactory
 from webresources.tests import ResourceFactory
 
 from projects.models import Project, Nomination
@@ -20,4 +20,4 @@ class NominationFactory(DjangoModelFactory):
 
     resource = SubFactory(ResourceFactory)
     project = SubFactory(ProjectFactory)
-    nominated_by = SubFactory(AgentFactory)
+    nominated_by = SubFactory(UserFactory)

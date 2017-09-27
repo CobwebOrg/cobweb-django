@@ -5,7 +5,7 @@ from django.forms import ModelForm
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, RedirectView
 
-from core.views import UserIndexView, UserDetailView, UserCreateView, UserUpdateView, AgentDetailView
+from core.views import UserIndexView, UserDetailView, UserCreateView, UserUpdateView
 from projects.views import ProjectIndexView, ProjectDetailView, ProjectCreateView
 from projects.views import NominationDetailView, NominationCreateView
 
@@ -19,9 +19,6 @@ urlpatterns = [
     url(r'^user/(?P<pk>\d+)/?$', UserDetailView.as_view(), name='user_detail'),
     url(r'^user/new/?$', UserCreateView.as_view(), name='user_create'),
     # url(r'^users/(?P<pk>\d+)/update/?$', UserUpdateView.as_view(), name='user_update'),
-
-    # Agent
-    url(r'^agent/(?P<pk>\d+)/?$', AgentDetailView.as_view(), name='agent_detail'),
 
     # Project
     url(r'^projects/?$', ProjectIndexView.as_view(), name='project_list'),

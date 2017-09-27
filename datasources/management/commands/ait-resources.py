@@ -6,15 +6,13 @@ import re
 import ipdb
 
 from archives.models import Collection, Holding
-from core.models import Agent, User, Software
+from core.models import User
 from datasources.models import APIProtocol
 from webresources.models import Resource, nocrypto_url
 
 
 
-SOFTWARE = Software.objects.get_or_create(name="Archive-It Importer")[0]
 USER = User.objects.get_or_create(username="admin")[0]
-AGENT = Agent.objects.get_or_create(user=USER, software=SOFTWARE)[0]
 APIROOT = 'https://archive-it.org/oai/organizations/'
 PROTOCOL = APIProtocol.objects.get_or_create(
     name = "OAI-PMH",

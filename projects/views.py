@@ -20,10 +20,7 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         candidate = form.save(commit=False)
-        candidate.administered_by.add(models.Agent.objects.get(
-            user=self.request.user,
-            software=models.Software.current_website_software(),
-        ))
+        candidate.administered_by.add(self.request.user)
 
         candidate.save()
         return super().form_valid(form)
@@ -43,9 +40,6 @@ class NominationCreateView(CreateView):
         candidate = form.save(commit=False)
         candidate.project = models.Project.objects.get(pk=self.kwargs['project_id'])
         self.success_url = candidate.project.get_absolute_url()
-        candidate.nominated_by = models.Agent.objects.get(
-            user=self.request.user,
-            software=models.Software.current_website_software(),
-        )
+        candidate.nominated_by = self.request.user
         candidate.save()
         return super().form_valid(form)

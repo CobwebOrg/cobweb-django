@@ -3,6 +3,8 @@ from django.db import models
 from django.urls import reverse
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -31,49 +33,14 @@ class User(AbstractUser):
     def get_absolute_url(self):
         return reverse('user_detail', kwargs={'pk': self.pk})
 
-class Software(models.Model):
-    name = models.CharField(max_length=200, unique=True)
+# @receiver(post_save, sender=settings.AUTH_USER_MODEL)
+# def create_user_agent(sender, instance, created, **kwargs):
+#     if created:
+#         Agent.objects.get_or_create(agent=instance)
 
-    description = models.TextField('Description', null=True, blank=True)
-    
-    created = models.DateTimeField('Date Created', auto_now_add=True)
-    deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
-
-    class Meta:
-        verbose_name_plural = "Software"
-
-    def __str__(self):
-        return self.name or 'Software {}'.format(self.pk)
-
-    @classmethod
-    def current_website_software(cls):
-        return cls.objects.get_or_create(name="Cobweb Website")[0]
-
-class Agent(models.Model):
-        
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
-    software = models.ForeignKey(Software, on_delete=models.PROTECT)
-    
-    class Meta:
-        unique_together = ("user", "software")
-    
-    def __str__(self):
-        return '{user} with {software}'.format(
-            user = self.user,
-            software = self.software
-        )
-
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_user_agent(sender, instance, created, **kwargs):
-    if created:
-        Agent.objects.get_or_create(
-            user=instance, 
-            software=Software.current_website_software()
-        )
-
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def save_user_agent(sender, instance, **kwargs):
-    Agent.objects.get(user=instance, software=Software.current_website_software()).save()
+# @receiver(post_save, sender=settings.AUTH_USER_MODEL)
+# def save_user_agent(sender, instance, **kwargs):
+#     Agent.objects.get(agent=instance).save()
     
 # class AgentIdentifier(models.Model):
 #     agent = models.ForeignKey('Agent', on_delete=models.CASCADE)
