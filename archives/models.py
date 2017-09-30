@@ -1,3 +1,4 @@
+import reversion
 from django.db import models
 
 from core.models import ModelValidationMixin
@@ -6,14 +7,14 @@ from webresources.models import NocryptoURLField
 
 
 class Collection(ModelValidationMixin, models.Model):
-    name = models.CharField('Name', max_length=200, unique=False)
+    name = models.TextField('Name', unique=False)
     organization = models.ForeignKey(
     	'core.Organization', on_delete=models.PROTECT, null=True, blank=True)
     
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
-    metadata = models.ManyToManyField('metadata.Metadatum')
+    metadata = models.ManyToManyField('metadata.Metadatum', blank=True)
     raw_metadata = models.TextField(null=True, blank=True)
 
     identifier = NocryptoURLField(null=True, blank=True, unique=True)
@@ -21,6 +22,7 @@ class Collection(ModelValidationMixin, models.Model):
     def __str__(self):
         return self.name or 'Collection {}'.format(self.pk)
 
+@reversion.register()
 class Claim(models.Model):
     resource = models.ForeignKey('webresources.Resource', on_delete=models.CASCADE)
     collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
@@ -39,15 +41,16 @@ class Claim(models.Model):
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
     
-    metadata = models.ManyToManyField('metadata.Metadatum')
+    metadata = models.ManyToManyField('metadata.Metadatum', blank=True)
     def __str__(self):
         return '{} in {}'.format(self.resource, self.collection)
 
+@reversion.register()
 class Holding(models.Model):
     resource = models.ForeignKey('webresources.Resource', on_delete=models.CASCADE)
     collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
     
-    metadata = models.ManyToManyField('metadata.Metadatum')
+    metadata = models.ManyToManyField('metadata.Metadatum', blank=True)
     raw_metadata = models.TextField(null=True, blank=True)
     
     # scope = ???

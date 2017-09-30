@@ -4,6 +4,7 @@ from django.contrib.contenttypes.admin import GenericTabularInline
 from reversion.admin import VersionAdmin
 
 from archives.admin import CollectionInline
+from datasources.admin import APIEndpointInline
 from metadata.admin import MetadatumInline
 
 from core import models
@@ -19,4 +20,4 @@ class UserAdmin(VersionAdmin, auth.admin.UserAdmin):
 class OrganizationAdmin(VersionAdmin):
     filter_horizontal = [ 'metadata' ]
     # fields = ['name', 'address']
-    inlines = [ CollectionInline ]
+    inlines = [ CollectionInline, APIEndpointInline ]

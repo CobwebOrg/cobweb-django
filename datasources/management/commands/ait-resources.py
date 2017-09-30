@@ -7,17 +7,12 @@ import ipdb
 
 from archives.models import Collection, Holding
 from core.models import User
-from datasources.models import APIProtocol
 from webresources.models import Resource, nocrypto_url
 
 
 
 USER = User.objects.get_or_create(username="admin")[0]
 APIROOT = 'https://archive-it.org/oai/organizations/'
-PROTOCOL = APIProtocol.objects.get_or_create(
-    name = "OAI-PMH",
-    identifier = "https://support.archive-it.org/hc/en-us/articles/210510506-Access-web-archives-with-the-OAI-PMH-metadata-feed",
-    )[0]
 
 
 

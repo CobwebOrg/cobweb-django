@@ -1,3 +1,4 @@
+import reversion
 from django.db import models
 
 
@@ -12,6 +13,7 @@ class NocryptoURLField(models.URLField):
     def clean(self, value, model_instance):
         return super().clean(nocrypto_url(value), model_instance)
 
+@reversion.register()
 class Resource(models.Model):
     location = NocryptoURLField(null=False, blank=False, unique=True)
 
@@ -25,4 +27,4 @@ class Resource(models.Model):
         return self.get_url()
 
     def get_url(self):
-    	return self.location or 'Resource {}'.format(self.pk)
+    	return self.location or 'Resource {}'.format@(self.pk)

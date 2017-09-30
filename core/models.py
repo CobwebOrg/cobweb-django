@@ -1,3 +1,4 @@
+import reversion
 from enum import Enum
 from django.db import models
 from django.urls import reverse
@@ -20,6 +21,7 @@ class ModelValidationMixin(object):
         super().save(*args, **kwargs)
 
 
+@reversion.register()
 class User(AbstractUser):
 
     affiliations = models.ManyToManyField('Organization', related_name="affiliated_users")
@@ -32,16 +34,8 @@ class User(AbstractUser):
 
     def get_absolute_url(self):
         return reverse('user_detail', kwargs={'pk': self.pk})
-
-# @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-# def create_user_agent(sender, instance, created, **kwargs):
-#     if created:
-#         Agent.objects.get_or_create(agent=instance)
-
-# @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-# def save_user_agent(sender, instance, **kwargs):
-#     Agent.objects.get(agent=instance).save()
     
+# @reversion.register()
 # class AgentIdentifier(models.Model):
 #     agent = models.ForeignKey('Agent', on_delete=models.CASCADE)
 #     class AGENT_IDENTIFIER_TYPES(Enum):
@@ -52,17 +46,19 @@ class User(AbstractUser):
 #         other = ('OTH', 'Other')
 #     id_type = models.CharField('Type', max_length=3,
 #         choices=[x.value for x in AGENT_IDENTIFIER_TYPES])
-#     value = models.CharField('Value', max_length=200)
+#     value = models.TextField()
     
+
+@reversion.register()
 class Organization(models.Model):
-    name = models.CharField('Name', max_length=200, null=True)
+    name = models.TextField('Name', null=True)
     parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
         
-    address = models.CharField('Address', max_length=1000, null=True, blank=True)
+    address = models.TextField('Address', null=True, blank=True)
     
     description = models.TextField('Description', null=True, blank=True)
 
-    metadata = models.ManyToManyField('metadata.Metadatum')
+    metadata = models.ManyToManyField('metadata.Metadatum', blank=True)
 
     class SECTORS(Enum):
         academic = ('a', 'Academic')
@@ -99,6 +95,7 @@ class Organization(models.Model):
     def __str__(self):
         return self.name or self.identifier or 'Organization {}'.format(self.pk)
 
+# @reversion.register()
 # class OrganizationIdentifier(models.Model):
 #     organization = models.ForeignKey(Organization, on_delete=models.PROTECT)
     
@@ -109,4 +106,4 @@ class Organization(models.Model):
 #     id_type = models.CharField('Type', max_length=3,
 #         choices=[x.value for x in ORGANIZATION_IDENTIFIER_TYPES])
     
-#     value = models.CharField('Value', max_length=200)
+#     value = models.TextField('Value')

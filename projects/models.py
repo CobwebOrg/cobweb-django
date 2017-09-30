@@ -1,3 +1,4 @@
+import reversion
 from enum import Enum
 from django.db import models
 from django.urls import reverse
@@ -6,11 +7,13 @@ from cobweb import settings
 
 
 
+@reversion.register()
 class Project(models.Model):
-    name = models.CharField('Name', max_length=200)
+    name = models.TextField('Name')
     administered_by = models.ManyToManyField(settings.AUTH_USER_MODEL)
 
     description = models.TextField('Description', null=True, blank=True)
+    metadata = models.ManyToManyField('metadata.metadatum')
     # keywords = models.ManyToManyField('metadata.Keyword')
 
     class STATUS(Enum):
@@ -26,6 +29,7 @@ class Project(models.Model):
     def get_absolute_url(self):
         return reverse('project_detail', kwargs={'pk': self.pk})
 
+@reversion.register()
 class Nomination(models.Model):
     resource = models.ForeignKey('webresources.Resource')
     project = models.ForeignKey(Project)

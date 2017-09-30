@@ -1,9 +1,11 @@
+import reversion
 from django.db import models
 
 # Create your models here.
 
+@reversion.register()
 class MDVocabulary(models.Model):
-    name = models.CharField(max_length=50, unique=True, db_index=True)
+    name = models.TextField(unique=True, db_index=True)
 
     class Meta:
         verbose_name='MDVocabulary'
@@ -12,12 +14,12 @@ class MDVocabulary(models.Model):
     def __str__(self):
         return self.name
 
+@reversion.register()
 class MDProperty(models.Model):
     vocabulary = models.ForeignKey(MDVocabulary, 
         null=True, blank=True, db_index=True)
 
-    name = models.CharField(max_length=25, 
-        null=True, blank=True, db_index=True)
+    name = models.TextField(null=True, blank=True, db_index=True)
 
     class Meta:
         unique_together = ('vocabulary', 'name')
@@ -30,11 +32,12 @@ class MDProperty(models.Model):
         else:
             return self.name or str(self.vocabulary)
 
+@reversion.register()
 class Metadatum(models.Model):
     md_property = models.ForeignKey(MDProperty, 
         null=True, blank=True, db_index=True)
 
-    name = models.CharField(max_length=25, db_index=True)
+    name = models.TextField(db_index=True)
 
     class Meta:
         unique_together = ('md_property', 'name')
