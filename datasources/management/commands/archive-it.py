@@ -11,10 +11,10 @@ from webresources.models import nocrypto_url
 
 
 class Command(BaseCommand):
-    help = 'Crudely imports some data about Archive-It collections'
+    help = 'Tells each APIEndpoint instance to harvest data.'
 
     def handle(self, *args, **kwargs):
-        print("Initializing AIT")
-        ait = models.APIEndpoint.get_archiveit_root()
-        ait.harvest()
-        
+        # models.APIEndpoint.get_archiveit_root().harvest()
+        for api in models.APIEndpoint.objects.all():
+            print("Trying {} API at {}".format(api.organization, api))
+            api.harvest()

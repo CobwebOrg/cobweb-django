@@ -15,7 +15,8 @@ class NocryptoURLField(models.URLField):
 
 @reversion.register()
 class Resource(models.Model):
-    location = NocryptoURLField(null=False, blank=False, unique=True)
+    location = NocryptoURLField(max_length=1000, null=False, blank=False, 
+        unique=True)
 
     nominated_projects = models.ManyToManyField(
         'projects.Project',

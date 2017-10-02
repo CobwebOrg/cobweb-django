@@ -1,10 +1,19 @@
 import reversion
 from django.db import models
 
-from core.models import ModelValidationMixin
 from webresources.models import NocryptoURLField
 
 
+
+
+
+class ModelValidationMixin(object):
+    """Django currently doesn't force validation on the model level
+    for compatibility reasons. We enforce here, that on each save,
+    a full valdation run will be done the for model instance"""
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
 
 class Collection(ModelValidationMixin, models.Model):
     name = models.TextField('Name', unique=False)

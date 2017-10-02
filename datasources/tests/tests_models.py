@@ -2,7 +2,6 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 
 from datasources import models, tests
-from datasources.importers import Importer, importers
 
 
 class APIEndpointModelTests(TestCase):
@@ -31,12 +30,12 @@ class APIEndpointModelTests(TestCase):
             .APIEndpointFactory(importer_class_name='OAIPMHImporter')
             .get_importer()
         )
-        self.assertTrue( issubclass(type(importer), Importer) )
-        self.assertIsInstance(importer, importers['OAIPMHImporter'])
+        self.assertTrue( issubclass(type(importer), models.Importer) )
+        self.assertIsInstance(importer, models.importers['OAIPMHImporter'])
 
         importer = ( tests
             .APIEndpointFactory(importer_class_name='AITCollectionsImporter')
             .get_importer()
         )
-        self.assertTrue( issubclass(type(importer), Importer) )
-        self.assertIsInstance(importer, importers['OAIPMHImporter'])
+        self.assertTrue( issubclass(type(importer), models.Importer) )
+        self.assertIsInstance(importer, models.importers['OAIPMHImporter'])

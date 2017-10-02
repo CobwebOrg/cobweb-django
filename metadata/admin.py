@@ -1,50 +1,26 @@
 from django.contrib import admin
 from reversion.admin import VersionAdmin
 
-from metadata import models
+# from datasources.admin import APIEndpointInline
+# from core.admin import OrganizationInline
+from projects.admin import NominationInline
+from archives.admin_inlines import CollectionInline, ClaimInline, HoldingInline
 
-# Register your models here.
+from metadata import models, admin_inlines
 
-class MDVocabularyInline(admin.TabularInline):
-    model = models.MDVocabulary
-    extra = 0
-    show_change_link = True
 
-class MDPropertyInline(admin.TabularInline):
-    model = models.MDProperty
-    extra = 0
-    show_change_link = True
-
-class MetadatumInline(admin.TabularInline):
-    model = models.Metadatum
-    extra = 0
-    show_change_link = True
 
 @admin.register(models.MDVocabulary)
 class MDVocabularyAdmin(VersionAdmin):
     model = models.MDVocabulary
-    inlines = [ MDPropertyInline ]
+    inlines = [ admin_inlines.MDPropertyInline ]
 
 @admin.register(models.MDProperty)
 class MDPropertyAdmin(VersionAdmin):
     model = models.MDProperty
-    inlines = [ MetadatumInline ]
+    inlines = [ admin_inlines.MetadatumInline ]
 
 @admin.register(models.Metadatum)
 class MetadatumAdmin(VersionAdmin):
+    # inlines = []
     pass
-
-
-
-# admin.site.register(
-#     Node,
-#     DraggableMPTTAdmin,
-#     list_display=(
-#         'tree_actions',
-#         'indented_title',
-#         # ...more fields if you feel like it...
-#     ),
-#     list_display_links=(
-#         'indented_title',
-#     ),
-# )

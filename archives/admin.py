@@ -2,56 +2,39 @@ from django.urls import reverse
 from django.contrib import admin
 from reversion.admin import VersionAdmin
 
-from archives import models
+from archives import models, admin_inlines
+from metadata.admin_inlines import MetadatumBaseInline
 
 
        
-class CollectionInline(admin.TabularInline):
-    model = models.Collection
-    extra = 0
-    show_change_link = True
 
-    fields = [ 'name', 'identifier' ]
-    readonly_fields = fields
+class CollectionMDAdminInline(MetadatumBaseInline):
+    model = models.Collection.metadata.through
 
-class ClaimInline(admin.TabularInline):
-    model = models.Claim
-    extra = 0
-    show_change_link = True
-    
-    fields = [ 
-        'resource', 
-        'collection', 
-        'start_date', 
-        'end_date', 
-    ]
-    readonly_fields = fields
+class ClaimMDAdminInline(MetadatumBaseInline):
+    model = models.Claim.metadata.through
 
-class HoldingInline(admin.TabularInline):
-    model = models.Holding
-    extra = 0
-    show_change_link = True
-    
-    fields = [
-        'resource', 
-        'collection',
-    ]
-    readonly_fields = fields
+class HoldingMDAdminInline(MetadatumBaseInline):
+    model = models.Holding.metadata.through
 
 
 
 @admin.register(models.Collection)  
 class CollectionAdmin(VersionAdmin):
-    filter_horizontal = [ 'metadata' ]
-    inlines = [ ClaimInline, HoldingInline ]
+    inlines = [ 
+        CollectionMDAdminInline,
+        admin_inlines.ClaimInline,
+        admin_inlines.HoldingInline,
+    ]
+    exclude = [ 'metadata' ]
 
 @admin.register(models.Claim)
 class ClaimAdmin(VersionAdmin):
-    filter_horizontal = [ 'metadata' ]
+    inlines = [ ClaimMDAdminInline ]
 
 @admin.register(models.Holding)
 class HoldingAdmin(VersionAdmin):
-    filter_horizontal = [ 'metadata' ]
+    inlines = [ HoldingMDAdminInline ]
     readonly_fields = [ 'resource_link', 'created' ]
     
     def resource_link(self, instance):

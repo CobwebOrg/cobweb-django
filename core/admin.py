@@ -1,23 +1,24 @@
 from django.contrib import admin, auth
-from django.contrib.auth import get_user_model
-from django.contrib.contenttypes.admin import GenericTabularInline
 from reversion.admin import VersionAdmin
 
-from archives.admin import CollectionInline
+from archives.admin_inlines import CollectionInline
 from datasources.admin import APIEndpointInline
-from metadata.admin import MetadatumInline
+from metadata.admin_inlines import MetadatumBaseInline
 
 from core import models
 
 
+class OrganizationMDInline(MetadatumBaseInline):
+    model = models.Organization.metadata.through
+
+
 admin.site.unregister(auth.models.Group)
 
-@admin.register(get_user_model())
+@admin.register(auth.get_user_model())
 class UserAdmin(VersionAdmin, auth.admin.UserAdmin):
     pass
     
 @admin.register(models.Organization)
 class OrganizationAdmin(VersionAdmin):
-    filter_horizontal = [ 'metadata' ]
-    # fields = ['name', 'address']
-    inlines = [ CollectionInline, APIEndpointInline ]
+    inlines = [ OrganizationMDInline, CollectionInline, APIEndpointInline ]
+    exclude = ['metadata']

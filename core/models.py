@@ -1,5 +1,6 @@
 import reversion
 from enum import Enum
+from django.apps import apps
 from django.db import models
 from django.urls import reverse
 from django.conf import settings
@@ -9,16 +10,8 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+# from metadata.models import MDVocabuary, MDProperty
 from webresources.models import NocryptoURLField
-
-
-class ModelValidationMixin(object):
-    """Django currently doesn't force validation on the model level
-    for compatibility reasons. We enforce here, that on each save,
-    a full valdation run will be done the for model instance"""
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)
 
 
 @reversion.register()
@@ -34,6 +27,7 @@ class User(AbstractUser):
 
     def get_absolute_url(self):
         return reverse('user_detail', kwargs={'pk': self.pk})
+
     
 # @reversion.register()
 # class AgentIdentifier(models.Model):
@@ -93,7 +87,7 @@ class Organization(models.Model):
         null=True, blank=True, unique=True, editable=False)
            
     def __str__(self):
-        return self.name or self.identifier or 'Organization {}'.format(self.pk)
+        return (self.name or self.identifier or 'Organization {}'.format(self.pk))
 
 # @reversion.register()
 # class OrganizationIdentifier(models.Model):

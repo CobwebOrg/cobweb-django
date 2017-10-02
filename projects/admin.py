@@ -13,11 +13,13 @@ class NominationInline(admin.TabularInline):
     fields = [ 'resource', 'project', 'nominated_by' ]
     readonly_fields = fields
 
+class ProjectMDAdminInline(admin.TabularInline):
+    model = Project.metadata.through
 
 
 @admin.register(Project)
 class ProjectAdmin(VersionAdmin):
-    inlines = [ NominationInline ]
+    inlines = [ NominationInline, ProjectMDAdminInline ]
 
 @admin.register(Nomination)
 class NominationAdmin(VersionAdmin):

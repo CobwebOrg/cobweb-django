@@ -34,16 +34,7 @@ def only_one(list_object):
     else:
         raise ValueError("Expected a list with exactly one item")
 
-wayback_url_parser = re.compile('http\:\/\/wayback\.archive\-it\.org\/\d+\/\*/(https?\:\/\/.*)')
-def parse_wayback_url(wayback_url):
-    try:
-        return nocrypto_url( 
-            wayback_url_parser
-            .match(wayback_url)
-            .groups()[0] 
-        )
-    except:
-        return wayback_url    
+  
 
 class Command(BaseCommand):
     help = 'Crudely imports some data about resources from Archive-It Parter Organizations'
