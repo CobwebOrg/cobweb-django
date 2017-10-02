@@ -115,7 +115,7 @@ class OAIPMHImporter(Importer):
             print("Harvesting OAI-PMH Sets as {}".format(set_class))
             for setspec in self.sickle.ListSets():
                 self.__harvest_setspec__(setspec)
-        except NoSetHierarchy as ex:
+        except Exception as ex:
             eprint("In {}.__harvest_all__()".format(self))
             eprint(ex, type(ex))
 

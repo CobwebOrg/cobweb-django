@@ -14,7 +14,7 @@ class Command(BaseCommand):
     help = 'Tells each APIEndpoint instance to harvest data.'
 
     def handle(self, *args, **kwargs):
-        # models.APIEndpoint.get_archiveit_root().harvest()
+        models.APIEndpoint.get_archiveit_root().harvest()
         for api in models.APIEndpoint.objects.all():
             print("Trying {} API at {}".format(api.organization, api))
             api.harvest()
