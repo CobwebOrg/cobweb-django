@@ -112,14 +112,14 @@ class OAIPMHImporter(Importer):
         self.__harvest_api_identification__()
 
         try:
-            print("Harvesting OAI-PMH Sets as {}".format(set_class))
+            print("Harvesting OAI-PMH Sets as {}".format(self.set_class))
             for setspec in self.sickle.ListSets():
                 self.__harvest_setspec__(setspec)
         except Exception as ex:
             eprint("In {}.__harvest_all__()".format(self))
             eprint(ex, type(ex))
 
-        print("Harvesting OAI-PMH Records as {}".format(record_class))
+        print("Harvesting OAI-PMH Records as {}".format(self.record_class))
         for record in self.sickle.ListRecords(metadataPrefix='oai_dc'):
             self.__harvest_record__(record)
 
