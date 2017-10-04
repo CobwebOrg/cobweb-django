@@ -25,7 +25,8 @@ SECRET_KEY = '0+i0#su8em*jpun1hnys3ll-6kedb=-rq%2^=8&o8r8oacxz4g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-INTERNAL_IPS = ['127.0.0.1']
+# INTERNAL_IPS = ['127.0.0.1']
+INTERNAL_IPS = ['72.18.0.1']
 ALLOWED_HOSTS =  ['cobweb-dev.xvkpjfy2kp.us-west-2.elasticbeanstalk.com', 'localhost', '127.0.0.1', '[::1]']
 
 
@@ -38,14 +39,17 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    # 'django.contrib.staticfiles',
+    'django.contrib.staticfiles',
     
     'django.contrib.humanize',
     'django_extensions',
     'crispy_forms',
     'reversion',
+    'ajax_select', 
     # 'mptt',
     # 'guardian',
+
+    'debug_toolbar',
     
     'core',
     'projects',
@@ -59,6 +63,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -166,3 +171,28 @@ STATICFILES_DIRS = [ os.path.join(BASE_DIR, "static"), ]
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
+
+
+
+DEBUG_TOOLBAR_PANELS = [
+    'debug_toolbar.panels.versions.VersionsPanel',
+    'debug_toolbar.panels.timer.TimerPanel',
+    'debug_toolbar.panels.settings.SettingsPanel',
+    'debug_toolbar.panels.headers.HeadersPanel',
+    'debug_toolbar.panels.request.RequestPanel',
+    'debug_toolbar.panels.sql.SQLPanel',
+    'debug_toolbar.panels.staticfiles.StaticFilesPanel',
+    'debug_toolbar.panels.templates.TemplatesPanel',
+    'debug_toolbar.panels.cache.CachePanel',
+    'debug_toolbar.panels.signals.SignalsPanel',
+    'debug_toolbar.panels.logging.LoggingPanel',
+    'debug_toolbar.panels.redirects.RedirectsPanel',
+]
+
+def show_toolbar(request):
+    return True
+
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': 'cobweb.settings.show_toolbar',
+    'INTERCEPT_REDIRECTS': False,
+}

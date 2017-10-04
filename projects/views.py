@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from projects import models, forms
 
@@ -18,12 +18,17 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
     template_name = 'generic_form.html'
     form_class = forms.ProjectForm
 
-    def form_valid(self, form):
-        candidate = form.save(commit=False)
-        candidate.administered_by.add(self.request.user)
+    # def form_valid(self, form):
+    #     candidate = form.save(commit=False)
+    #     candidate.administered_by.add(self.request.user)
 
-        candidate.save()
-        return super().form_valid(form)
+    #     candidate.save()
+    #     return super().form_valid(form)
+
+class ProjectUpdateView(LoginRequiredMixin, UpdateView):
+    model = models.Project
+    template_name = 'generic_form.html'
+    form_class = forms.ProjectForm
 
 class NominationDetailView(DetailView):
     model = models.Nomination

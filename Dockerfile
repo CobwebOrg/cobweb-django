@@ -3,6 +3,7 @@ ENV PYTHONUNBUFFERED 1
 RUN apt-get purge -y git 		# to prevent accidentally using git w/in container
 RUN apt-get clean
 RUN apt-get update
+run apt-get install -y graphviz
 RUN mkdir /code
 WORKDIR /code
 ADD requirements.txt /code/

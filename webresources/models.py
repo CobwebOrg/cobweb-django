@@ -28,4 +28,4 @@ class Resource(models.Model):
         return self.get_url()
 
     def get_url(self):
-    	return self.location or 'Resource {}'.format@(self.pk)
+    	return self.location or 'Resource {}'.format(self.pk)

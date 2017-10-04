@@ -8,10 +8,7 @@
 {% block content %}
 <div><h1>{{ object.name }}</h1></div>
 
-<p>
-	Created {{ object.created|naturaltime }} by 
-  <a href="{% url 'user_detail' pk=object.established_by.user.pk %}">{{ object.established_by.user }}</a>
-</p>
+
 
 {% if object.description %}
 	<p>{{ object.description }}</p>
@@ -30,7 +27,7 @@
   <li>
     {#<a href="{% url 'nomination_detail' pk=1 %}">#}
     {{resource}}
-    {#</a> nominated by <a href="{% url 'user_detail' pk=nomination.nominated_by.pk %}">{{nomination.nominated_by}}</a>#}
+    </a> nominated by <a href="{% url 'user_detail' pk=nomination.nominated_by.pk %}">{{nomination.nominated_by}}</a>
 {% endfor %}
 
 </ul>

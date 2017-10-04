@@ -1,3 +1,4 @@
+from ajax_select import urls as ajax_select_urls
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
@@ -6,39 +7,56 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, RedirectView
 
 from core.views import UserIndexView, UserDetailView, UserCreateView, UserUpdateView
-from projects.views import ProjectIndexView, ProjectDetailView, ProjectCreateView
-from projects.views import NominationDetailView, NominationCreateView
+import projects.views, metadata.views
+
 
 urlpatterns = [
-    url(r'^admin/?', admin.site.urls),
-    
-    url(r'^$', ProjectIndexView.as_view(), name='front_page'),
+    url(r'^$', projects.views.ProjectIndexView.as_view(), name='front_page'),
     
     # User
     url(r'^users/', UserIndexView.as_view(), name='user_list'),
-    url(r'^user/(?P<pk>\d+)/?$', UserDetailView.as_view(), name='user_detail'),
-    url(r'^user/new/?$', UserCreateView.as_view(), name='user_create'),
-    # url(r'^users/(?P<pk>\d+)/update/?$', UserUpdateView.as_view(), name='user_update'),
+    url(r'^users/(?P<pk>\d+)/$', UserDetailView.as_view(), name='user_detail'),
+    url(r'^users/new$', UserCreateView.as_view(), name='user_create'),
+    # url(r'^users/(?P<pk>\d+)/edit$', UserUpdateView.as_view(), name='user_update'),
 
     # Project
-    url(r'^projects/?$', ProjectIndexView.as_view(), name='project_list'),
-    url(r'^project/(?P<pk>\d+)/?$', ProjectDetailView.as_view(), name='project_detail'),
-    url(r'^project/new/?$', ProjectCreateView.as_view(), name='project_create'),
-    # url(r'^project/(?P<pk>\d+)/update/?$', ProjectUpdateView.as_view(), name='project_update'),
+    url(r'^projects/$', 
+        projects.views.ProjectIndexView.as_view(),
+        name='project_list'),
+    url(r'^projects/(?P<pk>\d+)/$', 
+        projects.views.ProjectDetailView.as_view(),
+        name='project_detail'),
+    url(r'^projects/new$', 
+        projects.views.ProjectCreateView.as_view(),
+        name='project_create'),
+    url(r'^project/(?P<pk>\d+)/edit$', 
+        projects.views.ProjectUpdateView.as_view(), 
+        name='project_update'),
     
     # Nomination
-    url(r'^nomination/(?P<pk>\d+)/', NominationDetailView.as_view(), name='nomination_detail'),
-    url(r'^project/(?P<project_id>\d+)/nominate/', NominationCreateView.as_view(), name='nominate'),
+    url(r'^nomination/(?P<pk>\d+)/', 
+        projects.views.NominationDetailView.as_view(), 
+        name='nomination_detail'),
+    url(r'^project/(?P<project_id>\d+)/nominate/', 
+        projects.views.NominationCreateView.as_view(), 
+        name='nominate'),
+
+    url(r'^md/(?P<pk>\d+)/edit', 
+        metadata.views.MDUpdateView.as_view(),
+        name = 'metadatum_update'),
 
     # Resource
 
     # Auth
     url(r'^', include('django.contrib.auth.urls')),
+
+    url(r'^ajax_select/', include(ajax_select_urls)),
+    url(r'^admin/?', admin.site.urls),
 ]
 
 
-# if settings.DEBUG:
-#     import debug_toolbar
-#     urlpatterns = [
-#         url(r'^__debug__/', include(debug_toolbar.urls)),
-#     ] + urlpatterns
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns

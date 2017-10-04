@@ -1,25 +1,30 @@
+from ajax_select import make_ajax_form
+from ajax_select.admin import AjaxSelectAdmin
 from django.urls import reverse
 from django.contrib import admin
 from reversion.admin import VersionAdmin
 
+from metadata.admin_inlines import MetadatumBaseInline
+
 from projects.models import Nomination, Project
+from projects.admin_inlines import NominationInline
 
 
-class NominationInline(admin.TabularInline):
-    model = Nomination
-    extra = 0
-    show_change_link = True
-    
-    fields = [ 'resource', 'project', 'nominated_by' ]
-    readonly_fields = fields
 
-class ProjectMDAdminInline(admin.TabularInline):
+
+class ProjectMDAdminInline(MetadatumBaseInline):
     model = Project.metadata.through
 
 
 @admin.register(Project)
-class ProjectAdmin(VersionAdmin):
-    inlines = [ NominationInline, ProjectMDAdminInline ]
+class ProjectAdmin(VersionAdmin, AjaxSelectAdmin):
+    inlines = [ NominationInline ]
+    # exclude = [ 'metadata' ]
+    form = make_ajax_form(Project, {
+        'administered_by': 'users',
+        'metadata': 'metadata',
+    })
+    # filter_horizontal = [ 'administered_by' ]
 
 @admin.register(Nomination)
 class NominationAdmin(VersionAdmin):
