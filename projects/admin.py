@@ -14,17 +14,18 @@ from projects.admin_inlines import NominationInline
 
 class ProjectMDAdminInline(MetadatumBaseInline):
     model = Project.metadata.through
-
+    verbose_name = "Project Metadatum"
+    verbose_name_plural = "Project Metadata"
 
 @admin.register(Project)
 class ProjectAdmin(VersionAdmin, AjaxSelectAdmin):
-    inlines = [ NominationInline ]
-    # exclude = [ 'metadata' ]
-    form = make_ajax_form(Project, {
-        'administered_by': 'users',
-        'metadata': 'metadata',
-    })
-    # filter_horizontal = [ 'administered_by' ]
+    inlines = [ ProjectMDAdminInline, NominationInline ]
+    exclude = [ 'metadata' ]
+    # form = make_ajax_form(Project, {
+    #     'administered_by': 'users',
+    #     'metadata': 'metadata',
+    # })
+    filter_horizontal = [ 'administered_by' ]
 
 @admin.register(Nomination)
 class NominationAdmin(VersionAdmin):

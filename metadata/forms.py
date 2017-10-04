@@ -19,18 +19,3 @@ class MetadatumForm(forms.ModelForm):
         model = Metadatum
         fields = [ 'md_property', 'name' ]
 
-
-class MDBaseInlineFormset(forms.BaseInlineFormset):
-    # Use as a base class for specialized inline formsets, e.g.:
-    # class ModelMDInlineFormset(metadata.forms.MetadatumBaseInline): 
-    #     model = Model.metadata.through
-
-    extra = 0
-    show_change_link = True
-
-    def md_name(self, instance):
-        if instance.id:
-            return(str(instance.metadatum))
-    md_name.short_description = 'Metadata'
-    fields = [ 'md_name' ]
-    readonly_fields = fields
