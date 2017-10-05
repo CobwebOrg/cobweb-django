@@ -4,8 +4,6 @@ from crispy_forms import layout
 from django import forms
 from django.forms.models import inlineformset_factory
 
-from metadata.forms import MetadatumForm
-from metadata.models import Metadatum
 from webresources.models import Resource
 
 from projects.models import Project, Nomination
@@ -45,8 +43,4 @@ class NominationForm(forms.ModelForm):
             raise forms.ValidationError("Please enter a URL.")
         else:
             return Resource.objects.get_or_create(location = location)[0]
-
-ProjectMDInlineFormset = inlineformset_factory(
-    Project, Project.metadatums.through, extra=3, #form = MetadatumForm,
-    fields=['metadatum']
-)
+            

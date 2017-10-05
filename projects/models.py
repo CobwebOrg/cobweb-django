@@ -18,8 +18,8 @@ class Project(models.Model):
     #     related_name='projects_nominating')
 
     description = models.TextField('Description', null=True, blank=True)
-    metadatums = models.ManyToManyField('metadata.metadatum')
     metadata = JSONField(null=True, blank=True)
+    raw_metadata = models.TextField(null=True, blank=True)
     # keywords = models.ManyToManyField('metadata.Keyword')
 
     class STATUS(Enum):

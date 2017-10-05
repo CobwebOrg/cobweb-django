@@ -5,30 +5,14 @@ from django_json_widget.widgets import JSONEditorWidget
 from reversion.admin import VersionAdmin
 
 from archives import models, admin_inlines
-from metadata.admin_inlines import MetadatumBaseInline
-
 
        
-
-class CollectionMDAdminInline(MetadatumBaseInline):
-    model = models.Collection.metadatums.through
-
-class ClaimMDAdminInline(MetadatumBaseInline):
-    model = models.Claim.metadatums.through
-
-class HoldingMDAdminInline(MetadatumBaseInline):
-    model = models.Holding.metadatums.through
-
-
-
 @admin.register(models.Collection)  
 class CollectionAdmin(VersionAdmin):
     inlines = [ 
-        # CollectionMDAdminInline,
         admin_inlines.ClaimInline,
         admin_inlines.HoldingInline,
     ]
-    exclude = [ 'metadatums' ]
 
     formfield_overrides = {
         postgres_fields.JSONField: {'widget': JSONEditorWidget},
@@ -36,9 +20,6 @@ class CollectionAdmin(VersionAdmin):
 
 @admin.register(models.Claim)
 class ClaimAdmin(VersionAdmin):
-    inlines = [ ClaimMDAdminInline ]
-
-    exclude = [ 'metadatums' ]
 
     formfield_overrides = {
         postgres_fields.JSONField: {'widget': JSONEditorWidget},
@@ -46,10 +27,7 @@ class ClaimAdmin(VersionAdmin):
 
 @admin.register(models.Holding)
 class HoldingAdmin(VersionAdmin):
-    inlines = [ HoldingMDAdminInline ]
     readonly_fields = [ 'resource_link', 'created' ]
-
-    exclude = [ 'metadatums' ]
 
     formfield_overrides = {
         postgres_fields.JSONField: {'widget': JSONEditorWidget},

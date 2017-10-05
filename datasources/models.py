@@ -1,6 +1,8 @@
 import inspect, re, reversion
 from sys import stderr, stdout
 
+import os
+
 # from django.apps import apps
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -11,11 +13,9 @@ from sickle import Sickle
 
 from archives.models import Collection, Holding
 from core.models import Organization
-from metadata.models import MDVocabulary, MDProperty, Metadatum
 from webresources.models import nocrypto_url, NocryptoURLField, Resource
 
 # from datasources.importers import importers
-
 
 
 @reversion.register()
@@ -36,7 +36,7 @@ class APIEndpoint(models.Model):
     last_updated = models.DateTimeField(null=True, editable=False)
 
     metadata = JSONField(null=True, blank=True)
-    metadatums = models.ManyToManyField('metadata.Metadatum', blank=True)
+    raw_metadata = models.TextField(null=True, blank=True)
 
     @classmethod
     def get_archiveit_root(cls,):
@@ -98,6 +98,9 @@ class Importer:
             reversion.set_user(self.api.get_agent())
             self.__harvest_all__()
 
+    def __str__(self):
+        return str(self.api)
+
 class OAIPMHImporter(Importer):
     set_class = Collection
     record_class = Holding
@@ -116,22 +119,32 @@ class OAIPMHImporter(Importer):
         try:
             print("Harvesting OAI-PMH Sets as {}".format(self.set_class))
             for setspec in self.sickle.ListSets():
+                try:
+                    print('{:<50}'.format(setspec.setName), end='\r')
+                    stdout.flush()
+                except:
+                    pass
                 self.__harvest_setspec__(setspec)
         except Exception as ex:
             eprint("In {}.__harvest_all__()".format(self))
             eprint(ex, type(ex))
 
-        print("Harvesting OAI-PMH Records as {}".format(self.record_class))
-        for record in self.sickle.ListRecords(metadataPrefix='oai_dc'):
-            self.__harvest_record__(record)
+        try:
+            print("Harvesting OAI-PMH Records as {}".format(self.record_class))
+            for record in self.sickle.ListRecords(metadataPrefix='oai_dc'):
+                try:
+                    print('{:<50}'.format(record.header.identifier), end='\r')
+                    stdout.flush()
+                except:
+                    pass
+                self.__harvest_record__(record)
+        except Exception as ex:
+            eprint("In {}.__harvest_all__()".format(self))
+            eprint(ex, type(ex))
 
 
     def __harvest_record__(self, record):
-        uri2 = record.metadata.pop('identifier')
         uri = nocrypto_url( record.header.identifier )
-
-        print(uri, end='\r')
-        stdout.flush()
 
         set_uri = self.__get_set_identifier__(only_one(record.header.setSpecs))
 
@@ -164,6 +177,7 @@ class OAIPMHImporter(Importer):
         # except Exception as ex:
         #     eprint(ex, type(ex))
 
+        target.raw_metadata = record.raw
         self.__attach_metadata__(target, record.metadata, 'oai_dc')
         target.save()
 
@@ -173,7 +187,8 @@ class OAIPMHImporter(Importer):
 
     def __harvest_api_identification__(self):
         api = APIEndpoint.objects.get(location=self.api.location)
-        metadata = dict(self.sickle.Identify())
+        api_identify = self.sickle.Identify()
+        metadata = dict(api_identify)
 
         assert ( nocrypto_url( only_one( metadata.pop('baseURL') )) 
             == nocrypto_url(self.api.location) )
@@ -182,6 +197,7 @@ class OAIPMHImporter(Importer):
             api.organization.name = only_one(metadata['repositoryName'])
             api.organization.save()
 
+        api.raw_metadata = api_identify.raw
         self.__attach_metadata__(api, metadata, 'DC?')
         api.save()
 
@@ -200,16 +216,17 @@ class OAIPMHImporter(Importer):
             eprint(ex, type(ex))
 
     def __attach_metadata__(self, target, metadata, vocabulary_name):
-        vocab = MDVocabulary.objects.get_or_create(name=vocabulary_name)[0]
+        record_md = []
         for key, values in metadata.items():
-            md_property = MDProperty.objects.get_or_create(
-                vocabulary=vocab, name=key)[0]
-            for value in values:
-                target.metadatums.add(
-                    Metadatum.objects.get_or_create(
-                        md_property=md_property, name=value)[0]
-                )
-
+            record_md.extend([
+                {
+                    'vocabulary': vocabulary_name,
+                    'element': key,
+                    'value': value
+                } for value in values
+            ])
+        target.metadata = record_md
+        target.save()
 
 class AITCollectionsImporter(OAIPMHImporter):
     set_class = Organization

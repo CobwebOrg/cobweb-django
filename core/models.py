@@ -54,7 +54,7 @@ class Organization(models.Model):
     description = models.TextField('Description', null=True, blank=True)
 
     metadata = JSONField(null=True, blank=True)
-    metadatums = models.ManyToManyField('metadata.Metadatum', blank=True)
+    raw_metadata = models.TextField(null=True, blank=True)
 
     class SECTORS(Enum):
         academic = ('a', 'Academic')

@@ -5,13 +5,8 @@ from django_json_widget.widgets import JSONEditorWidget
 
 from archives.admin_inlines import CollectionInline
 from datasources.admin import APIEndpointInline
-from metadata.admin_inlines import MetadatumBaseInline
 
 from core import models
-
-
-class OrganizationMDInline(MetadatumBaseInline):
-    model = models.Organization.metadatums.through
 
 
 admin.site.unregister(auth.models.Group)
@@ -22,8 +17,7 @@ class UserAdmin(VersionAdmin, auth.admin.UserAdmin):
     
 @admin.register(models.Organization)
 class OrganizationAdmin(VersionAdmin):
-    inlines = [ OrganizationMDInline, CollectionInline, APIEndpointInline ]
-    exclude = ['metadatums']
+    inlines = [ CollectionInline, APIEndpointInline ]
 
     formfield_overrides = {
         postgres_fields.JSONField: {'widget': JSONEditorWidget},
