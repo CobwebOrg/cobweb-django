@@ -1,5 +1,6 @@
 import reversion
 from enum import Enum
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.urls import reverse
 
@@ -10,10 +11,15 @@ from cobweb import settings
 @reversion.register()
 class Project(models.Model):
     name = models.TextField('Name')
-    administered_by = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    # name = models.CharField(max_length=500)
+    administered_by = models.ManyToManyField(settings.AUTH_USER_MODEL)#,
+        # related_name='projects_administered')
+    # nominators = models.ManyToManyField(settings.AUTH_USER_MODEL,
+    #     related_name='projects_nominating')
 
     description = models.TextField('Description', null=True, blank=True)
-    metadata = models.ManyToManyField('metadata.metadatum')
+    metadatums = models.ManyToManyField('metadata.metadatum')
+    metadata = JSONField(null=True, blank=True)
     # keywords = models.ManyToManyField('metadata.Keyword')
 
     class STATUS(Enum):

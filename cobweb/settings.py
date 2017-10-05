@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'reversion',
     'ajax_select', 
+    'django_json_widget',
     # 'mptt',
     # 'guardian',
 

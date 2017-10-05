@@ -22,7 +22,7 @@ class MetadatumInline(admin.TabularInline):
 class MetadatumBaseInline(admin.TabularInline):
     # Use as a base class for specialized inline classes, e.g.:
     # class ModelMDInline(metadata.admin.MetadatumBaseInline): 
-    #     model = Model.metadata.through
+    #     model = Model.metadatums.through
 
     extra = 0
     show_change_link = True

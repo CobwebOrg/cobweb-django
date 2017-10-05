@@ -9,6 +9,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.contrib.postgres.fields import JSONField
 
 # from metadata.models import MDVocabuary, MDProperty
 from webresources.models import NocryptoURLField
@@ -52,7 +53,8 @@ class Organization(models.Model):
     
     description = models.TextField('Description', null=True, blank=True)
 
-    metadata = models.ManyToManyField('metadata.Metadatum', blank=True)
+    metadata = JSONField(null=True, blank=True)
+    metadatums = models.ManyToManyField('metadata.Metadatum', blank=True)
 
     class SECTORS(Enum):
         academic = ('a', 'Academic')

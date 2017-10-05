@@ -1,5 +1,7 @@
 from django.contrib import admin, auth
 from reversion.admin import VersionAdmin
+from django.contrib.postgres import fields as postgres_fields
+from django_json_widget.widgets import JSONEditorWidget
 
 from archives.admin_inlines import CollectionInline
 from datasources.admin import APIEndpointInline
@@ -9,7 +11,7 @@ from core import models
 
 
 class OrganizationMDInline(MetadatumBaseInline):
-    model = models.Organization.metadata.through
+    model = models.Organization.metadatums.through
 
 
 admin.site.unregister(auth.models.Group)
@@ -21,4 +23,8 @@ class UserAdmin(VersionAdmin, auth.admin.UserAdmin):
 @admin.register(models.Organization)
 class OrganizationAdmin(VersionAdmin):
     inlines = [ OrganizationMDInline, CollectionInline, APIEndpointInline ]
-    exclude = ['metadata']
+    exclude = ['metadatums']
+
+    formfield_overrides = {
+        postgres_fields.JSONField: {'widget': JSONEditorWidget},
+    }

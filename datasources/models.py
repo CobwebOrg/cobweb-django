@@ -4,6 +4,7 @@ from sys import stderr, stdout
 # from django.apps import apps
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils import timezone
 from sickle import Sickle
@@ -34,7 +35,8 @@ class APIEndpoint(models.Model):
 
     last_updated = models.DateTimeField(null=True, editable=False)
 
-    metadata = models.ManyToManyField('metadata.Metadatum', blank=True)
+    metadata = JSONField(null=True, blank=True)
+    metadatums = models.ManyToManyField('metadata.Metadatum', blank=True)
 
     @classmethod
     def get_archiveit_root(cls,):
@@ -203,7 +205,7 @@ class OAIPMHImporter(Importer):
             md_property = MDProperty.objects.get_or_create(
                 vocabulary=vocab, name=key)[0]
             for value in values:
-                target.metadata.add(
+                target.metadatums.add(
                     Metadatum.objects.get_or_create(
                         md_property=md_property, name=value)[0]
                 )

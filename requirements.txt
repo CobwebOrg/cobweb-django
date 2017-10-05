@@ -5,6 +5,7 @@ django-crispy-forms~=1.6.1
 django_guardian~=1.4.9
 django-reversion~=2.0.10
 django_ajax_selects~=1.6.1
+django_json_widget
 # django-mptt <- trees -- not using for metadata but might want for urls?
 
 

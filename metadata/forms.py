@@ -19,3 +19,4 @@ class MetadatumForm(forms.ModelForm):
         model = Metadatum
         fields = [ 'md_property', 'name' ]
 
+# class MDInlineForm(forms.Modelform):

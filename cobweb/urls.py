@@ -17,7 +17,7 @@ urlpatterns = [
     url(r'^users/', UserIndexView.as_view(), name='user_list'),
     url(r'^users/(?P<pk>\d+)/$', UserDetailView.as_view(), name='user_detail'),
     url(r'^users/new$', UserCreateView.as_view(), name='user_create'),
-    # url(r'^users/(?P<pk>\d+)/edit$', UserUpdateView.as_view(), name='user_update'),
+    # url(r'^users/(?P<pk>\d+)/change/$', UserUpdateView.as_view(), name='user_update'),
 
     # Project
     url(r'^projects/$', 
@@ -29,7 +29,7 @@ urlpatterns = [
     url(r'^projects/new$', 
         projects.views.ProjectCreateView.as_view(),
         name='project_create'),
-    url(r'^project/(?P<pk>\d+)/edit$', 
+    url(r'^projects/(?P<pk>\d+)/change/$', 
         projects.views.ProjectUpdateView.as_view(), 
         name='project_update'),
     
@@ -41,7 +41,7 @@ urlpatterns = [
         projects.views.NominationCreateView.as_view(), 
         name='nominate'),
 
-    url(r'^md/(?P<pk>\d+)/edit', 
+    url(r'^md/(?P<pk>\d+)/change/', 
         metadata.views.MDUpdateView.as_view(),
         name = 'metadatum_update'),
 
