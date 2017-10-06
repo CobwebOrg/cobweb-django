@@ -5,7 +5,7 @@ from core.tests import UserFactory, OrganizationFactory
 
 
 
-# class UsersLookupModelTests(TestCase):
+# class UserLookupModelTests(TestCase):
 
 #     def setUp(self):
 #         self.u1 = UserFactory(username='andy', first_name='', last_name='')

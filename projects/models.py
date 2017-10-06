@@ -10,17 +10,16 @@ from cobweb import settings
 
 @reversion.register()
 class Project(models.Model):
-    name = models.TextField('Name')
-    # name = models.CharField(max_length=500)
-    administered_by = models.ManyToManyField(settings.AUTH_USER_MODEL)#,
-        # related_name='projects_administered')
+    name = models.CharField('Name', max_length=500)
+    administered_by = models.ManyToManyField(settings.AUTH_USER_MODEL,
+        related_name='projects_administered')
     # nominators = models.ManyToManyField(settings.AUTH_USER_MODEL,
     #     related_name='projects_nominating')
 
     description = models.TextField('Description', null=True, blank=True)
+    keywords = models.ManyToManyField('metadata.Keyword')
     metadata = JSONField(null=True, blank=True)
     raw_metadata = models.TextField(null=True, blank=True)
-    # keywords = models.ManyToManyField('metadata.Keyword')
 
     class STATUS(Enum):
         active = ('a', 'Active')

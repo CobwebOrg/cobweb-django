@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'reversion',
     'ajax_select', 
     'django_json_widget',
+    'django_select2',
     # 'mptt',
     # 'guardian',
 

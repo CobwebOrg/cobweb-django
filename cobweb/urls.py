@@ -41,15 +41,17 @@ urlpatterns = [
         projects.views.NominationCreateView.as_view(), 
         name='nominate'),
 
-    url(r'^md/(?P<pk>\d+)/change/', 
-        metadata.views.MDUpdateView.as_view(),
-        name = 'metadatum_update'),
+    # Keyword
+    url(r'^Keyword/(?P<pk>\d+)/', 
+        metadata.views.KeywordDetailView.as_view(),
+        name = 'keyword_detail'),
 
     # Resource
 
     # Auth
     url(r'^', include('django.contrib.auth.urls')),
 
+    url(r'^select2/', include('django_select2.urls')),
     url(r'^ajax_select/', include(ajax_select_urls)),
     url(r'^admin/?', admin.site.urls),
 ]

@@ -1,31 +1,24 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
-from metadata import models, forms
+from metadata import models#, forms
 
 
 
-class MDIndexView(ListView):
-    model = models.Metadatum
-    template_name = "project_list.html"
+class KeywordIndexView(ListView):
+    model = models.Keyword
+    template_name = "keyword_list.html"
 
-class MDDetailView(DetailView):
-    model = models.Metadatum
-    template_name = "project_detail.html"
+class KeywordDetailView(DetailView):
+    model = models.Keyword
+    template_name = "keyword_detail.html"
 
-class MDCreateView(LoginRequiredMixin, CreateView):
-    model = models.Metadatum
+class KeywordCreateView(LoginRequiredMixin, CreateView):
+    model = models.Keyword
     template_name = 'md_test.html'
-    form_class = forms.MetadatumForm
+    # form_class = forms.KeywordForm
 
-    # def form_valid(self, form):
-    #     candidate = form.save(commit=False)
-    #     candidate.administered_by.add(self.request.user)
-
-    #     candidate.save()
-    #     return super().form_valid(form)
-
-class MDUpdateView(LoginRequiredMixin, UpdateView):
-    model = models.Metadatum
-    template_name = 'md_test.html'
-    form_class = forms.MetadatumForm
+# class KeywordUpdateView(LoginRequiredMixin, UpdateView):
+#     model = models.Keyword
+#     template_name = 'md_test.html'
+#     # form_class = forms.KeywordForm

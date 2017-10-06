@@ -13,10 +13,11 @@ from projects.admin_inlines import NominationInline
 @admin.register(Project)
 class ProjectAdmin(VersionAdmin, AjaxSelectAdmin):
     inlines = [ NominationInline ]
-    # form = make_ajax_form(Project, {
-    #     'administered_by': 'users',
-    # })
-    filter_horizontal = [ 'administered_by' ]
+    form = make_ajax_form(Project, {
+        'administered_by': 'users',
+        # 'keywords': 'keywords',
+    })
+    filter_horizontal = [ 'keywords' ]
     formfield_overrides = {
         postgres_fields.JSONField: {'widget': JSONEditorWidget},
     }
