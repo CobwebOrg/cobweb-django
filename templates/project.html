@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{# {% load static %} #}
+{# {% load humanize %} #}
+{% load cobweb_look %}
+
+{% block title %}{{ object.name }}{% endblock %}
+
+{% block content %}
+<div class="card">
+	<div class="card-header">
+		<div class="card-title">
+			{% if user.is_authenticated %}
+				<div class = "pull-right"><a href="{% url  'project_update' pk=object.pk %}" class="text-dark">
+					Edit{% icon 'edit' %}
+				</a></div>
+			{% endif %}
+		<h1 class="">{{ object.name }}</h1>
+		</div>
+
+		<div class="card-subtitle">
+			Administered by: 
+			{% for user in object.administered_by.all %}
+				{% pill_link user %}
+			{% endfor %}
+		</div>
+	</div>
+
+	<div class="card-body">
+		{# <p> #}
+			{# Nomination policy: {{object.get_nomination_policy_display}}. #}
+			{# {% if object.nomination_policy == 'R' %} #}
+				{# Nominators:  #}
+				{# {% for user in object.nominators.all %} #}
+					{# {{user|pill}} #}
+				{# {% endfor %} #}
+			{# {% endif %} #}
+		{# </p> #}
+
+		{% if object.description %}
+			<p>{{ object.description }}</p>
+		{% else %}
+			<p>No Description</p>
+		{% endif %}
+
+		{% if object.nomination_policy == 'R' %}
+			{% for keyword in object.keywords.all %}
+				{% pill keyword %}
+			{% endfor %}
+		{% endif %}
+	</div>
+</div>
+
+{# {% render_table view.get_seed_table %} #}
+
+<div class="card border=white border-light"><div class="card-body">
+	<h2>Nominations</h2>
+		<ul>
+		{% if user.is_authenticated %}
+			<li><a class="" href="{% url 'nominate' project_id=object.pk %}">+ Add a nomination.</a></li>
+		{% endif %}
+		{% for resource in object.nominated_resources.distinct %}
+		  <li>
+		    {#<a href="{% url 'nomination_detail' pk=1 %}">#}
+		    {{resource}}
+		   </li>
+		{% endfor %}
+	</ul>
+</div></div>
+
+
+{% endblock %}

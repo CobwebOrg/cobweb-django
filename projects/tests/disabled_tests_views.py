@@ -52,7 +52,7 @@ class ProjectDetailViewTests(DetailViewTestsMixin, TestCase):
     def setUp(self):
         self.test_instance = get_project(description = "Just a test project.")
         self.fields = [ 'name', 'description' ]
-        self.templates = [ 'base.html', 'project_detail.html' ]
+        self.templates = [ 'base.html', 'project.html' ]
 
         # Add some nominations
         self.user_nominations = {

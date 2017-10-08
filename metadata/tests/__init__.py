@@ -1,11 +1,11 @@
 from factory import DjangoModelFactory, SubFactory, Faker
 
-from metadata.models import Metadatum, MDProperty, MDVocabulary
+from metadata import models
 
 
 class KeywordFactory(DjangoModelFactory):
     class Meta:
-        model = Keyword
+        model = models.Keyword
 
     name = Faker('word')
 

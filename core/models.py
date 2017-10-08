@@ -29,6 +29,11 @@ class User(AbstractUser):
     def get_absolute_url(self):
         return reverse('user_detail', kwargs={'pk': self.pk})
 
+    def html(self):
+        return ("<span class='badge badge-pill badge-info'>{}</span>"
+            .format(self))
+
+
     
 # @reversion.register()
 # class AgentIdentifier(models.Model):

@@ -13,8 +13,15 @@ class Project(models.Model):
     name = models.CharField('Name', max_length=500)
     administered_by = models.ManyToManyField(settings.AUTH_USER_MODEL,
         related_name='projects_administered')
-    # nominators = models.ManyToManyField(settings.AUTH_USER_MODEL,
-    #     related_name='projects_nominating')
+
+    class NOMINATION_POLICY(Enum):
+        anonymous = ('A', 'Anonymous')
+        open_nom = ('O', 'Open')
+        restricted_nom = ('R', 'Restricted')
+    nomination_policy = models.CharField(max_length=1, default='o',
+        choices = [x.value for x in NOMINATION_POLICY])
+    nominators = models.ManyToManyField(settings.AUTH_USER_MODEL,
+        related_name='projects_nominating')
 
     description = models.TextField('Description', null=True, blank=True)
     keywords = models.ManyToManyField('metadata.Keyword')

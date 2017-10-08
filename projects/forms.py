@@ -15,7 +15,7 @@ from projects.models import Project, Nomination
 class ProjectForm(forms.ModelForm):
 
     administered_by = AutoCompleteSelectMultipleField('users')
-    # administered_by = AutoCompleteSelectMultipleField('users')
+    nominators = AutoCompleteSelectMultipleField('users')
     keywords = AutoCompleteSelectMultipleField('keywords')
     keywords.add_link = True
     administered_by.add_link = True
@@ -26,7 +26,10 @@ class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ['name', 'administered_by', 'description', 'keywords', 'status']
+        fields = [
+            'name', 'administered_by', 'nomination_policy', 'nominators',
+            'description', 'keywords', 'status'
+        ]
 
 class NominationForm(forms.ModelForm):
 

@@ -14,10 +14,10 @@ urlpatterns = [
     url(r'^$', projects.views.ProjectIndexView.as_view(), name='front_page'),
     
     # User
-    url(r'^users/', UserIndexView.as_view(), name='user_list'),
+    url(r'^users/(?P<pk>\d+)/edit/$', UserUpdateView.as_view(), name='user_update'),
     url(r'^users/(?P<pk>\d+)/$', UserDetailView.as_view(), name='user_detail'),
     url(r'^users/new$', UserCreateView.as_view(), name='user_create'),
-    # url(r'^users/(?P<pk>\d+)/change/$', UserUpdateView.as_view(), name='user_update'),
+    url(r'^users/$', UserIndexView.as_view(), name='user_list'),
 
     # Project
     url(r'^projects/$', 
@@ -29,20 +29,20 @@ urlpatterns = [
     url(r'^projects/new$', 
         projects.views.ProjectCreateView.as_view(),
         name='project_create'),
-    url(r'^projects/(?P<pk>\d+)/change/$', 
+    url(r'^projects/(?P<pk>\d+)/edit/$', 
         projects.views.ProjectUpdateView.as_view(), 
         name='project_update'),
     
     # Nomination
-    url(r'^nomination/(?P<pk>\d+)/', 
+    url(r'^nomination/(?P<pk>\d+)/$', 
         projects.views.NominationDetailView.as_view(), 
         name='nomination_detail'),
-    url(r'^project/(?P<project_id>\d+)/nominate/', 
+    url(r'^project/(?P<project_id>\d+)/nominate/$', 
         projects.views.NominationCreateView.as_view(), 
         name='nominate'),
 
     # Keyword
-    url(r'^Keyword/(?P<pk>\d+)/', 
+    url(r'^Keyword/(?P<pk>\d+)/$', 
         metadata.views.KeywordDetailView.as_view(),
         name = 'keyword_detail'),
 

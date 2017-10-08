@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 class UserLookup(ajax_select.LookupChannel):
 
     model = get_user_model()
-    min_length = 3
+    min_length = 1
 
     def get_query(self, q, request):
         return self.model.objects.filter(
