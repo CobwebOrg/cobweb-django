@@ -30,9 +30,6 @@ class APIEndpoint(models.Model):
                  ('AITCollectionsImporter', 'AITPartnerImporter')]
         )
 
-    agent = models.OneToOneField(settings.AUTH_USER_MODEL, editable=False,
-        null=True, blank=True)
-
     last_updated = models.DateTimeField(null=True, editable=False)
 
     metadata = JSONField(null=True, blank=True)
@@ -58,13 +55,6 @@ class APIEndpoint(models.Model):
     def harvest(self):
         self.get_importer().harvest()
         self.last_updated = timezone.now()
-
-    def get_agent(self):
-        if not self.agent:
-            self.agent = get_user_model().objects.get_or_create(
-                username = "APIEndpoint_agent_{}".format(self.id)
-            )[0]
-        return self.agent
 
     def __str__(self):
         return self.location or 'APIEndpoint {}'.format(self.pk)
@@ -95,7 +85,9 @@ class Importer:
 
     def harvest(self):
         with reversion.create_revision():
-            reversion.set_user(self.api.get_agent())
+            reversion.set_user(get_user_model.objects.get_or_create(
+                username="admin"))
+            reversion.set_comment("Imported from: {}".format(repr(self.api)))
             self.__harvest_all__()
 
     def __str__(self):

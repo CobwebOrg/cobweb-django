@@ -21,10 +21,6 @@ class APIEndpointModelTests(TestCase):
         self.assertIsInstance(ait, models.APIEndpoint)
         self.assertEqual(ait.location, 'https://archive-it.org/oai')
 
-    def test_get_agent(self):
-        agent = self.test_instance.get_agent()
-        self.assertIsInstance(agent, get_user_model())
-
     def test_get_importer(self):
         importer = ( tests
             .APIEndpointFactory(importer_class_name='OAIPMHImporter')
