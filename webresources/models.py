@@ -1,4 +1,5 @@
 import reversion
+from django.db.models import Q
 from django.db import models
 
 
@@ -18,11 +19,12 @@ class Resource(models.Model):
     location = NocryptoURLField(max_length=1000, null=False, blank=False, 
         unique=True)
 
-    nominated_projects = models.ManyToManyField(
+    projects = models.ManyToManyField(
         'projects.Project',
         through='projects.Nomination',
         related_name='nominated_resources'
     )
+
     
     def __str__(self):
         return self.get_url()

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+{#{% load django_tables2 %}#}
+
+{% block title %}Cobweb: Resources{% endblock %}
+
+{% block content %}
+<div><h1>Resources</h1></div>
+
+<ul>
+  {% for object in object_list %}
+    <li><a href="{% url 'webresources:detail' pk=object.pk %}">{{ object }}</a></li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

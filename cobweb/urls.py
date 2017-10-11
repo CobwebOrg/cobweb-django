@@ -47,6 +47,7 @@ urlpatterns = [
         name = 'keyword_detail'),
 
     # Resource
+    url(r'^resources/', include('webresources.urls')),
 
     # Auth
     url(r'^', include('django.contrib.auth.urls')),
