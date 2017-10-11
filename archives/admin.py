@@ -46,7 +46,7 @@ class HoldingAdmin(VersionAdmin):
     resource_link.short_description = 'Resource'
     
     fields = [
-        'resource_link', 
+        'resource', 
         'collection',
         'raw_metadata',
         'created',

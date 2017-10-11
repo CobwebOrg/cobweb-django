@@ -30,6 +30,7 @@ INTERNAL_IPS = ['72.18.0.1']
 ALLOWED_HOSTS =  [
     'cobweb-dev.xvkpjfy2kp.us-west-2.elasticbeanstalk.com',
     'cobweb-dev-staging.xvkpjfy2kp.us-west-2.elasticbeanstalk.com',
+    'cranium.us-west-2.elasticbeanstalk.com',
      'localhost', '127.0.0.1', '[::1]'
 ]
 
