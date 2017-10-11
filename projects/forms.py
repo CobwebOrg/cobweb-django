@@ -17,9 +17,7 @@ class ProjectForm(forms.ModelForm):
     administered_by = AutoCompleteSelectMultipleField('users')
     nominators = AutoCompleteSelectMultipleField('users', required=False)
     keywords = AutoCompleteSelectMultipleField('keywords', required=False)
-    keywords.add_link = True
-    administered_by.add_link = True
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
@@ -29,7 +27,7 @@ class ProjectForm(forms.ModelForm):
         model = Project
         fields = [
             'name', 'administered_by', 'nomination_policy', 'nominators',
-            'description', 'keywords', 'status'
+            'description', 'keywords', 'status',
         ]
 
 class NominationForm(forms.ModelForm):

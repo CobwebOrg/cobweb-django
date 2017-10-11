@@ -20,11 +20,11 @@ class Project(models.Model):
         restricted_nom = ('R', 'Restricted')
     nomination_policy = models.CharField(max_length=1, default='o',
         choices = [x.value for x in NOMINATION_POLICY])
-    nominators = models.ManyToManyField(settings.AUTH_USER_MODEL,
+    nominators = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True,
         related_name='projects_nominating')
 
     description = models.TextField('Description', null=True, blank=True)
-    keywords = models.ManyToManyField('metadata.Keyword')
+    keywords = models.ManyToManyField('metadata.Keyword', blank=True)
     metadata = JSONField(null=True, blank=True)
     raw_metadata = models.TextField(null=True, blank=True)
 
@@ -47,10 +47,10 @@ class Project(models.Model):
     def get_edit_url(self):
         return reverse('project_update', kwargs={'pk': self.pk})
 
-    def can_administer(self, user):
+    def is_admin(self, user):
         return user in self.administered_by.all()
 
-    def can_nominate(self, user):
+    def is_nominator(self, user):
         return ( user in self.administered_by.all() 
             or user in self.nominators.all() )
 
@@ -68,6 +68,9 @@ class Nomination(models.Model):
     
     class Meta:
         unique_together = ('resource', 'project', 'nominated_by')
+
+    def is_admin(self, user):
+        return self.project.is_nominator(user)
 
     def __str__(self):
         return '{resource} nominated by {agent} in {project}'.format(

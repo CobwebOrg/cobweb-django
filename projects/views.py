@@ -33,7 +33,7 @@ class ProjectUpdateView(UserPassesTestMixin, RevisionMixin, UpdateView):
     # formset_class = forms.ProjectMDInlineFormset
 
     def test_func(self):
-        return self.get_object().can_administer(self.request.user)
+        return self.get_object().is_admin(self.request.user)
 
 class NominationDetailView(DetailView):
     model = models.Nomination
@@ -58,4 +58,4 @@ class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
         return models.Project.objects.get(pk=self.kwargs['project_id'])
 
     def test_func(self):
-        return self.get_project().can_nominate(self.request.user)
+        return self.get_project().is_nominator(self.request.user)

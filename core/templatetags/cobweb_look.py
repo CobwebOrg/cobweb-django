@@ -15,12 +15,12 @@ ICONS = defaultdict(str, {
 
 @register.inclusion_tag('add_nomination_link.html')
 def add_nomination_link(item, user):
-    if item.can_nominate(user):
+    if item.is_nominator(user):
         return {'link_url': item.get_add_nomination_url()}
 
 @register.inclusion_tag('edit_link.html')
 def edit_link(item, user):
-    if item.can_administer(user):
+    if item.is_admin(user):
         return {'edit_url': item.get_edit_url()}
     else:
         return dict()

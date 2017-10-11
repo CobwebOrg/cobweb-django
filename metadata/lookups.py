@@ -19,5 +19,8 @@ class KeywordLookup(ajax_select.LookupChannel):
     def format_match(self, item):
         return self.format_item_display(item)
 
-    def can_add(user, other_model):
+    def check_auth(self, request):
+        pass
+
+    def can_add(self, user, other_model):
         return True
