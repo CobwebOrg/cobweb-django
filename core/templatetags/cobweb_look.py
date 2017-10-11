@@ -13,6 +13,18 @@ ICONS = defaultdict(str, {
     'sign_up': 'user-plus',
 })
 
+@register.inclusion_tag('add_nomination_link.html')
+def add_nomination_link(item, user):
+    if item.can_nominate(user):
+        return {'link_url': item.get_add_nomination_url()}
+
+@register.inclusion_tag('edit_link.html')
+def edit_link(item, user):
+    if item.can_administer(user):
+        return {'edit_url': item.get_edit_url()}
+    else:
+        return dict()
+
 @register.inclusion_tag('icon.html')
 def icon(icon_name):
     return {'icon': ICONS[icon_name]}

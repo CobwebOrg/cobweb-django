@@ -27,7 +27,6 @@ class IndexViewTestsMixin(ViewTestsMixin):
         """Index Views should list  *all* instances of a class
         (This test will have to change when we introduce pagination.)"""
         for instance in self.test_instances:
-            import ipdb; ipdb.set_trace()
             self.assertContains(self.test_response, str(instance))
             self.assertContains(self.test_response, instance.get_absolute_url())
 

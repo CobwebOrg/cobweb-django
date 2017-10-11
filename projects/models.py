@@ -40,6 +40,19 @@ class Project(models.Model):
     
     def get_absolute_url(self):
         return reverse('project_detail', kwargs={'pk': self.pk})
+    
+    def get_add_nomination_url(self):
+        return reverse('nominate', kwargs={'project_id': self.pk})
+
+    def get_edit_url(self):
+        return reverse('project_update', kwargs={'pk': self.pk})
+
+    def can_administer(self, user):
+        return user in self.administered_by.all()
+
+    def can_nominate(self, user):
+        return ( user in self.administered_by.all() 
+            or user in self.nominators.all() )
 
 @reversion.register()
 class Nomination(models.Model):

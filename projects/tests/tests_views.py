@@ -3,31 +3,22 @@ from django.test import TestCase
 from django.urls import reverse
 from factory import DjangoModelFactory, Faker
 
+from core.tests import UserFactory
 from webresources.models import Resource
 from webresources.tests import ResourceFactory
 
-from projects import models, forms, views
+from projects import models, forms, tests, views
 from projects.models import Project, Nomination
 
-
-class DetailViewTestsMixin(ViewTestsMixin):
-
-    def test_absolute_url_method(self):
-        self.assertTrue(callable(self.test_instance.get_absolute_url))
-
-    def test_included_fields(self):
-        for field in self.fields:
-            self.assertContains(self.test_response, getattr(self.test_instance, field), html=True)
-
-    def test_update_link(self):
-        pass
 
 class ProjectIndexViewTests(TestCase):
     
     def setUp(self):
-        get_project(name="Boring Project")
-        get_project(name="Exciting Project")
-        get_project(name="Other Project")
+        self.test_instances = [
+            tests.ProjectFactory(name="Boring Project"),
+            tests.ProjectFactory(name="Exciting Project"),
+            tests.ProjectFactory(name="Other Project"),
+        ]
         self.response = self.client.get('/projects/')
 
     def test_links_to_all_projects(self):
@@ -43,14 +34,14 @@ class ProjectIndexViewTests(TestCase):
         self.client.logout()
         self.assertNotContains(self.client.get('/projects/'), 'Create new project')
         self.assertNotContains(self.client.get('/projects/'), reverse('project_create'))
-        self.client.force_login(get_user())
+        self.client.force_login(UserFactory())
         self.assertContains(self.client.get('/projects/'), 'Create new project')
         self.assertContains(self.client.get('/projects/'), reverse('project_create'))
 
-class ProjectDetailViewTests(DetailViewTestsMixin, TestCase):
+class ProjectDetailViewTests(TestCase):
 
     def setUp(self):
-        self.test_instance = get_project(description = "Just a test project.")
+        self.test_instance = tests.ProjectFactory()
         self.fields = [ 'name', 'description' ]
         self.templates = [ 'base.html', 'project.html' ]
 
@@ -64,15 +55,26 @@ class ProjectDetailViewTests(DetailViewTestsMixin, TestCase):
         }
         for url, users in self.user_nominations.items():
             for username in users:
-                get_nomination(
+                tests.NominationFactory(
                     project=self.test_instance,
-                    nominated_by=get_user(username=username),
-                    resource=get_resource(location=url),
+                    nominated_by=UserFactory(username=username),
+                    resource=ResourceFactory(location=url),
                 )
 
 
         self.client.logout()
         self.test_response = self.client.get(self.test_instance.get_absolute_url())
+
+    def test_absolute_url_method(self):
+        self.assertTrue(callable(self.test_instance.get_absolute_url))
+
+    def test_included_fields(self):
+        for field in self.fields:
+            self.assertContains(self.test_response, 
+                getattr(self.test_instance, field), html=True)
+
+    def test_update_link(self):
+        pass
 
     def test_each_nominated_resource_listed_only_once(self):
         """Each nominated resource should be listed on the Project Detail page.
@@ -85,8 +87,8 @@ class ProjectDetailViewTests(DetailViewTestsMixin, TestCase):
             self.assertContains(self.test_response, url, count=1)
 
     def test_edit_project_link(self):
-        """An 'edit project' link should be shown if logged-in user is authorized,
-        otherwise hidden."""
+        """An 'edit project' link should be shown if logged-in user is 
+        authorized, otherwise hidden."""
 
         pass
 
@@ -97,12 +99,31 @@ class ProjectDetailViewTests(DetailViewTestsMixin, TestCase):
         self.client.logout()
         response = self.client.get(self.test_instance.get_absolute_url())
         self.assertNotContains(response, 'Add a nomination')
-        self.assertNotContains(response, reverse('nominate', kwargs={'project_id': self.test_instance.pk}))
+        self.assertNotContains(response, reverse('nominate', 
+            kwargs={'project_id': self.test_instance.pk}))
 
-        self.client.force_login(self.test_instance.administered_by.objects.get.user)
+        outside_user = UserFactory()
+        self.client.force_login(outside_user)
+        response = self.client.get(self.test_instance.get_absolute_url())
+        self.assertNotContains(response, 'Add a nomination')
+        self.assertNotContains(response, reverse('nominate', 
+            kwargs={'project_id': self.test_instance.pk}))
+
+        admin_user = UserFactory()
+        self.test_instance.administered_by.add(admin_user)
+        self.client.force_login(admin_user)
         response = self.client.get(self.test_instance.get_absolute_url())
         self.assertContains(response, 'Add a nomination')
-        self.assertContains(response, reverse('nominate', kwargs={'project_id': self.test_instance.pk}))
+        self.assertContains(response, reverse('nominate', 
+            kwargs={'project_id': self.test_instance.pk}))
+
+        nominator = UserFactory()
+        self.test_instance.administered_by.add(nominator)
+        self.client.force_login(nominator)
+        response = self.client.get(self.test_instance.get_absolute_url())
+        self.assertContains(response, 'Add a nomination')
+        self.assertContains(response, reverse('nominate', 
+            kwargs={'project_id': self.test_instance.pk}))
 
 
 class ProjectCreateViewTests(TestCase):

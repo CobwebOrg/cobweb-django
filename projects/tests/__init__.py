@@ -9,9 +9,9 @@ from projects.models import Project, Nomination
 class ProjectFactory(DjangoModelFactory):
     class Meta:
         model = Project
-        # django_get_or_create = ( 'name' )
 
     name = Faker('sentence')
+    description = Faker('paragraph')
 
 class NominationFactory(DjangoModelFactory):
     class Meta:

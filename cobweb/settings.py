@@ -51,7 +51,9 @@ INSTALLED_APPS = [
     # 'mptt',
     # 'guardian',
 
-    'debug_toolbar',
+    # don't add debug_toolbar here - it causes error during view tests
+    # see bottom of page
+    # 'debug_toolbar', 
     
     'core',
     'projects',
@@ -65,7 +67,9 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # don't add debug_toolbar here - it causes error during view tests
+    # see bottom of page
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -174,7 +178,12 @@ STATICFILES_DIRS = [ os.path.join(BASE_DIR, "static"), ]
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
 
+import sys
+TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
 
+if not TESTING:
+    MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+    INSTALLED_APPS += ('debug_toolbar', )
 
 DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.versions.VersionsPanel',

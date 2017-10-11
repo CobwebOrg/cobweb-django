@@ -85,8 +85,8 @@ class Importer:
 
     def harvest(self):
         with reversion.create_revision():
-            reversion.set_user(get_user_model.objects.get_or_create(
-                username="admin"))
+            reversion.set_user(get_user_model().objects.get_or_create(
+                username="admin")[0])
             reversion.set_comment("Imported from: {}".format(repr(self.api)))
             self.__harvest_all__()
 

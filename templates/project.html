@@ -9,11 +9,7 @@
 <div class="card">
 	<div class="card-header">
 		<div class="card-title">
-			{% if user.is_authenticated %}
-				<div class = "pull-right"><a href="{% url  'project_update' pk=object.pk %}" class="text-dark">
-					Edit{% icon 'edit' %}
-				</a></div>
-			{% endif %}
+			{% edit_link object user %}
 		<h1 class="">{{ object.name }}</h1>
 		</div>
 
@@ -42,22 +38,16 @@
 			<p>No Description</p>
 		{% endif %}
 
-		{% if object.nomination_policy == 'R' %}
-			{% for keyword in object.keywords.all %}
-				{% pill keyword %}
-			{% endfor %}
-		{% endif %}
+		{% for keyword in object.keywords.all %}
+			{% pill keyword %}
+		{% endfor %}
 	</div>
 </div>
-
-{# {% render_table view.get_seed_table %} #}
 
 <div class="card border=white border-light"><div class="card-body">
 	<h2>Nominations</h2>
 		<ul>
-		{% if user.is_authenticated %}
-			<li><a class="" href="{% url 'nominate' project_id=object.pk %}">+ Add a nomination.</a></li>
-		{% endif %}
+		{% add_nomination_link object user %}
 		{% for resource in object.nominated_resources.distinct %}
 		  <li>
 		    {#<a href="{% url 'nomination_detail' pk=1 %}">#}

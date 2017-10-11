@@ -15,10 +15,11 @@ from projects.models import Project, Nomination
 class ProjectForm(forms.ModelForm):
 
     administered_by = AutoCompleteSelectMultipleField('users')
-    nominators = AutoCompleteSelectMultipleField('users')
-    keywords = AutoCompleteSelectMultipleField('keywords')
+    nominators = AutoCompleteSelectMultipleField('users', required=False)
+    keywords = AutoCompleteSelectMultipleField('keywords', required=False)
     keywords.add_link = True
     administered_by.add_link = True
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)

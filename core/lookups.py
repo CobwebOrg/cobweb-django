@@ -22,3 +22,7 @@ class UserLookup(ajax_select.LookupChannel):
 
     def can_add(user, other_model):
         return False
+
+    def check_auth(self, request):
+        if not request.user.is_authenticated():
+            raise PermissionDenied
