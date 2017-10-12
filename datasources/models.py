@@ -275,7 +275,6 @@ class AITPartnerImporter(OAIPMHImporter):
 
     def __harvest_record__(self, record):
         root_url = self.__parse_wayback_url__(record.header.identifier)
-        print(root_url, end='\r')
                 
         collection_uri = self.__get_set_identifier__(
             only_one(record.header.setSpecs))

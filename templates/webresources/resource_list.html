@@ -1,11 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
+{% load cobweb_look %}
 {#{% load django_tables2 %}#}
 
 {% block title %}Cobweb: Resources{% endblock %}
 
 {% block content %}
 <div><h1>Resources</h1></div>
+
+{% searchbar 'webresources:list' %}
 
 <ul>
   {% for object in object_list %}

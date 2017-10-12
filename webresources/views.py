@@ -1,14 +1,22 @@
 # from reversion.views import RevisionMixin
 # from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views import generic
+from django.contrib.postgres import search
 
 from webresources import models
 
 
 
-class ResourceIndexView(generic.ListView):
+class ResourceListView(generic.ListView):
     model = models.Resource
     template_name = "webresources/resource_list.html"
+
+    def get_queryset(self):
+        result = super().get_queryset()
+        query = self.request.GET.get('q')
+        if query:
+            result = result.filter(location__search=query)
+        return result
 
 class ResourceDetailView(generic.DetailView):
     model = models.Resource

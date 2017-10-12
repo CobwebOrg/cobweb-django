@@ -40,3 +40,8 @@ def pill(item):
 @register.inclusion_tag('pill_link.html')
 def pill_link(item):
     return pill(item) # same dict - template makes the difference
+
+@register.inclusion_tag('searchbar.html')
+def searchbar(view_name):
+    print('**************', view_name)
+    return { 'view_name': view_name }
