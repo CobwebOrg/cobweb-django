@@ -15,7 +15,7 @@ class ResourceListView(generic.ListView):
         result = super().get_queryset()
         query = self.request.GET.get('q')
         if query:
-            result = result.filter(location__search=query)
+            result = result.filter(location__icontains=query)
         return result
 
 class ResourceDetailView(generic.DetailView):
