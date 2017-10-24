@@ -27,7 +27,7 @@ class ClaimAdmin(VersionAdmin):
 
 @admin.register(models.Holding)
 class HoldingAdmin(VersionAdmin):
-    readonly_fields = [ 'resource_link', 'created' ]
+    readonly_fields = [ 'resource_link' ]
 
     formfield_overrides = {
         postgres_fields.JSONField: {'widget': JSONEditorWidget},
@@ -35,7 +35,8 @@ class HoldingAdmin(VersionAdmin):
     
     def resource_link(self, instance):
         if instance.id:
-            changeform_url = reverse('admin:webresources_resource_change', args=(instance.resource.id,))
+            changeform_url = reverse('admin:webresources_resource_change', 
+                args=(instance.resource.id,))
             return '<a href="{changeform_url}" target="_blank">{resource}</a>'.format(
                 changeform_url = changeform_url,
                 resource = instance.resource,
@@ -49,6 +50,4 @@ class HoldingAdmin(VersionAdmin):
         'resource', 
         'collection',
         'raw_metadata',
-        'created',
-        'deprecated',
     ]

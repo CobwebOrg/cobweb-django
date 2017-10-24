@@ -52,9 +52,8 @@ INSTALLED_APPS = [
     'reversion',
     'ajax_select', 
     'django_json_widget',
-    'django_select2',
-    # 'mptt',
-    # 'guardian',
+    'django_tables2',
+    'mptt',
 
     # don't add debug_toolbar here - it causes error during view tests
     # see bottom of page
@@ -152,7 +151,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend', # default
-    # 'guardian.backends.ObjectPermissionBackend',
 )
 
 AUTH_USER_MODEL = 'core.User'

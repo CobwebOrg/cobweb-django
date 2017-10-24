@@ -40,6 +40,9 @@ urlpatterns = [
     url(r'^project/(?P<project_id>\d+)/nominate/$', 
         projects.views.NominationCreateView.as_view(), 
         name='nominate'),
+    url(r'^nominate/\*/(?P<url>.+)$', 
+        projects.views.ResourceNominateView.as_view(),
+        name='nominate_resource'),
 
     # Keyword
     url(r'^Keyword/(?P<pk>\d+)/$', 
@@ -52,7 +55,6 @@ urlpatterns = [
     # Auth
     url(r'^', include('django.contrib.auth.urls')),
 
-    url(r'^select2/', include('django_select2.urls')),
     url(r'^ajax_select/', include(ajax_select_urls)),
     url(r'^admin/?', admin.site.urls),
 ]

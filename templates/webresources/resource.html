@@ -1,61 +1,16 @@
 {% extends "base.html" %}
 {% load cobweb_look %}
 
-{% block title %}Cobweb: {{ object.location }}{% endblock %}
+{% block title %}Cobweb: {{ object.url }}{% endblock %}
 
 {% block content %}
-<div class="card">
-    <div class="card-header">
-        <div class="card-title">
-        <h1 class="">{{ object.location }}</h1>
-        </div>
-    </div>
 
-    {% if object.description or object.keywords %}
-        <div class="card-body">
+<h1 class="">{{ object.url }}</h1>
 
-            {% if object.description %}
-                <p>{{ object.description }}</p>
-            {# {% else %} #}
-                {# <p>No Description</p> #}
-            {% endif %}
+<a href="{% url 'nominate_resource' url=object.url %}">Nominate to another project.</a>
 
-            {% if object.keywords %}
-                {% for keyword in object.keywords.all %}
-                    {% pill keyword %}
-                {% endfor %}
-            {% endif %}
-        </div>
-    {% endif %}
-</div>
-
-<div class="card border=white border-light"><div class="card-body">
-    <h2>Projects</h2>
-        <ul>
-        {# {% add_nomination_link object user %} #}
-        {% for project in object.projects.distinct %}
-            <li>
-                <a href="{% url 'project_detail' pk=project.pk %}">
-                    {{project}}
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
-</div></div>
-
-<div class="card border=white border-light"><div class="card-body">
-    <h2>Collections (as Holding)</h2>
-        <ul>
-        {# {% add_nomination_link object user %} #}
-        {% for holding in object.holding_set.all %}
-            <li>
-                {# <a href="{% url 'collection_detail' pk=holding.collection.pk %}"> #}
-                    {{holding.collection}}
-                {# </a> #}
-            </li>
-        {% endfor %}
-    </ul>
-</div></div>
-
+{% for item in object.get_deployments %}
+    {% metadata_card item %}
+{% endfor %}
 
 {% endblock %}

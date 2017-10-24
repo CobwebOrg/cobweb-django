@@ -59,7 +59,7 @@ class Migration(migrations.Migration):
                 ('created', models.DateTimeField(auto_now_add=True, verbose_name='Date Created')),
                 ('deprecated', models.DateTimeField(blank=True, null=True, verbose_name='Date Deprecated')),
                 ('raw_metadata', models.TextField(blank=True, null=True)),
-                ('identifier', webresources.models.NocryptoURLField(blank=True, editable=False, null=True, unique=True, verbose_name='Archive-It.org Identifier')),
+                ('identifier', webresources.models.NormalizedURLField(blank=True, editable=False, null=True, unique=True, verbose_name='Archive-It.org Identifier')),
                 ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='core.Organization')),
             ],
         ),

@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
             name='Resource',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('location', webresources.models.NocryptoURLField(max_length=1000, unique=True)),
+                ('location', webresources.models.NormalizedURLField(max_length=1000, unique=True)),
                 ('nominated_projects', models.ManyToManyField(related_name='nominated_resources', through='projects.Nomination', to='projects.Project')),
             ],
         ),

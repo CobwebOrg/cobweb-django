@@ -18,6 +18,7 @@ class ClaimFactory(DjangoModelFactory):
 
     resource = SubFactory(ResourceFactory)
     collection = SubFactory(CollectionFactory)
+    start_date = Faker('date')
 
 class HoldingFactory(DjangoModelFactory):
     class Meta:

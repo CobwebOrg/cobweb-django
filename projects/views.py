@@ -2,8 +2,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from reversion.views import RevisionMixin
 
-from projects import models, forms
+from webresources.models import Resource
 
+from projects import models, forms
 
 
 class ProjectIndexView(ListView):
@@ -24,7 +25,7 @@ class ProjectCreateView(LoginRequiredMixin, RevisionMixin, CreateView):
     #     candidate.administered_by.add(self.request.user)
 
     #     candidate.save()
-    #     return super().form_valid(form)
+    #     return super().form_valid(form)    
 
 class ProjectUpdateView(UserPassesTestMixin, RevisionMixin, UpdateView):
     model = models.Project
@@ -42,7 +43,7 @@ class NominationDetailView(DetailView):
 class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
     model = models.Nomination
     template_name = 'generic_form.html'
-    form_class = forms.NominationForm
+    form_class = forms.NominateToProjectForm
 
     def form_valid(self, form):
         print(self.request.path)
@@ -59,3 +60,33 @@ class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
 
     def test_func(self):
         return self.get_project().is_nominator(self.request.user)
+
+class ResourceNominateView(RevisionMixin, CreateView):
+    model = models.Nomination
+    template_name = 'generic_form.html'
+    form_class = forms.ResourceNominateForm
+
+    def form_valid(self, form):
+        print(self.request.path)
+        print(self.kwargs)
+        candidate = form.save(commit=False)
+        candidate.resource = self.get_resource()
+        self.success_url = candidate.resource.get_absolute_url()
+        candidate.nominated_by = self.request.user
+        candidate.save()
+        return super().form_valid(form)
+
+    def get_resource(self):
+        try:
+            obj = Resource.objects.get(url=self.kwargs['url'])
+        except Resource.DoesNotExist:
+            obj = Resource(url=url)
+        except Exception as ex:
+            raise ex
+
+        return obj
+
+    def test_func(self):
+        return True
+        # return self.get_project().is_nominator(self.request.user)
+        

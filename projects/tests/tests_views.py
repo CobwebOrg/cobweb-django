@@ -32,11 +32,16 @@ class ProjectIndexViewTests(TestCase):
         """A 'new project' link should be shown if logged-in user is authorized,
         otherwise hidden."""
         self.client.logout()
-        self.assertNotContains(self.client.get('/projects/'), 'Create new project')
-        self.assertNotContains(self.client.get('/projects/'), reverse('project_create'))
+        self.assertNotContains(self.client.get('/projects/'), 
+            'Create new project')
+        self.assertNotContains(self.client.get('/projects/'), 
+            reverse('project_create'))
+        
         self.client.force_login(UserFactory())
-        self.assertContains(self.client.get('/projects/'), 'Create new project')
-        self.assertContains(self.client.get('/projects/'), reverse('project_create'))
+        self.assertContains(self.client.get('/projects/'), 
+            'Create new project')
+        self.assertContains(self.client.get('/projects/'), 
+            reverse('project_create'))
 
 class ProjectDetailViewTests(TestCase):
 
@@ -58,7 +63,7 @@ class ProjectDetailViewTests(TestCase):
                 tests.NominationFactory(
                     project=self.test_instance,
                     nominated_by=UserFactory(username=username),
-                    resource=ResourceFactory(location=url),
+                    resource=ResourceFactory(url=url),
                 )
 
 

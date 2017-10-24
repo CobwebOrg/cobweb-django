@@ -16,6 +16,9 @@ class ProjectModelTests(TestCase):
         """Tests that str(object) always returns a str."""
         self.assertIsInstance(str(self.test_instance), str)
 
+    def test_is_nominator_function(self):
+        pass
+
 class NominationModelTests(TestCase):
 
     def setUp(self):

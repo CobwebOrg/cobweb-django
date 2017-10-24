@@ -13,7 +13,7 @@ from sickle import Sickle
 
 from archives.models import Collection, Holding
 from core.models import Organization
-from webresources.models import nocrypto_url, NocryptoURLField, Resource
+from webresources.models import normalize_url, NormalizedURLField, Resource
 
 # from datasources.importers import importers
 
@@ -136,7 +136,7 @@ class OAIPMHImporter(Importer):
 
 
     def __harvest_record__(self, record):
-        uri = nocrypto_url( record.header.identifier )
+        uri = normalize_url( record.header.identifier )
 
         set_uri = self.__get_set_identifier__(only_one(record.header.setSpecs))
 
@@ -182,8 +182,8 @@ class OAIPMHImporter(Importer):
         api_identify = self.sickle.Identify()
         metadata = dict(api_identify)
 
-        assert ( nocrypto_url( only_one( metadata.pop('baseURL') )) 
-            == nocrypto_url(self.api.location) )
+        assert ( normalize_url( only_one( metadata.pop('baseURL') )) 
+            == normalize_url(self.api.location) )
 
         if api.organization:
             api.organization.name = only_one(metadata['repositoryName'])
@@ -290,10 +290,10 @@ class AITPartnerImporter(OAIPMHImporter):
 
         try:
             resource = Resource.objects.get_or_create(
-                location=nocrypto_url(root_url))[0]
+                url=normalize_url(root_url))[0]
         except Exception as e:
-            e.args += ( "location = {}".format(nocrypto_url(root_url)), )
-            e.args += "len(location) = {}".format(len(nocrypto_url(root_url))),
+            e.args += ( "url = {}".format(normalize_url(root_url)), )
+            e.args += "len(url) = {}".format(len(normalize_url(root_url))),
             raise e
 
         holding = Holding.objects.get_or_create(
@@ -334,7 +334,7 @@ class AITPartnerImporter(OAIPMHImporter):
         wayback_url_parser = re.compile(
             'http\:\/\/wayback\.archive\-it\.org\/\d+\/\*/(https?\:\/\/.*)')
 
-        return nocrypto_url( 
+        return normalize_url( 
             wayback_url_parser
             .match(wayback_url)
             .groups()[0]

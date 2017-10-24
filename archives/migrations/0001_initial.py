@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
                 ('deprecated', models.DateTimeField(blank=True, null=True, verbose_name='Date Deprecated')),
                 ('metadata', django.contrib.postgres.fields.jsonb.JSONField(blank=True, null=True)),
                 ('raw_metadata', models.TextField(blank=True, null=True)),
-                ('identifier', webresources.models.NocryptoURLField(blank=True, null=True, unique=True)),
+                ('identifier', webresources.models.NormalizedURLField(blank=True, null=True, unique=True)),
             ],
             bases=(archives.models.ModelValidationMixin, models.Model),
         ),

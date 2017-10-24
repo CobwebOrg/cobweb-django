@@ -29,6 +29,12 @@ def edit_link(item, user):
 def icon(icon_name):
     return {'icon': ICONS[icon_name]}
 
+@register.inclusion_tag('core/metadata_card.html')
+def metadata_card(item, title=None):
+    if title is None:
+        title = str(item)
+    return {'item': item, 'title': title}
+
 @register.inclusion_tag('pill.html')
 def pill(item):
     return {

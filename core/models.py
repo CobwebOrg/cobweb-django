@@ -1,18 +1,13 @@
 import reversion
 from enum import Enum
-from django.apps import apps
 from django.db import models
 from django.urls import reverse
-from django.conf import settings
 from django.contrib.auth.models import AbstractUser
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+from django.db.models import Q
 from django.contrib.postgres.fields import JSONField
 
-# from metadata.models import MDVocabuary, MDProperty
-from webresources.models import NocryptoURLField
+from projects.models import Project
+from webresources.models import NormalizedURLField
 
 
 @reversion.register()
@@ -25,6 +20,28 @@ class User(AbstractUser):
     
     def __str__(self):
         return self.get_full_name() or self.username or 'User {}'.format(self.pk)
+
+    def get_projects_and_collections(self, to_nominate=True):
+        # Performance will be awful - gotta re-implement w/ DB query
+        return [project for project in Project.objects.all() if project.is_nominator(self)]
+
+        # open_noms = Q(nomination_policy__exact='A')
+        # if self.is_authenticated():
+        #     open_noms = open_noms | Q(nomination_policy__exact='O')
+        # restricted_noms = Q(nomination_policy__exact='R')
+
+        # is_admin = Q(administered_by__contains=self)
+        # is_nom = Q(nominators__contains=self)
+        # not_blacklisted = Q(blacklisted_nominators__notcontains=self)
+
+        # return Project.objects.filter(
+        #     is_admin | (
+        #         not_blacklisted & (
+        #             open_noms
+        #             | (restricted_noms & is_nom)
+        #         )
+        #     )
+        # )
 
     def get_absolute_url(self):
         return reverse('user_detail', kwargs={'pk': self.pk})
@@ -90,7 +107,7 @@ class Organization(models.Model):
     raw_metadata = models.TextField(null=True, blank=True)
     # tags = models.ManyToManyField(Tag)
 
-    identifier = NocryptoURLField("Archive-It.org Identifier",
+    identifier = NormalizedURLField("Archive-It.org Identifier",
         null=True, blank=True, unique=True, editable=False)
            
     def __str__(self):

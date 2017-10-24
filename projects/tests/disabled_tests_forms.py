@@ -54,4 +54,4 @@ class NominationFormTests(FormTestsMixin, TestCase):
             'user': get_user(),
             })
         self.assertTrue(form.is_valid())
-        self.assertEqual(form.cleaned_data['resource'], get_resource(location="http://twitter.com"))
+        self.assertEqual(form.cleaned_data['resource'], get_resource(url="http://twitter.com"))

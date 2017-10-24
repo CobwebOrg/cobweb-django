@@ -18,6 +18,6 @@ class ResourceModelTests(TestCase):
 
         # Make sure it works or db rejects if the usual fields are blank
         try:
-            self.assertIsInstance(str(ResourceFactory(location=None)), str)
+            self.assertIsInstance(str(ResourceFactory(url=None)), str)
         except IntegrityError:
             pass

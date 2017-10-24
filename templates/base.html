@@ -42,7 +42,7 @@
               Logout
             </a>
           {% else %}
-            <a class="nav-item nav-link px-1" href="{% url 'user_create' %}?next={{request.path}}">{% icon 'sign_up' %}Sign Up</a>
+            <a class="nav-item nav-link px-1" href="{% url 'user_create' %}?next={{request.path}}">Sign Up</a>
             <a class="nav-item nav-link px-1" href="{% url 'login' %}?next={{request.path}}">Login</a>
           {% endif %}
         </div><!-- navbar-nav -->

@@ -1,4 +1,5 @@
 import reversion
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 # Create your models here.
@@ -10,3 +11,11 @@ class Keyword(models.Model):
     def __str__(self):
         return self.name
 
+class CobwebMetadataMixin(models.Model):
+    description = models.TextField('Description', null=True, blank=True)
+    keywords = models.ManyToManyField(Keyword, blank=True)
+    metadata = JSONField(null=True, blank=True)
+    raw_metadata = models.TextField(null=True, blank=True)
+
+    class Meta:
+        abstract=True

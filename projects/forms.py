@@ -34,9 +34,10 @@ class NominationForm(forms.ModelForm):
 
     class Meta:
         model = Nomination
-        fields = ['resource', 'description']
+        fields = ['resource', 'project', 'description', 'keywords']
+        exclude = []
 
-    resource = forms.URLField(widget=forms.URLInput, initial='http://') 
+    keywords = AutoCompleteSelectMultipleField('keywords', required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -44,9 +45,21 @@ class NominationForm(forms.ModelForm):
         self.helper.add_input(layout.Submit('submit', 'Submit'))
 
     def clean_resource(self):
-        location = self.cleaned_data.get("resource")
-        if not location:
+        url = self.cleaned_data.get("resource")
+        if not url:
             raise forms.ValidationError("Please enter a URL.")
         else:
-            return Resource.objects.get_or_create(location = location)[0]
+            return Resource.objects.get_or_create(url = url)[0]
+
+class NominateToProjectForm(NominationForm):
+
+    class Meta(NominationForm.Meta):
+        exclude = ['project']
+        
+    resource = forms.URLField(widget=forms.URLInput, initial='http://')
+
+class ResourceNominateForm(NominationForm):
+
+    class Meta(NominationForm.Meta):
+        exclude = ['resource']
             
