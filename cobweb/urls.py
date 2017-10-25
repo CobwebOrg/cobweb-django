@@ -11,6 +11,8 @@ import projects.views, metadata.views
 
 
 urlpatterns = [
+    url(r'^search/', include('haystack.urls')),
+    
     url(r'^$', projects.views.ProjectIndexView.as_view(), name='front_page'),
     
     # User

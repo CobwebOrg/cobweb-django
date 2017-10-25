@@ -1,6 +1,6 @@
 FROM python:3.5
 ENV PYTHONUNBUFFERED 1
-RUN apt-get purge -y git 		# to prevent accidentally using git w/in container
+#RUN apt-get purge -y git 		# to prevent accidentally using git w/in container
 RUN apt-get clean
 RUN apt-get update
 run apt-get install -y graphviz
@@ -27,8 +27,8 @@ RUN pip install ipdb
 RUN pip install django-debug-toolbar
 RUN pip install uWSGI~=2.0.15
 RUN pip install django-mptt
-
-RUN pip freeze > requirements-frozen.txt
+RUN pip install pysolr
+RUN pip install git+https://github.com/django-haystack/django-haystack
 
 ADD . /code/
 EXPOSE 8000

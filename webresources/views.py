@@ -2,7 +2,6 @@
 # from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 import django_tables2 as tables
 
-from django.contrib.postgres import search
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.forms import formset_factory
 from django.http import Http404
