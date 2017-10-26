@@ -28,7 +28,7 @@ class ResourceTable(tables.Table):
         show_header=True
         exclude = [ 'id' ]
         attrs = {'class': 'table table-hover'}
-        # template = 'webresources/resource-table.html'
+        template = 'webresources/resource-table.html'
 
 class ResourceListView(tables.SingleTableView):
     model = models.Resource
