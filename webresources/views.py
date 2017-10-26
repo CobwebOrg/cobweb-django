@@ -39,7 +39,7 @@ class ResourceListView(tables.SingleTableView):
         result = super().get_queryset()
         query = self.request.GET.get('q')
         if query:
-            result = result.filter(location__icontains=query)
+            result = result.filter(url__icontains=query)
         return result
 
 class ResourceDetailView(generic.DetailView):
