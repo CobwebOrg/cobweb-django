@@ -49,5 +49,4 @@ def pill_link(item):
 
 @register.inclusion_tag('searchbar.html')
 def searchbar(view_name):
-    print('**************', view_name)
     return { 'view_name': view_name }
