@@ -53,8 +53,9 @@ class APIEndpoint(models.Model):
         return importers[self.importer_class_name](self)
 
     def harvest(self):
+        update_start_time = timezone.now()
         self.get_importer().harvest()
-        self.last_updated = timezone.now()
+        self.last_updated = update_start_time
 
     def __str__(self):
         return self.location or 'APIEndpoint {}'.format(self.pk)
