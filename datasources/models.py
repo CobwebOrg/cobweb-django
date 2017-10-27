@@ -113,7 +113,7 @@ class OAIPMHImporter(Importer):
             print("Harvesting OAI-PMH Sets as {}".format(self.set_class))
             for setspec in self.sickle.ListSets():
                 try:
-                    print('{:<50}'.format(setspec.setName), end='\r')
+                    print('{:<80}'.format(setspec.setName[:80]), end='\r')
                     stdout.flush()
                 except:
                     pass
@@ -126,7 +126,7 @@ class OAIPMHImporter(Importer):
             print("Harvesting OAI-PMH Records as {}".format(self.record_class))
             for record in self.sickle.ListRecords(metadataPrefix='oai_dc'):
                 try:
-                    print('{:<50}'.format(record.header.identifier), end='\r')
+                    print('{:<80}'.format(record.header.identifier[37:117]), end='\r')
                     stdout.flush()
                 except:
                     pass
@@ -134,6 +134,7 @@ class OAIPMHImporter(Importer):
         except Exception as ex:
             eprint("In {}.__harvest_all__()".format(self))
             eprint(ex, type(ex))
+        print()
 
 
     def __harvest_record__(self, record):
@@ -186,9 +187,11 @@ class OAIPMHImporter(Importer):
         assert ( normalize_url( only_one( metadata.pop('baseURL') )) 
             == normalize_url(self.api.location) )
 
-        if api.organization:
-            api.organization.name = only_one(metadata['repositoryName'])
-            api.organization.save()
+        # For Archive-it it's always
+        # "Archive-It Web Partner Url Seed Collections"
+        # if api.organization:
+        #     api.organization.name = only_one(metadata['repositoryName'])
+        #     api.organization.save()
 
         api.raw_metadata = api_identify.raw
         self.__attach_metadata__(api, metadata, 'DC?')
@@ -313,16 +316,17 @@ class AITPartnerImporter(OAIPMHImporter):
                 target.name = source.setName
                 target.save()
             else:
-                # can't get a valid set identifier
+                # can't get a valid set identifier, but that's okay
+                # usually this is just a dummy record at the start of the list
                 pass
         except Exception as ex:
             eprint("In {}.__harvest_setspec__({})".format(self, source))
             eprint(ex, type(ex))
-
+            
     def __get_set_identifier__(self, setspec):
         try:
             set_type, set_number = setspec.split(':')
-            return 'http://archive-it.org/organizations/{}'.format(
+            return 'http://archive-it.org/{}/{}'.format(
                 set_type, set_number)
         except ValueError:
             return None
