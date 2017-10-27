@@ -39,6 +39,28 @@ class ResourceListView(tables.SingleTableView):
             result = result.filter(url__icontains=query)
         return result
 
+    def get_context_data(self, **kwargs):
+        """
+        Get the context for this view.
+        """
+
+        context = super().get_context_data(**kwargs)        
+        try:
+            searchbox_url = models.normalize_url(self.request.GET.get('q'))
+            try:
+                context['search_resource'] = models.Resource.objects.get(url=searchbox_url)
+            except models.Resource.DoesNotExist:
+                context['search_resource'] = models.Resource(url=searchbox_url)
+            except Exception as ex:
+                raise ex
+        except ValidationError:
+            # Search term isn't a url. That's fine.
+            pass
+        except Exception as ex:
+            raise ex
+
+        return context
+
 class ResourceDetailView(generic.DetailView):
     model = models.Resource
     template_name = "webresources/resource.html"
