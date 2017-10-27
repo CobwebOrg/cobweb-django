@@ -25,8 +25,8 @@ class Project(CobwebMetadataMixin, models.Model):
     nominators = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True,
         related_name='projects_nominating')
 
-    nominator_blacklist = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True,
-        related_name='projects_blacklisted')
+    nominator_blacklist = models.ManyToManyField(settings.AUTH_USER_MODEL, 
+        blank=True, related_name='projects_blacklisted')
 
     class STATUS(Enum):
         active = ('a', 'Active')
