@@ -49,3 +49,10 @@ class Resource(models.Model):
 
     def get_absolute_url(self):
         return reverse('webresources:detail', kwargs={'url': self.url})
+
+    def resource_record_count(self):
+        return (
+            self.nominations.count()
+            + self.claims.count() 
+            + self.holdings.count()
+        )

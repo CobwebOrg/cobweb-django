@@ -16,12 +16,9 @@ from webresources import models
 
 class ResourceTable(tables.Table):
     
-    detail = tables.TemplateColumn('<a href="{{record.get_absolute_url}}">d</a>')
     url = tables.Column()
-    # nominations = tables.TemplateColumn('{{record.nominations.count}}')
-    # claims = tables.TemplateColumn('{{record.claims.count}}')
-    # holdings = tables.TemplateColumn('{{record.holdings.count}}')
-
+    records = tables.TemplateColumn('{{record.resource_record_count}}',
+        orderable=False)
 
     class Meta:
         model = models.Resource
