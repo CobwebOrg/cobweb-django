@@ -72,6 +72,9 @@ class Nomination(CobwebMetadataMixin, models.Model):
     class Meta:
         unique_together = ('resource', 'project', 'nominated_by')
 
+    def get_resource_set(self):
+        return self.project
+
     def is_admin(self, user):
         return self.project.is_nominator(user)
 

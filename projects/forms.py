@@ -34,7 +34,7 @@ class NominationForm(forms.ModelForm):
 
     class Meta:
         model = Nomination
-        fields = ['resource', 'project', 'description', 'keywords']
+        fields = ['resource', 'project', 'description', 'keywords', 'metadata']
         exclude = []
 
     keywords = AutoCompleteSelectMultipleField('keywords', required=False)

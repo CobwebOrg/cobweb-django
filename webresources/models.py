@@ -1,9 +1,10 @@
-import mptt.models, reversion
+import reversion
 from django.core.validators import URLValidator
 from django.db import models
 from django.urls import reverse
-from urllib.parse import urlparse
+from itertools import chain
 from surt import handyurl
+from urllib.parse import urlparse
 from surt.DefaultIAURLCanonicalizer import canonicalize
 
 validate_url = URLValidator()
@@ -36,8 +37,12 @@ class Resource(models.Model):
     def __str__(self):
         return self.get_url()
 
-    def get_deployments(self):
-        return self.holdings.all()
+    def get_resource_records(self):
+        return chain(
+            self.nominations.all(), 
+            self.claims.all(), 
+            self.holdings.all(),
+        )
 
     def get_url(self):
     	return self.url or 'Resource {}'.format(self.pk)

@@ -1,6 +1,7 @@
 import reversion
-from django.db import models
 from django.contrib.postgres.fields import JSONField
+from django.db import models
+from django.urls import reverse
 
 from metadata.models import CobwebMetadataMixin
 from webresources.models import NormalizedURLField
@@ -20,6 +21,10 @@ class Collection(ModelValidationMixin, CobwebMetadataMixin, models.Model):
     	'core.Organization', on_delete=models.PROTECT, null=True, blank=True)
     
     identifier = NormalizedURLField(null=True, blank=True, unique=True)
+    
+    def get_absolute_url(self):
+        return reverse('admin:archives_collection_change', args=[self.pk])
+        # return reverse('collection_detail', kwargs={'object_id': self.pk})
     
     def __str__(self):
         return self.name or 'Collection {}'.format(self.pk)
@@ -46,6 +51,9 @@ class Claim(CobwebMetadataMixin, models.Model):
     def __str__(self):
         return '{} in {}'.format(self.resource, self.collection)
 
+    def get_resource_set(self):
+        return self.collection
+
 @reversion.register()
 class Holding(CobwebMetadataMixin, models.Model):
     resource = models.ForeignKey('webresources.Resource',
@@ -56,3 +64,6 @@ class Holding(CobwebMetadataMixin, models.Model):
     
     def __str__(self):
         return '{} in {}'.format(self.resource, self.collection)
+
+    def get_resource_set(self):
+        return self.collection

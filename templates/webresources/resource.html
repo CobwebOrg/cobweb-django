@@ -7,10 +7,12 @@
 
 <h1 class="">{{ object.url }}</h1>
 
-<a href="{% url 'nominate_resource' url=object.url %}">Nominate to another project.</a>
+<div class="card card_body"
+	<a href="{% url 'nominate_resource' url=object.url %}">Nominate to another project.</a>
+</div>
 
-{% for item in object.get_deployments %}
-    {% metadata_card item %}
+{% for resource_record in object.get_resource_records %}
+    {% metadata_card resource_record %}
 {% endfor %}
 
 {% endblock %}
