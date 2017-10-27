@@ -53,6 +53,9 @@ class ResourceListView(tables.SingleTableView):
                 context['search_resource'] = models.Resource(url=searchbox_url)
             except Exception as ex:
                 raise ex
+        except AttributeError:
+            # No search query. That's fine.
+            pass
         except ValidationError:
             # Search term isn't a url. That's fine.
             pass
