@@ -4,11 +4,14 @@ from django.contrib.postgres import fields as postgres_fields
 from django_json_widget.widgets import JSONEditorWidget
 from reversion.admin import VersionAdmin
 
+from metadata.admin import MetadataAdminMixin
+
 from archives import models, admin_inlines
 
        
 @admin.register(models.Collection)  
-class CollectionAdmin(VersionAdmin):
+class CollectionAdmin(MetadataAdminMixin, VersionAdmin):
+    fields = ['name', 'organization', 'identifier'] + MetadataAdminMixin.fields
     inlines = [ 
         admin_inlines.ClaimInline,
         admin_inlines.HoldingInline,
