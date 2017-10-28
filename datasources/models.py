@@ -113,7 +113,7 @@ class OAIPMHImporter(Importer):
             print("Harvesting OAI-PMH Sets as {}".format(self.set_class))
             for setspec in self.sickle.ListSets():
                 try:
-                    print('{:<80}'.format(setspec.setName[:80]), end='\r')
+                    print(setspec.setName[:80], end='\r')
                     stdout.flush()
                 except:
                     pass
@@ -122,18 +122,15 @@ class OAIPMHImporter(Importer):
             eprint("In {}.__harvest_all__()".format(self))
             eprint(ex, type(ex))
 
-        try:
-            print("Harvesting OAI-PMH Records as {}".format(self.record_class))
-            for record in self.sickle.ListRecords(metadataPrefix='oai_dc'):
-                try:
-                    print('{:<80}'.format(record.header.identifier[37:117]), end='\r')
-                    stdout.flush()
-                except:
-                    pass
+        print("Harvesting OAI-PMH Records as {}".format(self.record_class))
+        for record in self.sickle.ListRecords(metadataPrefix='oai_dc'):
+            try:
+                print(record.header.identifier[:80], end='\r')
+                stdout.flush()
                 self.__harvest_record__(record)
-        except Exception as ex:
-            eprint("In {}.__harvest_all__()".format(self))
-            eprint(ex, type(ex))
+            except Exception as ex:
+                eprint("In {}.__harvest_all__()".format(self))
+                eprint(ex, type(ex))
         print()
 
 
