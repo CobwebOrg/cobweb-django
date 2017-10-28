@@ -247,7 +247,7 @@ class AITCollectionsImporter(OAIPMHImporter):
     def __get_set_identifier__(self, setspec):
         try:
             set_type, set_number = setspec.split(':')
-            return 'http://archive-it.org/{}/{}'.format(
+            return 'http://archive-it.org/{}s/{}'.format(
                 set_type, set_number)
         except ValueError:
             return None
@@ -326,7 +326,8 @@ class AITPartnerImporter(OAIPMHImporter):
     def __get_set_identifier__(self, setspec):
         try:
             set_type, set_number = setspec.split(':')
-            return 'http://archive-it.org/{}/{}'.format(
+
+            return 'http://archive-it.org/{}s/{}'.format(
                 set_type, set_number)
         except ValueError:
             return None
