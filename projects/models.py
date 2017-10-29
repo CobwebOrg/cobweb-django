@@ -25,8 +25,8 @@ class Project(CobwebMetadataMixin, models.Model):
     nominators = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True,
         related_name='projects_nominating')
 
-    nominator_blacklist = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True,
-        related_name='projects_blacklisted')
+    nominator_blacklist = models.ManyToManyField(settings.AUTH_USER_MODEL, 
+        blank=True, related_name='projects_blacklisted')
 
     class STATUS(Enum):
         active = ('a', 'Active')
@@ -71,6 +71,9 @@ class Nomination(CobwebMetadataMixin, models.Model):
     
     class Meta:
         unique_together = ('resource', 'project', 'nominated_by')
+
+    def get_resource_set(self):
+        return self.project
 
     def is_admin(self, user):
         return self.project.is_nominator(user)

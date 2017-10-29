@@ -47,7 +47,14 @@ def pill(item):
 def pill_link(item):
     return pill(item) # same dict - template makes the difference
 
+@register.filter
+def resourceset_model_name(item):
+    return item.get_resource_set()._meta.verbose_name
+
 @register.inclusion_tag('searchbar.html')
 def searchbar(view_name):
-    print('**************', view_name)
     return { 'view_name': view_name }
+
+@register.filter
+def model_name(item):
+    return item._meta.verbose_name

@@ -6,9 +6,21 @@
 {% block title %}Cobweb: Resources{% endblock %}
 
 {% block content %}
-<div><h1>Resources</h1></div>
 
 {% searchbar 'webresources:list' %}
+
+{% if search_resource %}
+	<div><h1>{{ search_resource.url }}</h1></div>
+	<p>
+	      <a href="{{ search_resource.get_absolute_url }}">Detail</a> 
+	    | <a href="{% url 'nominate_resource' url=search_resource.url %}">Nominate</a>
+	    | Claim
+   </p>
+{% elif request.GET.q %}
+	<div><h1>{{ request.GET.q }}</h1></div>
+{% else %}
+	<div><h1>All Resources</h1></div>
+{% endif %}
 
 {% render_table table %}
 

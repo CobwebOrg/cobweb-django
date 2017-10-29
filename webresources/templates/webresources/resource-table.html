@@ -35,37 +35,23 @@
                         <td class="bg-faded" colspan="{{ table.columns|length }}">
                                 {# <h2 class="">{{ row.record.url }}</h2> #}
 
-                                {% if row.record.description %}
-                                    <p>{{ row.record.description }}</p>
-                                {% endif %}
-                                {% if row.record.keywords %}
-                                    {% for keyword in row.record.keywords.all %}
-                                        {% pill keyword %}
-                                    {% endfor %}
-                                {% endif %}
 
-                                <h3>Projects</h3>
-                                    <ul>
-                                    {# {% add_nomination_link row.record user %} #}
-                                    {% for project in row.record.projects.distinct %}
-                                        <li>
-                                            <a href="{% url 'project_detail' pk=project.pk %}">
-                                                {{project}}
-                                            </a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-
-                                <h3>Collections (as Holding)</h3>
-                                    <ul>
-                                    {# {% add_nomination_link row.record user %} #}
-                                    {% for holding in row.record.holdings.all %}
-                                        <li>
-                                            {# <a href="{% url 'collection_detail' pk=holding.collection.pk %}"> #}
-                                                {{holding.collection}}
-                                            {# </a> #}
-                                        </li>
-                                    {% endfor %}
+                                <ul>
+                                {# {% add_nomination_link row.record user %} #}
+                                <li  style="list-style-type:none"> 
+                                      <a href="{{ row.record.get_absolute_url }}">Detail</a> 
+                                    | <a href="{% url 'nominate_resource' url=row.record.url %}">Nominate</a>
+                                    | Claim </li>
+                                {% for resource_record in row.record.get_resource_records %}
+                                    <li>
+                                        {{resource_record | model_name | capfirst}}
+                                        in
+                                        <a href="{{resource_record.get_resource_set.get_absolute_url}}">
+                                            {{resource_record.get_resource_set}}
+                                        </a>
+                                        {{resource_record.get_resource_set | model_name | capfirst}}
+                                    </li>
+                                {% endfor %}
                                 </ul>
 
 
