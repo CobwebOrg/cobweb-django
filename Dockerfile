@@ -1,4 +1,4 @@
-FROM python:3.5
+FROM python:latest
 ENV PYTHONUNBUFFERED 1
 RUN apt-get purge -y git 		# to prevent accidentally using git w/in container
 RUN apt-get clean
