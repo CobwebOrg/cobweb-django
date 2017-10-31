@@ -1,3 +1,6 @@
+# PyCharm
+.idea/
+
 import_errors.txt
 solrdata/
 postgresdata/
