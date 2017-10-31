@@ -20,6 +20,10 @@ from webresources.models import normalize_url, NormalizedURLField, Resource
 
 @reversion.register()
 class APIEndpoint(models.Model):
+
+    class Meta:
+        verbose_name = "API Endpoint"
+        
     location = models.URLField(max_length=200, unique=True)
     organization = models.ForeignKey('core.Organization', 
             null=True, blank=True)
