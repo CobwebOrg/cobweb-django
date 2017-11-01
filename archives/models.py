@@ -17,8 +17,8 @@ class ModelValidationMixin(object):
 
 class Collection(ModelValidationMixin, CobwebMetadataMixin, models.Model):
     name = models.TextField('Name', unique=False)
-    organization = models.ForeignKey(
-    	'core.Organization', on_delete=models.PROTECT, null=True, blank=True)
+    organization = models.ForeignKey('core.Organization', null=True, blank=True,
+        on_delete=models.PROTECT, related_name='collections')
     
     identifier = NormalizedURLField(null=True, blank=True, unique=True)
     
@@ -58,7 +58,8 @@ class Claim(CobwebMetadataMixin, models.Model):
 class Holding(CobwebMetadataMixin, models.Model):
     resource = models.ForeignKey('webresources.Resource',
         on_delete=models.PROTECT, related_name='holdings')
-    collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
+    collection = models.ForeignKey(Collection, on_delete=models.CASCADE,
+        related_name='holdings')
     
     # scope = ???
     
