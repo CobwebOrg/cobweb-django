@@ -23,12 +23,17 @@
   </head>
 
   <body>
+    <header class="container mb-2">{% include 'navbar.html' %}</header>
 
     <div class="container">
-
-      {% block content %}
-      
-  	  {% endblock %}
+      <div class="row flex-column-reverse flex-sm-row">
+        <div class="col-sm-3 col-lg-4 bg-light">
+          {% block sidebar %}{% include 'collaboration_sidebar.html' %}{% endblock %}
+        </div>
+        <div class="col-sm-9 col-lg-8">
+          {% block content %}{% endblock %}
+        </div>
+      </div>
     </div> <!-- /container -->
 	
 
