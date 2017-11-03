@@ -1,16 +1,32 @@
-    <div class="container">
-      <div class="header clearfix">
-        <h3 class="text-muted pull-left">
-					<a href="{% url 'front_page' %}">
-						Cobweb
-					</a>
-				</h3>
-        <nav>
-          <ul class="nav nav-pills pull-right">
-            <li role="presentation">{# <a href="#"> #}About{# </a> #}</li>
-            <li role="presentation">{# <a href="#"> #}Contact{# </a> #}</li>
-            <li role="presentation"><a href="{% url 'project_list' %}">Projects</a></li>
-            <li role="presentation">{# <a href="#"> #}Login{# </a> #}</li>
-          </ul>
-        </nav>
-      </div>
+<nav class="navbar row justify-content-end">
+	{% if user.is_authenticated %}
+		<span class="nav-link my-0 py-0">Welcome, {{user}}</span> |
+		<a class="nav-link my-0 py-0" href="#">Account</a> |
+		<a class="nav-link my-0 py-0" href="{% url 'logout' %}?next={{request.path}}">Logout</a>
+	{% else %}
+		<span class="nav-link my-0 py-0">Welcome!</span> |
+		<a class="nav-link my-0 py-0" href="{% url 'user_create' %}?next={{request.path}}">Sign Up</a> |
+		<a class="nav-link my-0 py-0" href="{% url 'login' %}?next={{request.path}}">Login</a>
+	{% endif %}
+
+
+</nav>
+<nav class="navbar row navbar-dark bg-dark">
+	<a href="/" class="navbar-brand mr-auto">cobWeb</a>
+
+	<a class="nav-link mr-auto ml-auto" href="{% url 'project_list' %}">
+		Projects
+	</a>
+	<a class="nav-link mr-auto ml-auto text-light" {# href="/ {% url 'webresources:list' %}" #}> 
+		Collections
+	</a>
+	<a class="nav-link mr-auto ml-auto" href="{% url 'webresources:list' %}">
+		Resources
+	</a>
+	<a class="nav-link mr-auto ml-auto text-light" href="{% url 'webresources:list' %}">
+		Organizations
+	</a>
+	<a class="nav-link mr-auto ml-auto text-light" href="{% url 'webresources:list' %}">
+		Users
+	</a>
+</nav>

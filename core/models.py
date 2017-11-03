@@ -45,6 +45,10 @@ class User(AbstractUser):
 
     def get_absolute_url(self):
         return reverse('user_detail', kwargs={'pk': self.pk})
+    
+    def get_edit_url(self):
+        return reverse('admin:core_user_change', args=[self.pk])
+        # return reverse('collection_detail', kwargs={'object_id': self.pk})
 
     def html(self):
         return ("<span class='badge badge-pill badge-info'>{}</span>"
