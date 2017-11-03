@@ -1,3 +1,7 @@
 {% load cobweb_look %}
 
-<span class='badge badge-pill badge-{{color}}'>{% icon icon_name %}{{item}}</span>
+{% if item.get_absolute_url %}
+	<a href='{{ item.get_absolute_url }}' class='badge badge-pill badge-primary'>{% icon icon_name %}{{item}}</a>
+{% else %}
+	<span class='badge badge-pill badge-info'>{% icon icon_name %} {{item}}</span>
+{% endif %}

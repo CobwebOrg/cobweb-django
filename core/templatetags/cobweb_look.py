@@ -1,6 +1,6 @@
 from collections import defaultdict
 from django import template
-from django.utils.html import conditional_escape
+from django.utils.html import conditional_escape, format_html
 from django.utils.safestring import mark_safe
 
 
@@ -9,8 +9,20 @@ register = template.Library()
 ICONS = defaultdict(str, {
     'User': 'fa-user',
     'Keyword': 'fa-tag',
+    'Organization': 'fa-institution',
+    'Project': 'fa-tasks',
+    'Collection': 'fa-archive',
+    'Nomination': 'fa-sign-out',
+    'Claim': 'fa-sign-in',
+    'Holding': 'fa-inbox',
+
+    'profile': 'fa-id-card', #'fa-id-card-o',
+
+    'close': ' fa-institution fa-remove',
     'edit':  'fa-pencil-square-o',
     'sign_up': 'user-plus',
+    'reply': 'fa-reply',
+    'search': 'fa-search',
 })
 
 @register.inclusion_tag('add_nomination_link.html')
@@ -38,14 +50,9 @@ def metadata_card(item, title=None):
 @register.inclusion_tag('pill.html')
 def pill(item):
     return {
-        'color': 'info',
         'icon_name': item.__class__.__name__,
         'item': item
      }
-
-@register.inclusion_tag('pill_link.html')
-def pill_link(item):
-    return pill(item) # same dict - template makes the difference
 
 @register.filter
 def resourceset_model_name(item):

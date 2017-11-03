@@ -16,7 +16,7 @@
 		<div class="card-subtitle">
 			Administered by: 
 			{% for user in object.administered_by.all %}
-				{% pill_link user %}
+				{% pill user %}
 			{% endfor %}
 		</div>
 	</div>
