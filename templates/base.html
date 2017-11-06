@@ -11,7 +11,7 @@
 
     <meta content="text/html">
 
-    <title>{% block title %}Cobweb{% endblock %}</title>
+    <title>{% block window_title %}Cobweb{% endblock %}</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
@@ -27,10 +27,9 @@
 
     <div class="container">
       <div class="row flex-column-reverse flex-sm-row">
-        <div class="col-sm-3 col-lg-4 bg-light">
           {% block sidebar %}{% include 'collaboration_sidebar.html' %}{% endblock %}
-        </div>
-        <div class="col-sm-9 col-lg-8">
+        <div class="col">
+          <h1>{% block title %}{% endblock %}</h1>
           {% block content %}{% endblock %}
         </div>
       </div>

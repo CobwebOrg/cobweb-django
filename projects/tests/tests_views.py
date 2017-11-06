@@ -1,6 +1,7 @@
 from django.db import IntegrityError
 from django.test import TestCase
 from django.urls import reverse
+from unittest import mock
 from factory import DjangoModelFactory, Faker
 
 from core.tests import UserFactory
@@ -142,6 +143,31 @@ class ProjectCreateViewTests(TestCase):
     def test_user_creates_project(self):
         """...
         Should autmatically set: User"""
+        pass
+
+
+class ProjectUpdateViewTests(TestCase):
+
+    def setUp(self):
+        user = UserFactory()
+        self.project = tests.ProjectFactory()
+        self.project.save()
+        self.project.administered_by.add(user)
+        self.client.force_login(user)
+        self.response = self.client.get(self.project.get_edit_url())
+
+    def test_load(self):
+        self.assertEqual(self.response.status_code, 200)
+        for template in ['base.html', 'generic_form.html']:
+            self.assertTemplateUsed(self.response, template)
+
+    def test_included_fields(self):
+        for field_name in ['name', 'administered_by', 'nomination_policy', 
+                      'nominators', 'status', 'description', 'keywords']:
+            self.assertContains(self.response, f'id="id_{field_name}"', 
+                html=False)
+
+    def test_permissions_to_edit_project(self):
         pass
 
 class NominationCreateViewTests(TestCase):

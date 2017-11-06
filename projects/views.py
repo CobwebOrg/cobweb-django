@@ -31,7 +31,11 @@ class ProjectUpdateView(UserPassesTestMixin, RevisionMixin, UpdateView):
     model = models.Project
     template_name = 'generic_form.html'
     form_class = forms.ProjectForm
-    # formset_class = forms.ProjectMDInlineFormset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs) 
+        context['page_title'] = 'Update Existing Project'
+        return context
 
     def test_func(self):
         return self.get_object().is_admin(self.request.user)

@@ -18,17 +18,41 @@ class ProjectForm(forms.ModelForm):
     nominators = AutoCompleteSelectMultipleField('users', required=False)
     keywords = AutoCompleteSelectMultipleField('keywords', required=False)
 
+    class Meta:
+        model = Project
+        exclude = []
+        # fields = [
+        #     'name', 'administered_by', 'nomination_policy', 'nominators',
+        #     'description', 'keywords', 'status',
+        # ]
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-        self.helper.add_input(layout.Submit('submit', 'Submit'))
-
-    class Meta:
-        model = Project
-        fields = [
-            'name', 'administered_by', 'nomination_policy', 'nominators',
-            'description', 'keywords', 'status',
-        ]
+        self.helper.layout = layout.Layout(
+            layout.Field('name'),
+            layout.Fieldset('Project Settings',
+                layout.Div(
+                    layout.Field('administered_by'), 
+                    layout.Field('status'),
+                    css_class='col-lg-6',
+                ),
+                layout.Div(
+                    layout.Field('nomination_policy'), 
+                    layout.Field('nominators'), 
+                    css_class='col-lg',
+                ),
+                css_class='row',
+            ),
+            layout.Fieldset('Project Metadata',
+                layout.Div(layout.Field('description'), css_class='col-lg-6'), 
+                layout.Div(layout.Field('keywords'), css_class='col-lg'),
+                css_class='row',
+            ),
+            layout.ButtonHolder(
+                layout.Submit('submit', 'Submit'),
+            ),
+        )
 
 class NominationForm(forms.ModelForm):
 
