@@ -3,17 +3,14 @@
 {# {% load humanize %} #}
 {% load cobweb_look %}
 
+{% block page_title %}{{ object.name }}{% endblock %}
 {% block title %}{{ object.name }}{% endblock %}
 
 {% block content %}
 <div class="card">
 	<div class="card-header">
-		<div class="card-title">
-			{% edit_link object user %}
-		<h1 class="">{{ object.name }}</h1>
-		</div>
-
 		<div class="card-subtitle">
+			{% edit_link object user %}
 			Administered by: 
 			{% for user in object.administered_by.all %}
 				{% pill user %}
