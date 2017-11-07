@@ -12,7 +12,12 @@ from projects.models import Project, Nomination
 
 
 
-# class ProjectFormTests:
+class ProjectFormTests(TestCase):
+
+    def test_multiselect_widgets(self):
+        form = forms.ProjectForm()
+        import ipdb; ipdb.set_trace()
+        assertIsInstance(form, forms.ProjectForm)
 
 #     def test_init(self):
 #         pass
