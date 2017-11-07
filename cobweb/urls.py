@@ -1,4 +1,5 @@
 from ajax_select import urls as ajax_select_urls
+from dal import autocomplete
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
@@ -6,18 +7,30 @@ from django.forms import ModelForm
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, RedirectView
 
-from core.views import UserIndexView, UserDetailView, UserCreateView, UserUpdateView
-import archives.views, projects.views, metadata.views
+import archives.views, core.views, projects.views, metadata.views
+
+from metadata.models import Keyword
 
 
 urlpatterns = [
     url(r'^$', projects.views.ProjectIndexView.as_view(), name='front_page'),
     
     # User
-    url(r'^users/(?P<pk>\d+)/edit/$', UserUpdateView.as_view(), name='user_update'),
-    url(r'^users/(?P<pk>\d+)/$', UserDetailView.as_view(), name='user_detail'),
-    url(r'^users/new$', UserCreateView.as_view(), name='user_create'),
-    url(r'^users/$', UserIndexView.as_view(), name='user_list'),
+    url(r'^users/(?P<pk>\d+)/edit/$', 
+        core.views.UserUpdateView.as_view(), 
+        name='user_update'),
+    url(r'^users/(?P<pk>\d+)/$', 
+        core.views.UserDetailView.as_view(), 
+        name='user_detail'),
+    url(r'^users/new$', 
+        core.views.UserCreateView.as_view(), 
+        name='user_create'),
+    url(r'^users/$', 
+        core.views.UserIndexView.as_view(), 
+        name='user_list'),
+    url(r'^users/autocomplete/$', 
+        core.views.UserAutocomplete.as_view(), 
+        name='user_autocomplete'),
 
     # Project
     url(r'^projects/$', 
@@ -62,6 +75,10 @@ urlpatterns = [
     url(r'^Keyword/(?P<pk>\d+)/$', 
         metadata.views.KeywordDetailView.as_view(),
         name = 'keyword_detail'),
+    url(r'^keywords/autocomplete/$', 
+        # autocomplete.Select2QuerySetView.as_view(model=Keyword, create_field='name'),
+        metadata.views.KeywordAutocomplete.as_view(create_field='name'), 
+        name='keyword_autocomplete'),
 
     # Resource
     url(r'^resources/', include('webresources.urls')),
