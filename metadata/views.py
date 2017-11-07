@@ -18,7 +18,14 @@ class KeywordCreateView(LoginRequiredMixin, CreateView):
     template_name = 'md_test.html'
     # form_class = forms.KeywordForm
 
-# class KeywordUpdateView(LoginRequiredMixin, UpdateView):
-#     model = models.Keyword
-#     template_name = 'md_test.html'
-#     # form_class = forms.KeywordForm
+class KeywordAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        if not self.request.user.is_authenticated():
+            return Country.objects.none()
+
+        qs = models.Keyword.objects.all()
+
+        if self.q:
+            qs = qs.filter(name__istartswith=self.q)
+
+        return qs
