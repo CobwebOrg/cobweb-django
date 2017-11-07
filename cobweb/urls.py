@@ -1,4 +1,3 @@
-from ajax_select import urls as ajax_select_urls
 from dal import autocomplete
 from django.conf import settings
 from django.conf.urls import include, url
@@ -86,7 +85,6 @@ urlpatterns = [
     # Auth
     url(r'^', include('django.contrib.auth.urls')),
 
-    url(r'^ajax_select/', include(ajax_select_urls)),
     url(r'^admin/?', admin.site.urls),
 ]
 

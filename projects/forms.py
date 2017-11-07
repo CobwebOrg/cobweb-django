@@ -1,5 +1,3 @@
-from ajax_select.fields import AutoCompleteSelectMultipleField
-from ajax_select.helpers import make_ajax_form, make_ajax_field
 from crispy_forms.helper import FormHelper
 from crispy_forms import layout
 from dal import autocomplete
@@ -15,13 +13,6 @@ from projects.models import Project, Nomination
 
 
 class ProjectForm(forms.ModelForm):
-
-    # administered_by = forms.ModelMultipleChoiceField(
-    #     queryset=get_user_model().objects.all(),
-    #     widget=autocomplete.ModelSelect2Multiple(url='user_autocomplete')
-    # )
-    # nominators = AutoCompleteSelectMultipleField('users', required=False)
-    # keywords = AutoCompleteSelectMultipleField('keywords', required=False)
 
     class Meta:
         model = Project
@@ -65,7 +56,6 @@ class ProjectForm(forms.ModelForm):
                 layout.Submit('submit', 'Submit'),
             ),
         )
-        print(self._meta.widgets)
 
 class NominationForm(forms.ModelForm):
 
@@ -73,8 +63,13 @@ class NominationForm(forms.ModelForm):
         model = Nomination
         fields = ['resource', 'project', 'description', 'keywords', 'metadata']
         exclude = []
+        fields = ('__all__')
+        widgets = {
+            'keywords': autocomplete.ModelSelect2Multiple(
+                url='keyword_autocomplete'
+            ),
+        }
 
-    keywords = AutoCompleteSelectMultipleField('keywords', required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

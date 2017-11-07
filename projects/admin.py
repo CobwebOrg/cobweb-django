@@ -1,5 +1,3 @@
-from ajax_select import make_ajax_form
-from ajax_select.admin import AjaxSelectAdmin
 from django.contrib import admin
 from django.contrib.postgres import fields as postgres_fields
 from django.urls import reverse
@@ -11,13 +9,8 @@ from projects.admin_inlines import NominationInline
 
 
 @admin.register(Project)
-class ProjectAdmin(VersionAdmin, AjaxSelectAdmin):
+class ProjectAdmin(VersionAdmin):
     inlines = [ NominationInline ]
-    # form = make_ajax_form(Project, {
-    #     'administered_by': 'users',
-    #     'nominators': 'users',
-    #     # 'keywords': 'keywords',
-    # })
     filter_horizontal = [ 'keywords', 'administered_by', 'nominators' ]
     formfield_overrides = {
         postgres_fields.JSONField: {'widget': JSONEditorWidget},

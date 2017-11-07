@@ -1,3 +1,4 @@
+from dal.autocomplete import ModelSelect2Multiple
 from django.db import IntegrityError
 from django.test import TestCase
 from django.urls import reverse
@@ -16,8 +17,9 @@ class ProjectFormTests(TestCase):
 
     def test_multiselect_widgets(self):
         form = forms.ProjectForm()
-        import ipdb; ipdb.set_trace()
-        assertIsInstance(form, forms.ProjectForm)
+        self.assertIsInstance(form, forms.ProjectForm)
+        for field in ('administered_by', 'nominators', 'keywords'):
+            self.assertIsInstance(form.fields[field].widget, ModelSelect2Multiple)
 
 #     def test_init(self):
 #         pass

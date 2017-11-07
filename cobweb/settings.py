@@ -52,10 +52,8 @@ INSTALLED_APPS = [
     'django_extensions',
     'crispy_forms',
     'reversion',
-    'ajax_select', 
     'django_json_widget',
     'django_tables2',
-    'mptt',
 
     # don't add debug_toolbar here - it causes error during view tests
     # see bottom of page
