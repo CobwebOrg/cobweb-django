@@ -27,6 +27,7 @@ RUN pip install ipdb
 RUN pip install django-debug-toolbar
 RUN pip install uWSGI~=2.0.15
 RUN pip install django-mptt
+RUN pip install djang-autocomplete-light
 
 RUN pip freeze > requirements-frozen.txt
 
