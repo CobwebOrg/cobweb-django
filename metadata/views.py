@@ -24,9 +24,9 @@ class KeywordAutocomplete(autocomplete.Select2QuerySetView):
         if not self.request.user.is_authenticated():
             return Country.objects.none()
 
-        qs = get_user_model().objects.all()
+        qs = models.Keyword.objects.all()
 
         if self.q:
-            qs = qs.filter(name__istartswith=q)
+            qs = qs.filter(name__istartswith=self.q)
 
         return qs
