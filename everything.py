@@ -31,5 +31,5 @@ from webresources.tests import *
 
 from metadata.models import *
 from metadata.views import *
-from metadata.forms import *
+# from metadata.forms import *
 from metadata.tests import *
