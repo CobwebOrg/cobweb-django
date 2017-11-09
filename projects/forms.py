@@ -50,19 +50,17 @@ from webresources.models import Resource
 from projects.models import Project, Nomination
 
 
-
 editable_title = Layout(
     HTML("""
         {% load cobweb_look %}
-        <h3 class="title_plaintext col-lg-12 collapse show">
+        <h3 class="editable_title col-lg-12 collapse show">
             {{object.name}} 
-            <a class="btn" onclick="$('.title_field').collapse('show'); 
-                                    $('.title_plaintext').collapse('hide');">
+            <a class="btn" data-toggle="collapse" href=".editable_title">
                 {% icon 'edit' %}
             </a>
         </h3>
         """),
-    Field('name', wrapper_class="col-lg-12 title_field collapse"),
+    Field('name', wrapper_class="col-lg-12 editable_title collapse"),
 )
 
 class ProjectForm(forms.ModelForm):
