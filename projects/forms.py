@@ -85,12 +85,14 @@ class ProjectForm(forms.ModelForm):
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
             Fieldset('', editable_title, css_class='row my-2'),
+
             Fieldset('',
-                Div(
-                    Field('administered_by'), 
-                    Field('status'),
-                    css_class='col-lg-6',
-                ),
+                Field('status', wrapper_class='col-lg-5 pb-2'),
+                Field('administered_by', wrapper_class='col-lg-7 pb-2'),
+                css_class='row',
+            ),
+
+            Fieldset('',
                 Div(
                     Field('nomination_policy'), 
                     Field('nominators'), 

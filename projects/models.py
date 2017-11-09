@@ -12,7 +12,7 @@ from metadata.models import CobwebMetadataMixin
 class Project(CobwebMetadataMixin, models.Model):
     name = models.CharField('Name', max_length=500)
     administered_by = models.ManyToManyField(settings.AUTH_USER_MODEL,
-        related_name='projects_administered')
+        related_name='projects_administered', verbose_name='administrators')
 
     class NOMINATION_POLICY(Enum):
         anonymous = ('A', 'Anonymous')
