@@ -93,16 +93,16 @@ class ProjectForm(forms.ModelForm):
             ),
 
             Fieldset('',
+                Field('description', template='metadata_field.html'), 
+                Field('keywords', template='metadata_field.html'),
+            ),
+
+            Fieldset('',
                 Div(
                     Field('nomination_policy'), 
                     Field('nominators'), 
                     css_class='col-lg-6',
                 ),
-                css_class='row',
-            ),
-            Fieldset('',
-                Div(Field('description'), css_class='col-lg-6'), 
-                Div(Field('keywords'), css_class='col-lg'),
                 css_class='row',
             ),
             FormActions(
