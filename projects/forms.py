@@ -75,9 +75,13 @@ class ProjectForm(forms.ModelForm):
             'nominators': autocomplete.ModelSelect2Multiple(
                 url='user_autocomplete'
             ),
+            'nominator_blacklist': autocomplete.ModelSelect2Multiple(
+                url='user_autocomplete'
+            ),
             'keywords': autocomplete.ModelSelect2Multiple(
                 url='keyword_autocomplete'
             ),
+            'nomination_policy': forms.RadioSelect
         }
 
     def __init__(self, *args, **kwargs):
@@ -98,16 +102,17 @@ class ProjectForm(forms.ModelForm):
             ),
 
             Fieldset('',
-                Div(
-                    Field('nomination_policy'), 
-                    Field('nominators'), 
-                    css_class='col-lg-6',
+                Field('nomination_policy', wrapper_class='col-lg-5'), 
+                Column(
+                    UneditableField('nominators'), 
+                    Field('nominator_blacklist'),
                 ),
                 css_class='row',
             ),
             FormActions(
                 Button('cancel', 'Cancel'),
                 Submit('submit', 'Submit'),
+                css_class='float-right'
             ),
         )
 

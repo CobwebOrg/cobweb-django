@@ -15,9 +15,9 @@ class Project(CobwebMetadataMixin, models.Model):
         related_name='projects_administered', verbose_name='administrators')
 
     class NOMINATION_POLICY(Enum):
-        anonymous = ('A', 'Anonymous')
-        open_nom = ('O', 'Open')
-        restricted_nom = ('R', 'Restricted')
+        anonymous = ('A', "Anonymous: anyone can nominate, even if they're not logged in.")
+        open_nom = ('O', 'Open: anyone with a Cobweb account can nominate.')
+        restricted_nom = ('R', 'Restricted: only selected users can nominate.')
 
     nomination_policy = models.CharField(max_length=1, default='o',
         choices = [x.value for x in NOMINATION_POLICY])
