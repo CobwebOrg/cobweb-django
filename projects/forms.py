@@ -75,6 +75,9 @@ class ProjectForm(forms.ModelForm):
             'nominators': autocomplete.ModelSelect2Multiple(
                 url='user_autocomplete'
             ),
+            'nominator_blacklist': autocomplete.ModelSelect2Multiple(
+                url='user_autocomplete'
+            ),
             'keywords': autocomplete.ModelSelect2Multiple(
                 url='keyword_autocomplete'
             ),
@@ -100,13 +103,16 @@ class ProjectForm(forms.ModelForm):
 
             Fieldset('',
                 Field('nomination_policy', wrapper_class='col-lg-5'), 
-                Field('nominators', wrapper_class='col'), 
+                Column(
+                    UneditableField('nominators'), 
+                    Field('nominator_blacklist'),
+                ),
                 css_class='row',
             ),
             FormActions(
                 Button('cancel', 'Cancel'),
                 Submit('submit', 'Submit'),
-                css_class='flex-row-reverse'
+                css_class='float-right'
             ),
         )
 
