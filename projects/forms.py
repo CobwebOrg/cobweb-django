@@ -78,6 +78,7 @@ class ProjectForm(forms.ModelForm):
             'keywords': autocomplete.ModelSelect2Multiple(
                 url='keyword_autocomplete'
             ),
+            'nomination_policy': forms.RadioSelect
         }
 
     def __init__(self, *args, **kwargs):
@@ -98,16 +99,14 @@ class ProjectForm(forms.ModelForm):
             ),
 
             Fieldset('',
-                Div(
-                    Field('nomination_policy'), 
-                    Field('nominators'), 
-                    css_class='col-lg-6',
-                ),
+                Field('nomination_policy', wrapper_class='col-lg-5'), 
+                Field('nominators', wrapper_class='col'), 
                 css_class='row',
             ),
             FormActions(
                 Button('cancel', 'Cancel'),
                 Submit('submit', 'Submit'),
+                css_class='flex-row-reverse'
             ),
         )
 
