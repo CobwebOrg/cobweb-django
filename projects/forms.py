@@ -106,6 +106,7 @@ class ProjectForm(forms.ModelForm):
                 Column(
                     UneditableField('nominators'), 
                     Field('nominator_blacklist'),
+                    css_class='col-lg-7'
                 ),
                 css_class='row',
             ),
