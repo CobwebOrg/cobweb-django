@@ -164,8 +164,12 @@ class ProjectUpdateViewTests(TestCase):
     def test_included_fields(self):
         for field_name in ['name', 'administered_by', 'nomination_policy', 
                       'nominators', 'status', 'description', 'keywords']:
-            self.assertContains(self.response, f'id="id_{field_name}"', 
-                html=False)
+            try:
+                self.assertContains(self.response, f'id="id_{field_name}"', 
+                    html=False)
+            except AssertionError:
+                self.assertContains(self.response, f'id="div_id_{field_name}"',
+                    html=False)
 
     def test_permissions_to_edit_project(self):
         pass
