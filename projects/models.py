@@ -14,13 +14,21 @@ class Project(CobwebMetadataMixin, models.Model):
     administered_by = models.ManyToManyField(settings.AUTH_USER_MODEL,
         related_name='projects_administered', verbose_name='administrators')
 
-    class NOMINATION_POLICY(Enum):
-        anonymous = ('A', "Anonymous: anyone can nominate, even if they're not logged in.")
-        open_nom = ('O', 'Open: anyone with a Cobweb account can nominate.')
-        restricted_nom = ('R', 'Restricted: only selected users can nominate.')
+    NOMINATION_POLICY = {
+        'A': "Anonymous: anyone can nominate, even if they're not logged in.",
+        'O': 'Open: anyone with a Cobweb account can nominate.',
+        'R': 'Restricted: only selected users can nominate.',
+    }
+    nomination_policy = models.CharField(max_length=1, default='O',
+        choices = [(key, value) for key, value in NOMINATION_POLICY.items()])
 
-    nomination_policy = models.CharField(max_length=1, default='o',
-        choices = [x.value for x in NOMINATION_POLICY])
+    # class NOMINATION_POLICY(Enum):
+    #     anonymous = ('A', "Anonymous: anyone can nominate, even if they're not logged in.")
+    #     open_nom = ('O', 'Open: anyone with a Cobweb account can nominate.')
+    #     restricted_nom = ('R', 'Restricted: only selected users can nominate.')
+
+    # nomination_policy = models.CharField(max_length=1, default='o',
+    #     choices = [x.value for x in NOMINATION_POLICY])
 
     nominators = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True,
         related_name='projects_nominating')
@@ -28,12 +36,13 @@ class Project(CobwebMetadataMixin, models.Model):
     nominator_blacklist = models.ManyToManyField(settings.AUTH_USER_MODEL, 
         blank=True, related_name='projects_blacklisted')
 
-    class STATUS(Enum):
-        active = ('a', 'Active')
-        inactive = ('i', 'Inactive')
-        deleted = ('d', 'Deleted')
+    STATUS = {
+        'a': 'Active',
+        'i': 'Inactive',
+        'd': 'Deleted',
+    }
     status = models.CharField(max_length=1, default='a',
-        choices = [x.value for x in STATUS])
+        choices = [(key, value) for key, value in STATUS.items()])
     
     def __str__(self):
         return self.name or 'Project {}'.format(self.pk)
@@ -46,6 +55,12 @@ class Project(CobwebMetadataMixin, models.Model):
 
     def get_edit_url(self):
         return reverse('project_update', kwargs={'pk': self.pk})
+
+    def get_nomination_policy(self):
+        return self.NOMINATION_POLICY[self.nomination_policy]
+
+    def get_status(self):
+        return self.STATUS[self.status]
 
     def is_admin(self, user):
         return user in self.administered_by.all()

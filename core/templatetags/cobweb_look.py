@@ -29,6 +29,8 @@ ICONS = defaultdict(str, {
 def add_nomination_link(item, user):
     if item.is_nominator(user):
         return {'link_url': item.get_add_nomination_url()}
+    else:
+        return {}
 
 @register.inclusion_tag('edit_link.html')
 def edit_link(item, user):

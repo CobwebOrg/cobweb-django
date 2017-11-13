@@ -102,17 +102,23 @@ class ProjectDetailViewTests(TestCase):
         """A 'nominate' link should be shown if logged-in user is authorized,
         otherwise hidden."""
 
+        ### ANONYMOUS NOMINATION POLICY
+
+        self.test_instance.nomination_policy = 'A'
+        self.test_instance.save()
+
+        # Anonymous User
         self.client.logout()
         response = self.client.get(self.test_instance.get_absolute_url())
-        self.assertNotContains(response, 'Add a nomination')
-        self.assertNotContains(response, reverse('nominate', 
+        self.assertContains(response, 'Add a nomination')
+        self.assertContains(response, reverse('nominate', 
             kwargs={'project_id': self.test_instance.pk}))
 
         outside_user = UserFactory()
         self.client.force_login(outside_user)
         response = self.client.get(self.test_instance.get_absolute_url())
-        self.assertNotContains(response, 'Add a nomination')
-        self.assertNotContains(response, reverse('nominate', 
+        self.assertContains(response, 'Add a nomination')
+        self.assertContains(response, reverse('nominate', 
             kwargs={'project_id': self.test_instance.pk}))
 
         admin_user = UserFactory()
@@ -124,11 +130,91 @@ class ProjectDetailViewTests(TestCase):
             kwargs={'project_id': self.test_instance.pk}))
 
         nominator = UserFactory()
-        self.test_instance.administered_by.add(nominator)
+        self.test_instance.nominators.add(nominator)
         self.client.force_login(nominator)
         response = self.client.get(self.test_instance.get_absolute_url())
         self.assertContains(response, 'Add a nomination')
         self.assertContains(response, reverse('nominate', 
+            kwargs={'project_id': self.test_instance.pk}))
+
+        blacklisted_user = UserFactory()
+        self.test_instance.nominator_blacklist.add(blacklisted_user)
+        self.client.force_login(blacklisted_user)
+        response = self.client.get(self.test_instance.get_absolute_url())
+        self.assertNotContains(response, 'Add a nomination')
+        self.assertNotContains(response, reverse('nominate', 
+            kwargs={'project_id': self.test_instance.pk}))
+
+        ### OPEN NOMINATION POLICY
+
+        self.test_instance.nomination_policy = 'O'
+        self.test_instance.save()
+
+        # Anonymous User
+        self.client.logout()
+        response = self.client.get(self.test_instance.get_absolute_url())
+        self.assertNotContains(response, 'Add a nomination')
+        self.assertNotContains(response, reverse('nominate', 
+            kwargs={'project_id': self.test_instance.pk}))
+
+        self.client.force_login(outside_user)
+        response = self.client.get(self.test_instance.get_absolute_url())
+        self.assertContains(response, 'Add a nomination')
+        self.assertContains(response, reverse('nominate', 
+            kwargs={'project_id': self.test_instance.pk}))
+
+        self.client.force_login(admin_user)
+        response = self.client.get(self.test_instance.get_absolute_url())
+        self.assertContains(response, 'Add a nomination')
+        self.assertContains(response, reverse('nominate', 
+            kwargs={'project_id': self.test_instance.pk}))
+
+        self.client.force_login(nominator)
+        response = self.client.get(self.test_instance.get_absolute_url())
+        self.assertContains(response, 'Add a nomination')
+        self.assertContains(response, reverse('nominate', 
+            kwargs={'project_id': self.test_instance.pk}))
+
+        self.client.force_login(blacklisted_user)
+        response = self.client.get(self.test_instance.get_absolute_url())
+        self.assertNotContains(response, 'Add a nomination')
+        self.assertNotContains(response, reverse('nominate', 
+            kwargs={'project_id': self.test_instance.pk}))
+
+        ### RESTRICTED NOMINATION POLICY
+
+        self.test_instance.nomination_policy = 'R'
+        self.test_instance.save()
+
+        # Anonymous User
+        self.client.logout()
+        response = self.client.get(self.test_instance.get_absolute_url())
+        self.assertNotContains(response, 'Add a nomination')
+        self.assertNotContains(response, reverse('nominate', 
+            kwargs={'project_id': self.test_instance.pk}))
+
+        self.client.force_login(outside_user)
+        response = self.client.get(self.test_instance.get_absolute_url())
+        self.assertNotContains(response, 'Add a nomination')
+        self.assertNotContains(response, reverse('nominate', 
+            kwargs={'project_id': self.test_instance.pk}))
+
+        self.client.force_login(admin_user)
+        response = self.client.get(self.test_instance.get_absolute_url())
+        self.assertContains(response, 'Add a nomination')
+        self.assertContains(response, reverse('nominate', 
+            kwargs={'project_id': self.test_instance.pk}))
+
+        self.client.force_login(nominator)
+        response = self.client.get(self.test_instance.get_absolute_url())
+        self.assertContains(response, 'Add a nomination')
+        self.assertContains(response, reverse('nominate', 
+            kwargs={'project_id': self.test_instance.pk}))
+
+        self.client.force_login(blacklisted_user)
+        response = self.client.get(self.test_instance.get_absolute_url())
+        self.assertNotContains(response, 'Add a nomination')
+        self.assertNotContains(response, reverse('nominate', 
             kwargs={'project_id': self.test_instance.pk}))
 
 
