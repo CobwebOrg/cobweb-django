@@ -1,7 +1,7 @@
 from collections import defaultdict
 from django import template
-from django.utils.html import conditional_escape, format_html
-from django.utils.safestring import mark_safe
+# from django.utils.html import conditional_escape, format_html
+# from django.utils.safestring import mark_safe
 
 
 register = template.Library()
@@ -16,7 +16,7 @@ ICONS = defaultdict(str, {
     'Claim': 'fa-sign-in',
     'Holding': 'fa-inbox',
 
-    'profile': 'fa-id-card', #'fa-id-card-o',
+    'profile': 'fa-id-card',
 
     'close': ' fa-institution fa-remove',
     'edit':  'fa-pencil-square-o',
@@ -25,12 +25,14 @@ ICONS = defaultdict(str, {
     'search': 'fa-search',
 })
 
+
 @register.inclusion_tag('add_nomination_link.html')
 def add_nomination_link(item, user):
     if item.is_nominator(user):
         return {'link_url': item.get_add_nomination_url()}
     else:
         return {}
+
 
 @register.inclusion_tag('edit_link.html')
 def edit_link(item, user):
@@ -39,15 +41,18 @@ def edit_link(item, user):
     else:
         return dict()
 
+
 @register.inclusion_tag('icon.html')
 def icon(icon_name):
     return {'icon': ICONS[icon_name]}
+
 
 @register.inclusion_tag('core/metadata_card.html')
 def metadata_card(item, title=None):
     if title is None:
         title = str(item)
     return {'item': item, 'title': title}
+
 
 @register.inclusion_tag('pill.html')
 def pill(item):
@@ -56,13 +61,16 @@ def pill(item):
         'item': item
      }
 
+
 @register.filter
 def resourceset_model_name(item):
     return item.get_resource_set()._meta.verbose_name
 
+
 @register.inclusion_tag('searchbar.html')
 def searchbar(view_name):
-    return { 'view_name': view_name }
+    return {'view_name': view_name}
+
 
 @register.filter
 def model_name(item):
