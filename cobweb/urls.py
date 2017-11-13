@@ -83,7 +83,7 @@ urlpatterns = [
     url(r'^resources/', include('webresources.urls')),
 
     # Auth
-    url(r'^', include('django.contrib.auth.urls')),
+    url(r'^accounts/', include('django.contrib.auth.urls')),
 
     url(r'^admin/?', admin.site.urls),
 ]
