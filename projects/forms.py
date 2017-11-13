@@ -70,16 +70,20 @@ class ProjectForm(forms.ModelForm):
         fields = ('__all__')
         widgets = {
             'administered_by': autocomplete.ModelSelect2Multiple(
-                url='user_autocomplete'
+                url='user_autocomplete',
+                attrs={'data-allow-clear': 'false'},
             ),
             'nominators': autocomplete.ModelSelect2Multiple(
-                url='user_autocomplete'
+                url='user_autocomplete',
+                attrs={'data-allow-clear': 'false'},
             ),
             'nominator_blacklist': autocomplete.ModelSelect2Multiple(
-                url='user_autocomplete'
+                url='user_autocomplete',
+                attrs={'data-allow-clear': 'false'},
             ),
             'keywords': autocomplete.ModelSelect2Multiple(
-                url='keyword_autocomplete'
+                url='keyword_autocomplete',
+                attrs={'data-allow-clear': 'false'},
             ),
             'nomination_policy': forms.RadioSelect
         }

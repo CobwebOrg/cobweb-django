@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
-{% block window_title %}Cobweb: {{page_title}}{% endblock %}
+{% block window_title %}Cobweb: {{object.name}}{% endblock %}
 
 {% block content %}
 {% crispy form %}
