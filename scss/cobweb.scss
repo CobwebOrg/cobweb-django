@@ -30,7 +30,7 @@ $gray-600:  #999999;  // bootstrap "gray"
 $gray-800:  #444444;  // bootstrap "gray-dark"
 
 
-$primary:   $cyan;
+$primary:   #4ea29a;
 $secondary: $purple;
 $success:   $green;
 $info:      $lime;
@@ -39,6 +39,8 @@ $danger:    $red;
 $light:     #f8f9fa;
 $dark:      #343a40;
 
-
+$theme-colors: (
+  "ltlime":  $ltlime
+);
 
 @import "/Users/andy/cobweb-django/bootstrap/scss/bootstrap.scss";
