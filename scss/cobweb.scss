@@ -24,13 +24,13 @@ $cyan:      #62aca5;
 $lime:      #aac066;
 
 $ltcyan:    #a9d8ca;
-$ltlime:    #dde1a0;
+$ltlime:    lighten(#dde1a0, 15%);
 
 $gray-600:  #999999;  // bootstrap "gray"
 $gray-800:  #444444;  // bootstrap "gray-dark"
 
 
-$primary:   #4ea29a;
+$primary:   darken(#4ea29a, 10%);
 $secondary: $purple;
 $success:   $green;
 $info:      $lime;
