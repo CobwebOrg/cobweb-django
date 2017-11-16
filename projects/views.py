@@ -54,6 +54,12 @@ class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
         candidate.save()
         return super().form_valid(form)
 
+    def get_initial(self):
+        return {
+            'nominated_by': self.request.user,
+            'project': self.get_project(),
+        }
+
     def get_project(self):
         return models.Project.objects.get(pk=self.kwargs['project_id'])
 
@@ -75,11 +81,17 @@ class ResourceNominateView(RevisionMixin, CreateView):
         candidate.save()
         return super().form_valid(form)
 
+    def get_initial(self):
+        return {
+            'nominated_by': self.request.user,
+            'resource': self.kwargs['url'],
+        }
+
     def get_resource(self):
         try:
             obj = Resource.objects.get(url=self.kwargs['url'])
         except Resource.DoesNotExist:
-            obj = Resource(url=url)
+            obj = Resource(url=self.kwargs['url'])
         except Exception as ex:
             raise ex
 

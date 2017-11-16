@@ -27,12 +27,6 @@ class Resource(models.Model):
     url = NormalizedURLField(max_length=1000, null=False, blank=False, 
         unique=True)
 
-    projects = models.ManyToManyField(
-        'projects.Project',
-        through='projects.Nomination',
-        related_name='nominated_resources'
-    )
-
     
     def __str__(self):
         return self.get_url()

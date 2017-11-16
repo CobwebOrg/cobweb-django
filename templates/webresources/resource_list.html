@@ -7,19 +7,19 @@
 
 {% block content %}
 
-{% searchbar 'webresources:list' %}
+<div class="mt-2 mb-3">{% searchbar 'webresources:list' %}</div>
 
 {% if search_resource %}
-	<div><h1>{{ search_resource.url }}</h1></div>
-	<p>
+	<div>
+		<h3>{{ search_resource.url }}</h3>
 	      <a href="{{ search_resource.get_absolute_url }}">Detail</a> 
 	    | <a href="{% url 'nominate_resource' url=search_resource.url %}">Nominate</a>
 	    | Claim
-   </p>
+	</div>
 {% elif request.GET.q %}
-	<div><h1>{{ request.GET.q }}</h1></div>
+	<div><h3>{{ request.GET.q }}</h3></div>
 {% else %}
-	<div><h1>All Resources</h1></div>
+	<div><h3>All Resources</h3></div>
 {% endif %}
 
 {% render_table table %}

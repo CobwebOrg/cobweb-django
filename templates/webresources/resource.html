@@ -1,18 +1,24 @@
 {% extends "base.html" %}
 {% load cobweb_look %}
 
-{% block title %}Cobweb: {{ object.url }}{% endblock %}
+{% block title %}Cobweb: {{ resource.url }}{% endblock %}
 
 {% block content %}
 
-<h1 class="">{{ object.url }}</h1>
+<h3 class="">{{ resource.url }}</h3>
 
-<div class="card card_body"
-	<a href="{% url 'nominate_resource' url=object.url %}">Nominate to another project.</a>
+<div class="row">
+	<div class="col">
+		{# <div class="card card_body" #}
+			<a href="{% url 'nominate_resource' url=resource.url %}">Nominate to another project.</a>
+		{# </div> #}
+	</div>
 </div>
-
-{% for resource_record in object.get_resource_records %}
-    {% metadata_card resource_record %}
-{% endfor %}
-
+<div class="row">
+	{% for resource_record in resource.get_resource_records %}
+	    <div class="col-lg-6 p-3">
+    		{% metadata_card resource_record exclude='resource' %}
+		</div>
+	{% endfor %}
+</div>
 {% endblock %}

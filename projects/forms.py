@@ -122,10 +122,12 @@ class ProjectForm(forms.ModelForm):
         )
 
 class NominationForm(forms.ModelForm):
+        
+    resource = forms.URLField(widget=forms.URLInput, initial='http://')
 
     class Meta:
         model = Nomination
-        fields = ['resource', 'project', 'description', 'keywords', 'metadata']
+        fields = ['resource', 'project', 'description', 'keywords']
         exclude = []
         fields = ('__all__')
         widgets = {
@@ -138,7 +140,17 @@ class NominationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-        self.helper.add_input(layout.Submit('submit', 'Submit'))
+        self.helper.layout = Layout(
+            Field('resource', template='metadata_field.html'),
+            Field('project', template='metadata_field.html'),
+            Field('description', template='metadata_field.html'),
+            Field('keywords', template='metadata_field.html'),
+            FormActions(
+                Button('cancel', 'Cancel'),
+                Submit('submit', 'Submit'),
+                css_class='float-right'
+            ),
+        )
 
     def clean_resource(self):
         url = self.cleaned_data.get("resource")
@@ -150,12 +162,12 @@ class NominationForm(forms.ModelForm):
 class NominateToProjectForm(NominationForm):
 
     class Meta(NominationForm.Meta):
-        exclude = ['project']
-        
-    resource = forms.URLField(widget=forms.URLInput, initial='http://')
+        fields = ['resource', 'project', 'description', 'keywords']
 
 class ResourceNominateForm(NominationForm):
 
     class Meta(NominationForm.Meta):
-        exclude = ['resource']
-            
+        fields = ['resource', 'project', 'description', 'keywords']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)

@@ -3,13 +3,14 @@
 {# {% load humanize %} #}
 {% load cobweb_look %}
 
-{% block page_title %}{{ object.name }}{% endblock %}
-{% block title %}{{ object.name }}{% endblock %}
+{% block page_title %}{{ project.name }}{% endblock %}
+{% block title %}{{ project.name }}{% endblock %}
 
 {% block content %}
 <div class="row">
-<h3 class="editable_title col-lg-12 collapse show">{{project.name}}{% edit_link object user %}
-</h3>
+	<h3 class="editable_title col-lg-12 collapse show">
+		{{project.name}}{% edit_link project user %}
+	</h3>
 </div>
 
 <div>
@@ -63,10 +64,21 @@
 
 <h4>Nominations</h4>
 
+<div class="float-right">{% add_nomination_link project user %}</div>
+
 <ul>
-	{% add_nomination_link object user %}
-	{% for resource in object.nominated_resources.distinct %}
-	  <li>{{resource}}</li>
+	{% for nomination in project.some_nominations %}
+		{# {% metadata_card nomination} #}
+		<li>
+			<a href="{{nomination.resource.get_absolute_url}}">
+			  	{{nomination.resource}}
+			</a>
+		  	<small>
+		  		{% for keyword in nomination.keywords.all %}
+			  		{% pill keyword %}
+			  	{% endfor %}
+			</small>
+		</li>
 	{% endfor %}
 </ul>
 

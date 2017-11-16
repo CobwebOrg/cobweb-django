@@ -66,7 +66,7 @@ urlpatterns = [
     url(r'^project/(?P<project_id>\d+)/nominate/$', 
         projects.views.NominationCreateView.as_view(), 
         name='nominate'),
-    url(r'^nominate/\*/(?P<url>.+)$', 
+    url(r'^nominate/(?P<url>.+)$', 
         projects.views.ResourceNominateView.as_view(),
         name='nominate_resource'),
 

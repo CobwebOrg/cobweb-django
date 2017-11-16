@@ -1,11 +1,9 @@
 {% load cobweb_look %}
 
 <div class="card">
-    <div class="card-header">
-        <h2 class="card-title">{{title}}</h2>
-    </div>
-
     <div class="card-body">
+        <h4>Nomination</h4>
+        in {{item.project | as_link}}
         {% if item.description or item.keywords %}
             {% if item.description %}
                 <p>{{ item.description }}</p>
@@ -14,9 +12,11 @@
             {% endif %}
 
             {% if item.keywords %}
-                {% for keyword in item.keywords.all %}
-                    {% pill keyword %}
-                {% endfor %}
+                <p>
+                    {% for keyword in item.keywords.all %}
+                        {% pill keyword %}
+                    {% endfor %}
+                </p>
             {% endif %}
         {% else %}
             <p>No metadata.</p>

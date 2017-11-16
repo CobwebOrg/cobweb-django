@@ -1,6 +1,6 @@
 from collections import defaultdict
 from django import template
-# from django.utils.html import conditional_escape, format_html
+from django.utils.html import format_html  # , conditional_escape
 # from django.utils.safestring import mark_safe
 
 
@@ -34,6 +34,15 @@ def add_nomination_link(item, user):
         return {}
 
 
+@register.filter
+def as_link(item):
+    return format_html(
+        '<a href="{url}">{item}</a>',
+        item=item,
+        url=item.get_absolute_url()
+    )
+
+
 @register.inclusion_tag('edit_link.html')
 def edit_link(item, user):
     if item.is_admin(user):
@@ -48,10 +57,9 @@ def icon(icon_name):
 
 
 @register.inclusion_tag('core/metadata_card.html')
-def metadata_card(item, title=None):
-    if title is None:
-        title = str(item)
-    return {'item': item, 'title': title}
+def metadata_card(item, **kwargs):
+    kwargs['item'] = item
+    return kwargs
 
 
 @register.inclusion_tag('pill.html')

@@ -1,6 +1,4 @@
 import reversion
-from enum import Enum
-from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.urls import reverse
 
@@ -11,16 +9,21 @@ from metadata.models import CobwebMetadataMixin
 @reversion.register()
 class Project(CobwebMetadataMixin, models.Model):
     name = models.CharField('Name', max_length=500)
-    administered_by = models.ManyToManyField(settings.AUTH_USER_MODEL,
-        related_name='projects_administered', verbose_name='administrators')
+    administered_by = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name='projects_administered',
+        verbose_name='administrators'
+    )
 
     NOMINATION_POLICY = {
         'A': "Anonymous: anyone can nominate, even if they're not logged in.",
         'O': 'Open: anyone with a Cobweb account can nominate.',
         'R': 'Restricted: only selected users can nominate.',
     }
-    nomination_policy = models.CharField(max_length=1, default='O',
-        choices = [(key, value) for key, value in NOMINATION_POLICY.items()])
+    nomination_policy = models.CharField(
+        max_length=1, default='O',
+        choices=[(key, value) for key, value in NOMINATION_POLICY.items()]
+    )
 
     # class NOMINATION_POLICY(Enum):
     #     anonymous = ('A', "Anonymous: anyone can nominate, even if they're not logged in.")
@@ -30,11 +33,16 @@ class Project(CobwebMetadataMixin, models.Model):
     # nomination_policy = models.CharField(max_length=1, default='o',
     #     choices = [x.value for x in NOMINATION_POLICY])
 
-    nominators = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True,
-        related_name='projects_nominating')
+    nominators = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, blank=True,
+        related_name='projects_nominating',
+    )
 
-    nominator_blacklist = models.ManyToManyField(settings.AUTH_USER_MODEL, 
-        blank=True, related_name='projects_blacklisted')
+    nominator_blacklist = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        blank=True,
+        related_name='projects_blacklisted',
+    )
 
     STATUS = {
         'a': 'Active',
@@ -44,6 +52,9 @@ class Project(CobwebMetadataMixin, models.Model):
     status = models.CharField(max_length=1, default='a',
         choices = [(key, value) for key, value in STATUS.items()])
     
+    def some_nominations(self):
+        return self.nominations.all().order_by('-id')[:20]
+
     def __str__(self):
         return self.name or 'Project {}'.format(self.pk)
     
@@ -80,7 +91,7 @@ class Project(CobwebMetadataMixin, models.Model):
 class Nomination(CobwebMetadataMixin, models.Model):
     resource = models.ForeignKey('webresources.Resource', 
         on_delete=models.PROTECT, related_name='nominations')
-    project = models.ForeignKey(Project)
+    project = models.ForeignKey(Project, related_name='nominations')
     nominated_by = models.ForeignKey(settings.AUTH_USER_MODEL,
         on_delete=models.PROTECT)
     
