@@ -1,5 +1,4 @@
-from django.core.management.base import BaseCommand, CommandError
-from django.utils import timezone
+from django.core.management.base import BaseCommand
 import random
 
 from datasources import models
@@ -14,8 +13,8 @@ class Command(BaseCommand):
             archiveit.harvest()
 
         print("picking a random APIEndpoint...")
-        api_endpoints = [ api for api in models.APIEndpoint.objects.all()
-            if api != archiveit ]
+        api_endpoints = [api for api in models.APIEndpoint.objects.all()
+                         if api != archiveit]
 
         random.choice(api_endpoints).harvest()
 

@@ -11,13 +11,15 @@ from core import models
 
 admin.site.unregister(auth.models.Group)
 
+
 @admin.register(auth.get_user_model())
 class UserAdmin(VersionAdmin, auth.admin.UserAdmin):
     pass
-    
+
+
 @admin.register(models.Organization)
 class OrganizationAdmin(VersionAdmin):
-    inlines = [ CollectionInline, APIEndpointInline ]
+    inlines = [CollectionInline, APIEndpointInline]
 
     formfield_overrides = {
         postgres_fields.JSONField: {'widget': JSONEditorWidget},

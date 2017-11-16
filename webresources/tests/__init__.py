@@ -4,8 +4,8 @@ from webresources.models import Resource
 
 
 class ResourceFactory(DjangoModelFactory):
-	class Meta:
-		model = Resource
-		django_get_or_create = [ 'url', ]
+    class Meta:
+        model = Resource
+        django_get_or_create = ['url']
 
-	url = Faker('url')
+    url = Faker('url')

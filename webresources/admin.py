@@ -6,6 +6,7 @@ from archives.admin_inlines import ClaimInline, HoldingInline
 
 from webresources.models import Resource
 
+
 @admin.register(Resource)
 class ResourceAdmin(VersionAdmin):
-    inlines = [ NominationInline, ClaimInline, HoldingInline ]
+    inlines = [NominationInline, ClaimInline, HoldingInline]

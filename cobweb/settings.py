@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,11 +28,11 @@ DEBUG = True
 
 # INTERNAL_IPS = ['127.0.0.1']
 INTERNAL_IPS = ['72.18.0.1']
-ALLOWED_HOSTS =  [
+ALLOWED_HOSTS = [
     'cobweb-dev.xvkpjfy2kp.us-west-2.elasticbeanstalk.com',
     'cobweb-dev-staging.xvkpjfy2kp.us-west-2.elasticbeanstalk.com',
     'cranium.us-west-2.elasticbeanstalk.com',
-     'localhost', 'testserver', '127.0.0.1', '[::1]'
+    'localhost', 'testserver', '127.0.0.1', '[::1]',
 ]
 
 
@@ -47,7 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     'django.contrib.humanize',
     'django_extensions',
     'crispy_forms',
@@ -57,8 +58,8 @@ INSTALLED_APPS = [
 
     # don't add debug_toolbar here - it causes error during view tests
     # see bottom of page
-    # 'debug_toolbar', 
-    
+    # 'debug_toolbar',
+
     'core',
     'projects',
     'archives',
@@ -86,7 +87,7 @@ ROOT_URLCONF = 'cobweb.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "templates"),],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -150,7 +151,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend', # default
+    'django.contrib.auth.backends.ModelBackend',  # default
 )
 
 AUTH_USER_MODEL = 'core.User'
@@ -175,13 +176,12 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [ os.path.join(BASE_DIR, "static"), ]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
 
-import sys
 TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
 
 # Use debug toolbar on local dev machine only

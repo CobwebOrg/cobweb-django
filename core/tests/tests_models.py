@@ -19,35 +19,36 @@ class UserModelTests(TestCase):
         """Tests that str(object) always returns a str."""
         self.assertIsInstance(str(self.test_instance), str)
 
-        # Make sure it works even if the usual fields are blank
-        try:
-            self.assertIsInstance(
-                str(UserFactory(first_name=None, last_name=None, username=None)),
-                str,
-            )
-        except:
-            pass
+        # # Make sure it works even if the usual fields are blank
+        # try:
+        #     self.assertIsInstance(
+        #         str(UserFactory(first_name=None, last_name=None,
+        #                         username=None)),
+        #         str,
+        #     )
+        # except:
+        #     pass
 
     def test_get_projects_and_collections(self):
         """Tests that User.get_projects_and_collections() returns the set of
         Projects the user can nominate to and (in future, not yet implemented)
         Collections they can claim on behalf of."""
 
-        anonymous_project = ProjectFactory(nomination_policy = 'A', 
-            name = 'anonymous_project')
+        anonymous_project = ProjectFactory(nomination_policy='A',
+                                           name='anonymous_project')
         anonymous_project.save()
 
-        open_project = ProjectFactory(nomination_policy = 'O', 
-            name = 'open_project')
+        open_project = ProjectFactory(nomination_policy='O',
+                                      name='open_project')
         open_project.save()
 
-        admin_project = ProjectFactory(nomination_policy = 'R', 
-            name = 'admin_project')
+        admin_project = ProjectFactory(nomination_policy='R',
+                                       name='admin_project')
         admin_project.save()
         admin_project.administered_by.add(self.test_instance)
 
-        nominator_project = ProjectFactory(nomination_policy = 'R', 
-            name = 'nominator_project')
+        nominator_project = ProjectFactory(nomination_policy='R',
+                                           name='nominator_project')
         nominator_project.save()
         nominator_project.nominators.add(self.test_instance)
 
@@ -58,16 +59,16 @@ class UserModelTests(TestCase):
             nominator_project,
         ]
 
-        not_nominator_project = ProjectFactory(nomination_policy = 'R', 
-            name = 'not_nominator_project')
+        not_nominator_project = ProjectFactory(nomination_policy='R',
+                                               name='not_nominator_project')
         not_nominator_project.save()
 
-        blacklisted_project = ProjectFactory(nomination_policy = 'O', 
-            name = 'blacklisted_project')
+        blacklisted_project = ProjectFactory(nomination_policy='O',
+                                             name='blacklisted_project')
         blacklisted_project.save()
         blacklisted_project.nominator_blacklist.add(self.test_instance)
 
-        excluded_projects = [ 
+        excluded_projects = [
             not_nominator_project,
             blacklisted_project,
         ]
@@ -80,6 +81,7 @@ class UserModelTests(TestCase):
 
         for project in excluded_projects:
             self.assertNotIn(project, queryset)
+
 
 class OrganizationModelTests(TestCase):
 
@@ -95,11 +97,11 @@ class OrganizationModelTests(TestCase):
         """Tests that str(object) always returns a str."""
         self.assertIsInstance(str(self.test_instance), str)
 
-        # Make sure it works even if the usual fields are blank
-        try:
-            self.assertIsInstance(
-                str(OrganizationFactory(name=None, identifier=None)),
-                str,
-            )
-        except:
-            pass
+        # # Make sure it works even if the usual fields are blank
+        # try:
+        #     self.assertIsInstance(
+        #         str(OrganizationFactory(name=None, identifier=None)),
+        #         str,
+        #     )
+        # except:
+        #     pass

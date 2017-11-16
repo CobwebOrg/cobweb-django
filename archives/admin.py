@@ -8,11 +8,11 @@ from metadata.admin import MetadataAdminMixin
 
 from archives import models, admin_inlines
 
-       
-@admin.register(models.Collection)  
+
+@admin.register(models.Collection)
 class CollectionAdmin(MetadataAdminMixin, VersionAdmin):
     fields = ['name', 'organization', 'identifier'] + MetadataAdminMixin.fields
-    inlines = [ 
+    inlines = [
         admin_inlines.ClaimInline,
         admin_inlines.HoldingInline,
     ]
@@ -21,6 +21,7 @@ class CollectionAdmin(MetadataAdminMixin, VersionAdmin):
         postgres_fields.JSONField: {'widget': JSONEditorWidget},
     }
 
+
 @admin.register(models.Claim)
 class ClaimAdmin(VersionAdmin):
 
@@ -28,29 +29,33 @@ class ClaimAdmin(VersionAdmin):
         postgres_fields.JSONField: {'widget': JSONEditorWidget},
     }
 
+
 @admin.register(models.Holding)
 class HoldingAdmin(VersionAdmin):
-    readonly_fields = [ 'resource_link' ]
+    readonly_fields = ['resource_link']
 
     formfield_overrides = {
         postgres_fields.JSONField: {'widget': JSONEditorWidget},
     }
-    
+
     def resource_link(self, instance):
         if instance.id:
-            changeform_url = reverse('admin:webresources_resource_change', 
-                args=(instance.resource.id,))
-            return '<a href="{changeform_url}" target="_blank">{resource}</a>'.format(
-                changeform_url = changeform_url,
-                resource = instance.resource,
+            changeform_url = reverse('admin:webresources_resource_change',
+                                     args=(instance.resource.id,))
+            return (
+                '<a href="{changeform_url}" target="_blank">{resource}</a>'
+                .format(
+                    changeform_url=changeform_url,
+                    resource=instance.resource,
+                )
             )
         else:
             return u''
     resource_link.allow_tags = True
     resource_link.short_description = 'Resource'
-    
+
     fields = [
-        'resource_link', 
+        'resource_link',
         'collection',
         'description',
         'keywords',

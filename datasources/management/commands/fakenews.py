@@ -30,7 +30,9 @@ def import_project(data_csv):
             nominated_by=random.choice(users),
         )[0]
         for keyword in data:
-            nomination.keywords.add(Keyword.objects.get_or_create(name=keyword)[0])
+            nomination.keywords.add(
+                Keyword.objects.get_or_create(name=keyword)[0]
+            )
         print(data_line, nomination.id, nomination.resource.url,
               nomination.keywords.all())
 

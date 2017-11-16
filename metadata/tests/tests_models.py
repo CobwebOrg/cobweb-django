@@ -14,4 +14,3 @@ class KeywordModelTests(TestCase):
     def test_str(self):
         """Tests that str(object) always returns a str."""
         self.assertIsInstance(str(self.test_instance), str)
-        

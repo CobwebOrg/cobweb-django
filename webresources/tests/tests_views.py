@@ -11,6 +11,7 @@ from webresources import models, tests, views
 class ResourceIndexViewTests(TestCase):
     pass
 
+
 class ResourceDetailViewTests(TestCase):
 
     def setUp(self):
@@ -26,10 +27,10 @@ class ResourceDetailViewTests(TestCase):
 
     def test_get(self):
         """
-        Tests that ResourceDetailView.get(...) performs URL normalization as 
+        Tests that ResourceDetailView.get(...) performs URL normalization as
         follows:
 
-        1. If url parameter is valid, or if called w/ id/pk instead of url, 
+        1. If url parameter is valid, or if called w/ id/pk instead of url,
         invoke super().get(...)
 
         2. If url is valid but non-cannonical (i.e. url ~= normalize_url(url) )
@@ -37,7 +38,7 @@ class ResourceDetailViewTests(TestCase):
 
         3. If url is not valid, return a 404 or something [not implemented yet]
 
-        Note that case #1 includes urls that are not yet in the database – 
+        Note that case #1 includes urls that are not yet in the database –
         custom logic for these cases in defined in .get_object(), which is
         invoked from the superclass's .get()
         """
@@ -58,16 +59,16 @@ class ResourceDetailViewTests(TestCase):
     def test_get_object(self):
         """
         Tests that get_object(valid_url) always returns a Resource object.
-        If such an object doesn't exist in the db yet, it will be created but 
+        If such an object doesn't exist in the db yet, it will be created but
         not saved.
 
-        This allows the ResourceDetailView to provide information such as 
+        This allows the ResourceDetailView to provide information such as
         parent/child resources, along with forms for nominating/claiming it
-        (in which case the Resource should be saved along w/ Nomination or 
+        (in which case the Resource should be saved along w/ Nomination or
         Claim object).
         """
 
-        url = models.normalize_url( Faker().url() )
+        url = models.normalize_url(Faker().url())
         self.assertEqual(
             models.Resource.objects.filter(url__exact=url).count(), 0)
         new_resource = views.ResourceDetailView(
@@ -77,4 +78,3 @@ class ResourceDetailViewTests(TestCase):
         saved_resource = views.ResourceDetailView(
             kwargs={'url': self.url}).get_object()
         self.assertIsNotNone(saved_resource.id)
-

@@ -11,9 +11,11 @@ class ProjectIndexView(ListView):
     model = models.Project
     template_name = "project_list.html"
 
+
 class ProjectDetailView(DetailView):
     model = models.Project
     template_name = "project.html"
+
 
 class ProjectCreateView(LoginRequiredMixin, RevisionMixin, CreateView):
     model = models.Project
@@ -25,7 +27,8 @@ class ProjectCreateView(LoginRequiredMixin, RevisionMixin, CreateView):
     #     candidate.administered_by.add(self.request.user)
 
     #     candidate.save()
-    #     return super().form_valid(form)    
+    #     return super().form_valid(form)
+
 
 class ProjectUpdateView(UserPassesTestMixin, RevisionMixin, UpdateView):
     model = models.Project
@@ -35,9 +38,11 @@ class ProjectUpdateView(UserPassesTestMixin, RevisionMixin, UpdateView):
     def test_func(self):
         return self.get_object().is_admin(self.request.user)
 
+
 class NominationDetailView(DetailView):
     model = models.Nomination
     template_name = 'nomination_detail.html'
+
 
 class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
     model = models.Nomination
@@ -65,6 +70,7 @@ class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
 
     def test_func(self):
         return self.get_project().is_nominator(self.request.user)
+
 
 class ResourceNominateView(RevisionMixin, CreateView):
     model = models.Nomination
@@ -100,4 +106,3 @@ class ResourceNominateView(RevisionMixin, CreateView):
     def test_func(self):
         return True
         # return self.get_project().is_nominator(self.request.user)
-        

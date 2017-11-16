@@ -1,4 +1,4 @@
-from factory import DjangoModelFactory, SubFactory, Faker
+from factory import DjangoModelFactory, Faker
 
 from metadata import models
 
@@ -8,4 +8,3 @@ class KeywordFactory(DjangoModelFactory):
         model = models.Keyword
 
     name = Faker('word')
-

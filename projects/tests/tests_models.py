@@ -19,6 +19,7 @@ class ProjectModelTests(TestCase):
     def test_is_nominator_function(self):
         pass
 
+
 class NominationModelTests(TestCase):
 
     def setUp(self):

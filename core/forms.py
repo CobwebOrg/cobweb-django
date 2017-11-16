@@ -1,7 +1,6 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms import layout
 from django.forms import EmailField
-from django.contrib import auth
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 
@@ -27,4 +26,3 @@ class UserForm(UserCreationForm):
     class Meta:
         model = get_user_model()
         fields = ("username", "email", "password1", "password2")
-

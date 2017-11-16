@@ -1,11 +1,7 @@
 import factory
 
-from django.contrib import auth
 from django.contrib.auth import get_user_model
-from django.db.models.signals import post_save
-from django.test import TestCase
 
-from core import forms
 from core.models import Organization
 
 
@@ -20,10 +16,11 @@ class UserFactory(factory.DjangoModelFactory):
     password = factory.Faker('password')
     is_superuser = False
 
-class OrganizationFactory(factory.DjangoModelFactory):
-	class Meta:
-		model = Organization
 
-	name = factory.Faker('company')
-	address = factory.Faker('address')
-	description = factory.Faker('paragraph')
+class OrganizationFactory(factory.DjangoModelFactory):
+    class Meta:
+        model = Organization
+
+    name = factory.Faker('company')
+    address = factory.Faker('address')
+    description = factory.Faker('paragraph')

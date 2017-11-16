@@ -1,7 +1,7 @@
 # Convenience module that loads just about everything from the project into
-# its namespace. 
+# its namespace.
 
-# This is to allow "from everything import *" for easy access in the 
+# This is to allow "from everything import *" for easy access in the
 # interactive shell, but don't use it in production code!
 
 from archives.models import *

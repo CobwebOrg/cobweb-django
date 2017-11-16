@@ -13,6 +13,7 @@ class ProjectFactory(DjangoModelFactory):
     name = Faker('sentence')
     description = Faker('paragraph')
 
+
 class NominationFactory(DjangoModelFactory):
     class Meta:
         model = Nomination

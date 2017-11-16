@@ -4,12 +4,14 @@ from django.db import models
 
 # Create your models here.
 
+
 @reversion.register()
 class Keyword(models.Model):
     name = models.CharField(max_length=200, unique=True, db_index=True)
 
     def __str__(self):
         return self.name
+
 
 class CobwebMetadataMixin(models.Model):
     description = models.TextField('Description', null=True, blank=True)
@@ -18,4 +20,4 @@ class CobwebMetadataMixin(models.Model):
     raw_metadata = models.TextField(null=True, blank=True)
 
     class Meta:
-        abstract=True
+        abstract = True

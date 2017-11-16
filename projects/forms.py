@@ -1,9 +1,6 @@
 from crispy_forms.helper import FormHelper
 from dal import autocomplete
 from django import forms
-from django.contrib.auth import get_user_model
-from django.forms.models import inlineformset_factory
-from django.template import Template
 
 from crispy_forms.layout import (
     BaseInput,
@@ -44,7 +41,6 @@ from crispy_forms.bootstrap import (
     UneditableField,
 )
 
-from metadata.models import Keyword
 from webresources.models import Resource
 
 from projects.models import Project, Nomination
@@ -54,7 +50,7 @@ editable_title = Layout(
     HTML("""
         {% load cobweb_look %}
         <h3 class="editable_title col-lg-12 collapse show">
-            {{object.name}} 
+            {{object.name}}
             <a class="btn" data-toggle="collapse" href=".editable_title">
                 {% icon 'edit' %}
             </a>
@@ -62,6 +58,7 @@ editable_title = Layout(
         """),
     Field('name', wrapper_class="col-lg-12 editable_title collapse"),
 )
+
 
 class ProjectForm(forms.ModelForm):
 
@@ -94,21 +91,24 @@ class ProjectForm(forms.ModelForm):
         self.helper.layout = Layout(
             Fieldset('', editable_title, css_class='row my-2'),
 
-            Fieldset('',
+            Fieldset(
+                '',
                 Field('status', wrapper_class='col-lg-5 pb-2'),
                 Field('administered_by', wrapper_class='col-lg-7 pb-2'),
                 css_class='row',
             ),
 
-            Fieldset('',
-                Field('description', template='metadata_field.html'), 
+            Fieldset(
+                '',
+                Field('description', template='metadata_field.html'),
                 Field('keywords', template='metadata_field.html'),
             ),
 
-            Fieldset('',
-                Field('nomination_policy', wrapper_class='col-lg-5'), 
+            Fieldset(
+                '',
+                Field('nomination_policy', wrapper_class='col-lg-5'),
                 Column(
-                    UneditableField('nominators'), 
+                    UneditableField('nominators'),
                     Field('nominator_blacklist'),
                     css_class='col-lg-7'
                 ),
@@ -121,8 +121,9 @@ class ProjectForm(forms.ModelForm):
             ),
         )
 
+
 class NominationForm(forms.ModelForm):
-        
+
     resource = forms.URLField(widget=forms.URLInput, initial='http://')
 
     class Meta:
@@ -135,7 +136,6 @@ class NominationForm(forms.ModelForm):
                 url='keyword_autocomplete'
             ),
         }
-
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -157,12 +157,14 @@ class NominationForm(forms.ModelForm):
         if not url:
             raise forms.ValidationError("Please enter a URL.")
         else:
-            return Resource.objects.get_or_create(url = url)[0]
+            return Resource.objects.get_or_create(url=url)[0]
+
 
 class NominateToProjectForm(NominationForm):
 
     class Meta(NominationForm.Meta):
         fields = ['resource', 'project', 'description', 'keywords']
+
 
 class ResourceNominateForm(NominationForm):
 

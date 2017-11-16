@@ -1,16 +1,7 @@
 from dal.autocomplete import ModelSelect2Multiple
-from django.db import IntegrityError
 from django.test import TestCase
-from django.urls import reverse
-from factory import DjangoModelFactory, Faker
 
-from core.tests import UserFactory
-from webresources.models import Resource
-from webresources.tests import ResourceFactory
-
-from projects import models, forms, tests, views
-from projects.models import Project, Nomination
-
+from projects import forms
 
 
 class ProjectFormTests(TestCase):
@@ -19,7 +10,10 @@ class ProjectFormTests(TestCase):
         form = forms.ProjectForm()
         self.assertIsInstance(form, forms.ProjectForm)
         for field in ('administered_by', 'nominators', 'keywords'):
-            self.assertIsInstance(form.fields[field].widget, ModelSelect2Multiple)
+            self.assertIsInstance(
+                form.fields[field].widget,
+                ModelSelect2Multiple
+            )
 
 #     def test_init(self):
 #         pass
@@ -61,5 +55,5 @@ class ProjectFormTests(TestCase):
 #             'user': UserFactory(),
 #             })
 #         self.assertTrue(form.is_valid())
-#         self.assertEqual(form.cleaned_data['resource'], 
+#         self.assertEqual(form.cleaned_data['resource'],
 #             ResourceFactory(url="http://twitter.com"))

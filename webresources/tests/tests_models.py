@@ -4,6 +4,7 @@ from django.test import TestCase
 from webresources.models import Resource
 from webresources.tests import ResourceFactory
 
+
 class ResourceModelTests(TestCase):
 
     def setUp(self):

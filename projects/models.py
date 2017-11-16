@@ -25,14 +25,6 @@ class Project(CobwebMetadataMixin, models.Model):
         choices=[(key, value) for key, value in NOMINATION_POLICY.items()]
     )
 
-    # class NOMINATION_POLICY(Enum):
-    #     anonymous = ('A', "Anonymous: anyone can nominate, even if they're not logged in.")
-    #     open_nom = ('O', 'Open: anyone with a Cobweb account can nominate.')
-    #     restricted_nom = ('R', 'Restricted: only selected users can nominate.')
-
-    # nomination_policy = models.CharField(max_length=1, default='o',
-    #     choices = [x.value for x in NOMINATION_POLICY])
-
     nominators = models.ManyToManyField(
         settings.AUTH_USER_MODEL, blank=True,
         related_name='projects_nominating',
@@ -49,18 +41,20 @@ class Project(CobwebMetadataMixin, models.Model):
         'i': 'Inactive',
         'd': 'Deleted',
     }
-    status = models.CharField(max_length=1, default='a',
-        choices = [(key, value) for key, value in STATUS.items()])
-    
+    status = models.CharField(
+        max_length=1, default='a',
+        choices=[(key, value) for key, value in STATUS.items()]
+    )
+
     def some_nominations(self):
         return self.nominations.all().order_by('-id')[:20]
 
     def __str__(self):
         return self.name or 'Project {}'.format(self.pk)
-    
+
     def get_absolute_url(self):
         return reverse('project_detail', kwargs={'pk': self.pk})
-    
+
     def get_add_nomination_url(self):
         return reverse('nominate', kwargs={'project_id': self.pk})
 
@@ -77,24 +71,30 @@ class Project(CobwebMetadataMixin, models.Model):
         return user in self.administered_by.all()
 
     def is_nominator(self, user):
-        return ( 
+        return (
             user not in self.nominator_blacklist.all()
             and (
-                self.nomination_policy == 'A' 
+                self.nomination_policy == 'A'
                 or (self.nomination_policy == 'O' and not user.is_anonymous())
-                or user in self.administered_by.all() 
-                or user in self.nominators.all() 
+                or user in self.administered_by.all()
+                or user in self.nominators.all()
             )
         )
 
+
 @reversion.register()
 class Nomination(CobwebMetadataMixin, models.Model):
-    resource = models.ForeignKey('webresources.Resource', 
-        on_delete=models.PROTECT, related_name='nominations')
+    resource = models.ForeignKey(
+        'webresources.Resource',
+        on_delete=models.PROTECT,
+        related_name='nominations'
+    )
     project = models.ForeignKey(Project, related_name='nominations')
-    nominated_by = models.ForeignKey(settings.AUTH_USER_MODEL,
-        on_delete=models.PROTECT)
-    
+    nominated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.PROTECT
+    )
+
     class Meta:
         unique_together = ('resource', 'project', 'nominated_by')
 
@@ -106,7 +106,7 @@ class Nomination(CobwebMetadataMixin, models.Model):
 
     def __str__(self):
         return '{resource} nominated by {agent} in {project}'.format(
-            resource = self.resource,
-            project = self.project,
-            agent = self.nominated_by
+            resource=self.resource,
+            project=self.project,
+            agent=self.nominated_by
         )

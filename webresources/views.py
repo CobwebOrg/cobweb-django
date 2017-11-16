@@ -1,21 +1,15 @@
-# from reversion.views import RevisionMixin
-# from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 import django_tables2 as tables
 
-from django.contrib.postgres import search
-from django.core.exceptions import ObjectDoesNotExist, ValidationError
-from django.forms import formset_factory
+from django.core.exceptions import ValidationError
 from django.http import Http404
 from django.views import generic
 from django.shortcuts import redirect, reverse
-from reversion.views import RevisionMixin
 
-from projects.forms import NominationForm
 from webresources import models
 
 
 class ResourceTable(tables.Table):
-    
+
     url = tables.Column()
     n = tables.TemplateColumn('{{record.nominations.count}}', orderable=False)
     c = tables.TemplateColumn('{{record.claims.count}}', orderable=False)
@@ -30,6 +24,7 @@ class ResourceTable(tables.Table):
         attrs = {'class': 'table table-hover'}
         template = 'webresources/resource-table.html'
         empty_text = "No records."
+
 
 class ResourceListView(tables.SingleTableView):
     model = models.Resource
@@ -48,11 +43,13 @@ class ResourceListView(tables.SingleTableView):
         Get the context for this view.
         """
 
-        context = super().get_context_data(**kwargs)        
+        context = super().get_context_data(**kwargs)
         try:
             searchbox_url = models.normalize_url(self.request.GET.get('q'))
             try:
-                context['search_resource'] = models.Resource.objects.get(url=searchbox_url)
+                context['search_resource'] = (
+                    models.Resource.objects.get(url=searchbox_url)
+                )
             except models.Resource.DoesNotExist:
                 context['search_resource'] = models.Resource(url=searchbox_url)
             except Exception as ex:
@@ -68,16 +65,17 @@ class ResourceListView(tables.SingleTableView):
 
         return context
 
+
 class ResourceDetailView(generic.DetailView):
     model = models.Resource
     template_name = "webresources/resource.html"
 
     def get(self, request, *args, **kwargs):
         """
-        Overrides parent .get() method to perform URL normalization as 
+        Overrides parent .get() method to perform URL normalization as
         follows:
 
-        1. If url parameter is valid, or if called w/ id/pk instead of url, 
+        1. If url parameter is valid, or if called w/ id/pk instead of url,
         invoke super().get(...)
 
         2. If url is valid but non-cannonical (i.e. url ~= normalize_url(url) )
@@ -85,7 +83,7 @@ class ResourceDetailView(generic.DetailView):
 
         3. If url is not valid, return a 404 or something [not implemented yet]
 
-        Note that case #1 includes urls that are not yet in the database – 
+        Note that case #1 includes urls that are not yet in the database –
         custom logic for these cases in defined in .get_object(), which is
         invoked from the superclass's .get()
         """
@@ -94,8 +92,12 @@ class ResourceDetailView(generic.DetailView):
             try:
                 normalized_url = models.normalize_url(kwargs['url'])
                 if normalized_url != kwargs['url']:
-                    return redirect(reverse('webresources:detail', 
-                        kwargs={'url': normalized_url}))
+                    return redirect(
+                        reverse(
+                            'webresources:detail',
+                            kwargs={'url': normalized_url}
+                        )
+                    )
             except ValidationError:
                 raise Http404("{} is not a valid URL".format(kwargs['url']))
         return super().get(request, *args, **kwargs)
@@ -107,11 +109,11 @@ class ResourceDetailView(generic.DetailView):
         to find a Resource object. If no `url` argument is found, calls
         super().get_object(...), which tries with `pk` or `slug`.
 
-        If a url is provided but no matching resource is in the database, 
-        returns a new, unsaved object. This allows the ResourceDetailView to provide information such as 
-        parent/child resources, along with forms for nominating/claiming it
-        (in which case the Resource should be saved along w/ Nomination or 
-        Claim object).
+        If a url is provided but no matching resource is in the database,
+        returns a new, unsaved object. This allows the ResourceDetailView to
+        provide information such as parent/child resources, along with forms
+        for nominating/claiming it (in which case the Resource should be saved
+        along w/ Nomination or Claim object).
         """
 
         # Use a custom queryset if provided; this is required for subclasses
@@ -130,4 +132,3 @@ class ResourceDetailView(generic.DetailView):
             obj = super().get_object(queryset)
 
         return obj
-
