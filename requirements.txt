@@ -7,6 +7,8 @@ django-reversion~=2.0.10
 django_guardian~=1.4.9
 django_json_widget
 django_tables2
+git+https://github.com/django-haystack/django-haystack
+pysolr
 Sickle~=0.6.2
 surt~=0.3.0
 whitenoise~=3.3.0

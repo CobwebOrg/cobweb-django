@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     'reversion',
     'django_json_widget',
     'django_tables2',
+    'haystack',
 
     # don't add debug_toolbar here - it causes error during view tests
     # see bottom of page
@@ -126,6 +127,14 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 WSGI_APPLICATION = 'cobweb.wsgi.application'
 
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+        'URL': 'http://solr:8983/solr/mycore',
+        'ADMIN_URL': 'http://solr:8983/solr/admin/cores',
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases

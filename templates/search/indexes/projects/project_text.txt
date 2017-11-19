@@ -1,0 +1,5 @@
+{{ object.name }}
+{{ object.description }}
+{% for keyword in object.keywords.all %}
+	{{ keyword }}
+{% endfor %}
