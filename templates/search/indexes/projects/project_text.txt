@@ -1,5 +1,13 @@
 {{ object.name }}
+
 {{ object.description }}
-{% for keyword in object.keywords.all %}
-	{{ keyword }}
+
+{% for keyword in object.keywords.all %}{{ keyword }} {% endfor %}
+
+Status: {{ object.status }}
+Administrators:{% for user in object.administered_by.all %} {{user}}{% endfor %}
+Nominators:{% for user in object.nominators.all %} {{user}}{% endfor %}
+
+{% for nomination in object.nominations.all %}
+	{% include 'search/indexes/projects/nomination_text.html' with object=nomination %}
 {% endfor %}

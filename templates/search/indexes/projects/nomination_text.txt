@@ -1,0 +1,7 @@
+{{ object.resource.url }}
+
+{{ object.description }}
+
+{% for keyword in object.keywords.all %}{{ keyword }} {% endfor %}
+
+Nominated by:{{ object.nominated_by }}

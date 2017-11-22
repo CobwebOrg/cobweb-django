@@ -10,7 +10,7 @@ services:
     entrypoint:
       - docker-entrypoint.sh
       - solr-precreate
-      - mycore
+      - cobweb
   db:
     image: postgres
     # volumes:

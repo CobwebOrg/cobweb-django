@@ -131,7 +131,7 @@ WSGI_APPLICATION = 'cobweb.wsgi.application'
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
-        'URL': 'http://solr:8983/solr/mycore',
+        'URL': 'http://solr:8983/solr/cobweb',
         'ADMIN_URL': 'http://solr:8983/solr/admin/cores',
     },
 }

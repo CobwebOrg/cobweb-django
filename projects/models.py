@@ -8,6 +8,8 @@ from metadata.models import CobwebMetadataMixin
 
 @reversion.register()
 class Project(CobwebMetadataMixin, models.Model):
+    """Django ORM model for a Cobweb project."""
+
     name = models.CharField('Name', max_length=500)
     administered_by = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
