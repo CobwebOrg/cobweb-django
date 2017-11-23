@@ -1,0 +1,9 @@
+{{ object.username }}
+{{ object.get_full_name }}
+{{ object.email }}
+
+{% for organization in object.affiliations.all %}{{organization}} {% endfor %}
+
+{{ object.description }}
+
+{# {% for keyword in object.keywords.all %}{{ keyword }} {% endfor %}#}

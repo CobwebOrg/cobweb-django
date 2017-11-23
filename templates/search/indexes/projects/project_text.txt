@@ -9,5 +9,5 @@ Administrators:{% for user in object.administered_by.all %} {{user}}{% endfor %}
 Nominators:{% for user in object.nominators.all %} {{user}}{% endfor %}
 
 {% for nomination in object.nominations.all %}
-	{% include 'search/indexes/projects/nomination_text.html' with object=nomination %}
+	{% include 'search/indexes/projects/nomination_text.txt' with object=nomination %}
 {% endfor %}

@@ -1,4 +1,3 @@
 {{ object.resource.url }}
 {% if object.description %}{{ object.description }}{% endif %}
 {% for keyword in object.keywords.all %}{{ keyword }} {% endfor %}
-Nominated by: {{ object.nominated_by }}

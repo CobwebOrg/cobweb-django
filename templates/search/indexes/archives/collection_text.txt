@@ -1,0 +1,16 @@
+{{ object.name }}
+{{ object.organization }}
+
+{{ object.description }}
+
+{% for keyword in object.keywords.all %}{{ keyword }} {% endfor %}
+
+{{ object.identifier }}
+
+{% for holding in object.holdings.all %}
+	{% include 'search/indexes/archives/holding_text.txt' with object=holding %}
+{% endfor %}
+
+{% for claim in object.claims.all %}
+	{% include 'search/indexes/archives/claim_text.txt' with object=claim %}
+{% endfor %}
