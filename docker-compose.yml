@@ -17,8 +17,6 @@ services:
     #   - ./postgres-data:/var/lib/postgresql/data
   web:
     build: .
-    environment:
-      - COBWEB_DJANGO_SECRET_KEY
     command: ['bash', 'start-development.sh']
     volumes:
       - .:/code
