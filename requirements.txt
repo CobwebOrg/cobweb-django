@@ -3,7 +3,7 @@ psycopg2~=2.7.3
 
 django-autocomplete-light
 django-crispy-forms~=1.6.1
-pdjango-reversion~=2.0.10
+django-reversion~=2.0.10
 django_json_widget
 django_tables2
 git+https://github.com/django-haystack/django-haystack
