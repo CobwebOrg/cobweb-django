@@ -8,8 +8,8 @@ secret.txt
 .idea/
 
 import_errors.txt
-solrdata/
-postgresdata/
+data/solr/cobweb/data/**
+data/postgres/
 
 # Created by https://www.gitignore.io
 

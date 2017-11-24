@@ -7,6 +7,7 @@ django-autocomplete-light==3.2.10
 django-crispy-forms==1.6.1
 django-debug-toolbar==1.9.1
 django-extensions==1.8.1
+django-extra-views==0.9.0
 django-haystack==2.7.dev30+g3f6016e
 django-json-widget==0.1.0
 django-reversion==2.0.10
