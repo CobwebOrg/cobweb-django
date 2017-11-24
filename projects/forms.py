@@ -46,23 +46,27 @@ from webresources.models import Resource
 from projects.models import Project, Nomination
 
 
-editable_title = Layout(
+name_plaintext_field = Layout(
     HTML("""
         {% load cobweb_look %}
-        <h3 class="editable_title col-lg-12 collapse show">
+        <h3 class="click_to_edit_field col-lg-12 collapse show">
             {{object.name}}
-            <a class="btn" data-toggle="collapse" href=".editable_title">
+            <a class="btn" data-toggle="collapse" href=".click_to_edit_field">
                 {% icon 'edit' %}
             </a>
         </h3>
         """),
-    Field('name', wrapper_class="col-lg-12 editable_title collapse"),
+    Field('name', wrapper_class="col-lg-12 click_to_edit_field collapse"),
 )
+name_form_field = Field('name', wrapper_class="col-lg-12")
 
 
 class ProjectForm(forms.ModelForm):
+    """Project model form."""
 
     class Meta:
+        """Metaclass for options."""
+
         model = Project
         fields = ('__all__')
         widgets = {
@@ -86,10 +90,17 @@ class ProjectForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
+        """Initialize ProjectForm, adding crispy_forms helper and layout."""
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
+
+        if self.instance.name and len(self.instance.name) > 0:
+            name_field = name_plaintext_field
+        else:
+            name_field = name_form_field
+
         self.helper.layout = Layout(
-            Fieldset('', editable_title, css_class='row my-2'),
+            Fieldset('', name_field, css_class='row my-2'),
 
             Fieldset(
                 '',
