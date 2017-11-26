@@ -1,4 +1,6 @@
-import inspect, re, reversion
+import inspect
+import re
+import reversion
 from sys import stderr, stdout
 
 import os
@@ -23,9 +25,9 @@ class APIEndpoint(models.Model):
 
     class Meta:
         verbose_name = "API Endpoint"
-        
+
     location = models.URLField(max_length=200, unique=True)
-    organization = models.ForeignKey('core.Organization', 
+    organization = models.ForeignKey('core.Organization',
             null=True, blank=True)
 
     importer_class_name = models.TextField( default = 'OAIPMHImporter',
@@ -68,7 +70,7 @@ def eprint(*args, **kwargs):
     print(*args, file=stderr, **kwargs)
 
 # def get_organization(record):
-#     if (len(record.header.setSpecs) == 1 
+#     if (len(record.header.setSpecs) == 1
 #             and record.header.setSpecs[0][:13] == 'organization:'):
 #         id_number = record.header.setSpecs[0][13:] # actually should be string
 #         org_url, api_url = setspec_to_urls(only_one(setspec))
@@ -185,7 +187,7 @@ class OAIPMHImporter(Importer):
         api_identify = self.sickle.Identify()
         metadata = dict(api_identify)
 
-        assert ( normalize_url( only_one( metadata.pop('baseURL') )) 
+        assert ( normalize_url( only_one( metadata.pop('baseURL') ))
             == normalize_url(self.api.location) )
 
         # For Archive-it it's always
@@ -213,39 +215,37 @@ class OAIPMHImporter(Importer):
             eprint(ex, type(ex))
 
     def __attach_metadata__(self, target, metadata, vocabulary_name):
-        record_md = []
+        record_md = defaultdict(list)
         for key, values in metadata.items():
-            record_md.extend([
-                {
-                    'vocabulary': vocabulary_name,
-                    'element': key,
-                    'value': value
-                } for value in values
-            ])
+            record_md[key].extend(values)
         target.metadata = record_md
         target.save()
 
+
 class AITCollectionsImporter(OAIPMHImporter):
+    """OAIPMHImporter for Archive-It's master list of collections."""
+
     set_class = Organization
     record_class = Collection
     set_key = 'organization'
     record_key = 'identifier'
 
-
     def __harvest_record__(self, record):
+        """Harvest a single record for an Archive-It collection."""
         super().__harvest_record__(record)
 
         for setspec in record.header.setSpecs:
             aitpartner_api = APIEndpoint.objects.get_or_create(
-                location = self.__get_set_api__(setspec)
+                location=self.__get_set_api__(setspec)
             )[0]
             aitpartner_api.importer_class_name = 'AITPartnerImporter'
             aitpartner_api.organization = Organization.objects.get_or_create(
-                identifier = self.__get_set_identifier__(setspec)
+                identifier=self.__get_set_identifier__(setspec)
             )[0]
             aitpartner_api.save()
 
     def __get_set_identifier__(self, setspec):
+        """Convert a setspec to a url-type identifier."""
         try:
             set_type, set_number = setspec.split(':')
             return 'http://archive-it.org/{}s/{}'.format(
@@ -258,11 +258,12 @@ class AITCollectionsImporter(OAIPMHImporter):
             eprint(ex, type(ex))
 
     def __get_set_api__(self, setspec):
+        """Infer API Enpoint from setspec."""
         try:
             set_type, set_number = setspec.split(':')
             if set_type == 'organization':
-                return ( 'https://archive-it.org/oai/organizations/{}'
-                    .format(set_number) )
+                return ('https://archive-it.org/oai/organizations/{}'
+                        .format(set_number))
             else:
                 return None
         except Exception as ex:
@@ -272,15 +273,17 @@ class AITCollectionsImporter(OAIPMHImporter):
 
 
 class AITPartnerImporter(OAIPMHImporter):
+    """OAIPMHImporter for individual Archive-it collections."""
+
     set_class = Collection
     record_class = Holding
     set_key = 'collection'
     record_key = 'resource'
 
-
     def __harvest_record__(self, record):
+        """Harvest a single record for an Archive-It collection."""
         root_url = self.__parse_wayback_url__(record.header.identifier)
-                
+
         collection_uri = self.__get_set_identifier__(
             only_one(record.header.setSpecs))
 
@@ -297,7 +300,7 @@ class AITPartnerImporter(OAIPMHImporter):
             resource = Resource.objects.get_or_create(
                 url=normalize_url(root_url))[0]
         except Exception as e:
-            e.args += ( "url = {}".format(normalize_url(root_url)), )
+            e.args += ("url = {}".format(normalize_url(root_url)),)
             e.args += "len(url) = {}".format(len(normalize_url(root_url))),
             raise e
 
@@ -323,7 +326,7 @@ class AITPartnerImporter(OAIPMHImporter):
         except Exception as ex:
             eprint("In {}.__harvest_setspec__({})".format(self, source))
             eprint(ex, type(ex))
-            
+
     def __get_set_identifier__(self, setspec):
         try:
             set_type, set_number = setspec.split(':')
@@ -341,7 +344,7 @@ class AITPartnerImporter(OAIPMHImporter):
         wayback_url_parser = re.compile(
             'http\:\/\/wayback\.archive\-it\.org\/\d+\/\*/(https?\:\/\/.*)')
 
-        return normalize_url( 
+        return normalize_url(
             wayback_url_parser
             .match(wayback_url)
             .groups()[0]
