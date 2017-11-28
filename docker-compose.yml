@@ -6,7 +6,7 @@ services:
     ports:
       - "8983:8983"
     volumes:
-      - ./data/solr:/opt/solr/server/solr/mycores
+      - solr_data:/opt/solr/server/solr/mycores
     entrypoint:
       - docker-entrypoint.sh
       - solr-precreate
@@ -14,19 +14,18 @@ services:
   db:
     image: postgres
     volumes:
-      - ./data/postgres:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
   web:
     build: .
     command: ['bash', 'start-development.sh']
     volumes:
       - .:/code
+      - solr_data:/code/data/solr
     ports:
       - "8000:8000"
     depends_on:
       - db
       - solr
-  # test:
-  #   build: .
-  #   volumes:
-  #     - .:/code
-  #   command: ['bash', 'start-test.sh']
+volumes:
+  postgres_data: {}
+  solr_data: {}
