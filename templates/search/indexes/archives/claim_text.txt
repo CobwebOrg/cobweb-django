@@ -1,11 +1,9 @@
 {{ object.resource.url }}
-{% if object.description %}{{ object.description }}{% endif %}
-{% for keyword in object.keywords.all %}{{ keyword }} {% endfor %}
 
-{% object.start_date %}
-{% object.end_date %}
-{% object.max_links %}
-{% object.time_limit %}
-{% object.document_limit %}
-{% object.data_limit %}
-{% object.robot_exclusion_override %}
+{% if object.description %}{{object.description}}{% endif %}
+
+{{object.keywords.all|join:', '}}
+
+{% for values in object.metadata.values %}{{values|join:', '}}
+{% endfor %}
+

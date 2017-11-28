@@ -1,4 +1,12 @@
-{{ object.resource.url }}
-{% if object.description %}{{ object.description }}{% endif %}
-{% for keyword in object.keywords.all %}{{ keyword }} {% endfor %}
-Nominated by: {{ object.nominated_by }}
+{{object.resource.url}}
+
+{{object.project}}
+
+{% if object.description %}{{object.description}}{% endif %}
+
+{{object.keywords.all|join:', '}}
+
+{% for values in object.metadata.values %}{{values|join:', '}}
+{% endfor %}
+
+{{ object.nominated_by }}

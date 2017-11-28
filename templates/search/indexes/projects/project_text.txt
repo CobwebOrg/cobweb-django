@@ -1,13 +1,15 @@
 {{ object.name }}
 
-{{ object.description }}
+{% if object.description %}{{object.description}}{% endif %}
 
-{% for keyword in object.keywords.all %}{{ keyword }} {% endfor %}
+{{object.keywords.all|join:', '}}
 
-Status: {{ object.status }}
-Administrators:{% for user in object.administered_by.all %} {{user}}{% endfor %}
-Nominators:{% for user in object.nominators.all %} {{user}}{% endfor %}
+{% for values in object.metadata.values %}{{values|join:', '}}
+{% endfor %}
 
+{{ object.status }}
+{{ object.administered_by.all|join:', ' }}
+{{ object.nominators.all|join:', ' }}
 {% for nomination in object.nominations.all %}
 	{% include 'search/indexes/projects/nomination_text.txt' with object=nomination %}
 {% endfor %}

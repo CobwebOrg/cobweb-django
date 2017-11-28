@@ -1,4 +1,10 @@
 {{ object.name }}
 {{ object.parent }}
 {{ object.address }}
-{{ object.description }}
+
+{% if object.description %}{{object.description}}{% endif %}
+
+{# {{object.keywords.all|join:', '}} #}
+
+{% for values in object.metadata.values %}{{values|join:', '}}
+{% endfor %}

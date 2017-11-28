@@ -1,6 +1,5 @@
 """SearchIndex classes for Django-haystack."""
 
-
 from haystack import indexes
 
 from archives.models import Collection
@@ -11,6 +10,8 @@ from webresources.models import Resource
 
 class ProjectIndex(indexes.ModelSearchIndex, indexes.Indexable):
     """Django-haystack index of Project model."""
+
+    text = indexes.CharField(document=True, use_template=True)
 
     class Meta:
         """ProjectIndex metaclass."""
@@ -30,6 +31,8 @@ class ProjectIndex(indexes.ModelSearchIndex, indexes.Indexable):
 class CollectionIndex(indexes.ModelSearchIndex, indexes.Indexable):
     """Django-haystack index of Collection model."""
 
+    text = indexes.CharField(document=True, use_template=True)
+
     class Meta:
         """CollectionIndex metaclass."""
 
@@ -38,6 +41,8 @@ class CollectionIndex(indexes.ModelSearchIndex, indexes.Indexable):
 
 class ResourceIndex(indexes.ModelSearchIndex, indexes.Indexable):
     """Django-haystack index of Resource model."""
+
+    text = indexes.CharField(document=True, use_template=True)
 
     class Meta:
         """ResourceIndex metaclass."""
@@ -48,6 +53,8 @@ class ResourceIndex(indexes.ModelSearchIndex, indexes.Indexable):
 class UserIndex(indexes.ModelSearchIndex, indexes.Indexable):
     """Django-haystack index of User model."""
 
+    text = indexes.CharField(document=True, use_template=True)
+
     class Meta:
         """UserIndex metaclass."""
 
@@ -56,6 +63,8 @@ class UserIndex(indexes.ModelSearchIndex, indexes.Indexable):
 
 class OrganizationIndex(indexes.ModelSearchIndex, indexes.Indexable):
     """Django-haystack index of Organization model."""
+
+    text = indexes.CharField(document=True, use_template=True)
 
     class Meta:
         """OrganizationIndex metaclass."""

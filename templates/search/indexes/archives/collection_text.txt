@@ -1,9 +1,12 @@
 {{ object.name }}
 {{ object.organization }}
 
-{{ object.description }}
+{% if object.description %}{{object.description}}{% endif %}
 
-{% for keyword in object.keywords.all %}{{ keyword }} {% endfor %}
+{{object.keywords.all|join:', '}}
+
+{% for values in object.metadata.values %}{{values|join:', '}}
+{% endfor %}
 
 {{ object.identifier }}
 
