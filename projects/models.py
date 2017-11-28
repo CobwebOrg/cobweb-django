@@ -110,5 +110,5 @@ class Nomination(CobwebMetadataMixin, models.Model):
         return '{resource} nominated by {agent} in {project}'.format(
             resource=self.resource,
             project=self.project,
-            agent=self.nominated_by
+            agent=self.nominated_by,
         )

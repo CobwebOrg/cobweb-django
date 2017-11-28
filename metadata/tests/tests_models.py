@@ -1,9 +1,9 @@
-from django.test import TestCase
+import django.test
 
 from metadata import models, tests
 
 
-class KeywordModelTests(TestCase):
+class KeywordModelTests(django.test.TestCase):
 
     def setUp(self):
         self.test_instance = tests.KeywordFactory()
