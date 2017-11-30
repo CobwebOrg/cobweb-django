@@ -46,14 +46,15 @@ except NameError:
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if 'DEBUG' in os.environ:
+    DEBUG = os.environ['DEBUG']
+else:
+    DEBUG = False
 
 # INTERNAL_IPS = ['127.0.0.1']
 INTERNAL_IPS = ['72.18.0.1']
 ALLOWED_HOSTS = [
-    'cobweb-dev.xvkpjfy2kp.us-west-2.elasticbeanstalk.com',
-    'cobweb-dev-staging.xvkpjfy2kp.us-west-2.elasticbeanstalk.com',
-    'cranium.us-west-2.elasticbeanstalk.com',
+    '35.165.214.42',
     'localhost', 'testserver', '127.0.0.1', '[::1]',
 ]
 
@@ -140,27 +141,15 @@ HAYSTACK_CONNECTIONS = {
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 
-if 'RDS_HOSTNAME' in os.environ:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ['RDS_DB_NAME'],
-            'USER': os.environ['RDS_USERNAME'],
-            'PASSWORD': os.environ['RDS_PASSWORD'],
-            'HOST': os.environ['RDS_HOSTNAME'],
-            'PORT': os.environ['RDS_PORT'],
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'HOST': 'db',
+        'PORT': 5432,
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'postgres',
-            'USER': 'postgres',
-            'HOST': 'db',
-            'PORT': 5432,
-        }
-    }
+}
 
 
 # Password validation
@@ -216,7 +205,7 @@ LOGIN_REDIRECT_URL = '/'
 TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
 
 # Use debug toolbar on local dev machine only
-if 'RDS_HOSTNAME' not in os.environ and not TESTING:
+if DEBUG and not TESTING:
     MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
     INSTALLED_APPS += ('debug_toolbar', )
 
