@@ -3,5 +3,5 @@ version: '3'
 services:
   web:
     ports:
-      - "80:80"
+      - "80:8000"
     command: ['bash', '/code/start-aws.sh']
