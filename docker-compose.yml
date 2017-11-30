@@ -15,10 +15,15 @@ services:
     image: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+        test: ['psql', '-h', 'db', '-U', '"postgres"', '-c', '"\q"']
+        interval: 30s
+        timeout: 10s
+        retries: 5
   web:
-    build: .
-    command: ['bash', 'start-development.sh']
+    image: python:3.6
     volumes:
+      - web_usr_local:/usr/local
       - .:/code
       - solr_data:/code/data/solr
     ports:
@@ -26,6 +31,9 @@ services:
     depends_on:
       - db
       - solr
+    working_dir: /code
+    command: ['bash', '/code/start-development.sh']
 volumes:
-  postgres_data: {}
-  solr_data: {}
+  postgres_data:
+  solr_data:
+  web_usr_local:
