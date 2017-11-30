@@ -55,7 +55,7 @@ else:
 INTERNAL_IPS = ['72.18.0.1']
 ALLOWED_HOSTS = [
     '35.165.214.42',
-    'localhost', 'testserver', '127.0.0.1', '[::1]',
+    'localhost', 'testserver', '127.0.0.1',
 ]
 
 
