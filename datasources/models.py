@@ -1,3 +1,5 @@
+import collections
+
 import inspect
 import re
 import reversion
@@ -95,7 +97,7 @@ class Importer:
             reversion.set_user(get_user_model().objects.get_or_create(
                 username="admin")[0])
             reversion.set_comment("Imported from: {}".format(repr(self.api)))
-            self.__harvest_all__()
+            self.__harvest_all()
 
     def __str__(self):
         return str(self.api)
@@ -110,10 +112,10 @@ class OAIPMHImporter(Importer):
         self.api = api
         self.sickle = Sickle(self.api.location)
 
-    def __harvest_all__(self):
+    def __harvest_all(self):
         print("Harvesting API Identification")
         print(self.api.location)
-        self.__harvest_api_identification__()
+        self.__harvest_api_identification()
 
         try:
             print("Harvesting OAI-PMH Sets as {}".format(self.set_class))
@@ -123,9 +125,9 @@ class OAIPMHImporter(Importer):
                     stdout.flush()
                 except:
                     pass
-                self.__harvest_setspec__(setspec)
+                self.__harvest_setspec(setspec)
         except Exception as ex:
-            eprint("In {}.__harvest_all__()".format(self))
+            eprint("In {}.__harvest_all()".format(self))
             eprint(ex, type(ex))
 
         print("Harvesting OAI-PMH Records as {}".format(self.record_class))
@@ -133,17 +135,17 @@ class OAIPMHImporter(Importer):
             try:
                 print(record.header.identifier[:80], end='\r')
                 stdout.flush()
-                self.__harvest_record__(record)
+                self.__harvest_record(record)
             except Exception as ex:
-                eprint("In {}.__harvest_all__()".format(self))
+                eprint("In {}.__harvest_all()".format(self))
                 eprint(ex, type(ex))
         print()
 
 
-    def __harvest_record__(self, record):
+    def __harvest_record(self, record):
         uri = normalize_url( record.header.identifier )
 
-        set_uri = self.__get_set_identifier__(only_one(record.header.setSpecs))
+        set_uri = self.__get_set_identifier(only_one(record.header.setSpecs))
 
         target = self.record_class.objects.get_or_create(
             identifier=uri,
@@ -165,7 +167,7 @@ class OAIPMHImporter(Importer):
         try:
             target.name = ' / '.join( record.metadata['title'] )
         except Exception as ex:
-            eprint("In {}.__harvest_record__({})".format(
+            eprint("In {}.__harvest_record({})".format(
                 self, record.header.identifier))
             eprint(ex, type(ex))
 
@@ -175,14 +177,14 @@ class OAIPMHImporter(Importer):
         #     eprint(ex, type(ex))
 
         target.raw_metadata = record.raw
-        self.__attach_metadata__(target, record.metadata, 'oai_dc')
+        self.__attach_metadata(target, record.metadata, 'oai_dc')
         target.save()
 
 
-    def __get_set_identifier__(self, setspec):
+    def __get_set_identifier(self, setspec):
         return setspec
 
-    def __harvest_api_identification__(self):
+    def __harvest_api_identification(self):
         api = APIEndpoint.objects.get(location=self.api.location)
         api_identify = self.sickle.Identify()
         metadata = dict(api_identify)
@@ -197,12 +199,12 @@ class OAIPMHImporter(Importer):
         #     api.organization.save()
 
         api.raw_metadata = api_identify.raw
-        self.__attach_metadata__(api, metadata, 'DC?')
+        self.__attach_metadata(api, metadata, 'DC?')
         api.save()
 
-    def __harvest_setspec__(self, source):
+    def __harvest_setspec(self, source):
         try:
-            uri = self.__get_set_identifier__(source.setSpec)
+            uri = self.__get_set_identifier(source.setSpec)
             if uri:
                 target = self.set_class.objects.get_or_create(identifier=uri)[0]
                 target.name = source.setName
@@ -211,11 +213,11 @@ class OAIPMHImporter(Importer):
                 # can't get a valid set identifier
                 pass
         except Exception as ex:
-            eprint("In {}.__harvest_setspec__({})".format(self, source))
+            eprint("In {}.__harvest_setspec({})".format(self, source))
             eprint(ex, type(ex))
 
-    def __attach_metadata__(self, target, metadata, vocabulary_name):
-        record_md = defaultdict(list)
+    def __attach_metadata(self, target, metadata, vocabulary_name):
+        record_md = collections.defaultdict(list)
         for key, values in metadata.items():
             record_md[key].extend(values)
         target.metadata = record_md
@@ -230,21 +232,21 @@ class AITCollectionsImporter(OAIPMHImporter):
     set_key = 'organization'
     record_key = 'identifier'
 
-    def __harvest_record__(self, record):
+    def __harvest_record(self, record):
         """Harvest a single record for an Archive-It collection."""
-        super().__harvest_record__(record)
+        super().__harvest_record(record)
 
         for setspec in record.header.setSpecs:
             aitpartner_api = APIEndpoint.objects.get_or_create(
-                location=self.__get_set_api__(setspec)
+                location=self.__get_set_api(setspec)
             )[0]
             aitpartner_api.importer_class_name = 'AITPartnerImporter'
             aitpartner_api.organization = Organization.objects.get_or_create(
-                identifier=self.__get_set_identifier__(setspec)
+                identifier=self.__get_set_identifier(setspec)
             )[0]
             aitpartner_api.save()
 
-    def __get_set_identifier__(self, setspec):
+    def __get_set_identifier(self, setspec):
         """Convert a setspec to a url-type identifier."""
         try:
             set_type, set_number = setspec.split(':')
@@ -257,7 +259,7 @@ class AITCollectionsImporter(OAIPMHImporter):
             eprint("setspec = {}".format(setspec))
             eprint(ex, type(ex))
 
-    def __get_set_api__(self, setspec):
+    def __get_set_api(self, setspec):
         """Infer API Enpoint from setspec."""
         try:
             set_type, set_number = setspec.split(':')
@@ -267,7 +269,7 @@ class AITCollectionsImporter(OAIPMHImporter):
             else:
                 return None
         except Exception as ex:
-            eprint("In {}.__get_set_api__({})".format(self, setspec))
+            eprint("In {}.__get_set_api({})".format(self, setspec))
             eprint("setspec = {}".format(setspec))
             eprint(ex, type(ex))
 
@@ -280,11 +282,11 @@ class AITPartnerImporter(OAIPMHImporter):
     set_key = 'collection'
     record_key = 'resource'
 
-    def __harvest_record__(self, record):
+    def __harvest_record(self, record):
         """Harvest a single record for an Archive-It collection."""
-        root_url = self.__parse_wayback_url__(record.header.identifier)
+        root_url = self.__parse_wayback_url(record.header.identifier)
 
-        collection_uri = self.__get_set_identifier__(
+        collection_uri = self.__get_set_identifier(
             only_one(record.header.setSpecs))
 
         collection = Collection.objects.get_or_create(
@@ -310,11 +312,11 @@ class AITPartnerImporter(OAIPMHImporter):
         )[0]
 
         holding.raw_metadata = record.raw
-        self.__attach_metadata__(holding, record.metadata, 'oai_dc')
+        self.__attach_metadata(holding, record.metadata, 'oai_dc')
 
-    def __harvest_setspec__(self, source):
+    def __harvest_setspec(self, source):
         try:
-            uri = self.__get_set_identifier__(source.setSpec)
+            uri = self.__get_set_identifier(source.setSpec)
             if uri:
                 target = self.set_class.objects.get_or_create(identifier=uri)[0]
                 target.name = source.setName
@@ -324,10 +326,10 @@ class AITPartnerImporter(OAIPMHImporter):
                 # usually this is just a dummy record at the start of the list
                 pass
         except Exception as ex:
-            eprint("In {}.__harvest_setspec__({})".format(self, source))
+            eprint("In {}.__harvest_setspec({})".format(self, source))
             eprint(ex, type(ex))
 
-    def __get_set_identifier__(self, setspec):
+    def __get_set_identifier(self, setspec):
         try:
             set_type, set_number = setspec.split(':')
 
@@ -340,7 +342,7 @@ class AITPartnerImporter(OAIPMHImporter):
             eprint("setspec = {}".format(setspec))
             eprint(ex, type(ex))
 
-    def __parse_wayback_url__(self, wayback_url):
+    def __parse_wayback_url(self, wayback_url):
         wayback_url_parser = re.compile(
             'http\:\/\/wayback\.archive\-it\.org\/\d+\/\*/(https?\:\/\/.*)')
 
@@ -350,5 +352,6 @@ class AITPartnerImporter(OAIPMHImporter):
             .groups()[0]
         )
 
-importers = { name: thing for name, thing in globals().items()
-              if inspect.isclass(thing) and issubclass(thing, Importer) }
+
+importers = {name: thing for name, thing in globals().items()
+             if inspect.isclass(thing) and issubclass(thing, Importer)}
