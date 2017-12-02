@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.utils import timezone
+import pytest
 
 from webresources.tests import ResourceFactory
 
@@ -51,6 +52,18 @@ class ClaimModelTests(TestCase):
         self.assertIsInstance(str(self.test_instance), str)
 
 
+@pytest.mark.django_db
+def test_Claim_get_resource_set():
+    """.get_resource_set() should return a collection object."""
+
+    collection = CollectionFactory()
+    assert ClaimFactory(collection=collection).get_resource_set() == collection
+
+
+###########################
+#   Holding Model Tests   #
+###########################
+
 class HoldingModelTests(TestCase):
 
     def setUp(self):
@@ -67,3 +80,11 @@ class HoldingModelTests(TestCase):
     def test_str(self):
         """Tests that str(object) always returns a str."""
         self.assertIsInstance(str(self.test_instance), str)
+
+
+@pytest.mark.django_db
+def test_Claim_get_resource_set():
+    """.get_resource_set() should return a collection object."""
+
+    collection = CollectionFactory()
+    assert HoldingFactory(collection=collection).get_resource_set() == collection
