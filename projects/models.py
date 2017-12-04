@@ -52,6 +52,11 @@ class Project(CobwebMetadataMixin, models.Model):
         return self.nominations.all().order_by('-id')[:20]
 
     def __str__(self):
+        """
+        Return a string representation of project.
+
+        Should be self.name, but returns 'Project <ID>' if name is blank.
+        """
         return self.name or 'Project {}'.format(self.pk)
 
     def get_absolute_url(self):
