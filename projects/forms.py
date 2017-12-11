@@ -46,19 +46,19 @@ from webresources.models import Resource
 from projects.models import Project, Nomination
 
 
-name_plaintext_field = Layout(
+title_plaintext_field = Layout(
     HTML("""
         {% load cobweb_look %}
         <h3 class="click_to_edit_field col-lg-12 collapse show">
-            {{object.name}}
+            {{object.title}}
             <a class="btn" data-toggle="collapse" href=".click_to_edit_field">
                 {% icon 'edit' %}
             </a>
         </h3>
         """),
-    Field('name', wrapper_class="col-lg-12 click_to_edit_field collapse"),
+    Field('title', wrapper_class="col-lg-12 click_to_edit_field collapse"),
 )
-name_form_field = Field('name', wrapper_class="col-lg-12")
+title_form_field = Field('title', wrapper_class="col-lg-12")
 
 
 class ProjectForm(forms.ModelForm):
@@ -94,13 +94,13 @@ class ProjectForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
 
-        if self.instance.name and len(self.instance.name) > 0:
-            name_field = name_plaintext_field
+        if self.instance.title and len(self.instance.title) > 0:
+            title_field = title_plaintext_field
         else:
-            name_field = name_form_field
+            title_field = title_form_field
 
         self.helper.layout = Layout(
-            Fieldset('', name_field, css_class='row my-2'),
+            Fieldset('', title_field, css_class='row my-2'),
 
             Fieldset(
                 '',

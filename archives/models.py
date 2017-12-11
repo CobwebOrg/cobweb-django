@@ -16,7 +16,6 @@ class ModelValidationMixin(object):
 
 
 class Collection(ModelValidationMixin, CobwebMetadataMixin, models.Model):
-    name = models.TextField('Name', unique=False)
     organization = models.ForeignKey(
         'core.Organization', null=True, blank=True,
         on_delete=models.PROTECT, related_name='collections'
@@ -25,11 +24,16 @@ class Collection(ModelValidationMixin, CobwebMetadataMixin, models.Model):
     identifier = NormalizedURLField(null=True, blank=True, unique=True)
 
     def get_absolute_url(self):
-        return reverse('admin:archives_collection_change', args=[self.pk])
-        # return reverse('collection_detail', kwargs={'object_id': self.pk})
+        return reverse('archives:collection_detail', kwargs={'pk': self.pk})
+
+    def some_holdings(self):
+        return self.holdings.all().order_by('-id')[:20]
+
+    def is_admin(self, user):
+        return False
 
     def __str__(self):
-        return self.name or 'Collection {}'.format(self.pk)
+        return self.title or 'Collection {}'.format(self.pk)
 
 
 @reversion.register()

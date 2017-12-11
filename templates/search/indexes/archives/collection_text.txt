@@ -1,4 +1,4 @@
-{{ object.name }}
+{{ object.title }}
 {{ object.organization }}
 
 {% if object.description %}{{object.description}}{% endif %}

@@ -8,7 +8,7 @@ class ProjectInline(admin.TabularInline):
     extra = 0
     show_change_link = True
 
-    fields = ['name', 'keywords']
+    fields = ['title', 'keywords']
     readonly_fields = fields
 
 

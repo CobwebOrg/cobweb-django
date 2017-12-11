@@ -3,13 +3,13 @@
 {# {% load humanize %} #}
 {% load cobweb_look %}
 
-{% block page_title %}{{ project.name }}{% endblock %}
-{% block title %}{{ project.name }}{% endblock %}
+{% block page_title %}{{ project.title }}{% endblock %}
+{% block title %}{{ project.title }}{% endblock %}
 
 {% block content %}
 <div class="row">
 	<h3 class="editable_title col-md-12 collapse show">
-		{{project.name}}{% edit_link project user %}
+		{{project.title}}{% edit_link project user %}
 	</h3>
 </div>
 

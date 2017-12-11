@@ -8,7 +8,7 @@ class CollectionInline(admin.TabularInline):
     extra = 0
     show_change_link = True
 
-    fields = ['name', 'identifier']
+    fields = ['title', 'identifier']
     readonly_fields = fields
 
 

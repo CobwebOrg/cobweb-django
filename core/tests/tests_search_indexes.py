@@ -12,7 +12,7 @@ class ProjectIndexTest(django.test.TestCase):
         index = core.search_indexes.ProjectIndex()
 
         project = projects.tests.ProjectFactory(
-            name='Project Name',
+            title='Project Name',
             metadata={'a': [1], 'b': [2, 3]}
         )
         project.save()

@@ -10,7 +10,6 @@ from metadata.models import CobwebMetadataMixin
 class Project(CobwebMetadataMixin, models.Model):
     """Django ORM model for a Cobweb project."""
 
-    name = models.CharField('Name', max_length=500)
     administered_by = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         related_name='projects_administered',
@@ -55,9 +54,9 @@ class Project(CobwebMetadataMixin, models.Model):
         """
         Return a string representation of project.
 
-        Should be self.name, but returns 'Project <ID>' if name is blank.
+        Should be self.title, but returns 'Project <ID>' if title is blank.
         """
-        return self.name or 'Project {}'.format(self.pk)
+        return self.title or 'Project {}'.format(self.pk)
 
     def get_absolute_url(self):
         return reverse('project_detail', kwargs={'pk': self.pk})

@@ -24,7 +24,7 @@ class CollectionModelTests(TestCase):
 
         # # Make sure it works even if the usual fields are blank
         # try:
-        #     self.assertIsInstance(str(CollectionFactory(name=None)), str)
+        #     self.assertIsInstance(str(CollectionFactory(title=None)), str)
         # except:
         #     pass
 

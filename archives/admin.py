@@ -11,7 +11,7 @@ from archives import models, admin_inlines
 
 @admin.register(models.Collection)
 class CollectionAdmin(MetadataAdminMixin, VersionAdmin):
-    fields = ['name', 'organization', 'identifier'] + MetadataAdminMixin.fields
+    fields = ['title', 'organization', 'identifier'] + MetadataAdminMixin.fields
     inlines = [
         admin_inlines.ClaimInline,
         admin_inlines.HoldingInline,

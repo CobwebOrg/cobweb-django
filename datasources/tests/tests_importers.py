@@ -9,6 +9,9 @@ from datasources import models, tests
 ### test that importing an archive-it subcollection doesn't reset collection
 ### name or create a new collection
 
+def test_OAIPMHImporter_harvest_record_transfers_title():
+    pass
+
 class AITPartnerImporterTests(test.TestCase):
 
     def setUp(self):
@@ -17,19 +20,19 @@ class AITPartnerImporterTests(test.TestCase):
     def test___harvest_setspec(self):
         pass
 
-    # def test___get_set_identifier(self):
-    #     self.assertEqual(
-    #         self.importer.__get_set_identifier('collection:8033'),
-    #         'http://archive-it.org/collections/8033'
-    #     )
-    #     self.assertEqual(
-    #         self.importer.__get_set_identifier('organization:853'),
-    #         'http://archive-it.org/organizations/853'
-    #     )
-    #     self.assertEqual(
-    #         self.importer.__get_set_identifier('organization'),
-    #         None
-    #     )
+    def test___get_set_identifier(self):
+        self.assertEqual(
+            self.importer.get_set_identifier('collection:8033'),
+            'http://archive-it.org/collections/8033'
+        )
+        self.assertEqual(
+            self.importer.get_set_identifier('organization:853'),
+            'http://archive-it.org/organizations/853'
+        )
+        self.assertEqual(
+            self.importer.get_set_identifier('organization'),
+            None
+        )
 
 @unittest.skip("Takes too long, already passed.")
 class LiveArchiveItTests(test.TestCase):
@@ -82,10 +85,10 @@ class LiveArchiveItTests(test.TestCase):
             'UCLA',
         )
         self.assertEqual(
-            self.harvard_holding.collection.name,
+            self.harvard_holding.collection.title,
             'A-Sites: Archived Harvard Websites',
         )
         self.assertEqual(
-            self.ucla_holding.collection.name,
+            self.ucla_holding.collection.title,
             'UK European Union Membership Referendum',
         )

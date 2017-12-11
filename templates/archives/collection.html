@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load cobweb_look %}
+
+{% block page_title %}{{ collection.title }}{% endblock %}
+{% block title %}{{ collection.title }}{% endblock %}
+
+{% block content %}
+<div class="row">
+	<h3 class="col-md-12">{{collection.title}}</h3>
+</div>
+
+<div>
+	<div id="div_id_organization" class="row form-group ">
+		<label for="id_organization" class="col-md-3 col-lg-2 form-control-label ">
+			Identifier:
+    	</label>
+    	<div class="col-md ">
+	    	<p id="id_organization">
+				{{collection.identifier | urlize}}
+			</p>
+		</div>
+	</div>
+	<div id="div_id_organization" class="row form-group ">
+		<label for="id_organization" class="col-md-3 col-lg-2 form-control-label ">
+			Organization:
+    	</label>
+    	<div class="col-md ">
+	    	<p id="id_organization">
+				<a href={{ collection.organization.get_absolute_url }}>{{collection.organization}}</a>
+			</p>
+		</div>
+	</div>
+	<div id="div_id_description" class="row form-group ">
+		<label for="id_description" class="col-md-3 col-lg-2 form-control-label ">
+			Description:
+    	</label>
+    	<div class="col-md ">
+	    	<p id="id_description">
+				{{collection.description}}
+			</p>
+		</div>
+	</div>
+	{% if collection.keywords.count > 0 %}
+		<div id="div_id_keywords" class="row form-group ">
+			<label for="id_keywords" class="col-md-3 col-lg-2 form-control-label">
+				Keywords:
+		    </label>
+			<div class="col-md ">
+				{% for keyword in collection.keywords.all %}{% pill keyword %}{% endfor %}
+			</div>
+		</div>
+	{% endif %}
+	{% for key, values in collection.metadata.items %}
+		<div id="div_id_{{key}}" class="row form-group ">
+			<label for="id_{{key}}" class="col-md-3 col-lg-2 form-control-label">
+				{{key|capfirst}}:
+		    </label>
+			<div class="col-md ">
+				{{values|join:', '}}
+			</div>
+		</div>
+	{% endfor %}
+</div>
+
+
+<h4>Holdings</h4>
+
+<ul>
+	{% for holding in collection.some_holdings %}
+		{# {% metadata_card nomination} #}
+		<li>
+			<a href="{{holding.resource.get_absolute_url}}">
+			  	{{holding}}
+			</a>
+		  	<small>
+		  		{% for subject in holding.metadata.subjects %}
+			  		{% pill keyword %}
+			  	{% endfor %}
+			</small>
+		</li>
+	{% endfor %}
+</ul>
+
+
+{% endblock %}

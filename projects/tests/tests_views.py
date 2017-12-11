@@ -13,9 +13,9 @@ class ProjectIndexViewTests(TestCase):
 
     def setUp(self):
         self.test_instances = [
-            tests.ProjectFactory(name="Boring Project"),
-            tests.ProjectFactory(name="Exciting Project"),
-            tests.ProjectFactory(name="Other Project"),
+            tests.ProjectFactory(title="Boring Project"),
+            tests.ProjectFactory(title="Exciting Project"),
+            tests.ProjectFactory(title="Other Project"),
         ]
         self.response = self.client.get('/projects/')
 
@@ -54,7 +54,7 @@ class ProjectDetailViewTests(TestCase):
 
     def setUp(self):
         self.test_instance = tests.ProjectFactory()
-        self.fields = ['name', 'description']
+        self.fields = ['title', 'description']
         self.templates = ['base.html', 'project.html']
 
         # Add some nominations
@@ -289,7 +289,7 @@ class ProjectUpdateViewTests(TestCase):
             self.assertTemplateUsed(self.response, template)
 
     def test_included_fields(self):
-        for field_name in ['name', 'administered_by', 'nomination_policy',
+        for field_name in ['title', 'administered_by', 'nomination_policy',
                            'nominators', 'status', 'description', 'keywords']:
             try:
                 self.assertContains(

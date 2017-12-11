@@ -6,6 +6,7 @@
 
 from archives.models import *
 from archives.views import *
+# from archives.forms import *
 from archives.tests import *
 
 from core.models import *

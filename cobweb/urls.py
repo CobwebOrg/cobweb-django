@@ -46,19 +46,8 @@ urlpatterns = [
         projects.views.ProjectUpdateView.as_view(),
         name='project_update'),
 
-    # # Collection
-    # url(r'^collections/$',
-    #     archives.views.CollectionIndexView.as_view(),
-    #     name='collection_list'),
-    # url(r'^collections/(?P<pk>\d+)/$',
-    #     archives.views.CollectionDetailView.as_view(),
-    #     name='collection_detail'),
-    # url(r'^collections/new$',
-    #     archives.views.CollectionCreateView.as_view(),
-    #     name='collection_create'),
-    # url(r'^collections/(?P<pk>\d+)/edit/$',
-    #     archives.views.CollectionUpdateView.as_view(),
-    #     name='collection_update'),
+    # Collection
+    url(r'^collections/', include('archives.urls')),
 
     # Nomination
     url(r'^nomination/(?P<pk>\d+)/$',

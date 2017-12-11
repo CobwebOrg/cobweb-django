@@ -1,4 +1,13 @@
-# from django.shortcuts import render
-# from reversion.views import RevisionMixin
+from django.views.generic import ListView, DetailView
 
-# # Create your views here.
+from archives import models
+
+
+class CollectionIndexView(ListView):
+    model = models.Collection
+    template_name = "archives/collection_list.html"
+
+
+class CollectionDetailView(DetailView):
+    model = models.Collection
+    template_name = "archives/collection.html"

@@ -7,9 +7,9 @@ from archives.models import Collection, Claim, Holding
 class CollectionFactory(DjangoModelFactory):
     class Meta:
         model = Collection
-        # django_get_or_create = ('name')
+        # django_get_or_create = ('title')
 
-    name = Faker('company')
+    title = Faker('company')
 
 
 class ClaimFactory(DjangoModelFactory):

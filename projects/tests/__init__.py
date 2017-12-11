@@ -10,7 +10,7 @@ class ProjectFactory(DjangoModelFactory):
     class Meta:
         model = Project
 
-    name = Faker('sentence')
+    title = Faker('sentence')
     description = Faker('paragraph')
 
 
