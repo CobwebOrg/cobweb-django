@@ -70,6 +70,7 @@ class ProjectForm(forms.ModelForm):
         model = Project
         fields = ('__all__')
         widgets = {
+            'title': forms.TextInput,
             'administered_by': autocomplete.ModelSelect2Multiple(
                 url='user_autocomplete',
                 attrs={'data-allow-clear': 'false'},

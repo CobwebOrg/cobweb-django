@@ -22,6 +22,12 @@ class ProjectCreateView(LoginRequiredMixin, RevisionMixin, CreateView):
     template_name = 'generic_form.html'
     form_class = forms.ProjectForm
 
+    def get_initial(self):
+        initial = super().get_initial()
+        initial['administered_by'] = {self.request.user.pk}
+        print(initial)
+        return initial
+
     # def form_valid(self, form):
     #     candidate = form.save(commit=False)
     #     candidate.administered_by.add(self.request.user)

@@ -34,20 +34,20 @@ class UserModelTests(TestCase):
         Projects the user can nominate to and (in future, not yet implemented)
         Collections they can claim on behalf of."""
 
-        anonymous_project = ProjectFactory(nomination_policy='A',
+        anonymous_project = ProjectFactory(nomination_policy='Anonymous',
                                            title='anonymous_project')
         anonymous_project.save()
 
-        open_project = ProjectFactory(nomination_policy='O',
+        open_project = ProjectFactory(nomination_policy='Open',
                                       title='open_project')
         open_project.save()
 
-        admin_project = ProjectFactory(nomination_policy='R',
+        admin_project = ProjectFactory(nomination_policy='Restricted',
                                        title='admin_project')
         admin_project.save()
         admin_project.administered_by.add(self.test_instance)
 
-        nominator_project = ProjectFactory(nomination_policy='R',
+        nominator_project = ProjectFactory(nomination_policy='Restricted',
                                            title='nominator_project')
         nominator_project.save()
         nominator_project.nominators.add(self.test_instance)
@@ -59,11 +59,11 @@ class UserModelTests(TestCase):
             nominator_project,
         ]
 
-        not_nominator_project = ProjectFactory(nomination_policy='R',
+        not_nominator_project = ProjectFactory(nomination_policy='Restricted',
                                                title='not_nominator_project')
         not_nominator_project.save()
 
-        blacklisted_project = ProjectFactory(nomination_policy='O',
+        blacklisted_project = ProjectFactory(nomination_policy='Open',
                                              title='blacklisted_project')
         blacklisted_project.save()
         blacklisted_project.nominator_blacklist.add(self.test_instance)

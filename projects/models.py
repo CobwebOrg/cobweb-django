@@ -17,12 +17,12 @@ class Project(CobwebMetadataMixin, models.Model):
     )
 
     NOMINATION_POLICY = {
-        'A': "Anonymous: anyone can nominate, even if they're not logged in.",
-        'O': 'Open: anyone with a Cobweb account can nominate.',
-        'R': 'Restricted: only selected users can nominate.',
+        'Anonymous': "Anonymous: anyone can nominate, even if they're not logged in.",
+        'Open': 'Open: anyone with a Cobweb account can nominate.',
+        'Restricted': 'Restricted: only selected users can nominate.',
     }
     nomination_policy = models.CharField(
-        max_length=1, default='O',
+        max_length=10, default='Open',
         choices=[(key, value) for key, value in NOMINATION_POLICY.items()]
     )
 
@@ -37,14 +37,10 @@ class Project(CobwebMetadataMixin, models.Model):
         related_name='projects_blacklisted',
     )
 
-    STATUS = {
-        'a': 'Active',
-        'i': 'Inactive',
-        'd': 'Deleted',
-    }
+    STATUS = {'Active', 'Inactive', 'Deleted'}
     status = models.CharField(
-        max_length=1, default='a',
-        choices=[(key, value) for key, value in STATUS.items()]
+        max_length=8, default='Active',
+        choices=[(x, x) for x in STATUS]
     )
 
     def some_nominations(self):
@@ -71,7 +67,7 @@ class Project(CobwebMetadataMixin, models.Model):
         return self.NOMINATION_POLICY[self.nomination_policy]
 
     def get_status(self):
-        return self.STATUS[self.status]
+        return self.STATUS
 
     def is_admin(self, user):
         return user in self.administered_by.all()
@@ -80,8 +76,8 @@ class Project(CobwebMetadataMixin, models.Model):
         return (
             user not in self.nominator_blacklist.all()
             and (
-                self.nomination_policy == 'A'
-                or (self.nomination_policy == 'O' and not user.is_anonymous)
+                self.nomination_policy == 'Anonymous'
+                or (self.nomination_policy == 'Open' and not user.is_anonymous)
                 or user in self.administered_by.all()
                 or user in self.nominators.all()
             )

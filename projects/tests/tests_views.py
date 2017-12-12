@@ -115,7 +115,7 @@ class ProjectDetailViewTests(TestCase):
 
         # ANONYMOUS NOMINATION POLICY
 
-        self.test_instance.nomination_policy = 'A'
+        self.test_instance.nomination_policy = 'Anonymous'
         self.test_instance.save()
 
         # Anonymous User
@@ -168,7 +168,7 @@ class ProjectDetailViewTests(TestCase):
 
         # OPEN NOMINATION POLICY
 
-        self.test_instance.nomination_policy = 'O'
+        self.test_instance.nomination_policy = 'Open'
         self.test_instance.save()
 
         # Anonymous User
@@ -214,7 +214,7 @@ class ProjectDetailViewTests(TestCase):
 
         # RESTRICTED NOMINATION POLICY
 
-        self.test_instance.nomination_policy = 'R'
+        self.test_instance.nomination_policy = 'Restricted'
         self.test_instance.save()
 
         # Anonymous User

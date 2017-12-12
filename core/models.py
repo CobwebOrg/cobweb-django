@@ -30,10 +30,10 @@ class User(AbstractUser):
         return [project for project in Project.objects.all()
                 if project.is_nominator(self)]
 
-        # open_noms = Q(nomination_policy__exact='A')
+        # open_noms = Q(nomination_policy__exact='Anonymous')
         # if self.is_authenticated():
-        #     open_noms = open_noms | Q(nomination_policy__exact='O')
-        # restricted_noms = Q(nomination_policy__exact='R')
+        #     open_noms = open_noms | Q(nomination_policy__exact='Open')
+        # restricted_noms = Q(nomination_policy__exact='Restricted')
 
         # is_admin = Q(administered_by__contains=self)
         # is_nom = Q(nominators__contains=self)
@@ -63,14 +63,10 @@ class User(AbstractUser):
 # @reversion.register()
 # class AgentIdentifier(models.Model):
 #     agent = models.ForeignKey('Agent', on_delete=models.CASCADE)
-#     class AGENT_IDENTIFIER_TYPES(Enum):
-#         orcid = ('ORC', 'ORCID')
-#         researcherid = ('RID', 'ResearcherID')
-#         scopus = ('SCO', 'Scopus')
-#         twitter = ('TWI', 'Twitter Handle')
-#         other = ('OTH', 'Other')
+#     AGENT_IDENTIFIER_TYPES = {'ORCID', 'ResearcherID', 'Scopus',
+#                               'Twitter Handle', 'Other'}
 #     id_type = models.CharField('Type', max_length=3,
-#         choices=[x.value for x in AGENT_IDENTIFIER_TYPES])
+#         choices=[(x, x) for x in AGENT_IDENTIFIER_TYPES])
 #     value = models.TextField()
 
 
@@ -87,28 +83,15 @@ class Organization(models.Model):
     metadata = JSONField(null=True, blank=True)
     raw_metadata = models.TextField(null=True, blank=True)
 
-    class SECTORS(Enum):
-        academic = ('a', 'Academic')
-        corporate = ('c', 'Corporate')
-        government = ('g', 'Government')
-        nonprofit = ('n', 'Non-Profit')
-        other = ('o', 'Other')
-    sector = models.CharField('Sector', max_length=1, null=True, blank=True,
-                              choices=[x.value for x in SECTORS])
+    SECTORS = {'Academic', 'Corporate', 'Government', 'Non-Profit', 'Other'}
+    sector = models.CharField('Sector', max_length=10, null=True, blank=True,
+                              choices=[(x, x) for x in SECTORS])
 
-    class ORGANIZATION_TYPES(Enum):
-        archive = ('arc', 'Archive')
-        datacenter = ('dat', 'Datacenter')
-        department = ('dpt', 'Department')
-        division = ('div', 'Division')
-        laboratory = ('lab', 'Laboratory')
-        library = ('lib', 'Library')
-        museum = ('mus', 'Museum')
-        project = ('pro', 'Project')
-        other = ('oth', 'Other')
+    ORGANIZATION_TYPES = {'Archive', 'Datacenter', 'Department', 'Division',
+                          'Laboratory', 'Library', 'Museum', 'Project', 'Other'}
     organization_type = models.CharField(
-        'Type', max_length=3, null=True, blank=True,
-        choices=[x.value for x in ORGANIZATION_TYPES]
+        'Type', max_length=10, null=True, blank=True,
+        choices=[(x, x) for x in ORGANIZATION_TYPES]
     )
 
     # country = ???
@@ -132,11 +115,8 @@ class Organization(models.Model):
 # class OrganizationIdentifier(models.Model):
 #     organization = models.ForeignKey(Organization, on_delete=models.PROTECT)
 
-#     class ORGANIZATION_IDENTIFIER_TYPES(Enum):
-#         isni = ('i', 'ISNI')
-#         ringgold = ('r', 'Ringgold')
-#         other = ('o', 'Other')
+#     ORGANIZATION_IDENTIFIER_TYPES = {'ISNI','Ringgold','Other'}
 #     id_type = models.CharField('Type', max_length=3,
-#         choices=[x.value for x in ORGANIZATION_IDENTIFIER_TYPES])
+#         choices=[(x, x) for x in ORGANIZATION_IDENTIFIER_TYPES])
 
 #     value = models.TextField('Value')
