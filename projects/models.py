@@ -81,7 +81,7 @@ class Project(CobwebMetadataMixin, models.Model):
             user not in self.nominator_blacklist.all()
             and (
                 self.nomination_policy == 'A'
-                or (self.nomination_policy == 'O' and not user.is_anonymous())
+                or (self.nomination_policy == 'O' and not user.is_anonymous)
                 or user in self.administered_by.all()
                 or user in self.nominators.all()
             )
@@ -95,11 +95,10 @@ class Nomination(CobwebMetadataMixin, models.Model):
         on_delete=models.PROTECT,
         related_name='nominations'
     )
-    project = models.ForeignKey(Project, related_name='nominations')
-    nominated_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.PROTECT
-    )
+    project = models.ForeignKey(Project, related_name='nominations',
+                                on_delete=models.PROTECT)
+    nominated_by = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                     on_delete=models.PROTECT)
 
     class Meta:
         unique_together = ('resource', 'project', 'nominated_by')

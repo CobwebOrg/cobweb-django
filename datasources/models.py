@@ -25,8 +25,8 @@ class APIEndpoint(models.Model):
         verbose_name = "API Endpoint"
 
     location = models.URLField(max_length=200, unique=True)
-    organization = models.ForeignKey('core.Organization',
-            null=True, blank=True)
+    organization = models.ForeignKey('core.Organization', null=True,
+                                     blank=True, on_delete=models.CASCADE,)
 
     importer_class_name = models.TextField( default = 'OAIPMHImporter',
             choices = [(x,x) for x in
