@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load cobweb_look %}
+{% load render_table from django_tables2 %}
 
 {% block page_title %}{{ collection.title }}{% endblock %}
 {% block title %}{{ collection.title }}{% endblock %}
@@ -64,6 +65,8 @@
 
 
 <h4>Holdings</h4>
+
+{% render_table table %}
 
 <ul>
 	{% for holding in collection.some_holdings %}
