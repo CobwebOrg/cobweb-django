@@ -25,7 +25,7 @@ services:
     volumes:
       - web_usr_local:/usr/local
       - .:/code
-      - solr_data:/code/data/solr
+      - solr_data:/solr_data
     ports:
       - "8000:8000"
     depends_on:
