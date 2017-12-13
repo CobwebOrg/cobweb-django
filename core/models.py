@@ -83,12 +83,12 @@ class Organization(models.Model):
     metadata = JSONField(null=True, blank=True)
     raw_metadata = models.TextField(null=True, blank=True)
 
-    SECTORS = {'Academic', 'Corporate', 'Government', 'Non-Profit', 'Other'}
+    SECTORS = ('Academic', 'Corporate', 'Government', 'Non-Profit', 'Other')
     sector = models.CharField('Sector', max_length=10, null=True, blank=True,
                               choices=[(x, x) for x in SECTORS])
 
-    ORGANIZATION_TYPES = {'Archive', 'Datacenter', 'Department', 'Division',
-                          'Laboratory', 'Library', 'Museum', 'Project', 'Other'}
+    ORGANIZATION_TYPES = ('Archive', 'Datacenter', 'Department', 'Division',
+                          'Laboratory', 'Library', 'Museum', 'Project', 'Other')
     organization_type = models.CharField(
         'Type', max_length=10, null=True, blank=True,
         choices=[(x, x) for x in ORGANIZATION_TYPES]

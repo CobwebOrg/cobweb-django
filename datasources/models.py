@@ -297,17 +297,15 @@ class AITPartnerImporter(OAIPMHImporter):
 
         try:
             holding.title = ' / '.join(record.metadata.pop('title'))
-        except Exception as ex:
-            eprint("In {}.harvest_record({})".format(
-                self, record.header.identifier))
-            eprint(ex, type(ex))
+        except KeyError:
+            pass  # no 'title' in record.metadata; that's fine!
 
         try:
             holding.description = '\n\n'.join(record.metadata.pop('description'))
-        except Exception as ex:
-            eprint("In {}.harvest_record({})".format(
-                self, record.header.identifier))
-            eprint(ex, type(ex))
+        except KeyError:
+            pass  # no 'description' in record.metadata; that's fine!
+
+
 
         self.attach_metadata(holding, record.metadata, 'oai_dc')
 

@@ -16,14 +16,12 @@ class Project(CobwebMetadataMixin, models.Model):
         verbose_name='administrators'
     )
 
-    NOMINATION_POLICY = {
-        'Anonymous': "Anonymous: anyone can nominate, even if they're not logged in.",
-        'Open': 'Open: anyone with a Cobweb account can nominate.',
-        'Restricted': 'Restricted: only selected users can nominate.',
-    }
     nomination_policy = models.CharField(
-        max_length=10, default='Open',
-        choices=[(key, value) for key, value in NOMINATION_POLICY.items()]
+        max_length=10, default='Open', choices=(
+            ('Anonymous', "Anonymous: anyone can nominate, even if they're not logged in."),
+            ('Open', 'Open: anyone with a Cobweb account can nominate.'),
+            ('Restricted', 'Restricted: only selected users can nominate.'),
+        )
     )
 
     nominators = models.ManyToManyField(
@@ -37,7 +35,7 @@ class Project(CobwebMetadataMixin, models.Model):
         related_name='projects_blacklisted',
     )
 
-    STATUS = {'Active', 'Inactive', 'Deleted'}
+    STATUS = ('Active', 'Inactive', 'Deleted')
     status = models.CharField(
         max_length=8, default='Active',
         choices=[(x, x) for x in STATUS]
@@ -62,12 +60,6 @@ class Project(CobwebMetadataMixin, models.Model):
 
     def get_edit_url(self):
         return reverse('project_update', kwargs={'pk': self.pk})
-
-    def get_nomination_policy(self):
-        return self.NOMINATION_POLICY[self.nomination_policy]
-
-    def get_status(self):
-        return self.STATUS
 
     def is_admin(self, user):
         return user in self.administered_by.all()
