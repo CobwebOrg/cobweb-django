@@ -20,6 +20,11 @@
     <link href="{% static 'Font-Awesome/css/font-awesome.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/cobweb.css' %}" rel="stylesheet">
 
+    <style type="text/css">
+      textarea {
+        resize: none;
+      }
+    </style>
   </head>
 
   <body>
@@ -43,6 +48,14 @@
         crossorigin="anonymous"></script>
     <script>
       var $ = window.jQuery;
+
+
+      $('textarea').each(function () {
+        this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
+      }).on('input', function () {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+      });
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" 
       integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" 
