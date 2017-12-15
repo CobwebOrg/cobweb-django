@@ -44,5 +44,5 @@ class CollectionDetailView(django_tables2.SingleTableMixin, DetailView):
     table_class = HoldingTable
 
     def get_table_data(self):
-        print(dir(self))
+        # print(dir(self))
         return self.object.holdings.all()
