@@ -1,5 +1,6 @@
 # Django SECRET_KEY
 secret.txt
+staticfiles
 
 # SASS
 .sass-cache
