@@ -4,6 +4,8 @@ from django.forms import EmailField
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 
+from projects.forms import CancelButton
+
 
 class UserForm(UserCreationForm):
 
@@ -14,7 +16,12 @@ class UserForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-        self.helper.add_input(layout.Submit('submit', 'Submit'))
+        self.helper.add_input(
+            layout.Layout(
+                CancelButton,
+                layout.Submit('submit', 'Submit')
+            )
+        )
 
     def save(self, commit=True):
         user = super().save(commit=False)

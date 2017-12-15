@@ -60,6 +60,12 @@ title_plaintext_field = Layout(
 )
 title_form_field = Field('title', wrapper_class="col-lg-12")
 
+CancelButton = HTML("""
+    <a href="{{object.get_absolute_url}}" class="btn btn-light btn btn-outline-dark mr-1">
+        Cancel
+    </a>
+""")
+
 
 class ProjectForm(forms.ModelForm):
     """Project model form."""
@@ -127,7 +133,7 @@ class ProjectForm(forms.ModelForm):
                 css_class='row',
             ),
             FormActions(
-                Button('cancel', 'Cancel'),
+                CancelButton,
                 Submit('submit', 'Submit'),
                 css_class='float-right'
             ),
@@ -158,7 +164,7 @@ class NominationForm(forms.ModelForm):
             Field('description', template='metadata_field.html'),
             Field('keywords', template='metadata_field.html'),
             FormActions(
-                Button('cancel', 'Cancel'),
+                CancelButton,
                 Submit('submit', 'Submit'),
                 css_class='float-right'
             ),
