@@ -59,6 +59,13 @@ ALLOWED_HOSTS = [
 ]
 
 
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+    }
+}
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -79,6 +86,7 @@ INSTALLED_APPS = [
     'django_json_widget',
     'django_tables2',
     'haystack',
+    'webpack_loader',
 
     # don't add debug_toolbar here - it causes error during view tests
     # see bottom of page
@@ -197,7 +205,10 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "assets"),
+]
 
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)

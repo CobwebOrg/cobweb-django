@@ -1,5 +1,6 @@
 {% load static %}
 {% load cobweb_look %}
+{% load render_bundle from webpack_loader %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,12 +14,9 @@
 
     <title>{% block window_title %}Cobweb{% endblock %}</title>
 
-    {# <!-- Bootstrap core CSS --> #}
-    {# <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"> #}
-
-    <!-- Custom styles for this template -->
+    <!-- Webpack bundle -->
+    {% render_bundle 'main' %}
     <link href="{% static 'Font-Awesome/css/font-awesome.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/cobweb.css' %}" rel="stylesheet">
 
     <style type="text/css">
       textarea {
@@ -38,34 +36,17 @@
         </div>
       </div>
     </div> <!-- /container -->
-	
+
 
 {# <br><br><br><br><br><br><br><br><br><br><p style='{padding-top: 3cm}'><pre> {% filter force_escape %} {% debug %} {% endfilter %} </pre> #}
+
 
 
     <script src="http://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous"></script>
-    <script>
-      var $ = window.jQuery;
 
-
-      $('textarea').each(function () {
-        this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
-      }).on('input', function () {
-        this.style.height = 'auto';
-        this.style.height = (this.scrollHeight) + 'px';
-      });
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" 
-      integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" 
-      crossorigin="anonymous"></script>
-    {#<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>#}
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" 
-      integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" 
-      crossorigin="anonymous"></script>
-   
-  <!-- Form DOT Media -->    
+  <!-- Form DOT Media -->
   {{ form.media }}
 </body>
 </html>

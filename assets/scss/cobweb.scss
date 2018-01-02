@@ -44,4 +44,4 @@ $theme-colors: (
   "ltprimary": lighten($primary, 25%)
 );
 
-@import "/Users/andy/cobweb-django/bootstrap/scss/bootstrap.scss";
+@import "~bootstrap/scss/bootstrap";

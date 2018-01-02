@@ -2,6 +2,9 @@
 secret.txt
 staticfiles
 
+# node stuff
+node_modules/
+
 # SASS
 .sass-cache
 
