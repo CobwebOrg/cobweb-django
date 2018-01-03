@@ -15,11 +15,12 @@ ICONS = defaultdict(str, {
     'Nomination': 'fa-sign-out',
     'Claim': 'fa-sign-in',
     'Holding': 'fa-inbox',
+    'Resource': 'fa-link',
 
     'profile': 'fa-id-card',
 
-    'close': ' fa-institution fa-remove',
-    'edit':  'fa-pencil-square-o',
+    'close': 'fa-remove',
+    'edit':  'fa-edit',
     'sign_up': 'user-plus',
     'reply': 'fa-reply',
     'search': 'fa-search',
@@ -53,7 +54,7 @@ def edit_link(item, user):
 
 @register.inclusion_tag('icon.html')
 def icon(icon_name):
-    return {'icon': ICONS[icon_name]}
+    return {'title': icon_name, 'icon': ICONS[icon_name]}
 
 
 @register.inclusion_tag('core/metadata_card.html')

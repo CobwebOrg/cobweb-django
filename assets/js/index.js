@@ -1,6 +1,10 @@
 var $ = require("jquery");
 import 'bootstrap';
 import '../scss/cobweb.scss';
+import fontawesome from '@fortawesome/fontawesome'
+import solid from '@fortawesome/fontawesome-free-solid'
+
+fontawesome.library.add(solid)
 
 // Make TextAreas auto-sizing
 

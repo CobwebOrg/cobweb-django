@@ -16,9 +16,6 @@
 
     <!-- Webpack bundle -->
     {% render_bundle 'main' %}
-
-    <link href="{% static 'Font-Awesome/css/font-awesome.min.css' %}" rel="stylesheet">
-
   </head>
 
   <body>
@@ -26,7 +23,7 @@
 
     <div class="container">
       <div class="row flex-column-reverse flex-sm-row">
-          {% block sidebar %}{% include 'collaboration_sidebar.html' %}{% endblock %}
+        {% block sidebar %}{% include 'collaboration_sidebar.html' %}{% endblock %}
         <div class="col">
           {% block content %}{% endblock %}
         </div>
@@ -36,13 +33,13 @@
 
 {# <br><br><br><br><br><br><br><br><br><br><p style='{padding-top: 3cm}'><pre> {% filter force_escape %} {% debug %} {% endfilter %} </pre> #}
 
-
-
     <script src="http://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous"></script>
 
   <!-- Form DOT Media -->
   {{ form.media }}
+
+  <!-- End of base.html content -->
 </body>
 </html>
