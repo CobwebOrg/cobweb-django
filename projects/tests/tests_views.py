@@ -21,7 +21,8 @@ class ProjectIndexViewTests(TestCase):
 
     def test_links_to_all_projects(self):
         self.assertTemplateUsed(self.response, 'base.html')
-        self.assertTemplateUsed(self.response, 'project_list.html')
+        self.assertTemplateUsed(self.response, 'generic_index.html')
+        self.assertTemplateUsed(self.response, 'generic_table.html')
         self.assertContains(self.response, 'Boring Project')
         self.assertContains(self.response, 'Exciting Project')
         self.assertContains(self.response, 'Other Project')
@@ -29,25 +30,18 @@ class ProjectIndexViewTests(TestCase):
     def test_new_project_link(self):
         """A 'new project' link should be shown if logged-in user is authorized,
         otherwise hidden."""
+
+        link_html = """
+            <a href="/projects/new" class="float-right btn btn-sm btn-primary">
+                <strong>+</strong> New Project
+            </a>
+        """
+
         self.client.logout()
-        self.assertNotContains(
-            self.client.get('/projects/'),
-            'Create new project'
-        )
-        self.assertNotContains(
-            self.client.get('/projects/'),
-            reverse('project_create')
-        )
+        self.assertNotContains(self.client.get('/projects/'), link_html, html=True)
 
         self.client.force_login(UserFactory())
-        self.assertContains(
-            self.client.get('/projects/'),
-            'Create new project'
-        )
-        self.assertContains(
-            self.client.get('/projects/'),
-            reverse('project_create')
-        )
+        self.assertContains(self.client.get('/projects/'), link_html, html=True)
 
 
 class ProjectDetailViewTests(TestCase):

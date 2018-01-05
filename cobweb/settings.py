@@ -134,6 +134,8 @@ TEMPLATES = [
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+DJANGO_TABLES2_TEMPLATE = 'generic_table.html'
+
 WSGI_APPLICATION = 'cobweb.wsgi.application'
 
 

@@ -22,7 +22,12 @@ class CollectionIndexViewTests(TestCase):
     def test_loads(self):
         self.assertEqual(self.response.status_code, 200)
         self.assertTemplateUsed(self.response, 'base.html')
-        self.assertTemplateUsed(self.response, 'archives/collection_list.html')
+        self.assertTemplateUsed(self.response, 'generic_index.html')
+        self.assertTemplateUsed(self.response, 'generic_table.html')
+
+    def test_title(self):
+        self.assertContains(self.response, '<h3>Collections',
+                            count=1, html=True)
 
     def test_links_to_all_collections(self):
         self.assertContains(self.response, 'Boring Collection')

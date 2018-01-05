@@ -1,7 +1,11 @@
 from collections import defaultdict
 from django import template
+from django.db.models import Model
 from django.utils.html import format_html  # , conditional_escape
 # from django.utils.safestring import mark_safe
+
+from archives.models import Collection
+from projects.models import Project
 
 
 register = template.Library()
@@ -54,6 +58,10 @@ def edit_link(item, user):
 
 @register.inclusion_tag('icon.html')
 def icon(icon_name):
+    print('>>>' + icon_name, type(icon_name), isinstance(icon_name, Model))
+    if isinstance(icon_name, Model):
+        icon_name = icon_name._meta.verbose_name
+    assert isinstance(icon_name, str)
     return {'title': icon_name, 'icon': ICONS[icon_name]}
 
 
@@ -71,6 +79,22 @@ def pill(item):
      }
 
 
+@register.inclusion_tag('resource_count_badge.html')
+def resource_count_badge(item):
+    assert type(item) is Project or type(item) is Collection
+    if type(item) is Project:
+        nresources = item.nominations.count()
+    elif type(item) is Collection:
+        nresources = item.holdings.count()
+    return {'nresources': nresources}
+
+
+@register.inclusion_tag('count_badge.html')
+def count_badge(queryset):
+    return {'count': queryset.count(),
+            'models': (str(queryset.model),)}
+
+
 @register.filter
 def resourceset_model_name(item):
     return item.get_resource_set()._meta.verbose_name
@@ -84,3 +108,8 @@ def searchbar(view_name):
 @register.filter
 def model_name(item):
     return item._meta.verbose_name
+
+
+@register.filter
+def model_name_plural(item):
+    return item._meta.verbose_name_plural

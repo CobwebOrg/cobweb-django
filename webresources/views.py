@@ -1,32 +1,34 @@
-import django_tables2 as tables
-
 from django.core.exceptions import ValidationError
 from django.http import Http404
 from django.views import generic
 from django.shortcuts import redirect, reverse
+import django_tables2
 
 from webresources import models
 
 
-class ResourceTable(tables.Table):
+class ResourceTable(django_tables2.Table):
 
-    url = tables.Column()
-    n = tables.TemplateColumn('{{record.nominations.count}}', orderable=False)
-    c = tables.TemplateColumn('{{record.claims.count}}', orderable=False)
-    h = tables.TemplateColumn('{{record.holdings.count}}', orderable=False)
-    # records = tables.TemplateColumn('{{record.resource_record_count}}',
+    url = django_tables2.Column()
+    nominations = django_tables2.TemplateColumn(
+        '{% load count_badge from cobweb_look %}'
+        '{% count_badge record.nominations %}',
+        default='', orderable=False
+    )
+
+    c = django_tables2.TemplateColumn('{{record.claims.count}}', orderable=False)
+    h = django_tables2.TemplateColumn('{{record.holdings.count}}', orderable=False)
+    # records = django_tables2.TemplateColumn('{{record.resource_record_count}}',
     #                                 orderable=False)
 
     class Meta:
         model = models.Resource
-        show_header = True
+        show_header = False
         exclude = ['id']
-        attrs = {'class': 'table table-hover'}
-        template = 'webresources/resource-table.html'
         empty_text = "No records."
 
 
-class ResourceListView(tables.SingleTableView):
+class ResourceListView(django_tables2.SingleTableView):
     model = models.Resource
     template_name = "webresources/resource_list.html"
     table_class = ResourceTable

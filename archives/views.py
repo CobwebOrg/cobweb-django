@@ -7,16 +7,17 @@ from archives import models
 class CollectionTable(django_tables2.Table):
 
     title = django_tables2.LinkColumn()
-    h = django_tables2.TemplateColumn('{% load icon from cobweb_look %}' +
-                                      '{{record.holdings.count}}' +
-                                      '{% icon "Holding" %}',
-                                      orderable=False)
+    nholdings = django_tables2.TemplateColumn(
+        '{% load resource_count_badge from cobweb_look %}'
+        '{% resource_count_badge record %}',
+        default='', orderable=False
+    )
 
     class Meta:
         model = models.Collection
-        show_header = True
-        fields = ['title', 'h']
-        attrs = {'class': 'table table-hover'}
+        show_header = False
+        fields = ['title', 'nholdings']
+        # attrs = {'class': 'table table-hover'}
         empty_text = "No collections."
 
 
@@ -34,7 +35,7 @@ class HoldingTable(django_tables2.Table):
 
 class CollectionIndexView(django_tables2.SingleTableView):
     model = models.Collection
-    template_name = "archives/collection_list.html"
+    template_name = "generic_index.html"
     table_class = CollectionTable
 
 

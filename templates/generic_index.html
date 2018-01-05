@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% load django_tables2 %}
+{% load model_name model_name_plural from cobweb_look %}
+
+{% block title %}Cobweb: {{view.model | model_name_plural | capfirst}} Index{% endblock %}
+
+{% block content %}
+<h3>
+  {{view.model | model_name_plural | capfirst}}
+  {% if new_item_link %}
+  	<a href="{{ new_item_link }}" class="float-right btn btn-sm btn-primary">
+      <strong>+</strong> New {{view.model | model_name | capfirst}}
+    </a>
+  {% endif %}
+</h3>
+
+{% render_table table %}
+
+{% endblock %}

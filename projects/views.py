@@ -1,5 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.urls import reverse
+from django.views.generic import DetailView, CreateView, UpdateView
+import django_tables2
 from reversion.views import RevisionMixin
 
 from webresources.models import Resource
@@ -7,9 +9,36 @@ from webresources.models import Resource
 from projects import models, forms
 
 
-class ProjectIndexView(ListView):
+class ProjectTable(django_tables2.Table):
+    """django_tables2.Table object for lists of projects."""
+
+    title = django_tables2.LinkColumn()
+    nholdings = django_tables2.TemplateColumn(
+        '{% load resource_count_badge from cobweb_look %}'
+        '{% resource_count_badge record %}',
+        default='', orderable=False
+    )
+
+    class Meta:
+        model = models.Project
+        show_header = False
+        fields = ['title', 'nholdings']
+        # attrs = {'class': 'table table-hover'}
+        empty_text = "No projects."
+
+
+class ProjectIndexView(django_tables2.SingleTableView):
     model = models.Project
-    template_name = "project_list.html"
+    template_name = "generic_index.html"
+    table_class = ProjectTable
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated():
+            context_data.update({
+                'new_item_link': reverse('project_create'),
+            })
+        return context_data
 
 
 class ProjectDetailView(DetailView):
