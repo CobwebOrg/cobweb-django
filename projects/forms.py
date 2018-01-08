@@ -107,13 +107,12 @@ class ProjectForm(forms.ModelForm):
             title_field = title_form_field
 
         self.helper.layout = Layout(
-            Fieldset('', title_field, css_class='row my-2'),
+            Row('', title_field, css_class='my-2'),
 
-            Fieldset(
+            Row(
                 '',
                 Field('status', wrapper_class='col-lg-5 pb-2'),
                 Field('administered_by', wrapper_class='col-lg-7 pb-2'),
-                css_class='row',
             ),
 
             Fieldset(
@@ -122,7 +121,7 @@ class ProjectForm(forms.ModelForm):
                 Field('keywords', template='metadata_field.html'),
             ),
 
-            Fieldset(
+            Row(
                 '',
                 Field('nomination_policy', wrapper_class='col-lg-5'),
                 Column(
@@ -130,7 +129,6 @@ class ProjectForm(forms.ModelForm):
                     Field('nominator_blacklist'),
                     css_class='col-lg-7'
                 ),
-                css_class='row',
             ),
             FormActions(
                 CancelButton,
