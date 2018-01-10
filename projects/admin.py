@@ -3,7 +3,7 @@ from django.contrib.postgres import fields as postgres_fields
 from django_json_widget.widgets import JSONEditorWidget
 from reversion.admin import VersionAdmin
 
-from projects.models import Nomination, Project
+from projects.models import Nomination, Project, Claim
 from projects.admin_inlines import NominationInline
 
 
@@ -19,3 +19,11 @@ class ProjectAdmin(VersionAdmin):
 @admin.register(Nomination)
 class NominationAdmin(VersionAdmin):
     pass
+
+
+@admin.register(Claim)
+class ClaimAdmin(VersionAdmin):
+
+    formfield_overrides = {
+        postgres_fields.JSONField: {'widget': JSONEditorWidget},
+    }

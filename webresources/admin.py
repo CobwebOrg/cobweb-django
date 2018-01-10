@@ -1,8 +1,8 @@
 from django.contrib import admin
 from reversion.admin import VersionAdmin
 
-from projects.admin import NominationInline
-from archives.admin_inlines import ClaimInline, HoldingInline
+from projects.admin_inlines import NominationInline, ClaimInline
+from archives.admin_inlines import HoldingInline
 
 from webresources.models import Resource
 

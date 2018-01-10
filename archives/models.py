@@ -37,36 +37,6 @@ class Collection(ModelValidationMixin, CobwebMetadataMixin, models.Model):
 
 
 @reversion.register()
-class Claim(CobwebMetadataMixin, models.Model):
-    resource = models.ForeignKey(
-        'webresources.Resource',
-        on_delete=models.PROTECT,
-        related_name='claims'
-    )
-    collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
-
-    # scope = ???
-    start_date = models.DateField('Starting Date')
-    end_date = models.DateField('Ending Date', null=True, blank=True)
-    # frequency = ???
-    max_links = models.IntegerField('Maximum Links', null=True, blank=True)
-    # host_limit = ???
-    time_limit = models.DurationField('Time Limit', null=True, blank=True)
-    document_limit = models.IntegerField('Document Limit',
-                                         null=True, blank=True)
-    data_limit = models.IntegerField('Data Limit (GB)', null=True, blank=True)
-    robot_exclusion_override = models.BooleanField('Override Robot Exclusion?',
-                                                   default=False)
-    # capture_software = ???
-
-    def __str__(self):
-        return '{} in {}'.format(self.resource, self.collection)
-
-    def get_resource_set(self):
-        return self.collection
-
-
-@reversion.register()
 class Holding(CobwebMetadataMixin, models.Model):
     resource = models.ForeignKey(
         'webresources.Resource',

@@ -2,8 +2,8 @@ from django.test import TestCase
 from django.urls import reverse
 from faker import Faker
 
-from archives.tests import ClaimFactory, HoldingFactory
-from projects.tests import NominationFactory
+from archives.tests import HoldingFactory
+from projects.tests import NominationFactory, ClaimFactory
 
 from webresources import models, tests, views
 

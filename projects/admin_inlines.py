@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from projects.models import Nomination, Project
+from projects.models import Nomination, Project, Claim
 
 
 class ProjectInline(admin.TabularInline):
@@ -18,4 +18,18 @@ class NominationInline(admin.TabularInline):
     show_change_link = True
 
     fields = ['resource', 'project', 'nominated_by']
+    readonly_fields = fields
+
+
+class ClaimInline(admin.TabularInline):
+    model = Claim
+    extra = 0
+    show_change_link = True
+
+    fields = [
+        'resource',
+        'collection',
+        'start_date',
+        'end_date',
+    ]
     readonly_fields = fields

@@ -5,6 +5,7 @@ from django_json_widget.widgets import JSONEditorWidget
 from reversion.admin import VersionAdmin
 
 from metadata.admin import MetadataAdminMixin
+from projects.admin_inlines import ClaimInline
 
 from archives import models, admin_inlines
 
@@ -13,17 +14,9 @@ from archives import models, admin_inlines
 class CollectionAdmin(MetadataAdminMixin, VersionAdmin):
     fields = ['title', 'organization', 'identifier'] + MetadataAdminMixin.fields
     inlines = [
-        admin_inlines.ClaimInline,
+        ClaimInline,
         admin_inlines.HoldingInline,
     ]
-
-    formfield_overrides = {
-        postgres_fields.JSONField: {'widget': JSONEditorWidget},
-    }
-
-
-@admin.register(models.Claim)
-class ClaimAdmin(VersionAdmin):
 
     formfield_overrides = {
         postgres_fields.JSONField: {'widget': JSONEditorWidget},

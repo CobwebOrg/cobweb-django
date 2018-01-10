@@ -4,8 +4,8 @@ import pytest
 
 from webresources.tests import ResourceFactory
 
-from archives.tests import CollectionFactory, ClaimFactory, HoldingFactory
-from archives.models import Collection, Claim, Holding
+from archives.tests import CollectionFactory, HoldingFactory
+from archives.models import Collection, Holding
 
 
 class CollectionModelTests(TestCase):
@@ -33,37 +33,6 @@ class CollectionModelTests(TestCase):
         self.assertTrue(self.test_instance.identifier.startswith('http://'))
 
 
-class ClaimModelTests(TestCase):
-
-    def setUp(self):
-        self.test_instance = ClaimFactory(
-            resource=ResourceFactory(),
-            collection=CollectionFactory(),
-            start_date=timezone.now(),
-        )
-
-    def test_claim_creation(self):
-        """Tests creation of Claim objects"""
-
-        self.assertTrue(isinstance(self.test_instance, Claim))
-
-    def test_str(self):
-        """Tests that str(object) always returns a str."""
-        self.assertIsInstance(str(self.test_instance), str)
-
-
-@pytest.mark.django_db
-def test_Claim_get_resource_set():
-    """.get_resource_set() should return a collection object."""
-
-    collection = CollectionFactory()
-    assert ClaimFactory(collection=collection).get_resource_set() == collection
-
-
-###########################
-#   Holding Model Tests   #
-###########################
-
 class HoldingModelTests(TestCase):
 
     def setUp(self):
@@ -83,7 +52,7 @@ class HoldingModelTests(TestCase):
 
 
 @pytest.mark.django_db
-def test_Claim_get_resource_set():
+def test_Holding_get_resource_set():
     """.get_resource_set() should return a collection object."""
 
     collection = CollectionFactory()
