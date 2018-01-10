@@ -23,12 +23,12 @@
 			{{project.status}}
 		</div>
 	</div>
-	<div id="div_id_administered_by" class="col-md-7 form-group">
-		<label for="id_administered_by" class="form-control-label">
+	<div id="div_id_administrators" class="col-md-7 form-group">
+		<label for="id_administrators" class="form-control-label">
 			Administrators:
 		</label>
 		<div class="">
-			{% for user in project.administered_by.all %}{% badge user %}{% endfor %}
+			{% for user in project.administrators.all %}{% badge user %}{% endfor %}
 		</div>
 	</div>
 </div>

@@ -91,7 +91,7 @@ class CollectionDetailViewTests(TestCase):
 #         user = UserFactory()
 #         self.collection = tests.CollectionFactory()
 #         self.collection.save()
-#         self.collection.administered_by.add(user)
+#         self.collection.administrators.add(user)
 #         self.client.force_login(user)
 #         self.response = self.client.get(self.collection.get_edit_url())
 
@@ -101,7 +101,7 @@ class CollectionDetailViewTests(TestCase):
 #             self.assertTemplateUsed(self.response, template)
 
 #     def test_included_fields(self):
-#         for field_name in ['title', 'administered_by', 'nomination_policy',
+#         for field_name in ['title', 'administrators', 'nomination_policy',
 #                            'nominators', 'status', 'description', 'keywords']:
 #             try:
 #                 self.assertContains(

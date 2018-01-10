@@ -10,7 +10,7 @@ from projects.admin_inlines import NominationInline
 @admin.register(Project)
 class ProjectAdmin(VersionAdmin):
     inlines = [NominationInline]
-    filter_horizontal = ['keywords', 'administered_by', 'nominators']
+    filter_horizontal = ['keywords', 'administrators', 'nominators']
     formfield_overrides = {
         postgres_fields.JSONField: {'widget': JSONEditorWidget},
     }

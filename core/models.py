@@ -35,7 +35,7 @@ class User(AbstractUser):
         #     open_noms = open_noms | Q(nomination_policy__exact='Open')
         # restricted_noms = Q(nomination_policy__exact='Restricted')
 
-        # is_admin = Q(administered_by__contains=self)
+        # is_admin = Q(administrators__contains=self)
         # is_nom = Q(nominators__contains=self)
         # not_blacklisted = Q(blacklisted_nominators__notcontains=self)
 

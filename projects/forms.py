@@ -77,7 +77,7 @@ class ProjectForm(forms.ModelForm):
         fields = ('__all__')
         widgets = {
             'title': forms.TextInput,
-            'administered_by': autocomplete.ModelSelect2Multiple(
+            'administrators': autocomplete.ModelSelect2Multiple(
                 url='user_autocomplete',
                 attrs={'data-allow-clear': 'false'},
             ),
@@ -112,7 +112,7 @@ class ProjectForm(forms.ModelForm):
             Row(
                 '',
                 Field('status', wrapper_class='col-lg-5 pb-2'),
-                Field('administered_by', wrapper_class='col-lg-7 pb-2'),
+                Field('administrators', wrapper_class='col-lg-7 pb-2'),
             ),
 
             Fieldset(

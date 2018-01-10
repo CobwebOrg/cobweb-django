@@ -8,7 +8,7 @@
 {% endfor %}
 
 {{ object.status }}
-{{ object.administered_by.all|join:', ' }}
+{{ object.administrators.all|join:', ' }}
 {{ object.nominators.all|join:', ' }}
 {% for nomination in object.nominations.all %}
 	{% include 'search/indexes/projects/nomination_text.txt' with object=nomination %}

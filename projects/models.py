@@ -10,7 +10,7 @@ from metadata.models import CobwebMetadataMixin
 class Project(CobwebMetadataMixin, models.Model):
     """Django ORM model for a Cobweb project."""
 
-    administered_by = models.ManyToManyField(
+    administrators = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         related_name='projects_administered',
         verbose_name='administrators'
@@ -62,7 +62,7 @@ class Project(CobwebMetadataMixin, models.Model):
         return reverse('project_update', kwargs={'pk': self.pk})
 
     def is_admin(self, user):
-        return user in self.administered_by.all()
+        return user in self.administrators.all()
 
     def is_nominator(self, user):
         return (
@@ -70,7 +70,7 @@ class Project(CobwebMetadataMixin, models.Model):
             and (
                 self.nomination_policy == 'Anonymous'
                 or (self.nomination_policy == 'Open' and not user.is_anonymous)
-                or user in self.administered_by.all()
+                or user in self.administrators.all()
                 or user in self.nominators.all()
             )
         )

@@ -131,7 +131,7 @@ class ProjectDetailViewTests(TestCase):
         )
 
         admin_user = UserFactory()
-        self.test_instance.administered_by.add(admin_user)
+        self.test_instance.administrators.add(admin_user)
         self.client.force_login(admin_user)
         response = self.client.get(self.test_instance.get_absolute_url())
         self.assertContains(response, 'Add a nomination')
@@ -273,7 +273,7 @@ class ProjectUpdateViewTests(TestCase):
         user = UserFactory()
         self.project = tests.ProjectFactory()
         self.project.save()
-        self.project.administered_by.add(user)
+        self.project.administrators.add(user)
         self.client.force_login(user)
         self.response = self.client.get(self.project.get_edit_url())
 
@@ -283,7 +283,7 @@ class ProjectUpdateViewTests(TestCase):
             self.assertTemplateUsed(self.response, template)
 
     def test_included_fields(self):
-        for field_name in ['title', 'administered_by', 'nomination_policy',
+        for field_name in ['title', 'administrators', 'nomination_policy',
                            'nominators', 'status', 'description', 'keywords']:
             try:
                 self.assertContains(

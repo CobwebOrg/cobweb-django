@@ -9,7 +9,7 @@ class ProjectFormTests(TestCase):
     def test_multiselect_widgets(self):
         form = forms.ProjectForm()
         self.assertIsInstance(form, forms.ProjectForm)
-        for field in ('administered_by', 'nominators', 'keywords'):
+        for field in ('administrators', 'nominators', 'keywords'):
             self.assertIsInstance(
                 form.fields[field].widget,
                 ModelSelect2Multiple

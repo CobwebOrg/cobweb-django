@@ -45,7 +45,7 @@ class UserModelTests(TestCase):
         admin_project = ProjectFactory(nomination_policy='Restricted',
                                        title='admin_project')
         admin_project.save()
-        admin_project.administered_by.add(self.test_instance)
+        admin_project.administrators.add(self.test_instance)
 
         nominator_project = ProjectFactory(nomination_policy='Restricted',
                                            title='nominator_project')
