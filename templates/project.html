@@ -2,6 +2,7 @@
 {# {% load static %} #}
 {# {% load humanize %} #}
 {% load cobweb_look %}
+{% load render_table from django_tables2 %}
 
 {% block page_title %}{{ project.title }}{% endblock %}
 {% block title %}{{ project.title }}{% endblock %}
@@ -27,7 +28,7 @@
 			Administrators:
 		</label>
 		<div class="col-md">
-			{% for user in project.administered_by.all %}{% pill user %}{% endfor %}
+			{% for user in project.administered_by.all %}{% badge user %}{% endfor %}
 		</div>
 	</div>
 </div>
@@ -48,7 +49,7 @@
 			Keywords:
 	    </label>
 		<div class="col-md ">
-			{% for keyword in project.keywords.all %}{% pill keyword %}{% endfor %}
+			{% for keyword in project.keywords.all %}{% badge keyword %}{% endfor %}
 		</div>
 	</div>
 	<div id="div_id_nomination_policy" class="form-group row">
@@ -62,25 +63,8 @@
 </div>
 
 
-<h4>Nominations</h4>
+<h4>Nominations<div class="float-right">{% add_nomination_link project user %}</div></h4>
 
-<div class="float-right">{% add_nomination_link project user %}</div>
-
-<ul>
-	{% for nomination in project.some_nominations %}
-		{# {% metadata_card nomination} #}
-		<li>
-			<a href="{{nomination.resource.get_absolute_url}}">
-			  	{{nomination.resource}}
-			</a>
-		  	<small>
-		  		{% for keyword in nomination.keywords.all %}
-			  		{% pill keyword %}
-			  	{% endfor %}
-			</small>
-		</li>
-	{% endfor %}
-</ul>
-
+{% render_table table %}
 
 {% endblock %}

@@ -1,7 +1,0 @@
-{% load cobweb_look %}
-
-{% if item.get_absolute_url %}
-	<a href='{{ item.get_absolute_url }}' class='badge badge-ltlime border border-primary'>{% icon icon_name %}{{item}}</a>
-{% else %}
-	<span class='badge badge-ltlime border border-primary'>{% icon icon_name %} {{item}}</span>
-{% endif %}

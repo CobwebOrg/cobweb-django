@@ -47,7 +47,7 @@
 				Keywords:
 		    </label>
 			<div class="col-md ">
-				{% for keyword in collection.keywords.all %}{% pill keyword %}{% endfor %}
+				{% for keyword in collection.keywords.all %}{% badge keyword %}{% endfor %}
 			</div>
 		</div>
 	{% endif %}
@@ -77,7 +77,7 @@
 			</a>
 		  	<small>
 		  		{% for subject in holding.metadata.subjects %}
-			  		{% pill keyword %}
+			  		{% badge keyword %}
 			  	{% endfor %}
 			</small>
 		</li>

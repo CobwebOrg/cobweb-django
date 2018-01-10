@@ -9,17 +9,22 @@ from webresources import models
 
 class ResourceTable(django_tables2.Table):
 
-    url = django_tables2.Column()
+    url = django_tables2.LinkColumn()
     nominations = django_tables2.TemplateColumn(
         '{% load count_badge from cobweb_look %}'
         '{% count_badge record.nominations %}',
         default='', orderable=False
     )
-
-    c = django_tables2.TemplateColumn('{{record.claims.count}}', orderable=False)
-    h = django_tables2.TemplateColumn('{{record.holdings.count}}', orderable=False)
-    # records = django_tables2.TemplateColumn('{{record.resource_record_count}}',
-    #                                 orderable=False)
+    claims = django_tables2.TemplateColumn(
+        '{% load count_badge from cobweb_look %}'
+        '{% count_badge record.claims %}',
+        default='', orderable=False
+    )
+    holdings = django_tables2.TemplateColumn(
+        '{% load count_badge from cobweb_look %}'
+        '{% count_badge record.holdings %}',
+        default='', orderable=False
+    )
 
     class Meta:
         model = models.Resource

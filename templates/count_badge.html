@@ -1,4 +1,4 @@
-{% load icon model_name from cobweb_look %}
+{% load icon from cobweb_look %}
 {% if count > 0 %}
   <span class='badge badge-pill badge-secondary text-white'>
     {{count}} {% for model in models %}{% icon model %}{% endfor %}

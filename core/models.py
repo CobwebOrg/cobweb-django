@@ -55,10 +55,6 @@ class User(AbstractUser):
         return reverse('admin:core_user_change', args=[self.pk])
         # return reverse('', kwargs={'object_id': self.pk})
 
-    def html(self):
-        return ("<span class='badge badge-pill badge-info'>{}</span>"
-                .format(self))
-
 
 # @reversion.register()
 # class AgentIdentifier(models.Model):

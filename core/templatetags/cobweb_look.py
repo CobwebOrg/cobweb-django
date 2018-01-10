@@ -1,34 +1,16 @@
 from collections import defaultdict
 from django import template
+from django.contrib import auth
 from django.db.models import Model
 from django.utils.html import format_html  # , conditional_escape
-# from django.utils.safestring import mark_safe
+from django.utils.safestring import mark_safe
 
 from archives.models import Collection
+from core.models import User
 from projects.models import Project
 
 
 register = template.Library()
-
-ICONS = defaultdict(str, {
-    'User': 'fa-user',
-    'Keyword': 'fa-tag',
-    'Organization': 'fa-institution',
-    'Project': 'fa-tasks',
-    'Collection': 'fa-archive',
-    'Nomination': 'fa-sign-out',
-    'Claim': 'fa-sign-in',
-    'Holding': 'fa-inbox',
-    'Resource': 'fa-link',
-
-    'profile': 'fa-id-card',
-
-    'close': 'fa-remove',
-    'edit':  'fa-edit',
-    'sign_up': 'user-plus',
-    'reply': 'fa-reply',
-    'search': 'fa-search',
-})
 
 
 @register.inclusion_tag('add_nomination_link.html')
@@ -41,11 +23,18 @@ def add_nomination_link(item, user):
 
 @register.filter
 def as_link(item):
+    assert isinstance(item, Model), f"{repr(item)} is {type(item)}, not {Model}"
     return format_html(
-        '<a href="{url}">{item}</a>',
-        item=item,
-        url=item.get_absolute_url()
+        '<a href="{url}">{item_name}</a>',
+        item_name=item,
+        url='/'#item.get_absolute_url()
     )
+
+
+@register.inclusion_tag('count_badge.html')
+def count_badge(queryset):
+    return {'count': queryset.count(),
+            'models': (queryset.model,)}
 
 
 @register.inclusion_tag('edit_link.html')
@@ -56,14 +45,34 @@ def edit_link(item, user):
         return dict()
 
 
-@register.inclusion_tag('icon.html')
-def icon(icon_name):
-    print('>>>' + icon_name, type(icon_name), isinstance(icon_name, Model))
-    if isinstance(icon_name, Model):
-        icon_name = icon_name._meta.verbose_name
-    assert isinstance(icon_name, str)
-    return {'title': icon_name, 'icon': ICONS[icon_name]}
+@register.simple_tag
+def icon(item):
+    if not isinstance(item, str):
+        item = item._meta.verbose_name.capitalize()
 
+    format_args = {
+        'User': ('User', 'fa-user'),
+        'Keyword': ('Keyword', 'fa-tag'),
+        'Organization': ('Organization', 'fa-institution'),
+        'Project': ('Project', 'fa-tasks'),
+        'Collection': ('Collection', 'fa-archive'),
+        'Nomination': ('Nomination', 'fa-paperclip'),
+        'Claim': ('Claim', 'fa-check'),
+        'Holding': ('Holding', 'fa-inbox'),
+        'Resource': ('Resource', 'fa-link'),
+
+        'profile': ('profile', 'fa-id-card'),
+
+        'close': ('close', 'fa-remove'),
+        'edit':  ('edit', 'fa-edit'),
+        'sign_up': ('sign_up', 'fa-user-plus'),
+        'reply': ('reply', 'fa-reply'),
+        'search': ('search', 'fa-search'),
+    }[item]
+
+    return mark_safe(
+        format_html('<span title="{}" class="fas {}"></span>', *format_args)
+    )
 
 @register.inclusion_tag('core/metadata_card.html')
 def metadata_card(item, **kwargs):
@@ -71,8 +80,8 @@ def metadata_card(item, **kwargs):
     return kwargs
 
 
-@register.inclusion_tag('pill.html')
-def pill(item):
+@register.inclusion_tag('badge.html')
+def badge(item):
     return {
         'icon_name': item.__class__.__name__,
         'item': item
@@ -87,12 +96,6 @@ def resource_count_badge(item):
     elif type(item) is Collection:
         nresources = item.holdings.count()
     return {'nresources': nresources}
-
-
-@register.inclusion_tag('count_badge.html')
-def count_badge(queryset):
-    return {'count': queryset.count(),
-            'models': (str(queryset.model),)}
 
 
 @register.filter
