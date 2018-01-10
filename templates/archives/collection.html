@@ -68,21 +68,5 @@
 
 {% render_table table %}
 
-<ul>
-	{% for holding in collection.some_holdings %}
-		{# {% metadata_card nomination} #}
-		<li>
-			<a href="{{holding.resource.get_absolute_url}}">
-			  	{{holding}}
-			</a>
-		  	<small>
-		  		{% for subject in holding.metadata.subjects %}
-			  		{% badge keyword %}
-			  	{% endfor %}
-			</small>
-		</li>
-	{% endfor %}
-</ul>
-
 
 {% endblock %}
