@@ -14,20 +14,20 @@
 	</h3>
 </div>
 
-<div>
-	<div id="div_id_status" class="row form-group">
-		<label for="id_status" class="col-md-3 col-lg-2 form-control-label">
+<div class="row">
+	<div id="div_id_status" class="col-md-5 form-group">
+		<label for="id_status" class="form-control-label">
 			Status:
 		</label>
-		<div class="col-md">
+		<div class="">
 			{{project.status}}
 		</div>
 	</div>
-	<div id="div_id_administered_by" class="row form-group">
-		<label for="id_administered_by" class="col-md-3 col-lg-2 form-control-label">
+	<div id="div_id_administered_by" class="col-md-7 form-group">
+		<label for="id_administered_by" class="form-control-label">
 			Administrators:
 		</label>
-		<div class="col-md">
+		<div class="">
 			{% for user in project.administered_by.all %}{% badge user %}{% endfor %}
 		</div>
 	</div>
@@ -35,7 +35,7 @@
 
 <div>
 	<div id="div_id_description" class="row form-group ">
-		<label for="id_description" class="col-md-3 col-lg-2 form-control-label ">
+		<label for="id_description" class="col-md-2 form-control-label ">
 			Description:
     	</label>
     	<div class="col-md ">
@@ -45,19 +45,30 @@
 		</div>
 	</div>
 	<div id="div_id_keywords" class="row form-group ">
-		<label for="id_keywords" class="col-md-3 col-lg-2 form-control-label">
+		<label for="id_keywords" class="col-md-2 form-control-label">
 			Keywords:
 	    </label>
 		<div class="col-md ">
 			{% for keyword in project.keywords.all %}{% badge keyword %}{% endfor %}
 		</div>
 	</div>
-	<div id="div_id_nomination_policy" class="form-group row">
-		<label for="id_nomination_policy_0" class="form-control-label col-md-3 col-lg-2">
+</div>
+
+<div class="row">
+	<div id="div_id_nomination_policy" class="form-group col-md-5">
+		<label for="id_nomination_policy_0" class="form-control-label">
 			Nomination policy:
 		</label>
-		<div class="col-md">
+		<div class="">
 	    	{{project.nomination_policy}}
+		</div>
+    </div>
+	<div id="div_id_nomination_policy" class="form-group col-md-7">
+		<label for="id_nomination_policy_0" class="form-control-label">
+			Nominators:
+		</label>
+		<div class="">
+			{% for nominator in project.nominators.all %}{% badge nominator %}{% endfor %}
 		</div>
     </div>
 </div>
