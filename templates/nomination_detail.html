@@ -12,9 +12,7 @@
     {{ object.project }}
   </a>
   by
-  <a href="{% url 'user_detail' pk=object.nominated_by.pk %}">
-    {{ object.nominated_by }}
-  </a>
+  {% for user in object.nominated_by %}{% badge user %}{% endfor %}
 </p>
 
 <p>{{ object.description }}

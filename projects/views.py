@@ -121,13 +121,13 @@ class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
         candidate = form.save(commit=False)
         candidate.project = self.get_project()
         self.success_url = candidate.project.get_absolute_url()
-        candidate.nominated_by = self.request.user
+        candidate.nominated_by.add(self.request.user)
         candidate.save()
         return super().form_valid(form)
 
     def get_initial(self):
         return {
-            'nominated_by': self.request.user,
+            'nominated_by': [self.request.user],
             'project': self.get_project(),
         }
 
@@ -155,7 +155,7 @@ class ResourceNominateView(RevisionMixin, CreateView):
 
     def get_initial(self):
         return {
-            'nominated_by': self.request.user,
+            'nominated_by': [self.request.user],
             'resource': self.kwargs['url'],
         }
 

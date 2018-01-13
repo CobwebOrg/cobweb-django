@@ -60,12 +60,12 @@ class ProjectDetailViewTests(TestCase):
             'ucla.edu': ('user1', 'user3'),
         }
         for url, users in self.user_nominations.items():
+            nom = tests.NominationFactory(
+                project=self.test_instance,
+                resource=ResourceFactory(url=url),
+            )
             for username in users:
-                tests.NominationFactory(
-                    project=self.test_instance,
-                    nominated_by=UserFactory(username=username),
-                    resource=ResourceFactory(url=url),
-                )
+                nom.nominated_by.add(UserFactory(username=username))
 
         self.client.logout()
         self.test_response = self.client.get(

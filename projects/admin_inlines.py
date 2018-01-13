@@ -17,7 +17,7 @@ class NominationInline(admin.TabularInline):
     extra = 0
     show_change_link = True
 
-    fields = ['resource', 'project', 'nominated_by']
+    fields = ['resource', 'project']
     readonly_fields = fields
 
 
