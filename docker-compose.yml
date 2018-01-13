@@ -16,7 +16,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-        test: ['psql', '-h', 'db', '-U', '"postgres"', '-c', '"\q"']
+        test: ['CMD', 'psql', '-h', 'db', '-U', 'postgres', '-c', '\q']
         interval: 30s
         timeout: 10s
         retries: 5
