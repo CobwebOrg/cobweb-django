@@ -9,7 +9,10 @@ from webresources import models, tests, views
 
 
 class ResourceIndexViewTests(TestCase):
-    pass
+
+    def test_loads(self):
+        response = self.client.get(reverse('webresources:list'))
+        assert response.status_code == 200
 
 
 class ResourceDetailViewTests(TestCase):
@@ -19,7 +22,7 @@ class ResourceDetailViewTests(TestCase):
         self.saved_resource.save()
         self.saved_nomination = NominationFactory(resource=self.saved_resource)
         self.saved_nomination.save()
-        self.saved_claim = ClaimFactory(resource=self.saved_resource)
+        self.saved_claim = ClaimFactory(nomination=self.saved_nomination)
         self.saved_claim.save()
         self.saved_holding = HoldingFactory(resource=self.saved_resource)
         self.saved_holding.save()

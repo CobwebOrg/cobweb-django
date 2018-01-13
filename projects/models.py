@@ -107,11 +107,12 @@ class Nomination(CobwebMetadataMixin, models.Model):
 
 @reversion.register()
 class Claim(CobwebMetadataMixin, models.Model):
-    resource = models.ForeignKey(
-        'webresources.Resource',
-        on_delete=models.PROTECT,
-        related_name='claims'
-    )
+
+    class Meta:
+        unique_together = ('nomination', 'collection')
+
+    nomination = models.ForeignKey(Nomination, related_name='claims',
+                                   on_delete=models.PROTECT)
     collection = models.ForeignKey('archives.Collection',
                                    on_delete=models.CASCADE)
 
@@ -130,7 +131,7 @@ class Claim(CobwebMetadataMixin, models.Model):
     # capture_software = ???
 
     def __str__(self):
-        return '{} in {}'.format(self.resource, self.collection)
+        return '{},  in {}'.format(self.nomination, self.collection)
 
     def get_resource_set(self):
         return self.collection

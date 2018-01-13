@@ -27,6 +27,6 @@ class ClaimFactory(DjangoModelFactory):
         model = Claim
         # django_get_or_create = ('resource', 'collection')
 
-    resource = SubFactory(ResourceFactory)
+    nomination = SubFactory(NominationFactory)
     collection = SubFactory(CollectionFactory)
     start_date = Faker('date')

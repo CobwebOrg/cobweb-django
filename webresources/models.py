@@ -34,7 +34,6 @@ class Resource(models.Model):
     def get_resource_records(self):
         return chain(
             self.nominations.all(),
-            self.claims.all(),
             self.holdings.all(),
         )
 
@@ -47,6 +46,5 @@ class Resource(models.Model):
     def resource_record_count(self):
         return (
             self.nominations.count()
-            + self.claims.count()
             + self.holdings.count()
         )

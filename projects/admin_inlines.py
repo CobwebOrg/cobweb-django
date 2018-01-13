@@ -27,7 +27,7 @@ class ClaimInline(admin.TabularInline):
     show_change_link = True
 
     fields = [
-        'resource',
+        'nomination',
         'collection',
         'start_date',
         'end_date',
