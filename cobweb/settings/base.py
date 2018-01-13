@@ -14,7 +14,8 @@ import os
 import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Refers to the path within docker container
+BASE_DIR = '/code'
 
 
 # Quick-start development settings - unsuitable for production
@@ -45,11 +46,15 @@ except NameError:
             to generate your secret key!' % SECRET_FILE)
 
 
+# Guess DEBUG and TESTING, but these should be set in settings/[environment].py
+
 # SECURITY WARNING: don't run with debug turned on in production!
 if 'DEBUG' in os.environ:
     DEBUG = os.environ['DEBUG']
 else:
     DEBUG = False
+
+TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
 
 # INTERNAL_IPS = ['127.0.0.1']
 INTERNAL_IPS = ['72.18.0.1']
@@ -72,41 +77,35 @@ INSTALLED_APPS = [
     # 'whitenoise.runserver_nostatic',
     'dal',
     'dal_select2',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
+    'django.contrib.humanize',
     'django.contrib.messages',
+    'django.contrib.sessions',
     'django.contrib.staticfiles',
 
-    'django.contrib.humanize',
-    'django_extensions',
     'crispy_forms',
-    'reversion',
+    'django_extensions',
     'django_json_widget',
     'django_tables2',
     'haystack',
+    'reversion',
     'webpack_loader',
 
-    # don't add debug_toolbar here - it causes error during view tests
-    # see bottom of page
-    # 'debug_toolbar',
-
-    'core',
-    'projects',
     'archives',
+    'core',
     'datasources',
-    'webresources',
     'metadata',
+    'projects',
+    'webresources',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    # don't add debug_toolbar here - it causes error during view tests
-    # see bottom of page
-    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -215,34 +214,3 @@ STATICFILES_DIRS = [
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
-
-TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
-
-# Use debug toolbar on local dev machine only
-if DEBUG and not TESTING:
-    MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
-    INSTALLED_APPS += ('debug_toolbar', )
-
-    DEBUG_TOOLBAR_PANELS = [
-        'debug_toolbar.panels.versions.VersionsPanel',
-        'debug_toolbar.panels.timer.TimerPanel',
-        'debug_toolbar.panels.settings.SettingsPanel',
-        'debug_toolbar.panels.headers.HeadersPanel',
-        'debug_toolbar.panels.request.RequestPanel',
-        'debug_toolbar.panels.sql.SQLPanel',
-        'debug_toolbar.panels.staticfiles.StaticFilesPanel',
-        'debug_toolbar.panels.templates.TemplatesPanel',
-        'debug_toolbar.panels.cache.CachePanel',
-        'debug_toolbar.panels.signals.SignalsPanel',
-        'debug_toolbar.panels.logging.LoggingPanel',
-        'debug_toolbar.panels.redirects.RedirectsPanel',
-    ]
-
-    def show_toolbar(request):
-        return True
-
-    DEBUG_TOOLBAR_CONFIG = {
-        'SHOW_TOOLBAR_CALLBACK': 'cobweb.settings.show_toolbar',
-        'INTERCEPT_REDIRECTS': False,
-        'DISABLE_PANELS': DEBUG_TOOLBAR_PANELS,
-    }
