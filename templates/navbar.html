@@ -1,7 +1,10 @@
 {% load static %}
 
 <header class="container mb-2 position-relative">
-	<img class='float-left mr-auto position-absolute ml-1 pl-3' src="{% static 'images/cobweb_logo_top.png' %}" height=44>
+	<span style="position: absolute; top: 0; left: 0.875rem; z-index: 1100;">
+	    <img class='float-left mr-auto position-absolute' src="{% static 'images/cobweb_logo_b4.png' %}" alt="CobWeb logo">
+	</span>
+	<img class='float-left mr-auto position-absolute' src="" height=44>
 	<nav class="navbar row justify-content-end">
 		{% if user.is_authenticated %}
 			<span class="nav-link my-0 py-0">Welcome, {{user}}</span> |
@@ -14,8 +17,10 @@
 		{% endif %}
 	</nav>
 
-	<nav class="navbar row navbar-dark bg-dark">
-		<a href="/" class="navbar-brand py-0 mr-auto"><h1>cobWeb</h1></a>
+    <nav class="navbar row navbar-dark bg-dark" style="margin-top: 10px;">
+		<span style="visibility: hidden;"><a class="nav-link text-uppercase mr-auto ml-auto text-ltprimary" href="/">
+			CobWeb home
+		</a></span>
 
 		<a class="nav-link text-uppercase mr-auto ml-auto text-ltprimary" href="{% url 'project_list' %}">
 			Projects
