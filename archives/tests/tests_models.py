@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.utils import timezone
 import pytest
 
+from core.tests import UserFactory
 from webresources.tests import ResourceFactory
 
 from archives.tests import CollectionFactory, HoldingFactory
@@ -31,6 +32,14 @@ class CollectionModelTests(TestCase):
     def test_https_becomes_http(self):
         self.test_instance.full_clean()
         self.assertTrue(self.test_instance.identifier.startswith('http://'))
+
+    def test_is_admin(self):
+        collection = CollectionFactory()
+        user = UserFactory()
+        assert collection.is_admin(user) is False
+
+        collection.administrators.add(user)
+        assert collection.is_admin(user) is True
 
 
 class HoldingModelTests(TestCase):

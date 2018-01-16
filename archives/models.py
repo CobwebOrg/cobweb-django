@@ -1,4 +1,5 @@
 import reversion
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 
@@ -16,6 +17,9 @@ class ModelValidationMixin(object):
 
 
 class Collection(ModelValidationMixin, CobwebMetadataMixin, models.Model):
+    administrators = models.ManyToManyField(get_user_model(), related_name='collections_administered')
+    invited_administrators = models.ManyToManyField(get_user_model(), related_name='collections_administered_invited')
+
     organization = models.ForeignKey(
         'core.Organization', null=True, blank=True,
         on_delete=models.PROTECT, related_name='collections'
@@ -26,11 +30,8 @@ class Collection(ModelValidationMixin, CobwebMetadataMixin, models.Model):
     def get_absolute_url(self):
         return reverse('archives:collection_detail', kwargs={'pk': self.pk})
 
-    def some_holdings(self):
-        return self.holdings.all().order_by('-id')[:20]
-
     def is_admin(self, user):
-        return False
+        return user in self.administrators.all()
 
     def __str__(self):
         return self.title or 'Collection {}'.format(self.pk)
