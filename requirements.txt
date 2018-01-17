@@ -1,26 +1,25 @@
-Django~=1.11.4
-psycopg2~=2.7.3
+Django~=2.0
+psycopg2
 
 django-autocomplete-light
-django-crispy-forms~=1.6.1
-django-reversion~=2.0.10
-django-webpack-loader~=0.5
-django_json_widget~=0.1
-django_tables2~=1.15
-git+https://github.com/django-haystack/django-haystack
-pysolr~=3.6
-Sickle~=0.6.2
-surt~=0.3.0
-whitenoise~=3.3.0
+django-crispy-forms
+django-reversion
+django-webpack-loader
+django_json_widget
+django_tables2
+git+https://github.com/mpauly/django-haystack
+pysolr
+Sickle
+surt
+whitenoise
 
-uWSGI~=2.0.15
+uWSGI
 
-coverage~=4.4.1
-pytest~=3.3
-pytest-django~=3.1.2
-hypothesis[django]~=3.39
-django-debug-toolbar~=1.9
-django-extensions~=1.8.1
-django-extensions~=1.8.1
-factory-boy~=2.9.2
-pdbpp~=0.9.2
+coverage
+pytest
+pytest-django
+hypothesis[django]
+django-debug-toolbar
+django-extensions
+factory-boy
+pdbpp

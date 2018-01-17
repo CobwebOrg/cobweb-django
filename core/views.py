@@ -31,7 +31,7 @@ class UserUpdateView(RevisionMixin, generic.UpdateView):
 
 class UserAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
-        if not self.request.user.is_authenticated():
+        if not self.request.user.is_authenticated:
             return get_user_model().objects.none()
 
         qs = get_user_model().objects.all()

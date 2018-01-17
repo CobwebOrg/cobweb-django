@@ -61,7 +61,7 @@ class ProjectIndexView(django_tables2.SingleTableView):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        if self.request.user.is_authenticated():
+        if self.request.user.is_authenticated:
             context_data.update({
                 'new_item_link': reverse('project_create'),
             })

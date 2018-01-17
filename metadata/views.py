@@ -23,7 +23,7 @@ class KeywordCreateView(LoginRequiredMixin, CreateView):
 
 class KeywordAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
-        if not self.request.user.is_authenticated():
+        if not self.request.user.is_authenticated:
             return models.Keyword.objects.none()
 
         qs = models.Keyword.objects.all()

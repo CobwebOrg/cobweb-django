@@ -31,7 +31,7 @@ class User(AbstractUser):
                 if project.is_nominator(self)]
 
         # open_noms = Q(nomination_policy__exact='Anonymous')
-        # if self.is_authenticated():
+        # if self.is_authenticated:
         #     open_noms = open_noms | Q(nomination_policy__exact='Open')
         # restricted_noms = Q(nomination_policy__exact='Restricted')
 
