@@ -1,5 +1,3 @@
-import unittest
-
 from django.test import TestCase
 from django.urls import reverse
 
@@ -7,6 +5,7 @@ from core.tests import UserFactory
 from webresources.tests import ResourceFactory
 
 from projects import tests
+from projects.models import Project
 
 
 class ProjectIndexViewTests(TestCase):
@@ -51,6 +50,15 @@ class ProjectDetailViewTests(TestCase):
         self.fields = ['title', 'description']
         self.templates = ['base.html', 'project.html']
 
+        # Add some users
+        self.admin_user = UserFactory()
+        self.test_instance.administrators.add(self.admin_user)
+        self.outside_user = UserFactory()
+        self.nominator = UserFactory()
+        self.test_instance.nominators.add(self.nominator)
+        self.blacklisted_user = UserFactory()
+        self.test_instance.nominator_blacklist.add(self.blacklisted_user)
+
         # Add some nominations
         self.user_nominations = {
             'facebook.com': ('user1', 'user3'),
@@ -84,18 +92,25 @@ class ProjectDetailViewTests(TestCase):
             )
 
     def test_update_link(self):
-        pass
+        url = self.test_instance.get_absolute_url()
+        edit_link = f'<a href="{self.test_instance.get_edit_url()}">'
 
-    @unittest.skip("Relevant???")
-    def test_each_nominated_resource_listed_only_once(self):
-        """Each nominated resource should be listed on the Project Detail page.
-        If it was nominated by multiple users, it should appear only once.
+        # admin user -> link
+        self.client.force_login(self.admin_user)
+        self.assertContains(self.client.get(url), edit_link)
 
-        As currently written, this test will also fail if the resource url is
-        included in a link, which shouldn't happen."""
+        # nominator -> no link
+        self.client.force_login(self.nominator)
+        self.assertNotContains(self.client.get(url), edit_link, html=True)
 
-        for url in self.user_nominations:
-            self.assertContains(self.test_response, url, count=1)
+        # other user -> no link
+        self.client.force_login(self.outside_user)
+        self.assertNotContains(self.client.get(url), edit_link, html=True)
+
+        # anonymous user -> no link
+        self.client.logout()
+        self.assertNotContains(self.client.get(url), edit_link, html=True)
+
 
     def test_edit_project_link(self):
         """An 'edit project' link should be shown if logged-in user is
@@ -121,8 +136,7 @@ class ProjectDetailViewTests(TestCase):
             reverse('nominate', kwargs={'project_id': self.test_instance.pk})
         )
 
-        outside_user = UserFactory()
-        self.client.force_login(outside_user)
+        self.client.force_login(self.outside_user)
         response = self.client.get(self.test_instance.get_absolute_url())
         self.assertContains(response, 'Add a nomination')
         self.assertContains(
@@ -130,9 +144,7 @@ class ProjectDetailViewTests(TestCase):
             reverse('nominate', kwargs={'project_id': self.test_instance.pk})
         )
 
-        admin_user = UserFactory()
-        self.test_instance.administrators.add(admin_user)
-        self.client.force_login(admin_user)
+        self.client.force_login(self.admin_user)
         response = self.client.get(self.test_instance.get_absolute_url())
         self.assertContains(response, 'Add a nomination')
         self.assertContains(
@@ -140,9 +152,7 @@ class ProjectDetailViewTests(TestCase):
             reverse('nominate', kwargs={'project_id': self.test_instance.pk})
         )
 
-        nominator = UserFactory()
-        self.test_instance.nominators.add(nominator)
-        self.client.force_login(nominator)
+        self.client.force_login(self.nominator)
         response = self.client.get(self.test_instance.get_absolute_url())
         self.assertContains(response, 'Add a nomination')
         self.assertContains(
@@ -150,9 +160,7 @@ class ProjectDetailViewTests(TestCase):
             reverse('nominate', kwargs={'project_id': self.test_instance.pk})
         )
 
-        blacklisted_user = UserFactory()
-        self.test_instance.nominator_blacklist.add(blacklisted_user)
-        self.client.force_login(blacklisted_user)
+        self.client.force_login(self.blacklisted_user)
         response = self.client.get(self.test_instance.get_absolute_url())
         self.assertNotContains(response, 'Add a nomination')
         self.assertNotContains(
@@ -174,7 +182,7 @@ class ProjectDetailViewTests(TestCase):
             reverse('nominate', kwargs={'project_id': self.test_instance.pk})
         )
 
-        self.client.force_login(outside_user)
+        self.client.force_login(self.outside_user)
         response = self.client.get(self.test_instance.get_absolute_url())
         self.assertContains(response, 'Add a nomination')
         self.assertContains(
@@ -182,7 +190,7 @@ class ProjectDetailViewTests(TestCase):
             reverse('nominate', kwargs={'project_id': self.test_instance.pk})
         )
 
-        self.client.force_login(admin_user)
+        self.client.force_login(self.admin_user)
         response = self.client.get(self.test_instance.get_absolute_url())
         self.assertContains(response, 'Add a nomination')
         self.assertContains(
@@ -190,7 +198,7 @@ class ProjectDetailViewTests(TestCase):
             reverse('nominate', kwargs={'project_id': self.test_instance.pk})
         )
 
-        self.client.force_login(nominator)
+        self.client.force_login(self.nominator)
         response = self.client.get(self.test_instance.get_absolute_url())
         self.assertContains(response, 'Add a nomination')
         self.assertContains(
@@ -198,7 +206,7 @@ class ProjectDetailViewTests(TestCase):
             reverse('nominate', kwargs={'project_id': self.test_instance.pk})
         )
 
-        self.client.force_login(blacklisted_user)
+        self.client.force_login(self.blacklisted_user)
         response = self.client.get(self.test_instance.get_absolute_url())
         self.assertNotContains(response, 'Add a nomination')
         self.assertNotContains(
@@ -220,7 +228,7 @@ class ProjectDetailViewTests(TestCase):
             reverse('nominate', kwargs={'project_id': self.test_instance.pk})
         )
 
-        self.client.force_login(outside_user)
+        self.client.force_login(self.outside_user)
         response = self.client.get(self.test_instance.get_absolute_url())
         self.assertNotContains(response, 'Add a nomination')
         self.assertNotContains(
@@ -228,7 +236,7 @@ class ProjectDetailViewTests(TestCase):
             reverse('nominate',  kwargs={'project_id': self.test_instance.pk})
         )
 
-        self.client.force_login(admin_user)
+        self.client.force_login(self.admin_user)
         response = self.client.get(self.test_instance.get_absolute_url())
         self.assertContains(response, 'Add a nomination')
         self.assertContains(
@@ -236,7 +244,7 @@ class ProjectDetailViewTests(TestCase):
             reverse('nominate', kwargs={'project_id': self.test_instance.pk})
         )
 
-        self.client.force_login(nominator)
+        self.client.force_login(self.nominator)
         response = self.client.get(self.test_instance.get_absolute_url())
         self.assertContains(response, 'Add a nomination')
         self.assertContains(
@@ -244,7 +252,7 @@ class ProjectDetailViewTests(TestCase):
             reverse('nominate', kwargs={'project_id': self.test_instance.pk})
         )
 
-        self.client.force_login(blacklisted_user)
+        self.client.force_login(self.blacklisted_user)
         response = self.client.get(self.test_instance.get_absolute_url())
         self.assertNotContains(response, 'Add a nomination')
         self.assertNotContains(
@@ -255,11 +263,20 @@ class ProjectDetailViewTests(TestCase):
 
 class ProjectCreateViewTests(TestCase):
 
-    def setUp(self):
-        pass
-
     def test_anonymous_cant_create_project(self):
-        pass
+        self.client.logout()
+        response = self.client.get(reverse('project_create'))
+        self.assertRedirects(response, '/accounts/login/?next=/projects/new')
+
+        project_data = {
+            'title': 'Test Project for test_anonymous_cant_create_project',
+            'status': 'Active',
+            'nomination_policy': 'Open',
+        }
+
+        response2 = self.client.post(reverse('project_create'), project_data)
+        self.assertRedirects(response2, '/accounts/login/?next=/projects/new')
+        assert Project.objects.filter(title=project_data['title']).count() == 0
 
     def test_user_creates_project(self):
         """...
@@ -270,12 +287,17 @@ class ProjectCreateViewTests(TestCase):
 class ProjectUpdateViewTests(TestCase):
 
     def setUp(self):
-        user = UserFactory()
         self.project = tests.ProjectFactory()
         self.project.save()
-        self.project.administrators.add(user)
-        self.client.force_login(user)
-        self.response = self.client.get(self.project.get_edit_url())
+
+        # make some users
+        self.admin_user = UserFactory()
+        self.project.administrators.add(self.admin_user)
+
+        # get a default response
+        self.url = self.project.get_edit_url()
+        self.client.force_login(self.admin_user)
+        self.response = self.client.get(self.url)
 
     def test_load(self):
         self.assertEqual(self.response.status_code, 200)
@@ -298,8 +320,31 @@ class ProjectUpdateViewTests(TestCase):
                     html=False
                 )
 
-    def test_permissions_to_edit_project(self):
-        pass
+    def test_no_edit_if_not_admin(self):
+        """Anonymous and non-admin users get redirected to login page."""
+        self.client.logout()
+        self.assertRedirects(self.client.get(self.url),
+                             f'/accounts/login/?next={self.url}')
+
+        project_data = {
+            'title': 'Test Project for test_anonymous_cant_create_project',
+            'status': 'Active',
+            'nomination_policy': 'Open',
+        }
+        self.assertRedirects(self.client.post(self.url, project_data),
+                             f'/accounts/login/?next={self.url}')
+
+        self.client.force_login(UserFactory())
+        self.assertRedirects(self.client.get(self.url),
+                             f'/accounts/login/?next={self.url}')
+
+        project_data = {
+            'title': 'Test Project for test_anonymous_cant_create_project',
+            'status': 'Active',
+            'nomination_policy': 'Open',
+        }
+        self.assertRedirects(self.client.post(self.url, project_data),
+                             f'/accounts/login/?next={self.url}')
 
 
 class NominationCreateViewTests(TestCase):
