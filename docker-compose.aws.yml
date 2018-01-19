@@ -5,3 +5,5 @@ services:
     ports:
       - "80:8000"
     command: ['bash', '/code/start-aws.sh']
+    environment:
+      DEBUG: 'false'
