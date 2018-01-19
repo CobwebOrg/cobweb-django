@@ -41,8 +41,13 @@ $light:     #f8f9fa;
 $dark:      #343a40;
 
 $theme-colors: (
+        "gray": lighten($gray-600, 15%),
   "ltlime":  $ltlime,
-  "ltprimary": lighten($primary, 25%)
+  "ltprimary": lighten($primary, 25%),
+  "metadata": lighten($cyan, 44%),
+
+  "keyword": $ltlime,
+  "user": lighten($purple, 50%)
 );
 
 @import "~bootstrap/scss/bootstrap";
@@ -53,4 +58,12 @@ textarea {
 
 .navbar {
   padding: 0.2rem 0.5rem;
+}
+
+.form-section {
+  @extend .border, .border-gray;
+  @extend .form-group;
+  @extend .bg-metadata;
+  @extend .p-2;
+  @extend .rounded;
 }

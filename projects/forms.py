@@ -66,6 +66,14 @@ CancelButton = HTML("""
     </a>
 """)
 
+class FormSection(Div):
+    def __init__(self, *args, **kwargs):
+        try:
+            kwargs['css_class'] += ' form-section'
+        except KeyError:
+            kwargs['css_class'] = 'form-section'
+            super().__init__(*args, **kwargs)
+
 
 class ProjectForm(forms.ModelForm):
     """Project model form."""
@@ -111,17 +119,18 @@ class ProjectForm(forms.ModelForm):
 
             Row(
                 '',
-                Field('status', wrapper_class='col-lg-5 pb-2'),
-                Field('administrators', wrapper_class='col-lg-7 pb-2'),
+                Column(FormSection(Field('status')), css_class='col-lg-5'),
+                Column(FormSection(Field('administrators')), css_class='col-lg-7'),
             ),
 
-            Fieldset(
+            FormSection(
                 '',
                 Field('description', template='metadata_field.html'),
                 Field('keywords', template='metadata_field.html'),
             ),
 
-            Row(
+            FormSection(
+                Row(
                 '',
                 Field('nomination_policy', wrapper_class='col-lg-5'),
                 Column(
@@ -129,7 +138,7 @@ class ProjectForm(forms.ModelForm):
                     Field('nominator_blacklist'),
                     css_class='col-lg-7'
                 ),
-            ),
+            )),
             FormActions(
                 CancelButton,
                 Submit('submit', 'Submit'),
