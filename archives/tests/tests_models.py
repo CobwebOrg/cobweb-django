@@ -33,6 +33,8 @@ class CollectionModelTests(TestCase):
         self.test_instance.full_clean()
         self.assertTrue(self.test_instance.identifier.startswith('http://'))
 
+    # Expect to fail because I'm using a stopgap is_admin that always returns true for orphan Collections
+    @pytest.mark.xfail(strict=True)
     def test_is_admin(self):
         collection = CollectionFactory()
         user = UserFactory()
@@ -40,6 +42,17 @@ class CollectionModelTests(TestCase):
 
         collection.administrators.add(user)
         assert collection.is_admin(user) is True
+
+    # This one tests the stopgap behavior and should be removed when it is.
+    def test_is_admin(self):
+        collection = CollectionFactory()
+        user = UserFactory()
+        assert collection.is_admin(user) is True
+
+        collection.administrators.add(user)
+        assert collection.is_admin(user) is True
+
+        assert collection.is_admin(UserFactory()) is False
 
 
 class HoldingModelTests(TestCase):

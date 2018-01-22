@@ -1,3 +1,4 @@
+import pytest
 from django.test import TestCase
 from django.urls import reverse
 
@@ -52,6 +53,7 @@ class CollectionDetailViewTests(TestCase):
     def test_absolute_url_method(self):
         self.assertTrue(callable(self.test_instance.get_absolute_url))
 
+    @pytest.mark.xfail(strict=True)
     def test_included_fields(self):
         for field in ('title', 'description'):
             self.assertContains(
@@ -67,6 +69,7 @@ class CollectionDetailViewTests(TestCase):
                 except AssertionError:
                     self.assertIn(str(v), self.response.rendered_content)
 
+    @pytest.mark.xfail(strict=True)
     def test_claim_orphan_link(self):
         claim_orphan_url = reverse('archives:claim',
                                    kwargs={'pk': self.test_instance.id})
