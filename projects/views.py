@@ -58,6 +58,7 @@ class ProjectIndexView(django_tables2.SingleTableView):
     model = models.Project
     template_name = "generic_index.html"
     table_class = ProjectTable
+    section = 'project'
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
@@ -72,6 +73,7 @@ class ProjectDetailView(django_tables2.SingleTableMixin, DetailView):
     model = models.Project
     template_name = "project.html"
     table_class = NominationTable
+    section = 'project'
 
     def get_table_data(self):
         return self.object.nominations.all()
@@ -81,6 +83,7 @@ class ProjectCreateView(LoginRequiredMixin, RevisionMixin, CreateView):
     model = models.Project
     template_name = 'generic_form.html'
     form_class = forms.ProjectForm
+    section = 'project'
 
     def get_initial(self):
         initial = super().get_initial()
@@ -100,6 +103,7 @@ class ProjectUpdateView(UserPassesTestMixin, RevisionMixin, UpdateView):
     model = models.Project
     template_name = 'generic_form.html'
     form_class = forms.ProjectForm
+    section = 'project'
 
     def test_func(self):
         return self.get_object().is_admin(self.request.user)
@@ -108,12 +112,14 @@ class ProjectUpdateView(UserPassesTestMixin, RevisionMixin, UpdateView):
 class NominationDetailView(DetailView):
     model = models.Nomination
     template_name = 'nomination_detail.html'
+    section = 'nomination'
 
 
 class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
     model = models.Nomination
     template_name = 'generic_form.html'
     form_class = forms.NominateToProjectForm
+    section = 'nominate'
 
     def form_valid(self, form):
         print(self.request.path)

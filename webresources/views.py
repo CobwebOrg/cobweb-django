@@ -37,6 +37,7 @@ class ResourceListView(django_tables2.SingleTableView):
     model = models.Resource
     template_name = "webresources/resource_list.html"
     table_class = ResourceTable
+    section = 'resource'
 
     def get_queryset(self):
         result = super().get_queryset()
@@ -76,6 +77,7 @@ class ResourceListView(django_tables2.SingleTableView):
 class ResourceDetailView(generic.DetailView):
     model = models.Resource
     template_name = "webresources/resource.html"
+    section = 'resource'
 
     def get(self, request, *args, **kwargs):
         """

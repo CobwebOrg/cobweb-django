@@ -8,17 +8,20 @@ from metadata import models  # , forms
 class KeywordIndexView(ListView):
     model = models.Keyword
     template_name = "keyword_list.html"
+    section = 'metadata'
 
 
 class KeywordDetailView(DetailView):
     model = models.Keyword
     template_name = "keyword_detail.html"
+    section = 'metadata'
 
 
 class KeywordCreateView(LoginRequiredMixin, CreateView):
     model = models.Keyword
     template_name = 'md_test.html'
     # form_class = forms.KeywordForm
+    section = 'metadata'
 
 
 class KeywordAutocomplete(autocomplete.Select2QuerySetView):

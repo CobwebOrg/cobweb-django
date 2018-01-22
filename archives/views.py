@@ -50,12 +50,14 @@ class CollectionIndexView(django_tables2.SingleTableView):
     model = models.Collection
     template_name = "generic_index.html"
     table_class = CollectionTable
+    section = 'collection'
 
 
 class CollectionDetailView(django_tables2.SingleTableMixin, DetailView):
     model = models.Collection
     template_name = "archives/collection.html"
     table_class = HoldingTable
+    section = 'collection'
 
     def get_table_data(self):
         # print(dir(self))

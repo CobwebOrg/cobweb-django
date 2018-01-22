@@ -10,23 +10,27 @@ from core.forms import UserForm
 class UserIndexView(generic.ListView):
     model = get_user_model()
     template_name = "user_list.html"
+    section = 'user'
 
 
 class UserDetailView(generic.DetailView):
     model = get_user_model()
     template_name = "user_detail.html"
+    section = 'user'
 
 
 class UserCreateView(RevisionMixin, generic.CreateView):
     model = get_user_model()
     template_name = "generic_form.html"
     form_class = UserForm
+    section = 'user'
 
 
 class UserUpdateView(RevisionMixin, generic.UpdateView):
     model = get_user_model()
     template_name = "generic_form.html"
     form_class = UserForm
+    section = 'user'
 
 
 class UserAutocomplete(autocomplete.Select2QuerySetView):
