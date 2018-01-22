@@ -1,6 +1,4 @@
 from django.contrib import admin
-from django.contrib.postgres import fields as postgres_fields
-from django_json_widget.widgets import JSONEditorWidget
 from reversion.admin import VersionAdmin
 
 from datasources.models import APIEndpoint
@@ -18,7 +16,3 @@ class APIEndpointInline(admin.TabularInline):
 class APIEndpointAdmin(VersionAdmin):
     fields = ['location', 'organization', 'last_updated', 'importer_class_name']
     readonly_fields = ['last_updated']
-
-    formfield_overrides = {
-        postgres_fields.JSONField: {'widget': JSONEditorWidget},
-    }

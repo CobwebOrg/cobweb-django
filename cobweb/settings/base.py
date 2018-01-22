@@ -88,7 +88,6 @@ INSTALLED_APPS = [
 
     'crispy_forms',
     'django_extensions',
-    'django_json_widget',
     'django_tables2',
     'haystack',
     'reversion',

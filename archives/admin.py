@@ -1,7 +1,5 @@
 from django.urls import reverse
 from django.contrib import admin
-from django.contrib.postgres import fields as postgres_fields
-from django_json_widget.widgets import JSONEditorWidget
 from reversion.admin import VersionAdmin
 
 from metadata.admin import MetadataAdminMixin
@@ -18,18 +16,10 @@ class CollectionAdmin(MetadataAdminMixin, VersionAdmin):
         admin_inlines.HoldingInline,
     ]
 
-    formfield_overrides = {
-        postgres_fields.JSONField: {'widget': JSONEditorWidget},
-    }
-
 
 @admin.register(models.Holding)
 class HoldingAdmin(VersionAdmin):
     readonly_fields = ['resource_link']
-
-    formfield_overrides = {
-        postgres_fields.JSONField: {'widget': JSONEditorWidget},
-    }
 
     def resource_link(self, instance):
         if instance.id:

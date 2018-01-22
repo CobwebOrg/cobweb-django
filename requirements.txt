@@ -5,7 +5,6 @@ django-autocomplete-light
 django-crispy-forms
 django-reversion
 django-webpack-loader
-django_json_widget
 django_tables2
 git+https://github.com/mpauly/django-haystack
 pysolr
