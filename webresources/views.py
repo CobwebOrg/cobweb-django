@@ -15,11 +15,11 @@ class ResourceTable(django_tables2.Table):
         '{% count_badge record.nominations %}',
         default='', orderable=False
     )
-    # claims = django_tables2.TemplateColumn(
-    #     '{% load count_badge from cobweb_look %}'
-    #     '{% count_badge record.claims %}',
-    #     default='', orderable=False
-    # )
+    claims = django_tables2.TemplateColumn(
+        '{% load count_badge from cobweb_look %}'
+        '{% count_badge record.claims %}',
+        default='', orderable=False
+    )
     holdings = django_tables2.TemplateColumn(
         '{% load count_badge from cobweb_look %}'
         '{% count_badge record.holdings %}',
