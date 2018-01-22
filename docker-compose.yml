@@ -32,6 +32,9 @@ services:
       - db
       - solr
     working_dir: /code
+    environment:
+      DEBUG: 'true'
+    command: ['bash', '/code/start-development.sh']
 volumes:
   postgres_data:
   solr_data:

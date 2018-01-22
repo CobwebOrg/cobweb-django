@@ -11,6 +11,15 @@ node_modules/
 # PyCharm
 .idea/
 
+# Atom &c
+.tags
+.tags_swap
+.ropeproject/
+
+### Sublime Text ###
+cobweb-django.sublime-project
+cobweb-django.sublime-workspace
+
 import_errors.txt
 data/solr/cobweb/data/**
 data/postgres/
@@ -111,7 +120,3 @@ db.sqlite3
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
-
-### Sublime Text ###
-cobweb-django.sublime-project
-cobweb-django.sublime-workspace
