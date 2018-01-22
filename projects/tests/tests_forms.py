@@ -2,6 +2,7 @@ from dal.autocomplete import ModelSelect2Multiple
 from django.test import TestCase
 
 from projects import forms
+from projects.tests import NominationFactory
 
 
 class ProjectFormTests(TestCase):
@@ -18,21 +19,11 @@ class ProjectFormTests(TestCase):
 #     def test_init(self):
 #         pass
 
-# class NominationFormTests(TestCase):
+class NominationFormTests(TestCase):
 
-#     def setUp(self):
-#         self.nomination = tests.NominationFactory()
-
-#         self.test_data = [
-#             # ({test_data}, is_valid)
-#             ({'wrong_field': 'wrong info'}, False),
-#             ({'resource': 'twitter.com'}, True),
-#             ({'resource': 'http://nytimes.com', 'Description': 'NYT'}, True),
-#         ]
-
-#     # def test_init_without_entry(self):
-#     #     with self.assertRaises(KeyError):
-#     #         forms.NominationForm()
+    def test_init_without_entry(self):
+        form = forms.NominationForm()
+        assert form.is_valid() == False
 
 #     def test_with_data(self):
 #         for (data, valid) in self.test_data:

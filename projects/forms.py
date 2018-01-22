@@ -49,16 +49,16 @@ from projects.models import Project, Nomination
 title_plaintext_field = Layout(
     HTML("""
         {% load cobweb_look %}
-        <h3 class="click_to_edit_field col-lg-12 collapse show">
+        <h3 class="click_to_edit_field col-md-12 collapse show">
             {{object.title}}
             <a class="btn" data-toggle="collapse" href=".click_to_edit_field">
                 {% icon 'edit' %}
             </a>
         </h3>
         """),
-    Field('title', wrapper_class="col-lg-12 click_to_edit_field collapse"),
+    Field('title', wrapper_class="col-md-12 click_to_edit_field collapse"),
 )
-title_form_field = Field('title', wrapper_class="col-lg-12")
+title_form_field = Field('title', wrapper_class="col-md-12")
 
 CancelButton = HTML("""
     <a href="{{object.get_absolute_url}}" class="btn btn-light btn btn-outline-dark mr-1">
@@ -119,8 +119,8 @@ class ProjectForm(forms.ModelForm):
 
             Row(
                 '',
-                Column(FormSection(Field('status')), css_class='col-lg-5'),
-                Column(FormSection(Field('administrators')), css_class='col-lg-7'),
+                Column(FormSection(Field('status')), css_class='col-md-5'),
+                Column(FormSection(Field('administrators')), css_class='col-md-7'),
             ),
 
             FormSection(
@@ -132,11 +132,11 @@ class ProjectForm(forms.ModelForm):
             FormSection(
                 Row(
                 '',
-                Field('nomination_policy', wrapper_class='col-lg-5'),
+                Field('nomination_policy', wrapper_class='col-md-5'),
                 Column(
                     UneditableField('nominators'),
                     Field('nominator_blacklist'),
-                    css_class='col-lg-7'
+                    css_class='col-md-7'
                 ),
             )),
             FormActions(
