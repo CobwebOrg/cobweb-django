@@ -5,9 +5,10 @@ from django.db.models import Model
 from django.utils.html import format_html  # , conditional_escape
 from django.utils.safestring import mark_safe
 
-from archives.models import Collection
+from archives.models import Collection, Holding
 from core.models import User
-from projects.models import Project
+from projects.models import Project, Nomination, Claim
+from webresources.models import Resource
 
 
 register = template.Library()
@@ -27,7 +28,7 @@ def as_link(item):
     return format_html(
         '<a href="{url}">{item_name}</a>',
         item_name=item,
-        url='/'#item.get_absolute_url()
+        url='/'  # item.get_absolute_url()
     )
 
 
@@ -35,6 +36,27 @@ def as_link(item):
 def count_badge(queryset):
     return {'count': queryset.count(),
             'models': (queryset.model,)}
+
+
+@register.simple_tag
+def cobweb_site_section(item):
+    try:
+        section = {
+            Project: 'Project',
+            Nomination: 'Project',
+            Claim: 'Project',
+            Collection: 'Collection',
+            Holding: 'Collection',
+            Resource: 'Resource'
+        }[item]
+    except KeyError:
+        try:
+            section = model_name(item).title_case()
+        except AttributeError:
+            section = item
+    print(f'###{section}###')
+
+    return section
 
 
 @register.inclusion_tag('edit_link.html')
