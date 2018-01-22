@@ -31,7 +31,10 @@ class Collection(ModelValidationMixin, CobwebMetadataMixin, models.Model):
         return reverse('archives:collection_detail', kwargs={'pk': self.pk})
 
     def is_admin(self, user):
-        return user in self.administrators.all()
+        return user in self.administrators.all() or self.administrators.all().count()==0
+
+    def get_edit_url(self):
+        return reverse('archives:collection_update', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.title or 'Collection {}'.format(self.pk)

@@ -1,12 +1,9 @@
-import unittest
-
 from django.test import TestCase
 from django.urls import reverse
 
-from core.tests import UserFactory
-from webresources.tests import ResourceFactory
-
 from archives import tests
+from archives.tests import CollectionFactory
+from core.tests import UserFactory
 
 
 class CollectionIndexViewTests(TestCase):
@@ -70,6 +67,12 @@ class CollectionDetailViewTests(TestCase):
                 except AssertionError:
                     self.assertIn(str(v), self.response.rendered_content)
 
+    def test_claim_orphan_link(self):
+        claim_orphan_url = reverse('archives:claim',
+                                   kwargs={'pk': self.test_instance.id})
+        claim_orphan_html = f'<a href="{claim_orphan_url}"'
+        self.assertContains(self.response, claim_orphan_html)
+
 
 # class CollectionCreateViewTests(TestCase):
 
@@ -81,24 +84,24 @@ class CollectionDetailViewTests(TestCase):
 
 #     def test_user_creates_collection(self):
 #         """...
-#         Should autmatically set: User"""
+#         Should automatically set: User"""
 #         pass
 
 
-# class CollectionUpdateViewTests(TestCase):
+class CollectionUpdateViewTests(TestCase):
 
-#     def setUp(self):
-#         user = UserFactory()
-#         self.collection = tests.CollectionFactory()
-#         self.collection.save()
-#         self.collection.administrators.add(user)
-#         self.client.force_login(user)
-#         self.response = self.client.get(self.collection.get_edit_url())
+    def setUp(self):
+        user = UserFactory()
+        self.collection = CollectionFactory()
+        self.collection.save()
+        self.collection.administrators.add(user)
+        self.client.force_login(user)
+        self.response = self.client.get(self.collection.get_edit_url())
 
-#     def test_load(self):
-#         self.assertEqual(self.response.status_code, 200)
-#         for template in ['base.html', 'generic_form.html']:
-#             self.assertTemplateUsed(self.response, template)
+    def test_load(self):
+        self.assertEqual(self.response.status_code, 200)
+        for template in ['base.html', 'generic_form.html']:
+            self.assertTemplateUsed(self.response, template)
 
 #     def test_included_fields(self):
 #         for field_name in ['title', 'administrators', 'nomination_policy',
@@ -117,18 +120,4 @@ class CollectionDetailViewTests(TestCase):
 #                 )
 
 #     def test_permissions_to_edit_collection(self):
-#         pass
-
-
-# class NominationCreateViewTests(TestCase):
-
-#     def setUp(self):
-#         pass
-
-#     def test_anonymous_cannot_nominate_to_restricted_collection(self):
-#         pass
-
-#     def test_user_creates_collection(self):
-#         """...
-#         Should autmatically set: User"""
 #         pass

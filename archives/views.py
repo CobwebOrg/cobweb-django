@@ -1,9 +1,11 @@
-from django.views.generic import ListView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import ListView, DetailView, UpdateView
 import django_tables2
 from django_tables2.utils import Accessor
+from reversion.views import RevisionMixin
 
 from archives import models
-
+from archives.forms import CollectionForm
 
 class CollectionTable(django_tables2.Table):
 
@@ -60,5 +62,19 @@ class CollectionDetailView(django_tables2.SingleTableMixin, DetailView):
     section = 'collection'
 
     def get_table_data(self):
-        # print(dir(self))
         return self.object.holdings.all()
+
+class CollectionUpdateView(UserPassesTestMixin, RevisionMixin, UpdateView):
+    model = models.Collection
+    template_name = 'generic_form.html'
+    form_class = CollectionForm
+    section = 'collection'
+
+    def test_func(self):
+        admins = self.get_object().administrators.all()
+        ans = self.request.user in admins or admins.count()==0
+        return ans
+
+    def put(self, *args, **kwargs):
+        print('********', self, self.request, dir(self.request), self.request.PUT)
+        super().put(*args, **kwargs)

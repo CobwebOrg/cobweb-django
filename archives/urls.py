@@ -10,4 +10,7 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/$',
         views.CollectionDetailView.as_view(),
         name='collection_detail'),
+    url(r'^(?P<pk>\d+)/edit/$',
+        views.CollectionUpdateView.as_view(),
+        name='collection_update'),
 ]
