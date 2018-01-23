@@ -29,7 +29,5 @@ class ClaimInline(admin.TabularInline):
     fields = [
         'nomination',
         'collection',
-        'start_date',
-        'end_date',
     ]
     readonly_fields = fields

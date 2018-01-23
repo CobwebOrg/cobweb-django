@@ -37,10 +37,10 @@ class NominationModelTests(TestCase):
         self.assertIsInstance(str(self.test_instance), str)
 
 
-class ClaimModelTests(TestCase):
+@pytest.mark.django_db
+class ClaimModelTests:
 
-    @pytest.mark.django_db
-    def test_claim_creation(self):
+    def test_claim_creation():
         """Tests creation of Claim objects"""
 
         good_claim_data = {'nomination': NominationFactory(),
@@ -52,20 +52,17 @@ class ClaimModelTests(TestCase):
         with pytest.raises(IntegrityError):
             Claim.objects.create(**good_claim_data)
 
-    @pytest.mark.django_db
-    def test_create_with_incomplete_data(self):
+    def test_create_with_incomplete_data():
         incomplete_data = {'nomination': NominationFactory()}
         with pytest.raises(IntegrityError):
             Claim.objects.create(**incomplete_data)
 
-    def test_str(self):
+    def test_str():
         """Tests that str(object) always returns a str."""
         assert isinstance(str(NominationFactory), str)
 
+    def test_Claim_get_resource_set():
+        """.get_resource_set() should return a collection object."""
 
-@pytest.mark.django_db
-def test_Claim_get_resource_set():
-    """.get_resource_set() should return a collection object."""
-
-    collection = CollectionFactory()
-    assert ClaimFactory(collection=collection).get_resource_set() == collection
+        collection = CollectionFactory()
+        assert ClaimFactory(collection=collection).get_resource_set() == collection

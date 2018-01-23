@@ -116,19 +116,11 @@ class Claim(CobwebMetadataMixin, models.Model):
     collection = models.ForeignKey('archives.Collection',
                                    on_delete=models.CASCADE)
 
-    # scope = ???
-    start_date = models.DateField('Starting Date')
-    end_date = models.DateField('Ending Date', null=True, blank=True)
-    # frequency = ???
-    max_links = models.IntegerField('Maximum Links', null=True, blank=True)
-    # host_limit = ???
-    time_limit = models.DurationField('Time Limit', null=True, blank=True)
-    document_limit = models.IntegerField('Document Limit',
-                                         null=True, blank=True)
-    data_limit = models.IntegerField('Data Limit (GB)', null=True, blank=True)
-    robot_exclusion_override = models.BooleanField('Override Robot Exclusion?',
-                                                   default=False)
-    # capture_software = ???
+    # note: the Cobweb data model documentation includes a large number of
+    # fields related to capture software parameters. I plan on storing them in
+    # the 'metadata' JSONField that Claim inherits from CobwebMetadataMixin.
+    # For the full list, see projects.views.ClaimCreateView.get_initial()
+    # TODO: some sort of schema / validation system...
 
     def __str__(self):
         return '{},  in {}'.format(self.nomination, self.collection)

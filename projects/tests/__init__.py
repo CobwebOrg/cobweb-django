@@ -29,4 +29,3 @@ class ClaimFactory(DjangoModelFactory):
 
     nomination = SubFactory(NominationFactory)
     collection = SubFactory(CollectionFactory)
-    start_date = Faker('date')
