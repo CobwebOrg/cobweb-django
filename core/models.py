@@ -77,7 +77,6 @@ class Organization(models.Model):
     description = models.TextField('Description', null=True, blank=True)
 
     metadata = JSONField(null=True, blank=True)
-    raw_metadata = models.TextField(null=True, blank=True)
 
     SECTORS = ('Academic', 'Corporate', 'Government', 'Non-Profit', 'Other')
     sector = models.CharField('Sector', max_length=10, null=True, blank=True,
@@ -93,9 +92,6 @@ class Organization(models.Model):
     # country = ???
     created = models.DateTimeField('Date Created', auto_now_add=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
-
-    raw_metadata = models.TextField(null=True, blank=True)
-    # tags = models.ManyToManyField(Tag)
 
     identifier = NormalizedURLField(
         "Archive-It.org Identifier",

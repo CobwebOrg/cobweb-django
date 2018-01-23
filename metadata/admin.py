@@ -6,7 +6,7 @@ from metadata import models
 
 
 class MetadataAdminMixin:
-    fields = ['description', 'keywords', 'metadata', 'raw_metadata']
+    fields = ['description', 'keywords', 'metadata']
 
 
 @admin.register(models.Keyword)

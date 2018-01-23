@@ -36,7 +36,6 @@ class APIEndpoint(models.Model):
     last_updated = models.DateTimeField(null=True, editable=False)
 
     metadata = JSONField(null=True, blank=True)
-    raw_metadata = models.TextField(null=True, blank=True)
 
     @classmethod
     def get_archiveit_root(cls,):
@@ -146,8 +145,6 @@ class OAIPMHImporter(Importer):
             }
         )[0]
 
-        target.raw_metadata = record.raw
-
         try:
             target.title = ' / '.join(record.metadata.pop('title'))
         except KeyError:
@@ -179,7 +176,6 @@ class OAIPMHImporter(Importer):
         #     api.organization.title = only_one(metadata['repositoryName'])
         #     api.organization.save()
 
-        api.raw_metadata = api_identify.raw
         self.attach_metadata(api, metadata, 'DC?')
         api.save()
 
@@ -292,8 +288,6 @@ class AITPartnerImporter(OAIPMHImporter):
             resource=resource,
             collection=collection,
         )[0]
-
-        holding.raw_metadata = record.raw
 
         try:
             holding.title = ' / '.join(record.metadata.pop('title'))

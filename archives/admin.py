@@ -43,5 +43,4 @@ class HoldingAdmin(VersionAdmin):
         'description',
         'keywords',
         'metadata',
-        'raw_metadata',
     ]
