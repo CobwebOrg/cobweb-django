@@ -67,3 +67,24 @@ textarea {
   @extend .p-2;
   @extend .rounded;
 }
+
+.note {
+  @extend .card, .border-info, .bg-white, .mb-3;
+  font-size: 0.8rem;
+}
+
+.note-header {
+  @extend .card-header, .bg-info, .card-title, .p-2;
+}
+
+.note-body {
+  @extend .card-body, .p-2;
+}
+
+.note-warning {
+  @extend .note, .border-warning;
+}
+
+.note-warning > .note-header {
+  @extend .note-header, .bg-warning;
+}
