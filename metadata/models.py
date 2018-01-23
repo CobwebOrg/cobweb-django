@@ -5,6 +5,10 @@ from django.db import models
 # Create your models here.
 
 
+class MetadataJSONField(JSONField):
+    pass
+
+
 @reversion.register()
 class Keyword(models.Model):
     """A single keyword."""
@@ -22,8 +26,7 @@ class CobwebMetadataMixin(models.Model):
     title = models.TextField(null=True)
     description = models.TextField('Description', null=True, blank=True)
     keywords = models.ManyToManyField(Keyword, blank=True)
-    metadata = JSONField(null=True, blank=True)
-    raw_metadata = models.TextField(null=True, blank=True)
+    metadata = MetadataJSONField(null=True, blank=True)
 
     class Meta:
         abstract = True
