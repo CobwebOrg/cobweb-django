@@ -34,6 +34,8 @@ services:
     working_dir: /code
     environment:
       DEBUG: 'true'
+    stdin_open: true
+    tty: true
     command: ['bash', '/code/start-development.sh']
 volumes:
   postgres_data:

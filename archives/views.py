@@ -1,3 +1,4 @@
+from dal import autocomplete
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, UpdateView
 import django_tables2
@@ -78,3 +79,16 @@ class CollectionUpdateView(UserPassesTestMixin, RevisionMixin, UpdateView):
     def put(self, *args, **kwargs):
         print('********', self, self.request, dir(self.request), self.request.PUT)
         super().put(*args, **kwargs)
+
+
+class CollectionAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        if not self.request.user.is_authenticated:
+            return get_user_model().objects.none()
+
+        qs = models.Collection.objects.all()
+
+        if self.q:
+            qs = qs.filter(title__icontains=self.q)
+
+        return qs

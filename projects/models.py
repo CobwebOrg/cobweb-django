@@ -98,11 +98,10 @@ class Nomination(CobwebMetadataMixin, models.Model):
         return self.project.is_nominator(user)
 
     def __str__(self):
-        return '{resource} nominated by {agent} in {project}'.format(
-            resource=self.resource,
-            project=self.project,
-            agent=self.nominated_by,
-        )
+        return f'{self.resource} – Project {self.project}'
+
+    def __repr__(self):
+        return f'Nomination {self.resource}, project={self.project}'
 
 
 @reversion.register()
@@ -114,16 +113,16 @@ class Claim(CobwebMetadataMixin, models.Model):
     nomination = models.ForeignKey(Nomination, related_name='claims',
                                    on_delete=models.PROTECT)
     collection = models.ForeignKey('archives.Collection',
-                                   on_delete=models.CASCADE)
+                                   on_delete=models.PROTECT)
 
-    # note: the Cobweb data model documentation includes a large number of
+    # NOTE: the Cobweb data model documentation includes a large number of
     # fields related to capture software parameters. I plan on storing them in
     # the 'metadata' JSONField that Claim inherits from CobwebMetadataMixin.
     # For the full list, see projects.views.ClaimCreateView.get_initial()
     # TODO: some sort of schema / validation system...
 
     def __str__(self):
-        return '{},  in {}'.format(self.nomination, self.collection)
+        return f'{self.nomination} – Collection {self.collection}'
 
     def get_resource_set(self):
         return self.collection

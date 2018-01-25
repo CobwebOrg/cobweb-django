@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.urls import path
 
 # import archives.views
 import core.views
@@ -59,6 +60,11 @@ urlpatterns = [
     url(r'^nominate/(?P<url>.+)$',
         projects.views.ResourceNominateView.as_view(),
         name='nominate_resource'),
+
+    # Claim
+    path('nomination/<int:nomination_pk>/claim',
+         projects.views.ClaimCreateView.as_view(),
+         name='claim'),
 
     # Keyword
     url(r'^Keyword/(?P<pk>\d+)/$',

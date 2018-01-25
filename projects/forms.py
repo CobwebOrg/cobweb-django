@@ -43,7 +43,7 @@ from crispy_forms.bootstrap import (
 
 from webresources.models import Resource
 
-from projects.models import Project, Nomination
+from projects.models import Project, Nomination, Claim
 
 
 title_plaintext_field = Layout(
@@ -131,14 +131,15 @@ class ProjectForm(forms.ModelForm):
 
             FormSection(
                 Row(
-                '',
-                Field('nomination_policy', wrapper_class='col-md-5'),
-                Column(
-                    UneditableField('nominators'),
-                    Field('nominator_blacklist'),
-                    css_class='col-md-7'
-                ),
-            )),
+                    '',
+                    Field('nomination_policy', wrapper_class='col-md-5'),
+                    Column(
+                        UneditableField('nominators'),
+                        Field('nominator_blacklist'),
+                        css_class='col-md-7'
+                    ),
+                )
+            ),
             FormActions(
                 CancelButton,
                 Submit('submit', 'Submit'),
@@ -153,9 +154,7 @@ class NominationForm(forms.ModelForm):
 
     class Meta:
         model = Nomination
-        fields = ['resource', 'project', 'description', 'keywords']
         exclude = []
-        fields = ('__all__')
         widgets = {
             'keywords': autocomplete.ModelSelect2Multiple(
                 url='keyword_autocomplete'
@@ -198,3 +197,32 @@ class ResourceNominateForm(NominationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+
+class ClaimForm(forms.ModelForm):
+
+    class Meta:
+        model = Claim
+        fields = ('__all__')
+        widgets = {
+            'keywords': autocomplete.ModelSelect2Multiple(
+                url='keyword_autocomplete'
+            ),
+
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout(
+            Field('nomination', css_class='form-control-plaintext'),
+            Field('collection'),
+            Field('description'),
+            Field('keywords'),
+            Field('metadata'),
+            FormActions(
+                CancelButton,
+                Submit('submit', 'Submit'),
+                css_class='float-right'
+            ),
+        )

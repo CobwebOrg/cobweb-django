@@ -1,4 +1,5 @@
 from django.conf.urls import url
+from django.urls import path
 
 from archives import views
 
@@ -10,7 +11,12 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/$',
         views.CollectionDetailView.as_view(),
         name='collection_detail'),
-    url(r'^(?P<pk>\d+)/edit/$',
-        views.CollectionUpdateView.as_view(),
-        name='collection_update'),
+    path('<pk>/edit',
+         views.CollectionUpdateView.as_view(),
+         name='collection_update'),
+
+    # Claim
+    path('autocomplete',
+         views.CollectionAutocomplete.as_view(),
+         name='collection_autocomplete'),
 ]
