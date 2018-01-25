@@ -2,6 +2,7 @@ from collections import defaultdict
 from django import template
 from django.contrib import auth
 from django.db.models import Model
+from django.urls import reverse
 from django.utils.html import format_html  # , conditional_escape
 from django.utils.safestring import mark_safe
 
@@ -36,6 +37,17 @@ def as_link(item):
 def count_badge(queryset):
     return {'count': queryset.count(),
             'models': (queryset.model,)}
+
+
+@register.simple_tag
+def claim_button(nomination, user):
+    if user.collections_administered.count() > 0:
+        return format_html(
+            '<a href="{}" class="btn btn-primary float-right">Claim</a>',
+            reverse('claim_create', kwargs={'nomination_pk': nomination.pk}),
+        )
+    else:
+        return ''
 
 
 @register.simple_tag

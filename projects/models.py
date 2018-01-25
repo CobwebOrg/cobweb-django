@@ -91,6 +91,9 @@ class Nomination(CobwebMetadataMixin, models.Model):
     class Meta:
         unique_together = ('resource', 'project')
 
+    def get_absolute_url(self):
+        return reverse('nomination_detail', kwargs={'pk': self.pk})
+
     def get_resource_set(self):
         return self.project
 

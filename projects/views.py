@@ -17,7 +17,7 @@ class ProjectTable(django_tables2.Table):
     nholdings = django_tables2.TemplateColumn(
         '{% load resource_count_badge from cobweb_look %}'
         '{% resource_count_badge record %}',
-        default='', orderable=False
+        default='', orderable=False,
     )
 
     class Meta:
@@ -31,10 +31,7 @@ class ProjectTable(django_tables2.Table):
 class NominationTable(django_tables2.Table):
     """django_tables2.Table object for lists of projects."""
 
-    resource = django_tables2.LinkColumn(
-        'webresources:detail',
-        kwargs={'url': Accessor('resource.url')}
-    )
+    resource = django_tables2.LinkColumn()
     keywords = django_tables2.TemplateColumn(
         """
         {% load badge from cobweb_look %}
@@ -44,6 +41,9 @@ class NominationTable(django_tables2.Table):
             {% endfor %}
         </small>
         """, default='', orderable=False
+    )
+    claim_link = django_tables2.TemplateColumn(
+        """ – <a href="{% url 'claim_create' nomination_pk=record.pk %}">[claim]</a>""",
     )
 
     class Meta:
