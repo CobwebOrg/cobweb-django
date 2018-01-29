@@ -2,6 +2,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.urls import path
+from django.views.generic import TemplateView
 
 # import archives.views
 import core.views
@@ -14,7 +15,7 @@ import metadata.views
 urlpatterns = [
     url(r'^search/', include('haystack.urls')),
 
-    url(r'^$', projects.views.ProjectIndexView.as_view(), name='front_page'),
+    url(r'^$', TemplateView.as_view(template_name='landing_page.html'), name='front_page'),
 
     # User
     url(r'^users/(?P<pk>\d+)/edit/$',
