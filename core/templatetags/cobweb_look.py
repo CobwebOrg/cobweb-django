@@ -127,9 +127,11 @@ def resource_count_badge(item):
     assert type(item) is Project or type(item) is Collection
     if type(item) is Project:
         nresources = item.nominations.count()
+        n_unclaimed = item.nominations.filter(claims=None).count()
     elif type(item) is Collection:
         nresources = item.holdings.count()
-    return {'nresources': nresources}
+        n_unclaimed = 0
+    return {'claimed': nresources-n_unclaimed, 'unclaimed': n_unclaimed}
 
 
 @register.filter

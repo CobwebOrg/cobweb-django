@@ -1,6 +1,17 @@
 {% load icon from cobweb_look %}
-{% if nresources > 0 %}
-  <span class='badge badge-pill badge-secondary text-white'>
-    {{nresources}} {% icon 'Resource' %}
+{% if unclaimed > 0 and claimed > 0 %}
+  <span class='badge badge-pill badge-info text-white badge-left'>
+    {{unclaimed}}
+  </span><span class='badge badge-pill badge-info text-white badge-right'>
+    {{nresources}}
+    {% icon 'Resource' %}
+  </span>
+{% elif unclaimed > 0 and claimed == 0 %}
+  <span class='badge badge-pill badge-danger text-white'>
+    {{unclaimed}} {% icon 'Resource' %}
+  </span>
+{% elif unclaimed == 0 and claimed > 0 %}
+  <span class='badge badge-pill badge-info text-white badge-left'>
+    {{unclaimed}} {% icon 'Resource' %}
   </span>
 {% endif %}

@@ -88,3 +88,19 @@ textarea {
 .note-warning > .note-header {
   @extend .note-header, .bg-warning;
 }
+
+.badge-left {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-right: 0;
+}
+
+.badge-right {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-left: 0;
+}
+
+.badge-mid {
+  @extend .badge-left, .badge-right;
+}
