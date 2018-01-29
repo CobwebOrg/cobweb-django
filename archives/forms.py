@@ -97,7 +97,7 @@ class CollectionForm(forms.ModelForm):
             Row(
                 '',
                 Column(
-                    FormSection(AutoField('identifier')),
+                    FormSection(Field('identifier')),
                     css_class='col-md-5'
                 ),
                 Column(
@@ -108,7 +108,7 @@ class CollectionForm(forms.ModelForm):
 
             Row(
                 '',
-                Column(FormSection(AutoField('metadata')), css_class='col-md-12'),
+                Column(FormSection(Field('metadata')), css_class='col-md-12'),
             ),
 
             FormActions(

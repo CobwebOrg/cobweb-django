@@ -110,13 +110,15 @@ class Nomination(CobwebMetadataMixin, models.Model):
 @reversion.register()
 class Claim(CobwebMetadataMixin, models.Model):
 
-    class Meta:
-        unique_together = ('nomination', 'collection')
+    title = models.TextField(null=True, blank=True)
 
     nomination = models.ForeignKey(Nomination, related_name='claims',
                                    on_delete=models.PROTECT)
-    collection = models.ForeignKey('archives.Collection',
+    collection = models.ForeignKey('archives.Collection', related_name='claims',
                                    on_delete=models.PROTECT)
+
+    class Meta:
+       unique_together = ('nomination', 'collection')
 
     # NOTE: the Cobweb data model documentation includes a large number of
     # fields related to capture software parameters. I plan on storing them in
@@ -126,6 +128,9 @@ class Claim(CobwebMetadataMixin, models.Model):
 
     def __str__(self):
         return f'{self.nomination} – Collection {self.collection}'
+
+    def get_absolute_url(self):
+        return reverse('claim_update', kwargs={'pk': self.pk})
 
     def get_resource_set(self):
         return self.collection

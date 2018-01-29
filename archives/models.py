@@ -17,13 +17,11 @@ class ModelValidationMixin(object):
 
 
 class Collection(ModelValidationMixin, CobwebMetadataMixin, models.Model):
+    title = models.TextField(null=True, blank=True)
+
     administrators = models.ManyToManyField(
-        get_user_model(),
+        get_user_model(), blank=True,
         related_name='collections_administered',
-    )
-    invited_administrators = models.ManyToManyField(
-        get_user_model(),
-        related_name='collections_administered_invited',
     )
 
     organization = models.ForeignKey(
