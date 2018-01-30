@@ -10542,6 +10542,8 @@ $('textarea').each(function () {
   this.style.height = (this.scrollHeight) + 'px';
 });
 
+window.$$ = $ // Expose *this* jquery to browser console - $ gets overloaded
+
 
 /***/ }),
 /* 3 */
