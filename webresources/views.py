@@ -15,11 +15,6 @@ class ResourceTable(django_tables2.Table):
         '{% count_badge record.nominations %}',
         default='', orderable=False
     )
-    # claims = django_tables2.TemplateColumn(
-    #     '{% load count_badge from cobweb_look %}'
-    #     '{% count_badge record.claims %}',
-    #     default='', orderable=False
-    # )
     holdings = django_tables2.TemplateColumn(
         '{% load count_badge from cobweb_look %}'
         '{% count_badge record.holdings %}',
@@ -40,7 +35,7 @@ class ResourceListView(django_tables2.SingleTableView):
     section = 'resource'
 
     def get_queryset(self):
-        result = super().get_queryset()
+        result = super().get_queryset().exclude(nominations=None, holdings=None)
         query = self.request.GET.get('q')
         if query:
             result = result.filter(url__icontains=query)
