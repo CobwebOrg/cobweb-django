@@ -1,0 +1,6 @@
+{% load icon from cobweb_look %}
+{% if holdings > 0 %}
+  <span class='badge badge-pill badge-gray text-white'>
+    {{holdings}} {% icon 'Resource' %}
+  </span>
+{% endif %}

@@ -12,8 +12,8 @@ class CollectionTable(django_tables2.Table):
 
     title = django_tables2.LinkColumn()
     nholdings = django_tables2.TemplateColumn(
-        '{% load resource_count_badge from cobweb_look %}'
-        '{% resource_count_badge record %}',
+        '{% load collection_count_badge from cobweb_look %}'
+        '{% collection_count_badge record %}',
         default='', orderable=False
     )
 

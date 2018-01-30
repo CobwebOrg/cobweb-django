@@ -15,8 +15,8 @@ class ProjectTable(django_tables2.Table):
 
     title = django_tables2.LinkColumn()
     nholdings = django_tables2.TemplateColumn(
-        '{% load resource_count_badge from cobweb_look %}'
-        '{% resource_count_badge record %}',
+        '{% load project_count_badge from cobweb_look %}'
+        '{% project_count_badge record %}',
         default='', orderable=False,
     )
 

@@ -124,14 +124,30 @@ def badge(item):
 
 @register.inclusion_tag('resource_count_badge.html')
 def resource_count_badge(item):
-    assert type(item) is Project or type(item) is Collection
-    if type(item) is Project:
-        nresources = item.nominations.count()
-        n_unclaimed = item.nominations.filter(claims=None).count()
-    elif type(item) is Collection:
-        nresources = item.holdings.count()
-        n_unclaimed = 0
-    return {'claimed': nresources-n_unclaimed, 'unclaimed': n_unclaimed}
+    assert type(item) is Resource
+    nominations = item.nominations.count()
+    n_unclaimed = item.nominations.filter(claims=None).count()
+    holdings = item.holdings.count()
+    return {
+        'claimed': nominations-n_unclaimed,
+        'unclaimed': n_unclaimed,
+        'holdings': holdings,
+    }
+
+
+@register.inclusion_tag('project_count_badge.html')
+def project_count_badge(item):
+   assert type(item) is Project
+   nresources = item.nominations.count()
+   n_unclaimed = item.nominations.filter(claims=None).count()
+   return {'claimed': nresources-n_unclaimed, 'unclaimed': n_unclaimed}
+
+
+@register.inclusion_tag('collection_count_badge.html')
+def collection_count_badge(item):
+  assert type(item) is Collection
+  nresources = item.holdings.count()
+  return {'holdings': nresources}
 
 
 @register.filter

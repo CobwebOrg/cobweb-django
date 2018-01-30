@@ -41,7 +41,7 @@ $light:     #f8f9fa;
 $dark:      #343a40;
 
 $theme-colors: (
-        "gray": lighten($gray-600, 15%),
+  "gray": lighten($gray-600, 15%),
   "ltlime":  $ltlime,
   "ltprimary": lighten($primary, 25%),
   "metadata": lighten($cyan, 44%),
