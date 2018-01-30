@@ -185,6 +185,19 @@ class ClaimFormViewMixin(UserPassesTestMixin, RevisionMixin):
     form_class = forms.ClaimForm
     section = 'claim'
 
+    def get_form(self, *args, **kwargs):
+        form = super().get_form(*args, **kwargs)
+        form.fields['collection'].queryset = (
+            self.request.user.collections_administered
+        )
+        return form
+
+    def test_func(self):
+        return self.request.user.collections_administered.count() > 0
+
+
+class ClaimCreateView(ClaimFormViewMixin, CreateView):
+
     def get_initial(self):
         return {
             'nomination': self.kwargs['nomination_pk'],
@@ -207,20 +220,10 @@ class ClaimFormViewMixin(UserPassesTestMixin, RevisionMixin):
 
     def get_form(self, *args, **kwargs):
         form = super().get_form(*args, **kwargs)
-        form.fields['collection'].queryset = (
-            self.request.user.collections_administered
-        )
         form.fields['nomination'].queryset = (
             models.Nomination.objects.filter(id=self.kwargs['nomination_pk'])
         )
         return form
-
-    def test_func(self):
-        return self.request.user.collections_administered.count() > 0
-
-
-class ClaimCreateView(ClaimFormViewMixin, CreateView):
-    pass
 
 
 class ClaimUpdateView(ClaimFormViewMixin, UpdateView):
