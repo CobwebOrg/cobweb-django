@@ -42,8 +42,10 @@ class NominationTable(django_tables2.Table):
         </small>
         """, default='', orderable=False
     )
-    claim_link = django_tables2.TemplateColumn(
-        """ – <a href="{% url 'claim_create' nomination_pk=record.pk %}">[claim]</a>""",
+    claims = django_tables2.TemplateColumn(
+        """{% load nomination_count_badge from cobweb_look %} –
+        {% nomination_count_badge record %}
+        <a href="{% url 'claim_create' nomination_pk=record.pk %}">[claim]</a>""",
     )
 
     class Meta:

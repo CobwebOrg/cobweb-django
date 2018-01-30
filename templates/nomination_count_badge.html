@@ -1,0 +1,4 @@
+{% load icon from cobweb_look %}
+<span class='badge badge-pill {% if nclaims > 0 %}badge-info{% else %}badge-danger{% endif %} text-white'>
+  {{nclaims}} {% icon 'Claim' %}
+</span>

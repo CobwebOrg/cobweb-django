@@ -15,6 +15,7 @@ from .base import *
 
 DEBUG = True
 TESTING = False
+CRISPY_FAIL_SILENTLY = False
 
 # Django Debug Toolbar
 

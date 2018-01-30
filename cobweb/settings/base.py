@@ -53,6 +53,7 @@ if 'DEBUG' in os.environ:
     DEBUG = os.environ['DEBUG']
 else:
     DEBUG = False
+CRISPY_FAIL_SILENTLY = not DEBUG
 
 TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
 
