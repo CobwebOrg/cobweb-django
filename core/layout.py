@@ -64,4 +64,4 @@ class FormSection(Div):
             kwargs['css_class'] += ' form-section'
         except KeyError:
             kwargs['css_class'] = 'form-section'
-            super().__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
