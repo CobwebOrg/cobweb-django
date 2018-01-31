@@ -38,30 +38,29 @@ class NominationModelTests(TestCase):
 
 
 @pytest.mark.django_db
-class ClaimModelTests:
+class TestClaimModel:
 
-    def test_claim_creation():
+    def test_claim_creation(self):
         """Tests creation of Claim objects"""
 
         good_claim_data = {'nomination': NominationFactory(),
-                           'collection': CollectionFactory(),
-                           'start_date': timezone.now()}
+                           'collection': CollectionFactory()}
         Claim.objects.create(**good_claim_data).save()
 
         # Duplicate data should raise error
         with pytest.raises(IntegrityError):
             Claim.objects.create(**good_claim_data)
 
-    def test_create_with_incomplete_data():
+    def test_create_with_incomplete_data(self):
         incomplete_data = {'nomination': NominationFactory()}
         with pytest.raises(IntegrityError):
             Claim.objects.create(**incomplete_data)
 
-    def test_str():
+    def test_str(self):
         """Tests that str(object) always returns a str."""
         assert isinstance(str(NominationFactory), str)
 
-    def test_Claim_get_resource_set():
+    def test_Claim_get_resource_set(self):
         """.get_resource_set() should return a collection object."""
 
         collection = CollectionFactory()

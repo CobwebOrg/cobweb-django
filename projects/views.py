@@ -8,52 +8,7 @@ from reversion.views import RevisionMixin
 from webresources.models import Resource
 
 from projects import models, forms
-
-
-class ProjectTable(django_tables2.Table):
-    """django_tables2.Table object for lists of projects."""
-
-    title = django_tables2.LinkColumn()
-    nholdings = django_tables2.TemplateColumn(
-        '{% load project_count_badge from cobweb_look %}'
-        '{% project_count_badge record %}',
-        default='', orderable=False,
-    )
-
-    class Meta:
-        model = models.Project
-        show_header = False
-        fields = ['title', 'nholdings']
-        # attrs = {'class': 'table table-hover'}
-        empty_text = "No projects."
-
-
-class NominationTable(django_tables2.Table):
-    """django_tables2.Table object for lists of projects."""
-
-    resource = django_tables2.LinkColumn()
-    keywords = django_tables2.TemplateColumn(
-        """
-        {% load badge from cobweb_look %}
-        <small>
-            {% for keyword in record.keywords.all %}
-                {% badge keyword %}
-            {% endfor %}
-        </small>
-        """, default='', orderable=False
-    )
-    claims = django_tables2.TemplateColumn(
-        """{% load nomination_count_badge from cobweb_look %} –
-        {% nomination_count_badge record %}
-        <a href="{% url 'claim_create' nomination_pk=record.pk %}">[claim]</a>""",
-    )
-
-    class Meta:
-        model = models.Project
-        show_header = False
-        fields = []
-        # attrs = {'class': 'table table-hover'}
-        empty_text = "No nominations."
+from projects.tables import ProjectTable, NominationTable
 
 
 class ProjectIndexView(django_tables2.SingleTableView):
@@ -113,19 +68,17 @@ class ProjectUpdateView(UserPassesTestMixin, RevisionMixin, UpdateView):
 
 class NominationDetailView(DetailView):
     model = models.Nomination
-    template_name = 'nomination_detail.html'
+    template_name = 'nomination.html'
     section = 'nomination'
 
 
 class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
     model = models.Nomination
     template_name = 'generic_form.html'
-    form_class = forms.NominateToProjectForm
-    section = 'nominate'
+    form_class = forms.NominationForm
+    section = 'nomination'
 
     def form_valid(self, form):
-        print(self.request.path)
-        print(self.kwargs)
         candidate = form.save(commit=False)
         candidate.project = self.get_project()
         self.success_url = candidate.project.get_absolute_url()
@@ -148,16 +101,12 @@ class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
 class ResourceNominateView(RevisionMixin, CreateView):
     model = models.Nomination
     template_name = 'generic_form.html'
-    form_class = forms.ResourceNominateForm
+    form_class = forms.NominationForm
+    section = 'nomination'
 
     def form_valid(self, form):
-        print(self.request.path)
-        print(self.kwargs)
         candidate = form.save(commit=False)
         candidate.resource = self.get_resource()
-        self.success_url = candidate.resource.get_absolute_url()
-        candidate.nominated_by = self.request.user
-        candidate.save()
         return super().form_valid(form)
 
     def get_initial(self):
@@ -179,6 +128,23 @@ class ResourceNominateView(RevisionMixin, CreateView):
     def test_func(self):
         return True
         # return self.get_project().is_nominator(self.request.user)
+
+
+class NominationUpdateView(UserPassesTestMixin, RevisionMixin, UpdateView):
+    model = models.Nomination
+    template_name = 'generic_form.html'
+    form_class = forms.NominationForm
+    section = 'nomination'
+
+    def form_valid(self, form):
+        candidate = form.save(commit=False)
+        candidate.project = self.get_project()
+        self.success_url = candidate.project.get_absolute_url()
+        candidate.save()
+        return super().form_valid(form)
+
+    def test_func(self):
+        return self.get_object().project.is_nominator(self.request.user)
 
 
 class ClaimFormViewMixin(UserPassesTestMixin, RevisionMixin):

@@ -94,6 +94,9 @@ class Nomination(CobwebMetadataMixin, models.Model):
     def get_absolute_url(self):
         return reverse('nomination_detail', kwargs={'pk': self.pk})
 
+    def get_edit_url(self):
+        return reverse('nomination_update', kwargs={'pk': self.pk})
+
     def get_resource_set(self):
         return self.project
 

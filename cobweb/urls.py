@@ -44,7 +44,7 @@ urlpatterns = [
     url(r'^projects/new$',
         projects.views.ProjectCreateView.as_view(),
         name='project_create'),
-    url(r'^projects/(?P<pk>\d+)/edit/$',
+    url(r'^projects/(?P<pk>\d+)/edit$',
         projects.views.ProjectUpdateView.as_view(),
         name='project_update'),
 
@@ -61,6 +61,9 @@ urlpatterns = [
     url(r'^nominate/(?P<url>.+)$',
         projects.views.ResourceNominateView.as_view(),
         name='nominate_resource'),
+    path('nomination/<int:pk>/edit',
+        projects.views.NominationUpdateView.as_view(),
+        name='nomination_update'),
 
     # Claim
     path('nomination/<int:nomination_pk>/claim',

@@ -2,37 +2,23 @@ from crispy_forms.helper import FormHelper
 from dal import autocomplete
 from django import forms
 
-from crispy_forms.layout import (
+from core.layout import (
+    CancelButton,
     Column,
     Field,
+    FormActions,
+    FormSection,
+    Hidden,
     Layout,
-    Reset,
     Row,
     Submit,
-)
-from crispy_forms.bootstrap import (
-    Accordion,
-    AccordionGroup,
-    Alert,
-    AppendedText,
-    Container,
-    ContainerHolder,
-    FieldWithButtons,
-    FormActions,
-    InlineCheckboxes,
-    InlineField,
-    InlineRadios,
-    PrependedAppendedText,
-    PrependedText,
-    StrictButton,
-    Tab,
-    TabHolder,
+    title_form_field,
+    title_plaintext_field,
     UneditableField,
 )
-
-from core.layout import CancelButton, FormSection, title_plaintext_field
 from projects.models import Project, Nomination, Claim
 from webresources.models import Resource
+from webresources.widgets import ResourceInput
 
 
 class ProjectForm(forms.ModelForm):
@@ -75,23 +61,20 @@ class ProjectForm(forms.ModelForm):
             title_field = title_form_field
 
         self.helper.layout = Layout(
-            Row('', title_field, css_class='my-2'),
+            Row(title_field, css_class='my-2'),
 
             Row(
-                '',
                 Column(FormSection(Field('status')), css_class='col-md-5'),
                 Column(FormSection(Field('administrators')), css_class='col-md-7'),
             ),
 
             FormSection(
-                '',
                 Field('description', template='metadata_field.html'),
                 Field('keywords', template='metadata_field.html'),
             ),
 
             FormSection(
                 Row(
-                    '',
                     Field('nomination_policy', wrapper_class='col-md-5'),
                     Column(
                         UneditableField('nominators'),
@@ -102,7 +85,6 @@ class ProjectForm(forms.ModelForm):
             ),
             FormActions(
                 CancelButton,
-                Reset('reset', 'Reset'),
                 Submit('submit', 'Submit'),
                 css_class='float-right'
             ),
@@ -111,7 +93,7 @@ class ProjectForm(forms.ModelForm):
 
 class NominationForm(forms.ModelForm):
 
-    resource = forms.URLField(widget=forms.URLInput, initial='http://')
+    resource = forms.URLField(widget=ResourceInput, initial='http://')
 
     class Meta:
         model = Nomination
@@ -126,10 +108,13 @@ class NominationForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
-            Field('resource', template='metadata_field.html'),
-            Field('project', template='metadata_field.html'),
-            Field('description', template='metadata_field.html'),
-            Field('keywords', template='metadata_field.html'),
+            Field('project'),
+            Field('resource'),
+            FormSection(
+                Field('description', template='metadata_field.html'),
+                Field('keywords', template='metadata_field.html'),
+            ),
+            FormSection(Field('metadata', template='metadata_field.html')),
             FormActions(
                 CancelButton,
                 Submit('submit', 'Submit'),
@@ -143,21 +128,6 @@ class NominationForm(forms.ModelForm):
             raise forms.ValidationError("Please enter a URL.")
         else:
             return Resource.objects.get_or_create(url=url)[0]
-
-
-class NominateToProjectForm(NominationForm):
-
-    class Meta(NominationForm.Meta):
-        fields = ['resource', 'project', 'description', 'keywords']
-
-
-class ResourceNominateForm(NominationForm):
-
-    class Meta(NominationForm.Meta):
-        fields = ['resource', 'project', 'description', 'keywords']
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
 
 
 class ClaimForm(forms.ModelForm):

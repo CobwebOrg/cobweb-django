@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load badge icon claim_button edit_link from cobweb_look %}
+
+{% block title %}Cobweb Nomination: {{ object }}{% endblock %}
+
+{% block content %}
+<div id="div_id_project" class="form-group">
+  <h3 name="project" id="id_project">
+    {{nomination.project}}
+  </h3>
+</div>
+
+<div id="div_id_resource" class="form-group">
+  <h4 name="resource" id="id_resource" type="url">
+    {% edit_link object user %}{{nomination.resource}}
+  </h4>
+</div>
+
+<div class="form-section">
+  <div id="div_id_description" class="row form-group ">
+    <label for="id_description" class="col-md-2 form-control-label ">Description</label>
+    <div class="col-md ">{{object.description | default:"[None]"}}</div>
+  </div>
+  <div id="div_id_keywords" class="row form-group ">
+    <label for="id_keywords" class="col-md-2 form-control-label ">Keywords</label>
+    <div class="col-md ">{% for keyword in nomination.keywords.all %}{% badge keyword %}{% empty %}[None]{% endfor %}</div>
+  </div>
+	{% for key, values in collection.metadata.items %}
+		<div id="div_id_{{key}}" class="row form-group ">
+			<label for="id_{{key}}" class="col-md-3 col-lg-2 form-control-label">
+				{{key|capfirst}}:
+		    </label>
+			<div class="col-md ">
+				{{values|join:', '}}
+			</div>
+		</div>
+	{% endfor %}
+</div>
+
+{% claim_button object user %}<h5>Claims</h5>
+
+{% endblock %}
