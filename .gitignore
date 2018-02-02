@@ -85,7 +85,7 @@ var/
 pip-log.txt
 pip-delete-this-directory.txt
 
-# Unit test / coverage reports
+# Unit test / coverage reports, &c
 code_analysis/
 htmlcov/
 .tox/
@@ -93,6 +93,7 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
+.hypothesis/
 
 # Translations
 *.mo
