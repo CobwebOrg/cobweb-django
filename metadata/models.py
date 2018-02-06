@@ -23,7 +23,7 @@ class Keyword(models.Model):
 class CobwebMetadataMixin(models.Model):
     """The standard metadata fields attached to the main data types."""
 
-    title = models.TextField(null=True)
+    title = models.TextField(null=True, blank=True)
     description = models.TextField('Description', null=True, blank=True)
     keywords = models.ManyToManyField(Keyword, blank=True)
     metadata = MetadataJSONField(null=True, blank=True)
