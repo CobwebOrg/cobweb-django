@@ -86,7 +86,7 @@ class Nomination(CobwebMetadataMixin, models.Model):
     project = models.ForeignKey(Project, related_name='nominations',
                                 on_delete=models.PROTECT)
 
-    nominated_by = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    nominated_by = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
 
     class Meta:
         unique_together = ('resource', 'project')
