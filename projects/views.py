@@ -136,13 +136,6 @@ class NominationUpdateView(UserPassesTestMixin, RevisionMixin, UpdateView):
     form_class = forms.NominationForm
     section = 'nomination'
 
-    def form_valid(self, form):
-        candidate = form.save(commit=False)
-        candidate.project = self.get_project()
-        self.success_url = candidate.project.get_absolute_url()
-        candidate.save()
-        return super().form_valid(form)
-
     def test_func(self):
         return self.get_object().project.is_nominator(self.request.user)
 
