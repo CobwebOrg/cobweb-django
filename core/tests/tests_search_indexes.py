@@ -1,8 +1,8 @@
 import django.test
 
 import core.search_indexes
-import metadata.tests
-import projects.tests
+from metadata.tests.factories import KeywordFactory
+from projects.tests.factories import ProjectFactory
 
 
 class ProjectIndexTest(django.test.TestCase):
@@ -11,13 +11,13 @@ class ProjectIndexTest(django.test.TestCase):
         """All metadata should be in the dict returned by metadata_as_dict."""
         index = core.search_indexes.ProjectIndex()
 
-        project = projects.tests.ProjectFactory(
+        project = ProjectFactory(
             title='Project Name',
             metadata={'a': [1], 'b': [2, 3]}
         )
         project.save()
-        project.keywords.add(metadata.tests.KeywordFactory())
-        project.keywords.add(metadata.tests.KeywordFactory())
+        project.keywords.add(KeywordFactory())
+        project.keywords.add(KeywordFactory())
 
         solr_dict = index.prepare(project)
         solr_document = solr_dict['text']

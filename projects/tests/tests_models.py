@@ -1,11 +1,10 @@
 from django.db.utils import IntegrityError
 from django.test import TestCase
-from django.utils import timezone
 import pytest
 
-from archives.tests import CollectionFactory
+from archives.tests.factories import CollectionFactory
 from projects.models import Project, Nomination, Claim
-from projects.tests import ProjectFactory, NominationFactory, ClaimFactory
+from projects.tests.factories import ProjectFactory, NominationFactory, ClaimFactory
 
 
 class ProjectModelTests(TestCase):

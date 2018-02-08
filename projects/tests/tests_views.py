@@ -1,10 +1,10 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from core.tests import UserFactory
-from webresources.tests import ResourceFactory
+from core.tests.factories import UserFactory
+from webresources.tests.factories import ResourceFactory
 
-from projects import tests
+from projects.tests.factories import ProjectFactory, NominationFactory
 from projects.models import Project
 
 
@@ -12,9 +12,9 @@ class ProjectIndexViewTests(TestCase):
 
     def setUp(self):
         self.test_instances = [
-            tests.ProjectFactory(title="Boring Project"),
-            tests.ProjectFactory(title="Exciting Project"),
-            tests.ProjectFactory(title="Other Project"),
+            ProjectFactory(title="Boring Project"),
+            ProjectFactory(title="Exciting Project"),
+            ProjectFactory(title="Other Project"),
         ]
         self.response = self.client.get('/projects/')
 
@@ -46,7 +46,7 @@ class ProjectIndexViewTests(TestCase):
 class ProjectDetailViewTests(TestCase):
 
     def setUp(self):
-        self.test_instance = tests.ProjectFactory()
+        self.test_instance = ProjectFactory()
         self.fields = ['title', 'description']
         self.templates = ['base.html', 'project.html']
 
@@ -68,7 +68,7 @@ class ProjectDetailViewTests(TestCase):
             'ucla.edu': ('user1', 'user3'),
         }
         for url, users in self.user_nominations.items():
-            nom = tests.NominationFactory(
+            nom = NominationFactory(
                 project=self.test_instance,
                 resource=ResourceFactory(url=url),
             )
@@ -287,7 +287,7 @@ class ProjectCreateViewTests(TestCase):
 class ProjectUpdateViewTests(TestCase):
 
     def setUp(self):
-        self.project = tests.ProjectFactory()
+        self.project = ProjectFactory()
         self.project.save()
 
         # make some users

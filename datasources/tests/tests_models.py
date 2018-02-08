@@ -1,13 +1,14 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
-from datasources import models, tests
+from datasources import models
+from datasources.tests.factories import APIEndpointFactory
 
 
 class APIEndpointModelTests(TestCase):
 
     def setUp(self):
-        self.test_instance = tests.APIEndpointFactory()
+        self.test_instance = APIEndpointFactory()
 
     def test_creation(self):
         self.assertIsInstance(self.test_instance, models.APIEndpoint)
@@ -22,16 +23,12 @@ class APIEndpointModelTests(TestCase):
         self.assertEqual(ait.location, 'https://archive-it.org/oai')
 
     def test_get_importer(self):
-        importer = ( tests
-            .APIEndpointFactory(importer_class_name='OAIPMHImporter')
-            .get_importer()
-        )
+        importer = (APIEndpointFactory(importer_class_name='OAIPMHImporter')
+                    .get_importer())
         self.assertTrue( issubclass(type(importer), models.Importer) )
         self.assertIsInstance(importer, models.importers['OAIPMHImporter'])
 
-        importer = ( tests
-            .APIEndpointFactory(importer_class_name='AITCollectionsImporter')
-            .get_importer()
-        )
+        importer = (APIEndpointFactory(importer_class_name='AITCollectionsImporter')
+                    .get_importer())
         self.assertTrue( issubclass(type(importer), models.Importer) )
         self.assertIsInstance(importer, models.importers['OAIPMHImporter'])

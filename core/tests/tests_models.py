@@ -1,10 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
-from projects.tests import ProjectFactory
+from projects.tests.factories import ProjectFactory
 
 from core.models import Organization
-from core.tests import UserFactory, OrganizationFactory
+from core.tests.factories import UserFactory, OrganizationFactory
 
 
 class UserModelTests(TestCase):

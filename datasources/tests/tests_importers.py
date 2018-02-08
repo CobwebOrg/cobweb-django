@@ -4,7 +4,9 @@ from django import test
 from archives.models import Collection, Holding
 from core.models import Organization
 
-from datasources import models, tests
+from datasources import models
+from datasources.tests.factories import AITPartnerImporterFactory
+
 
 ### test that importing an archive-it subcollection doesn't reset collection
 ### name or create a new collection
@@ -15,7 +17,7 @@ def test_OAIPMHImporter_harvest_record_transfers_title():
 class AITPartnerImporterTests(test.TestCase):
 
     def setUp(self):
-        self.importer = tests.AITPartnerImporterFactory()
+        self.importer = AITPartnerImporterFactory()
 
     def test___harvest_setspec(self):
         pass

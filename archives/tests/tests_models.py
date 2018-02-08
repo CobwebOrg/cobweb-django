@@ -2,10 +2,10 @@ from django.test import TestCase
 from django.utils import timezone
 import pytest
 
-from core.tests import UserFactory
-from webresources.tests import ResourceFactory
+from core.tests.factories import UserFactory
+from webresources.tests.factories import ResourceFactory
 
-from archives.tests import CollectionFactory, HoldingFactory
+from archives.tests.factories import CollectionFactory, HoldingFactory
 from archives.models import Collection, Holding
 
 

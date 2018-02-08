@@ -2,7 +2,6 @@ from dal.autocomplete import ModelSelect2Multiple
 from django.test import TestCase
 
 from projects import forms
-from projects.tests import NominationFactory
 
 
 class ProjectFormTests(TestCase):

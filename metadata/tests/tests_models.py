@@ -1,12 +1,13 @@
 import django.test
 
-from metadata import models, tests
+from metadata import models
+from metadata.tests.factories import KeywordFactory
 
 
 class KeywordModelTests(django.test.TestCase):
 
     def setUp(self):
-        self.test_instance = tests.KeywordFactory()
+        self.test_instance = KeywordFactory()
 
     def test_creation(self):
         self.assertIsInstance(self.test_instance, models.Keyword)

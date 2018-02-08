@@ -2,18 +2,17 @@ import pytest
 from django.test import TestCase
 from django.urls import reverse
 
-from archives import tests
-from archives.tests import CollectionFactory
-from core.tests import UserFactory
+from archives.tests.factories import CollectionFactory
+from core.tests.factories import UserFactory
 
 
 class CollectionIndexViewTests(TestCase):
 
     def setUp(self):
         self.test_instances = [
-            tests.CollectionFactory(title="Boring Collection"),
-            tests.CollectionFactory(title="Exciting Collection"),
-            tests.CollectionFactory(title="Other Collection"),
+            CollectionFactory(title="Boring Collection"),
+            CollectionFactory(title="Exciting Collection"),
+            CollectionFactory(title="Other Collection"),
         ]
         self.response = self.client.get('/collections/')
 
@@ -36,7 +35,7 @@ class CollectionIndexViewTests(TestCase):
 class CollectionDetailViewTests(TestCase):
 
     def setUp(self):
-        self.test_instance = tests.CollectionFactory()
+        self.test_instance = CollectionFactory()
         self.test_instance.metadata = {'a': [1], 'b': [2, 3], 'c': ['hello']}
         self.test_instance.save()
 

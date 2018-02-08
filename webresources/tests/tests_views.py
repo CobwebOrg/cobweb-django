@@ -2,10 +2,11 @@ from django.test import TestCase
 from django.urls import reverse
 from faker import Faker
 
-from archives.tests import HoldingFactory
-from projects.tests import NominationFactory, ClaimFactory
+from archives.tests.factories import HoldingFactory
+from projects.tests.factories import NominationFactory, ClaimFactory
+from webresources.tests.factories import ResourceFactory
 
-from webresources import models, tests, views
+from webresources import models, views
 
 
 class ResourceIndexViewTests(TestCase):
@@ -18,7 +19,7 @@ class ResourceIndexViewTests(TestCase):
 class ResourceDetailViewTests(TestCase):
 
     def setUp(self):
-        self.saved_resource = tests.ResourceFactory()
+        self.saved_resource = ResourceFactory()
         self.saved_resource.save()
         self.saved_nomination = NominationFactory(resource=self.saved_resource)
         self.saved_nomination.save()

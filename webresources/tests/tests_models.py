@@ -2,7 +2,7 @@ from django.db.utils import IntegrityError
 from django.test import TestCase
 
 from webresources.models import Resource
-from webresources.tests import ResourceFactory
+from webresources.tests.factories import ResourceFactory
 
 
 class ResourceModelTests(TestCase):

@@ -1,9 +1,9 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from projects.tests import ProjectFactory
+from projects.tests.factories import ProjectFactory
 
-from core.tests import UserFactory
+from core.tests.factories import UserFactory
 
 
 class ViewTestsMixin:
