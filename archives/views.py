@@ -76,10 +76,6 @@ class CollectionUpdateView(UserPassesTestMixin, RevisionMixin, UpdateView):
         ans = self.request.user in admins or admins.count()==0
         return ans
 
-    def put(self, *args, **kwargs):
-        print('********', self, self.request, dir(self.request), self.request.PUT)
-        super().put(*args, **kwargs)
-
 
 class CollectionAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
