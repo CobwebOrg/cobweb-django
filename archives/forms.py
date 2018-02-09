@@ -92,10 +92,9 @@ class CollectionForm(forms.ModelForm):
         self.helper = FormHelper(self)
 
         self.helper.layout = Layout(
-            Row('', HTML("<h3>{{object.title}}</h3>"), css_class='my-2'),
+            Row(HTML("<h3>{{object.title}}</h3>"), css_class='my-2'),
 
             Row(
-                '',
                 Column(
                     FormSection(Field('identifier')),
                     css_class='col-md-5'
@@ -107,7 +106,6 @@ class CollectionForm(forms.ModelForm):
             ),
 
             Row(
-                '',
                 Column(FormSection(Field('metadata')), css_class='col-md-12'),
             ),
 

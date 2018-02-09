@@ -1,4 +1,6 @@
 import pytest
+
+from django.http.response import HttpResponseRedirect
 from django.test import TestCase
 from django.urls import reverse
 
@@ -92,18 +94,49 @@ class CollectionDetailViewTests(TestCase):
 
 class CollectionUpdateViewTests(TestCase):
 
-    def setUp(self):
-        user = UserFactory()
-        self.collection = CollectionFactory()
-        self.collection.save()
-        self.collection.administrators.add(user)
-        self.client.force_login(user)
-        self.response = self.client.get(self.collection.get_edit_url())
+    def test_load_orphan_collection(self):
+        """Anyone should be able to load if the collection has no admins.
+        NOTE: This is an interim fix, and should be replaced w/ a sensible
+        mechanism for claiming / verifying collection administrators."""
 
-    def test_load(self):
-        self.assertEqual(self.response.status_code, 200)
+        user = UserFactory()
+        collection = CollectionFactory()
+        collection.save()
+        assert collection.administrators.count() == 0, (
+            "CollectionUpdateViewTests.test_load_orphan_collection: has admins"
+        )
+
+        self.client.force_login(user)
+        response = self.client.get(collection.get_edit_url())
+        self.assertEqual(response.status_code, 200)
         for template in ['base.html', 'generic_form.html']:
-            self.assertTemplateUsed(self.response, template)
+            self.assertTemplateUsed(response, template)
+
+    def test_load_administered_collection(self):
+        """User can load UpdateView for a collection they administer."""
+
+        user = UserFactory()
+        collection = CollectionFactory()
+        collection.save()
+        collection.administrators.add(user)
+        self.client.force_login(user)
+        response = self.client.get(collection.get_edit_url())
+        self.assertEqual(response.status_code, 200)
+        for template in ['base.html', 'generic_form.html']:
+            self.assertTemplateUsed(response, template)
+
+    def test_load_nonadministered_collection(self):
+        """User can't load UpdateView for a collection they don't administer."""
+
+        user = UserFactory()
+        collection = CollectionFactory()
+        collection.save()
+        collection.administrators.add(UserFactory())
+        self.client.force_login(user)
+        response = self.client.get(collection.get_edit_url())
+
+        assert isinstance(response, HttpResponseRedirect)
+        assert response.url == f'/accounts/login/?next={collection.get_edit_url()}'
 
 #     def test_included_fields(self):
 #         for field_name in ['title', 'administrators', 'nomination_policy',
