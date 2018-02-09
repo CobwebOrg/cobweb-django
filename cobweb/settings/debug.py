@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
-from .base import *
+from .production import *
 
 
 DEBUG = True
@@ -41,7 +41,7 @@ def show_toolbar(request):
     return True
 
 DEBUG_TOOLBAR_CONFIG = {
-    'SHOW_TOOLBAR_CALLBACK': 'cobweb.settings.show_toolbar',
+    'SHOW_TOOLBAR_CALLBACK': 'cobweb.settings.debug.show_toolbar',
     'INTERCEPT_REDIRECTS': False,
     'DISABLE_PANELS': DEBUG_TOOLBAR_PANELS,
 }

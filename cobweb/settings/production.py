@@ -48,14 +48,9 @@ except NameError:
 
 # Guess DEBUG and TESTING, but these should be set in settings/[environment].py
 
-# SECURITY WARNING: don't run with debug turned on in production!
-if 'DEBUG' in os.environ:
-    DEBUG = os.environ['DEBUG']
-else:
-    DEBUG = False
-CRISPY_FAIL_SILENTLY = not DEBUG
-
-TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
+DEBUG = False
+CRISPY_FAIL_SILENTLY = True
+TESTING = False
 
 # INTERNAL_IPS = ['127.0.0.1']
 INTERNAL_IPS = ['72.18.0.1']
