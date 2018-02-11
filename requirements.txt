@@ -18,6 +18,7 @@ uWSGI
 
 coverage
 pytest
+pytest-cov
 pytest-django
 hypothesis[django]
 django-debug-toolbar

@@ -1,3 +1,5 @@
+import typing
+
 import reversion
 from django.contrib.auth import get_user_model
 from django.db import models
@@ -7,6 +9,7 @@ from metadata.models import CobwebMetadataMixin
 from webresources.models import NormalizedURLField
 
 
+User = get_user_model()
 class ModelValidationMixin(object):
     """Django currently doesn't force validation on the model level
     for compatibility reasons. We enforce here, that on each save,
@@ -20,7 +23,7 @@ class Collection(ModelValidationMixin, CobwebMetadataMixin, models.Model):
     title = models.TextField(null=True, blank=True)
 
     administrators = models.ManyToManyField(
-        get_user_model(), blank=True,
+        User, blank=True,
         related_name='collections_administered',
     )
 
@@ -31,16 +34,21 @@ class Collection(ModelValidationMixin, CobwebMetadataMixin, models.Model):
 
     identifier = NormalizedURLField(null=True, blank=True, unique=True)
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
+        """Return the detail url for collection."""
         return reverse('archives:collection_detail', kwargs={'pk': self.pk})
 
-    def is_admin(self, user):
-        return user in self.administrators.all() or self.administrators.all().count()==0
-
-    def get_edit_url(self):
+    def get_edit_url(self) -> str:
+        """Return the edit url for collection."""
         return reverse('archives:collection_update', kwargs={'pk': self.pk})
 
-    def __str__(self):
+    def is_admin(self, user: User) -> bool:
+        """Check whether *user* is in collection.administrators."""
+        return (user in self.administrators.all()
+                or self.administrators.all().count() == 0)
+
+    def __str__(self) -> str:
+        """Get user-readable string representation of collection."""
         return self.title or 'Collection {}'.format(self.pk)
 
 
@@ -59,8 +67,9 @@ class Holding(CobwebMetadataMixin, models.Model):
 
     # scope = ???
 
-    def __str__(self):
-        return '{} in {}'.format(self.resource, self.collection)
+    def __str__(self) -> str:
+        return f'{self.resource} in {self.collection}'
 
-    def get_resource_set(self):
+    def get_resource_set(self) -> Collection:
+        """Return the Collection containing a Holding."""
         return self.collection
