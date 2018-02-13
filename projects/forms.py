@@ -154,7 +154,6 @@ class ClaimForm(forms.ModelForm):
             Field('collection'),
             Field('description'),
             Field('keywords'),
-            Field('metadata'),
             FormActions(
                 CancelButton,
                 Submit('submit', 'Submit'),

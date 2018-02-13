@@ -96,7 +96,7 @@ class Nomination(models.Model):
     # mutability =
 
     status = models.CharField(max_length=11, default='Unclaimed', choices=[
-        (x, x) for x in ('Rejected', 'Unclaimed', 'Underclaimed', 'Claimed')])
+        (x, x) for x in ('Rejected', 'Unclaimed', 'Underclaimed', 'Claimed', 'Deprecated')])
     nominated_by = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
 
     @property
@@ -126,23 +126,17 @@ class Nomination(models.Model):
 
 
 @reversion.register()
-class Claim(CobwebMetadataMixin, models.Model):
-
-    title = models.TextField(null=True, blank=True)
-
+class Claim(models.Model):
     nomination = models.ForeignKey(Nomination, related_name='claims',
                                    on_delete=models.PROTECT)
     collection = models.ForeignKey('archives.Collection', related_name='claims',
                                    on_delete=models.PROTECT)
 
+    description = models.TextField('Description', null=True, blank=True)
+    keywords = models.ManyToManyField(Keyword, blank=True)
+
     class Meta:
        unique_together = ('nomination', 'collection')
-
-    # NOTE: the Cobweb data model documentation includes a large number of
-    # fields related to capture software parameters. I plan on storing them in
-    # the 'metadata' JSONField that Claim inherits from CobwebMetadataMixin.
-    # For the full list, see projects.views.ClaimCreateView.get_initial()
-    # TODO: some sort of schema / validation system...
 
     def __str__(self):
         return f'{self.nomination} – Collection {self.collection}'
