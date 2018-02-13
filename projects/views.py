@@ -162,13 +162,6 @@ class ClaimCreateView(ClaimFormViewMixin, CreateView):
     def get_initial(self):
         return {'nomination': self.kwargs['nomination_pk']}
 
-    def get_form(self, *args, **kwargs):
-        form = super().get_form(*args, **kwargs)
-        form.fields['nomination'].queryset = (
-            models.Nomination.objects.filter(id=self.kwargs['nomination_pk'])
-        )
-        return form
-
 
 class ClaimUpdateView(ClaimFormViewMixin, UpdateView):
     pass
