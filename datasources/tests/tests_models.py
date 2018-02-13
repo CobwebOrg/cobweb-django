@@ -1,3 +1,4 @@
+from unittest import mock
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
@@ -19,8 +20,8 @@ class APIEndpointModelTests(TestCase):
 
     def test_get_archiveit_root(self):
         ait = models.APIEndpoint.get_archiveit_root()
-        self.assertIsInstance(ait, models.APIEndpoint)
-        self.assertEqual(ait.location, 'https://archive-it.org/oai')
+        assert isinstance(ait, models.APIEndpoint)
+        assert ait.location == 'https://archive-it.org/oai'
 
     def test_get_importer(self):
         importer = (APIEndpointFactory(importer_class_name='OAIPMHImporter')

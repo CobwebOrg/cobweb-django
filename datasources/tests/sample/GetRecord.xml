@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><OAI-PMH xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd" xmlns:ex="http://exslt.org/dates-and-times" xmlns:exslt="http://exslt.org/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.openarchives.org/OAI/2.0/">
+<responseDate>2018-02-12T17:42:00Z</responseDate>
+<request verb="GetRecord" identifier="http://archive-it.org/collections/2323">http://archive-it.org/oai?verb=GetRecord&amp;metadataPrefix=oai_dc&amp;identifier=http://archive-it.org/collections/2323</request>
+<GetRecord>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://apihtawikosisan.com/</identifier>
+<datestamp>2017-04-24T18:28:16Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>âpihtawikosisân</dc:title>
+<dc:subject>Education</dc:subject>
+<dc:subject>Indigenous activists</dc:subject>
+<dc:subject>Indigenous peoples, Treatment of—Canada</dc:subject>
+<dc:subject>Racism--Canada</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:creator>Chelsea Vowel</dc:creator>
+<dc:description>The personal blog of Metis writer and educator Chelsea Vowel, who blogs about education, aboriginal law, and the Cree language, and includes entries on the work of the Truth and Reconciliation Commission.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://apihtawikosisan.com/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+</GetRecord>
+</OAI-PMH>

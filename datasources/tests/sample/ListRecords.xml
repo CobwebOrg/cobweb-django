@@ -1,0 +1,2012 @@
+<?xml version="1.0" encoding="UTF-8"?><OAI-PMH xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd" xmlns:ex="http://exslt.org/dates-and-times" xmlns:exslt="http://exslt.org/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.openarchives.org/OAI/2.0/">
+<responseDate>2018-02-12T20:58:54Z</responseDate>
+<request verb="ListRecords">http://archive-it.org/oai/organizations?verb=ListRecords&amp;metadataPrefix=oai_dc</request>
+<ListRecords>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://1000conversations.ca/</identifier>
+<datestamp>2017-04-24T18:28:19Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>1000 Conversations Across Canada on Reconciliation</dc:title>
+<dc:subject>Community organization</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:creator>1000 Conversations</dc:creator>
+<dc:description>1000 Conversations is a national campaign intended to engage all Canadians in dialogue about the history of residential schools, their resulting impacts, and the need for healing and reconciliation.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://1000conversations.ca/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://100ansdepertes.ca/fr/</identifier>
+<datestamp>2017-04-25T18:36:18Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>100 Ans De Pertes - L’expérience des pensionnats autochtones</dc:title>
+<dc:subject>Residential school survivors</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:creator>Fondation autochtone de l’espoir</dc:creator>
+<dc:language>FR</dc:language>
+<dc:description>100 Ans de Pertes -- L’expérience des pensionnats autochtones est un programme éducatif et une exposition virtuelle du Fondation autochtone de l’espoir. Ressource également disponible en anglais.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://100ansdepertes.ca/fr/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://100yearsofloss.ca</identifier>
+<datestamp>2017-04-24T18:28:16Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>100 Years of Loss - The Residential School System in Canada</dc:title>
+<dc:subject>Residential school survivors</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:creator>Legacy of Hope Foundation</dc:creator>
+<dc:description>100 Years of Loss – The Residential School System in Canada is an education program and virtual exhibit from the Legacy of Hope Foundation. Resource also available in French.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://100yearsofloss.ca</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ahf2.ca/</identifier>
+<datestamp>2017-04-24T18:28:16Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Aboriginal Healing Foundation - SHOP</dc:title>
+<dc:subject>Indigenous peoples--Mental health services--North America</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:creator>Aboriginal Healing Foundation</dc:creator>
+<dc:description>Archived website of the Aboriginal Healing Foundation, which closed on September 30, 2014 after sixteen years of operation.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ahf2.ca/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://apihtawikosisan.com/</identifier>
+<datestamp>2017-04-24T18:28:16Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>âpihtawikosisân</dc:title>
+<dc:subject>Education</dc:subject>
+<dc:subject>Indigenous activists</dc:subject>
+<dc:subject>Indigenous peoples, Treatment of—Canada</dc:subject>
+<dc:subject>Racism--Canada</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:creator>Chelsea Vowel</dc:creator>
+<dc:description>The personal blog of Metis writer and educator Chelsea Vowel, who blogs about education, aboriginal law, and the Cree language, and includes entries on the work of the Truth and Reconciliation Commission.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://apihtawikosisan.com/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://apihtawikosisan.com/2012/01/residential-schools-an-introduction/</identifier>
+<datestamp>2017-04-24T18:28:16Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Residential Schools: an Introduction</dc:title>
+<dc:subject>Apologies</dc:subject>
+<dc:subject>Intergenerational communication</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Residential school survivors</dc:subject>
+<dc:creator>Chelsea Vowel</dc:creator>
+<dc:description>Blog post discussing the legacy and public perception of residential schools.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://apihtawikosisan.com/2012/01/residential-schools-an-introduction/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://apihtawikosisan.com/aboriginal-issue-primers/</identifier>
+<datestamp>2017-04-24T18:45:18Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Indigenous Issues 101</dc:title>
+<dc:subject>Education</dc:subject>
+<dc:creator>Chelsea Vowel</dc:creator>
+<dc:description>Links to resources covering a broad range of indigenous issues.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://apihtawikosisan.com/aboriginal-issue-primers/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://aptn.ca/news/2014/03/30/fading-memory-fragmented-records-passage-time-keep-residential-school-truths-hidden-forever/</identifier>
+<datestamp>2017-04-24T18:28:16Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:subject>Indigenous peoples--Canada—Government relations</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:publisher>APTN</dc:publisher>
+<dc:creator>Jorge Berrera</dc:creator>
+<dc:language>EN</dc:language>
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Fading memory, fragmented records and the passage of time keep some residential school truths hidden forever</dc:title>
+<dc:description>This article argues that due to the gaps in records around residential schools, the federal government must fund ongoing investigations into the deaths of Indigenous students in the IRS system.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://aptn.ca/news/2014/03/30/fading-memory-fragmented-records-passage-time-keep-residential-school-truths-hidden-forever/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://archives.siwel.info/Le-Canada-demande-pardon-aux-peuples-autochtones-L-indescriptible-histoire-des-pensionnats-indiens_a8202.html</identifier>
+<datestamp>2017-05-11T15:21:01Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:subject>Apologies</dc:subject>
+<dc:subject>Indigenous peoples--Canada—Government relations</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:title>Le Canada demande "pardon" aux peuples autochtones: L’indescriptible histoire des pensionnats indiens</dc:title>
+<dc:language>FR</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://archives.siwel.info/Le-Canada-demande-pardon-aux-peuples-autochtones-L-indescriptible-histoire-des-pensionnats-indiens_a8202.html</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://blog.legalaid.on.ca/2015/07/08/apologies-are-only-the-start-a-reflection-on-the-release-of-the-report-by-the-truth-and-reconciliation-commission/</identifier>
+<datestamp>2017-04-24T18:28:16Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:subject>Indigenous peoples, Treatment of—Canada</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:publisher>Legal Aid Ontario Blog</dc:publisher>
+<dc:creator>Jonathan Rudin</dc:creator>
+<dc:language>EN</dc:language>
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Apologies are only the start – a reflection on the release of the report by the Truth and Reconciliation Commission.</dc:title>
+<dc:description>Article posted 8 July 2015 by Jonathan Rudin.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://blog.legalaid.on.ca/2015/07/08/apologies-are-only-the-start-a-reflection-on-the-release-of-the-report-by-the-truth-and-reconciliation-commission/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://blogs.u-paris10.fr/article/commission-de-verite-et-reconciliation-du-canada-faire-le-deuil-dun-genocide-culturel-3</identifier>
+<datestamp>2017-05-11T15:20:50Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:subject>Indigenous peoples, Treatment of—Canada</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:title>Commission de Vérité et Réconciliation du Canada : faire le deuil d’un génocide culturel</dc:title>
+<dc:language>FR</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://blogs.u-paris10.fr/article/commission-de-verite-et-reconciliation-du-canada-faire-le-deuil-dun-genocide-culturel-3</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ceremonies.ubc.ca/reconciliation-pole/</identifier>
+<datestamp>2017-05-11T15:20:51Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>British Columbia</dc:coverage>
+<dc:subject>Indigenous arts</dc:subject>
+<dc:subject>Traditional knowledge</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:title>Reconciliation Pole | UBC Ceremonies and Events</dc:title>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ceremonies.ubc.ca/reconciliation-pole/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://encyclopediecanadienne.com/fr/article/pensionnats/</identifier>
+<datestamp>2017-04-25T18:36:18Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Pensionnats indiens</dc:title>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:creator>Historica Canada</dc:creator>
+<dc:language>FR</dc:language>
+<dc:description>Un article sur le site Web d'Historica Canada qui traite de l'histoire des pensionnats indiens. Ressource également disponible en anglais.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://encyclopediecanadienne.com/fr/article/pensionnats/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://esask.uregina.ca/entry/residential_schools.html</identifier>
+<datestamp>2017-04-24T18:28:16Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Saskatchewan</dc:coverage>
+<dc:title>Encyclopedia of Saskatchewan: Residential Schools</dc:title>
+<dc:subject>Indigenous peoples, Treatment of—Canada</dc:subject>
+<dc:subject>Racism--Canada</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:creator>Encyclopedia of Saskatchewan</dc:creator>
+<dc:description>A one-page capture from the online Encyclopedia of Saskatchewan that addresses residential schools.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://esask.uregina.ca/entry/residential_schools.html</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://eugenicsarchive.ca/discover/institutions/</identifier>
+<datestamp>2017-04-24T18:28:16Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Aboriginal Residential Schools</dc:title>
+<dc:subject>Racism--Canada</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:creator>The Eugenics Archive</dc:creator>
+<dc:description>A website created with the support of SSHRC to explore resources on the history of eugenics in western Canada. The tab for Aboriginal Residential Schools opens to an interactive map that shows the location of IRS in western Canada. Due to the interactive nature of the website, web capture may not fully represent the features of the live site.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://eugenicsarchive.ca/discover/institutions/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://fadg.ca</identifier>
+<datestamp>2017-04-25T18:36:18Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Fondation autochtone de guérison</dc:title>
+<dc:subject>Indigenous peoples--Mental health services--North America</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:creator>Fondation autochtone de guérison</dc:creator>
+<dc:language>FR</dc:language>
+<dc:description>Site Web archivé du Fondation autochtone de guérison, qui a cessé ses activités le 30 septembre 2014 après seize ans d'exploitation.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://fadg.ca</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://fondationautochtonedelespoir.ca/</identifier>
+<datestamp>2017-04-25T18:36:18Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Fondation autochtone de l'espoir</dc:title>
+<dc:subject>Residential school survivors</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:creator>Fondation autochtone de l'espoir</dc:creator>
+<dc:language>FR</dc:language>
+<dc:description>FAE est un organisme caritatif national dirigé par des Autochtones et dont le but est d’éduquer et de sensibiliser la population au sujet de l’histoire et des nombreuses séquelles du Régime des pensionnats. Ces séquelles comprennent les répercussions directes et continues sur les survivants et survivantes des Premières Nations, métis et inuits, leurs collectivités et leurs descendants. Sa mission est de favoriser, par l’éducation, des relations justes et équitables de réconciliation et de guérison pour tous les Canadiens et Canadiennes.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://fondationautochtonedelespoir.ca/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://forgottenmetis.ca/</identifier>
+<datestamp>2017-04-24T18:28:16Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Forgotten Metis</dc:title>
+<dc:subject>Indigenous peoples, Treatment of—Canada</dc:subject>
+<dc:subject>Métis</dc:subject>
+<dc:subject>Métis--Residential schools</dc:subject>
+<dc:subject>Personal narratives</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:creator>Legacy of Hope Foundation</dc:creator>
+<dc:description>This virtual exhibition, curated by Gregory Scofield for the Legacy of Hope Foundation, is the online counterpart to a touring exhibition that aims to give voice to the experience of the many Métis children forced to attend Indian Residential Schools.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://forgottenmetis.ca/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/1024166/quete-gord-downie-secret-path-chanie-wenjack-tragically-hip</identifier>
+<datestamp>2017-05-11T15:21:01Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:publisher>Radio-Canada</dc:publisher>
+<dc:coverage>Canada</dc:coverage>
+<dc:subject>Arts, Canadian</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:title>La dernière quête de Gord Downie</dc:title>
+<dc:language>FR</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/1024166/quete-gord-downie-secret-path-chanie-wenjack-tragically-hip</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/600827/pensionnats-autochtones-deces-etude</identifier>
+<datestamp>2017-05-11T15:21:01Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:publisher>Radio-Canada</dc:publisher>
+<dc:coverage>Canada</dc:coverage>
+<dc:subject>Indigenous peoples, Treatment of—Canada</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:title>Pensionnats autochtones : 3000 enfants morts, selon une enquête</dc:title>
+<dc:language>FR</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/600827/pensionnats-autochtones-deces-etude</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/610862/pensionnats-autochtones-survivants</identifier>
+<datestamp>2017-05-11T15:21:01Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:publisher>Radio-Canada</dc:publisher>
+<dc:coverage>Canada</dc:coverage>
+<dc:subject>Residential school survivors</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:title>Pensionnats autochtones : survivants #44, #58, #99...</dc:title>
+<dc:language>FR</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/610862/pensionnats-autochtones-survivants</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/610955/pensionnats-autochtones-morts</identifier>
+<datestamp>2017-05-11T15:21:01Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:title>4134 morts dans les pensionnats autochtones au Canada</dc:title>
+<dc:language>FR</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/610955/pensionnats-autochtones-morts</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/660354/commission-verite-reconciliation-fin-temoignages</identifier>
+<datestamp>2017-05-11T15:20:59Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:publisher>Radio-Canada</dc:publisher>
+<dc:coverage>Canada</dc:coverage>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:title>La Commission de vérité et réconciliation entend son dernier témoignage</dc:title>
+<dc:language>FR</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/660354/commission-verite-reconciliation-fin-temoignages</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/672655/pensionnats-indiens-confidnentialite</identifier>
+<datestamp>2017-05-11T15:21:01Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:publisher>Radio-Canada</dc:publisher>
+<dc:coverage>Canada</dc:coverage>
+<dc:subject>Archives and Indigenous peoples</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:title>Pensionnats autochtones : l'adjudicateur des victimes craint pour leur vie privée</dc:title>
+<dc:language>FR</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/672655/pensionnats-indiens-confidnentialite</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/679360/pensionnats-autochtones-indemnisations-destruction-documents</identifier>
+<datestamp>2017-05-11T15:21:09Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:subject>Archives and Indigenous peoples</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:title>Pensionnats autochtones : un juge permet la destruction de témoignages</dc:title>
+<dc:language>FR</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/679360/pensionnats-autochtones-indemnisations-destruction-documents</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/695444/ottawa-lacunes-bibliotheque-archives-reaction-saganash</identifier>
+<datestamp>2017-05-11T15:20:58Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:subject>Indigenous peoples--Canada—Government relations</dc:subject>
+<dc:subject>Library and Archives Canada</dc:subject>
+<dc:title>Les lacunes à Bibliothèque et Archives nuisent au deuil des Autochtones, dit Romeo Saganash</dc:title>
+<dc:language>FR</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/695444/ottawa-lacunes-bibliotheque-archives-reaction-saganash</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/723529/pensionnats-autochtones-genocide-culturel-selon-commission-verite-reconciliation</identifier>
+<datestamp>2017-05-11T15:21:03Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:publisher>Radio-Canada</dc:publisher>
+<dc:coverage>Canada</dc:coverage>
+<dc:subject>Indigenous peoples--Canada—Government relations</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:title>Pensionnats autochtones : un génocide culturel, dit la Commission de vérité et réconciliation</dc:title>
+<dc:language>FR</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/723529/pensionnats-autochtones-genocide-culturel-selon-commission-verite-reconciliation</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/723555/pensionnats-autochtones-nord-reactions</identifier>
+<datestamp>2017-05-11T15:20:56Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:subject>Indigenous activists</dc:subject>
+<dc:subject>Indigenous peoples--Canada—Government relations</dc:subject>
+<dc:subject>Residential school survivors</dc:subject>
+<dc:title>Pensionnats autochtones : après les mots, l'action, demandent les Autochtones</dc:title>
+<dc:language>FR</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/723555/pensionnats-autochtones-nord-reactions</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/723612/commission-verite-reconciliation-autochtones-reactions</identifier>
+<datestamp>2017-05-11T15:21:03Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:subject>Indigenous peoples--Canada—Government relations</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:title>Pensionnats autochtones : Stephen Harper parle d'« assimilation forcée »</dc:title>
+<dc:language>FR</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/723612/commission-verite-reconciliation-autochtones-reactions</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/750986/cours-obligatoire-autochtone-universite-winnipeg</identifier>
+<datestamp>2017-05-11T15:21:01Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Manitoba</dc:coverage>
+<dc:subject>Education</dc:subject>
+<dc:subject>Indigenous peoples, Treatment of—Canada</dc:subject>
+<dc:title>Un cours obligatoire sur les questions autochtones à l'Université de Winnipeg</dc:title>
+<dc:language>FR</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/750986/cours-obligatoire-autochtone-universite-winnipeg</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/755245/rapport-commission-verite-reconciliation-autochtones-pensionnats-morts</identifier>
+<datestamp>2017-05-11T15:21:01Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:publisher>Radio-Canada</dc:publisher>
+<dc:coverage>Canada</dc:coverage>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:title>« Honorer dignement la mémoire » de 3201 enfants morts dans les pensionnats autochtones</dc:title>
+<dc:language>FR</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/755245/rapport-commission-verite-reconciliation-autochtones-pensionnats-morts</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/755368/autochtones-rapport-reactions-trudeau-commissaires-suivi</identifier>
+<datestamp>2017-05-11T15:21:01Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:subject>Indigenous peoples--Canada—Government relations</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:title>Trudeau veut aborder une nouvelle ère avec les peuples autochtones</dc:title>
+<dc:language>FR</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/755368/autochtones-rapport-reactions-trudeau-commissaires-suivi</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/770094/revision-enseignement-histoire-secondaire-sebastien-proulx</identifier>
+<datestamp>2017-05-11T15:20:53Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Quebec</dc:coverage>
+<dc:subject>Education</dc:subject>
+<dc:subject>Indigenous peoples--Canada—Government relations</dc:subject>
+<dc:title>Québec pourrait réviser sa réforme de l'enseignement de l'histoire</dc:title>
+<dc:language>FR</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/770094/revision-enseignement-histoire-secondaire-sebastien-proulx</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/775253/commission-royale-peuples-autochtones-20-ans-plus-tard-conditions-de-vie</identifier>
+<datestamp>2017-05-11T15:20:53Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:subject>Indigenous peoples--Canada—Government relations</dc:subject>
+<dc:title>Commission royale sur les peuples autochtones : 20 ans d'inaction</dc:title>
+<dc:language>FR</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/775253/commission-royale-peuples-autochtones-20-ans-plus-tard-conditions-de-vie</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/780619/pensionnats-autochtones-ottawa-acadie-terre-neuve-et-labrador</identifier>
+<datestamp>2017-05-11T15:20:54Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Newfoundland &amp; Labrador</dc:coverage>
+<dc:subject>Indigenous peoples--Canada—Government relations</dc:subject>
+<dc:subject>Residential school survivors</dc:subject>
+<dc:title>Pensionnats autochtones à T.-N.-L. : 50 millions pour les victimes</dc:title>
+<dc:language>FR</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/780619/pensionnats-autochtones-ottawa-acadie-terre-neuve-et-labrador</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/784303/commission-verite-reconciliation-reponse-officielle-ontario</identifier>
+<datestamp>2017-05-11T15:20:52Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:publisher>Radio-Canada</dc:publisher>
+<dc:coverage>Ontario</dc:coverage>
+<dc:subject>Indigenous peoples--Canada—Government relations</dc:subject>
+<dc:subject>Residential school survivors</dc:subject>
+<dc:title>Pensionnats autochtones : « Je m'excuse pour le silence de la province » - Kathleen Wynne</dc:title>
+<dc:language>FR</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/784303/commission-verite-reconciliation-reponse-officielle-ontario</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/788641/pensionnat-autochtone-minute-patrimoine-chanie-wenjack-histoire-canada</identifier>
+<datestamp>2017-05-11T15:21:12Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:subject>Residential schools</dc:subject>
+<dc:title>Une « Minute du patrimoine » explore l'histoire des pensionnats autochtones</dc:title>
+<dc:language>FR</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/788641/pensionnat-autochtone-minute-patrimoine-chanie-wenjack-histoire-canada</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/802110/gord-downie-disque-roman-film-pensionnats-autochtones</identifier>
+<datestamp>2017-05-11T15:21:12Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:publisher>Radio-Canada</dc:publisher>
+<dc:coverage>Canada</dc:coverage>
+<dc:subject>Arts, Canadian</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:title>Mort en fuyant un pensionnat autochtone; la tragique histoire racontée par Gord Downie</dc:title>
+<dc:language>FR</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/802110/gord-downie-disque-roman-film-pensionnats-autochtones</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/811342/autochtone-pensionnat-temoignage-verite-reconciliation</identifier>
+<datestamp>2017-05-11T15:20:52Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:publisher>Radio-Canada</dc:publisher>
+<dc:coverage>Canada</dc:coverage>
+<dc:subject>Archives and Indigenous peoples</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:title>Peut-on détruire les témoignages des anciens élèves des pensionnats autochtones?</dc:title>
+<dc:language>FR</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelle/811342/autochtone-pensionnat-temoignage-verite-reconciliation</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelles/special/2016/10/pensionnats-autochtones-resistance-histoire-meconnue-abitibi/index.html?isAutoPlay=1</identifier>
+<datestamp>2017-05-11T15:20:54Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:publisher>Radio-Canada</dc:publisher>
+<dc:coverage>Canada</dc:coverage>
+<dc:subject>Residential school survivors</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:title>Fuir et résister, l’histoire méconnue des pensionnats</dc:title>
+<dc:language>FR</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/nouvelles/special/2016/10/pensionnats-autochtones-resistance-histoire-meconnue-abitibi/index.html?isAutoPlay=1</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/sujet/veritereconciliation/</identifier>
+<datestamp>2017-04-25T18:36:21Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>La commission de vérité et réconciliation</dc:title>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:creator>Radio-Canada</dc:creator>
+<dc:language>FR</dc:language>
+<dc:description>Une section qui concerne la Commission de vérité et réconciliation sur le site de Radio Canada.  Elle inclus des liens vers des articles et vidéos.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ici.radio-canada.ca/sujet/veritereconciliation/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://indigenousfoundations.arts.ubc.ca/home/government-policy/the-residential-school-system.html</identifier>
+<datestamp>2017-04-24T18:28:12Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>The Residential School System</dc:title>
+<dc:subject>Residential schools</dc:subject>
+<dc:creator>University of British Columbia - Indigenous Foundations</dc:creator>
+<dc:description>A sub-page of the UBC Indigenous Foundations Arts program focused on the history of residential schools, their long-term impacts, and the federal government response.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://indigenousfoundations.arts.ubc.ca/home/government-policy/the-residential-school-system.html</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://irititja.com</identifier>
+<datestamp>2017-04-24T18:28:12Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Australia</dc:coverage>
+<dc:title>The Ara Irititja Project</dc:title>
+<dc:subject>Archives and Indigenous peoples</dc:subject>
+<dc:subject>Traditional knowledge</dc:subject>
+<dc:subject>Traditional practice</dc:subject>
+<dc:creator>South Australia Museum &amp; Pitjantjatjara Council Aboriginal Corporation</dc:creator>
+<dc:description>Community-based, multimedia digital archive and social history project of Anangu of Australia, sharing knowledge to support indigenous-led digital projects.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://irititja.com</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://irsi.aboriginal.ubc.ca/</identifier>
+<datestamp>2017-04-24T18:28:12Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>British Columbia</dc:coverage>
+<dc:title>Indian Residential School Initiative / ourtruth</dc:title>
+<dc:subject>Education</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:creator>Univeristy of British Columbia</dc:creator>
+<dc:description>A website designed to help users locate information about events and initiatives occurring at and around UBC in preparation for the TRC's National Event on September 18-21 2013. The website also host information on the development of a centre in the heart of UBC's Vancouver campus that will address the history and legacy of the Indian Residential School system.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://irsi.aboriginal.ubc.ca/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://irsss.ca/</identifier>
+<datestamp>2017-04-24T18:28:12Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>British Columbia</dc:coverage>
+<dc:title>Indian Residential Schools Survivor Society</dc:title>
+<dc:subject>Indigenous peoples--Services for--North America</dc:subject>
+<dc:subject>Residential school survivors</dc:subject>
+<dc:creator>Indian Residential Schools Survivor Society</dc:creator>
+<dc:description>Website for the IRSSS, a B.C.-based provincial organization which provides services to Indian Residential School Survivors.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://irsss.ca/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://leaderpost.com/opinion/columnists/after-truth-and-reconciliation-commission-report-we-need-action/</identifier>
+<datestamp>2017-04-24T18:28:12Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:subject>Indigenous peoples--Canada—Government relations</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:publisher>Regina Leader-Post</dc:publisher>
+<dc:creator>Joyce Green</dc:creator>
+<dc:language>EN</dc:language>
+<dc:coverage>Canada</dc:coverage>
+<dc:title>After Truth and Reconciliation Commission report we need action</dc:title>
+<dc:description>Joyce Green argues that reconciliation must be accompanied by restitution in the form of land-returns, Indigenous jurisdiction over resources and tax room, and other compensatory amends.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://leaderpost.com/opinion/columnists/after-truth-and-reconciliation-commission-report-we-need-action/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://lesenfantsdevenus.ca/fr</identifier>
+<datestamp>2017-04-25T18:36:21Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Que sont les enfants devenus? L'expérience des pensionnats autochtones</dc:title>
+<dc:subject>Archives</dc:subject>
+<dc:subject>Archives and Indigenous peoples</dc:subject>
+<dc:subject>Education</dc:subject>
+<dc:subject>Indigenous peoples, Treatment of—Canada</dc:subject>
+<dc:subject>Personal narratives</dc:subject>
+<dc:subject>Residential school survivors</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:creator>Fondation autochtone de l'espoir</dc:creator>
+<dc:language>FR</dc:language>
+<dc:description>Développé en 2001, les objectifs de ce site Web sont les suivants: reconnaître les expériences et les impacts des pensionnats du Canada sur les peuples autochtones; créer un dossier public et historique de cette période de l’histoire canadienne qui pourrait être facilement accessible par les Canadiens; et à promouvoir la sensibilisation, la compréhension et l’éducation de l’histoire et de l’héritage des pensionnats.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://lesenfantsdevenus.ca/fr</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://missinghistory.ca/</identifier>
+<datestamp>2017-04-24T18:28:12Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Missing History: Recovering Canada's Lost Histories</dc:title>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:creator>Legacy of Hope Foundation</dc:creator>
+<dc:description>A project of the Legacy of Hope Foundation and building on the lesson plans of the LHF Edukit, this website offers an opportunity to deliver a message to Survivors, their families, communities, and to all Canadians about Canada’s residential school history, and about the importance of reconciliation and healing.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://missinghistory.ca/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://montrealgazette.com/news/aboriginal-leader-phil-fontaine-believes-in-reconciliation?utm_content=buffer3d99c&amp;utm_medium=social&amp;utm_source=facebook.com&amp;utm_campaign=buffer</identifier>
+<datestamp>2017-04-24T18:28:12Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:subject>Adoption</dc:subject>
+<dc:subject>Indigenous civic leaders</dc:subject>
+<dc:subject>Residential school survivors</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:publisher>Montreal Gazette</dc:publisher>
+<dc:creator>Christopher Curtis</dc:creator>
+<dc:language>EN</dc:language>
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Aboriginal leader Phil Fontaine believes in reconciliation</dc:title>
+<dc:description>Published 9 March 2016. Former Assembly of First Nations national chief Phil Fontaine speaks of how Canada and its aboriginal people can work toward reconciliation.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://montrealgazette.com/news/aboriginal-leader-phil-fontaine-believes-in-reconciliation?utm_content=buffer3d99c&amp;utm_medium=social&amp;utm_source=facebook.com&amp;utm_campaign=buffer</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://nctr.ca</identifier>
+<datestamp>2017-04-24T18:28:12Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>National Centre for Truth and Reconciliation</dc:title>
+<dc:subject>Archives and Indigenous peoples</dc:subject>
+<dc:subject>Education</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:creator>National Centre for Truth and Reconciliation (University of Manitoba)</dc:creator>
+<dc:description>Dedicated website for the National Centre for Truth and Reconciliation at the University of Manitoba. Resource also available in French.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://nctr.ca</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://nctr.ca/fr/</identifier>
+<datestamp>2017-04-25T18:36:21Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Centre national pour la vérité et réconciliation</dc:title>
+<dc:subject>Archives and Indigenous peoples</dc:subject>
+<dc:subject>Education</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:creator>Centre national pour la vérité et réconciliation (Université du Manitoba)</dc:creator>
+<dc:language>FR</dc:language>
+<dc:description>Site Web dédié au Centre national pour la vérité et réconciliation de l'Université du Manitoba.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://nctr.ca/fr/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://nctr.ca/fr/reports.php</identifier>
+<datestamp>2017-05-29T20:46:33Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:title>Rapports de la Vérité et la Réconciliation</dc:title>
+<dc:subject>Archives and Indigenous peoples</dc:subject>
+<dc:subject>Education</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:language>FR</dc:language>
+<dc:coverage>Canada</dc:coverage>
+<dc:description>Liens vers des rapports publiés ou créés par la Commission vérité et réconciliation</dc:description>
+<dc:creator>Centre national pour la vérité et réconciliation (Université du Manitoba)</dc:creator>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://nctr.ca/fr/reports.php</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://nctr.ca/reports.php</identifier>
+<datestamp>2017-06-01T12:33:14Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:subject>Archives and Indigenous peoples</dc:subject>
+<dc:subject>Education</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:language>EN</dc:language>
+<dc:coverage>Canada</dc:coverage>
+<dc:description>Links to reports issued or created by the Truth and Reconciliation Commission.</dc:description>
+<dc:creator>National Centre for Truth and Reconciliation (University of Manitoba)</dc:creator>
+<dc:title>Reports of theTruth and Reconciliation Commission</dc:title>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://nctr.ca/reports.php</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://news.nationalpost.com/full-comment/clifton-rubenstein-debunking-the-half-truths-and-exaggerations-in-the-truth-and-reconciliation-report</identifier>
+<datestamp>2017-04-24T18:28:12Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:subject>Indigenous children--Institutional care</dc:subject>
+<dc:subject>Racism--Canada</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:publisher>National Post</dc:publisher>
+<dc:creator>Rodney E. Clifton and Hymie Rubenstein</dc:creator>
+<dc:language>EN</dc:language>
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Clifton &amp; Rubenstein: Debunking the half-truths and exaggerations in the Truth and Reconciliation report</dc:title>
+<dc:description>Commentary challenging the findings of the Final TRC report.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://news.nationalpost.com/full-comment/clifton-rubenstein-debunking-the-half-truths-and-exaggerations-in-the-truth-and-reconciliation-report</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://news.nationalpost.com/full-comment/conrad-black-canadas-treatment-of-aboriginals-was-shameful-but-it-was-not-genocide</identifier>
+<datestamp>2017-04-24T18:28:12Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:subject>Indigenous children--Institutional care</dc:subject>
+<dc:subject>Indigenous peoples, Treatment of—Canada</dc:subject>
+<dc:subject>Indigenous peoples--Government relations</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:publisher>National Post</dc:publisher>
+<dc:creator>Conrad Black</dc:creator>
+<dc:language>EN</dc:language>
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Conrad Black: Canada’s treatment of aboriginals was shameful, but it was not genocide</dc:title>
+<dc:description>Commentary arguing that the residential school system, though shameful, does not fit the definition of genocide.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://news.nationalpost.com/full-comment/conrad-black-canadas-treatment-of-aboriginals-was-shameful-but-it-was-not-genocide</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://news.nationalpost.com/full-comment/rubenstein-clifton-truth-and-reconciliation-report-tells-a-skewed-and-partial-story-of-residential-schools</identifier>
+<datestamp>2017-04-24T18:28:12Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:subject>Indigenous peoples, Treatment of—Canada</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada - critiques</dc:subject>
+<dc:publisher>National Post</dc:publisher>
+<dc:creator>Hymie Rubenstein and Rodney Clifton</dc:creator>
+<dc:language>EN</dc:language>
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Rubenstein &amp; Clifton: Truth and Reconciliation report tells a ‘skewed and partial story’ of residential schools</dc:title>
+<dc:description>Commentary expressing skepticism at the findings of the TRC report. One of the authors, Professor Clifton, identifies himself as a supervisor at a residential school in the 1960s.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://news.nationalpost.com/full-comment/rubenstein-clifton-truth-and-reconciliation-report-tells-a-skewed-and-partial-story-of-residential-schools</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://news.nationalpost.com/news/canada/canadian-politics/wynne-apologizes-on-behalf-of-province-for-brutalities-suffered-in-residential-schools/</identifier>
+<datestamp>2017-04-24T18:28:12Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:subject>Apologies</dc:subject>
+<dc:subject>Indigenous peoples--Government relations</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:publisher>National Post</dc:publisher>
+<dc:creator>Canadian Press</dc:creator>
+<dc:language>EN</dc:language>
+<dc:coverage>Ontario</dc:coverage>
+<dc:title>Wynne apologizes on behalf of Ontario for ‘brutalities’ suffered in residential schools</dc:title>
+<dc:description>Ontario Premier Kathleen Wynne offered a formal apology on behalf of the Ontario government for the brutalities of the Indian Residential School System.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://news.nationalpost.com/news/canada/canadian-politics/wynne-apologizes-on-behalf-of-province-for-brutalities-suffered-in-residential-schools/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://news.nationalpost.com/news/canada/five-of-the-best-and-perhaps-worst/</identifier>
+<datestamp>2017-04-24T18:28:12Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:publisher>National Post</dc:publisher>
+<dc:creator>Jen Gerson</dc:creator>
+<dc:language>EN</dc:language>
+<dc:coverage>Ontario</dc:coverage>
+<dc:title>Five of the best recommendations from the Truth &amp; Reconciliation Commission, and five that will be problematic</dc:title>
+<dc:description>Published 3 June 2015. Columnist Jen Gerson offers an assessment of 10 of the TRC's 94 recommendations.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://news.nationalpost.com/news/canada/five-of-the-best-and-perhaps-worst/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://news.nationalpost.com/news/canada/new-heritage-minutes-tackle-some-hard-truths-about-residential-schools-and-treaties-as-part-of-reconciliation/</identifier>
+<datestamp>2017-04-24T18:28:16Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:subject>Indigenous peoples, Treatment of—Canada</dc:subject>
+<dc:subject>Indigenous peoples--Canada—Government relations</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:publisher>National Post</dc:publisher>
+<dc:creator>Ashley Csanady</dc:creator>
+<dc:language>EN</dc:language>
+<dc:coverage>Canada</dc:coverage>
+<dc:title>New Heritage Minutes tackle ‘some hard truths about residential schools and treaties’ as part of reconciliation</dc:title>
+<dc:description>Published 21 June 2016. Article addresses the two new Canadian Heritage Minutes videos on the history of residential schools and treaties.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://news.nationalpost.com/news/canada/new-heritage-minutes-tackle-some-hard-truths-about-residential-schools-and-treaties-as-part-of-reconciliation/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://news.nationalpost.com/news/canada/residential-schools-to-blame-for-problems-plaguing-aboriginals-truth-and-reconciliation-commission/</identifier>
+<datestamp>2017-04-24T18:28:16Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:subject>Indigenous peoples, Treatment of—Canada</dc:subject>
+<dc:subject>Indigenous peoples--Canada—Government relations</dc:subject>
+<dc:subject>Intergenerational relations</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:publisher>National Post</dc:publisher>
+<dc:creator>Mark Kennedy</dc:creator>
+<dc:language>EN</dc:language>
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Residential schools to blame for problems plaguing aboriginals: Truth and Reconciliation Commission</dc:title>
+<dc:description>An exhaustive new report has concluded that modern-day Canada is perpetuating the mistakes that led to the creation of the often-abusive aboriginal residential schools more than a century ago through policies that continue to harm Indigenous people.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://news.nationalpost.com/news/canada/residential-schools-to-blame-for-problems-plaguing-aboriginals-truth-and-reconciliation-commission/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://news.nationalpost.com/news/canada/skeleton-of-aboriginal-girl-buried-180-years-ago-on-alberta-farm-becomes-unlikely-bridge-builder/</identifier>
+<datestamp>2017-04-24T18:28:16Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:subject>Spirituality--Indigenous</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:publisher>National Post</dc:publisher>
+<dc:creator>Otiena Ellwand</dc:creator>
+<dc:language>EN</dc:language>
+<dc:coverage>Alberta</dc:coverage>
+<dc:title>Skeleton of aboriginal girl, buried 180 years ago on Alberta farm, becomes unlikely ‘bridge builder’</dc:title>
+<dc:description>A ceremony was held in October 2015 to re-bury the bones of a young Aboriginal woman found on a farm near Viking, Alberta. The farmer contextualized the experience in terms of the findings of the TRC and the necessity of building bridges between cultures.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://news.nationalpost.com/news/canada/skeleton-of-aboriginal-girl-buried-180-years-ago-on-alberta-farm-becomes-unlikely-bridge-builder/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://news.nationalpost.com/news/canada/the-chief-who-said-no-one-northern-village-rejected-residential-schools-and-built-their-own-instead/</identifier>
+<datestamp>2017-04-24T18:28:16Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:subject>Community organization</dc:subject>
+<dc:subject>Indigenous education</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:publisher>National Post</dc:publisher>
+<dc:creator>Bob Weber</dc:creator>
+<dc:language>EN</dc:language>
+<dc:coverage>Canada</dc:coverage>
+<dc:title>The chief who said no: One Northern village rejected residential schools and built their own instead</dc:title>
+<dc:description>Rather than allow government officials to remove children of the Jean Marie River reserve in the Northwest Territories, chief Louis Norwegian spearheaded the building of a school on the reserve in the early 1950s, the first of its kind in Canada.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://news.nationalpost.com/news/canada/the-chief-who-said-no-one-northern-village-rejected-residential-schools-and-built-their-own-instead/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://news.nationalpost.com/news/canada/where-i-learned-to-fight-and-cheat-and-steal-six-nations-wants-to-save-longest-running-residential-school/</identifier>
+<datestamp>2017-04-24T18:28:16Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:subject>Anglican Church</dc:subject>
+<dc:subject>Community organization</dc:subject>
+<dc:subject>Indigenous children--Institutional care</dc:subject>
+<dc:subject>Indigenous peoples, Treatment of—Canada</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:publisher>National Post</dc:publisher>
+<dc:creator>Ashley Csanady</dc:creator>
+<dc:language>EN</dc:language>
+<dc:coverage>Ontario</dc:coverage>
+<dc:title>‘Where I learned to fight and cheat and steal’: Six Nations wants to save longest-running residential school</dc:title>
+<dc:description>This article describes the former Mohawk Institute on Six Nations territory near Brantford and the community's fight to preserve Canada's longest-running residential school.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://news.nationalpost.com/news/canada/where-i-learned-to-fight-and-cheat-and-steal-six-nations-wants-to-save-longest-running-residential-school/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://noubliepaslesmetis.ca</identifier>
+<datestamp>2017-04-25T18:36:22Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:relation>http://noubliepaslesmetis.ca</dc:relation>
+<dc:coverage>Canada</dc:coverage>
+<dc:title>N'oublie pas les Métis</dc:title>
+<dc:subject>Métis--Residential schools</dc:subject>
+<dc:creator>Fondation autochtone de l’espoir (FAE)</dc:creator>
+<dc:language>FR</dc:language>
+<dc:description>Cette exposition virtuelle, produite par Gregory Scofield pour la Fondation autochtone de l'espoir (FAE), présente l'expérience vécue des enfants Métis dans les pensionnats indiens.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://noubliepaslesmetis.ca</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://nousetionssiloin.ca</identifier>
+<datestamp>2017-04-25T18:36:23Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Nous Étions Si Loin - L'expérience des Inuits dans les pensionnats</dc:title>
+<dc:subject>Inuit--Canada--Residential schools</dc:subject>
+<dc:subject>Residential school survivors</dc:subject>
+<dc:creator>Fondataion autochtone de l'espoir</dc:creator>
+<dc:language>FR</dc:language>
+<dc:description>Exposition virtuelle montée par la Fondation autochtone de l'espoir qui présente les histoires des survivants inuits des pensionnats.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://nousetionssiloin.ca</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://o.canada.com/news/national/at-least-4000-aboriginal-children-died-in-residential-schools-commission-finds</identifier>
+<datestamp>2017-04-24T18:28:16Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:subject>Indigenous children--Institutional care</dc:subject>
+<dc:subject>Indigenous peoples, Treatment of—Canada</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:publisher>canada.com</dc:publisher>
+<dc:creator>Mark Kennedy</dc:creator>
+<dc:language>EN</dc:language>
+<dc:coverage>Canada</dc:coverage>
+<dc:title>At least 4,000 aboriginal children died in residential schools, commission finds</dc:title>
+<dc:description>Estimates on the number of children who died in residential schools is expected to rise beyond the 4,000 already counted by the TRC.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://o.canada.com/news/national/at-least-4000-aboriginal-children-died-in-residential-schools-commission-finds</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://oblatesinthewest.library.ualberta.ca/eng/impact/indianschools.html</identifier>
+<datestamp>2017-04-24T18:28:16Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Alberta</dc:coverage>
+<dc:title>Indian Residential Schools in Alberta</dc:title>
+<dc:subject>Residential schools</dc:subject>
+<dc:creator>Oblates in the West: "The Alberta Story"</dc:creator>
+<dc:description>A list of Indian Residential Schools in Alberta based on information from Catholic and Oblate sources and the websites of the Anglican Church and United Church of Canada.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://oblatesinthewest.library.ualberta.ca/eng/impact/indianschools.html</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://oblatesinthewest.library.ualberta.ca/fr/impact/indianschools.html</identifier>
+<datestamp>2017-04-25T18:36:24Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Alberta</dc:coverage>
+<dc:title>La liste des pensionnats indiens en Alberta</dc:title>
+<dc:subject>Residential schools</dc:subject>
+<dc:creator>Les Oblats dans l'Ouest: "L'histoire de l'Alberta"</dc:creator>
+<dc:language>FR</dc:language>
+<dc:description>Une liste des pensionnats indiens en Alberta à partir d'information provenant de sources catholiques et oblates et des sites Web de l'Église anglicane et l'Église unie du Canada.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://oblatesinthewest.library.ualberta.ca/fr/impact/indianschools.html</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ottawacitizen.com/news/national/high-hopes-for-trudeau-to-act-on-residential-schools-report/</identifier>
+<datestamp>2017-04-24T18:28:16Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:subject>Indigenous peoples--Canada—Government relations</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:publisher>Ottawa Citizen</dc:publisher>
+<dc:creator>Mark Kennedy</dc:creator>
+<dc:language>EN</dc:language>
+<dc:coverage>Canada</dc:coverage>
+<dc:title>'High hopes' for Trudeau to act on residential schools report</dc:title>
+<dc:description>The head of the commission that examined the aboriginal residential schools has “high hopes” that Justin Trudeau’s incoming Liberal government will adopt the dozens of recommendations proposed in the TRC’s final report.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ottawacitizen.com/news/national/high-hopes-for-trudeau-to-act-on-residential-schools-report/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ottawacitizen.com/news/national/truth-and-reconciliation-commission-whats-in-the-final-report/</identifier>
+<datestamp>2017-04-24T18:28:16Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:subject>Indigenous peoples, Treatment of—Canada</dc:subject>
+<dc:subject>Indigenous peoples--Canada—Government relations</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:publisher>Ottawa Citizen</dc:publisher>
+<dc:creator>Ottawa Citizen</dc:creator>
+<dc:language>EN</dc:language>
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Truth and Reconciliation Commission: what's in the final report</dc:title>
+<dc:description>The Truth and Reconciliation Commission's final report has been endorsed by newly elected Prime Minister Justin Trudeau, who has pledged to enact its recommendations.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ottawacitizen.com/news/national/truth-and-reconciliation-commission-whats-in-the-final-report/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ottawacitizen.com/news/politics/truth-seeker-murray-sinclairs-relentless-quest-for-the-truth-about-residential-schools</identifier>
+<datestamp>2017-05-11T15:20:57Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:publisher>Ottawa Citizen</dc:publisher>
+<dc:coverage>Canada</dc:coverage>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:title>Truth Seeker: Murray Sinclair's relentless quest for the facts about residential schools</dc:title>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ottawacitizen.com/news/politics/truth-seeker-murray-sinclairs-relentless-quest-for-the-truth-about-residential-schools</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://ottawacitizen.com/opinion/columnists/op-ed-indigenous-studies-is-central-to-liberal-arts-education-in-canada/</identifier>
+<datestamp>2017-04-24T18:28:16Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:subject>Education</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:publisher>Ottawa Citizen</dc:publisher>
+<dc:creator>Thomas McMorrow, Natalie Oman, and Rachel Ariss</dc:creator>
+<dc:language>EN</dc:language>
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Op-Ed: Indigenous studies is central to liberal arts education in Canada</dc:title>
+<dc:description>The University of Winnipeg and Lakehead University recently announced plans to integrate compulsory indigenous-focused courses across their programs.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://ottawacitizen.com/opinion/columnists/op-ed-indigenous-studies-is-central-to-liberal-arts-education-in-canada/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://presbyterian.ca/2016/09/15/remembering-chanie-wenjack/</identifier>
+<datestamp>2017-04-24T18:28:16Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Remembering Chanie Wenjack</dc:title>
+<dc:subject>Archives</dc:subject>
+<dc:subject>Archives and Indigenous peoples</dc:subject>
+<dc:subject>Indigenous education</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:subject>Presbyterian Church</dc:subject>
+<dc:creator>The Presbyterian Church in Canada</dc:creator>
+<dc:description>The Presbyterian Church in Canada recognises that the story of Chanie Wenjack has an important place in its institutional history. The Presbyterian Church in Canada ran 11 residential schools between 1884 and 1969, including the Cecilia Jeffrey school in Kenora, Ontario.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://presbyterian.ca/2016/09/15/remembering-chanie-wenjack/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://presbyterian.ca/healing/</identifier>
+<datestamp>2017-04-24T18:28:16Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Healing and Reconciliation</dc:title>
+<dc:subject>Apologies</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:subject>Presbyterian Church in Canada</dc:subject>
+<dc:creator>Presbyterian Church in Canada</dc:creator>
+<dc:description>Resources documenting the role of the Presbyterian Church in the TRC process.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://presbyterian.ca/healing/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://projectofheart.ca/</identifier>
+<datestamp>2017-04-24T18:28:16Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:relation>http://projectofheart.ca/</dc:relation>
+<dc:coverage>Canada</dc:coverage>
+<dc:description>Project of Heart is an interactive artistic project that seeks to examine the legacy of the IRS system and commemorate the lives of the thousands of children who died in residential schools. The project was present at the TRC's national events. Certain pages of the website can be toggled to French.</dc:description>
+<dc:subject>Education</dc:subject>
+<dc:subject>Indigenous arts</dc:subject>
+<dc:subject>Intergenerational relations</dc:subject>
+<dc:subject>Personal narratives</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:creator>Project of Heart</dc:creator>
+<dc:title>Project of Heart</dc:title>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://projectofheart.ca/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://projetwampum.com/</identifier>
+<datestamp>2017-05-11T15:20:51Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Quebec</dc:coverage>
+<dc:subject>Intergenerational relations</dc:subject>
+<dc:subject>Residential school survivors</dc:subject>
+<dc:title>Le projet Wampum</dc:title>
+<dc:language>FR</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://projetwampum.com/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://rabble.ca/blogs/bloggers/dennis-gruending/2015/06/truth-and-reconciliation-commission-challenges-canadian-chur/</identifier>
+<datestamp>2017-04-24T18:28:12Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:subject>Anglican Church</dc:subject>
+<dc:subject>Personal narratives</dc:subject>
+<dc:subject>Roman Catholic Church</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:subject>United Church of Canada</dc:subject>
+<dc:subject>Presbyterian Church--Canada</dc:subject>
+<dc:publisher>Rabble.ca</dc:publisher>
+<dc:creator>Dennis Gruending</dc:creator>
+<dc:language>EN</dc:language>
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Truth and Reconciliation commission challenges canadian churches</dc:title>
+<dc:description>An article in Rabble's "Pulpit and Politics" blog that discusses the TRC final report recommendations for Canadian churches.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://rabble.ca/blogs/bloggers/dennis-gruending/2015/06/truth-and-reconciliation-commission-challenges-canadian-chur/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://rabble.ca/blogs/bloggers/kairos-canada/2016/03/unlearning-racism-against-indigenous-peoples-one-generation?utm_content=buffer05fb8&amp;utm_medium=social&amp;utm_source=facebook.com&amp;utm_campaign=buffer</identifier>
+<datestamp>2017-04-24T18:28:16Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:subject>Education</dc:subject>
+<dc:subject>Indigenous education</dc:subject>
+<dc:subject>Racism--Canada</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:publisher>rabble.ca</dc:publisher>
+<dc:creator>Jennifer Henry</dc:creator>
+<dc:language>EN</dc:language>
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Unlearning racism against Indigenous peoples in one generation</dc:title>
+<dc:description>Published 21 March 2016, this article describes the use of the KAIROS blanket exercise to teach participants, especially children, about Indigenous cultures.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://rabble.ca/blogs/bloggers/kairos-canada/2016/03/unlearning-racism-against-indigenous-peoples-one-generation?utm_content=buffer05fb8&amp;utm_medium=social&amp;utm_source=facebook.com&amp;utm_campaign=buffer</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://rabble.ca/news/2015/08/what-fish-have-to-do-truth-and-reconciliation</identifier>
+<datestamp>2017-04-24T18:28:19Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:subject>Indigenous peoples--Canada—Government relations</dc:subject>
+<dc:subject>Traditional practice</dc:subject>
+<dc:publisher>Rabble.ca</dc:publisher>
+<dc:creator>Ken Watts</dc:creator>
+<dc:language>EN</dc:language>
+<dc:coverage>British Columbia</dc:coverage>
+<dc:title>What fish have to do with truth and reconciliation</dc:title>
+<dc:description>Five Nuu-chah-nulth Nations from the west coast of Vancouver Island have sought to negotiate with Fisheries and Oceans Canada (DFO) to implement their Aboriginal rights to fish and sell fish.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://rabble.ca/news/2015/08/what-fish-have-to-do-truth-and-reconciliation</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://reconciliationcanada.ca/</identifier>
+<datestamp>2017-04-24T18:28:19Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Reconciliation Canada</dc:title>
+<dc:subject>Community development</dc:subject>
+<dc:subject>Education</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:creator>Reconciliation Canada</dc:creator>
+<dc:description>Reconciliation Canada engages Canadians in dialogue and transformative experiences in an effort to revitalize the relationships among Indigenous peoples and all Canadians.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://reconciliationcanada.ca/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://returningtospirit.org</identifier>
+<datestamp>2017-04-24T18:28:19Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Returning to Spirit Reconciliation Workshops</dc:title>
+<dc:subject>Education</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:creator>Returning to Spirit</dc:creator>
+<dc:description>Returning to Spirit (RTS) is a non-profit charitable organization that addresses the legacy of residential schools through workshops designed to promote personal empowerment and community leadership.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://returningtospirit.org</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://secretpath.ca</identifier>
+<datestamp>2017-04-24T18:28:19Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Secret Path</dc:title>
+<dc:subject>Arts, Canadian</dc:subject>
+<dc:subject>Indigenous children--North America</dc:subject>
+<dc:subject>Indigenous peoples, Treatment of—Canada</dc:subject>
+<dc:subject>Personal narratives</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:creator>Gord Downie and Jeff Lemire</dc:creator>
+<dc:description>A website for the album and graphic novel, Secret Path, by Canadian musician Gord Downie. The project tells the story of Chanie Wenjack, who died fleeing the Celia Jeffrey Indian Residential School near Kenora, Ontario, in October 1966. Proceeds donated to the Gord Downie Secret Path Fund for Truth and Reconciliation via the National Centre for Truth and Reconciliation.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://secretpath.ca</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://sincmurr.com/</identifier>
+<datestamp>2017-04-24T18:28:19Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Mizana Gheezik</dc:title>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:creator>Justice Murray Sinclair</dc:creator>
+<dc:description>Blog of Justice Murray Sinclair, Chair of the TRC.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://sincmurr.com/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://speakingmytruth.ca</identifier>
+<datestamp>2017-04-24T18:28:19Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Speaking My Truth</dc:title>
+<dc:subject>Education</dc:subject>
+<dc:subject>Indigenous children--Institutional care</dc:subject>
+<dc:subject>Indigenous children--North America</dc:subject>
+<dc:subject>Indigenous peoples, Treatment of—Canada</dc:subject>
+<dc:subject>Residential school survivors</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Traditional knowledge</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:creator>Aboriginal Healing Foundation</dc:creator>
+<dc:description>The website for the Aboriginal Healing Foundation's three-volume series "Truth and Reconciliation," which includes "From Truth to Reconciliation;" "Response, Responsibility, and Renewal;" and "Cultivating Canada."</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://speakingmytruth.ca</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://thecanadianencyclopedia.com/en/article/residential-schools/</identifier>
+<datestamp>2017-04-24T18:28:19Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Residential Schools</dc:title>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:creator>Historica Canada</dc:creator>
+<dc:description>An article on the Historica Canada website that addresses the history of residential schools. Resource also available in French.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://thecanadianencyclopedia.com/en/article/residential-schools/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://thechildrenremembered.ca/</identifier>
+<datestamp>2017-04-24T18:28:19Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>The Children Remembered: Residential School Archive Project</dc:title>
+<dc:subject>Archives</dc:subject>
+<dc:subject>Archives and Indigenous peoples</dc:subject>
+<dc:subject>Education</dc:subject>
+<dc:subject>Indigenous children--Institutional care</dc:subject>
+<dc:subject>Indigenous peoples, Treatment of—Canada</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:subject>United Church of Canada</dc:subject>
+<dc:creator>United Church of Canada Archives</dc:creator>
+<dc:description>The website for the United Church of Canada's The Children Remembered: Residential School Archive Project, which addresses the history of the church’s Indian Residential Schools. The project was intended to be a form of repatriation to First Nations communities and a recognition of the church's responsibility to engage in truth-telling about its role in the residential school system and colonialism.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://thechildrenremembered.ca/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://trc.ca</identifier>
+<datestamp>2017-04-24T18:28:19Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Truth and Reconciliation Commission of Canada</dc:title>
+<dc:subject>Indigenous peoples, Treatment of—Canada</dc:subject>
+<dc:subject>Indigenous peoples--Canada—Government relations</dc:subject>
+<dc:subject>Indigenous peoples--Civil rights--Canada.</dc:subject>
+<dc:subject>Indigenous peoples--Criminal justice system--North America</dc:subject>
+<dc:subject>Legal assistance to Indigenous peoples</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:creator>Truth and Reconciliation Commission of Canada</dc:creator>
+<dc:description>The official website for the Truth and Reconciliation Commission of Canada for the duration of the TRC's mandate. Upon the issue of the TRC's final report the commission's web presence was transferred to the National Centre for Truth and Reconciliation. As such this URL leads to a portal redirecting to the NCTR. Resource also available in French.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://trc.ca</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://umanitoba.ca/cnvr/</identifier>
+<datestamp>2017-04-25T18:36:27Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Université du Manitoba - Centre national pour la vérité et réconciliation</dc:title>
+<dc:subject>Archives</dc:subject>
+<dc:subject>Archives and Indigenous peoples</dc:subject>
+<dc:subject>Education</dc:subject>
+<dc:subject>Personal narratives</dc:subject>
+<dc:subject>Racism--Canada</dc:subject>
+<dc:subject>Residential school survivors</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:creator>Université du Manitoba - Centre national pour la vérité et réconciliation / University of Manitoba - National Centre for Truth and Reconciliation</dc:creator>
+<dc:language>FR</dc:language>
+<dc:description>Le site Web officiel du Centre national pour la vérité et réconciliation (CNVR). Le CNVR était créé afin de préserver le souvenir du régime des pensionnats indiens et son héritage. Depuis 2015, le CNVR était le siège permanent de toutes les déclarations, documents et autres matériaux rassemblés par la Commission de vérité et réconciliation du Canada (CVR). Ressource également disponible en anglais.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://umanitoba.ca/cnvr/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://umanitoba.ca/nctr/</identifier>
+<datestamp>2017-04-24T18:28:18Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>University of Manitoba - National Centre for Truth and Reconciliation</dc:title>
+<dc:subject>Archives</dc:subject>
+<dc:subject>Archives and Indigenous peoples</dc:subject>
+<dc:subject>Education</dc:subject>
+<dc:subject>Personal narratives</dc:subject>
+<dc:subject>Racism--Canada</dc:subject>
+<dc:subject>Residential school survivors</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:creator>University of Manitoba - National Centre for Truth and Reconciliation / Université du Manitoba - Centre national pour la vérité et réconciliation</dc:creator>
+<dc:description>The official web page for the National Centre for Truth and Reconciliation (NCTR). The NCTR was created to preserve the memory of Canada’s Residential School system and legacy. As of 2015, the NCTR has been the permanent home for all statements, documents, and other materials gathered by the Truth and Reconciliation Commission of Canada.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://umanitoba.ca/nctr/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://walkingwithoursisters.ca/</identifier>
+<datestamp>2017-04-24T18:28:18Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Walking Without our Sisters</dc:title>
+<dc:subject>Indigenous arts</dc:subject>
+<dc:subject>Indigenous women</dc:subject>
+<dc:subject>Personal narratives</dc:subject>
+<dc:subject>Residential school survivors</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:creator>Walking Without our Sisters</dc:creator>
+<dc:description>The website for a commemorative art installation for the Missing and Murdered Indigenous Women of Canada and the US. The installation was exhibited as part of the TRC's national events.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://walkingwithoursisters.ca/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://weweresofaraway.ca</identifier>
+<datestamp>2017-04-24T18:28:18Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>We Were So Far Away - The Inuit Experience of Residential Schools</dc:title>
+<dc:subject>Inuit--Canada--Residential schools</dc:subject>
+<dc:subject>Residential school survivors</dc:subject>
+<dc:creator>Legacy of Hope Foundation</dc:creator>
+<dc:description>Virtual exhibit mounted by the Legacy of Hope Foundation that records the stories of Inuit survivors of residential schools. Resource also available in French.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://weweresofaraway.ca</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://wherearethechildren.ca/</identifier>
+<datestamp>2017-04-24T18:28:18Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Where are the Children? Healing the Legacy of the Residential Schools</dc:title>
+<dc:subject>Archives</dc:subject>
+<dc:subject>Archives and Indigenous peoples</dc:subject>
+<dc:subject>Education</dc:subject>
+<dc:subject>Indigenous peoples, Treatment of—Canada</dc:subject>
+<dc:subject>Personal narratives</dc:subject>
+<dc:subject>Residential school survivors</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:creator>Legacy of Hope Foundation</dc:creator>
+<dc:description>Developed in 2001, the goals of this website are: to acknowledge the experiences of, and the impacts and consequences of Canada’s Residential School System on Aboriginal peoples; to create a public and historical record of this period in Canadian history that could be easily accessed by Canadians; and to promote public awareness, understanding and education of the history and legacy of residential schools. This site is a counterpart to a touring exhibition that explores the history and legacy of Canada’s Residential School System.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://wherearethechildren.ca/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://witnessblanket.ca</identifier>
+<datestamp>2017-04-24T18:28:18Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Witness Blanket</dc:title>
+<dc:subject>Indigenous activists</dc:subject>
+<dc:subject>Indigenous arts</dc:subject>
+<dc:subject>Residential school survivors</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Spirituality--Indigenous</dc:subject>
+<dc:subject>Truth and Reconciliation Canada</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:creator>Witness Blanket</dc:creator>
+<dc:description>The website for the Witness Blanket project, which aims to stand as a national monument to recognise the atrocities of the Indian Residential School era, honour the children, and symbolise ongoing reconciliation. Inspired by a woven blanket, the large-scale art installation is comprised of hundreds of items reclaimed from Residential Schools, churches, government buildings and traditional and cultural structures including Friendship Centres, band offices, treatment centres and universities, from across Canada. The project was exhibited at the Truth and Reconciliation Commission's national events.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://witnessblanket.ca</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://www.aadnc-aandc.gc.ca/eng/1100100015576/1100100015577</identifier>
+<datestamp>2017-04-24T18:28:18Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Indian Residential Schools</dc:title>
+<dc:subject>Apologies</dc:subject>
+<dc:subject>Indigenous peoples--Canada—Government relations</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:creator>Indigenous and Northern Affairs Canada</dc:creator>
+<dc:description>AANDC's official website on residential schools. Resource also available in French.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://www.aadnc-aandc.gc.ca/eng/1100100015576/1100100015577</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://www.aadnc-aandc.gc.ca/eng/1100100015594/1100100015595/</identifier>
+<datestamp>2017-04-24T18:28:19Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Common Experience Payment</dc:title>
+<dc:subject>Indigenous peoples--Canada—Government relations</dc:subject>
+<dc:subject>Residential school survivors</dc:subject>
+<dc:creator>Indigenous and Northern Affairs Canada</dc:creator>
+<dc:description>A sub-site of Indigenous and Northern Affairs Canada the CEP, a component of the Indian Residential Schools Settlement Agreement.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://www.aadnc-aandc.gc.ca/eng/1100100015594/1100100015595/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://www.aadnc-aandc.gc.ca/fra/1100100015576/1100100015577</identifier>
+<datestamp>2017-04-25T18:36:27Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Résolution des pensionnats indiens</dc:title>
+<dc:subject>Apologies</dc:subject>
+<dc:subject>Indigenous peoples--Canada—Government relations</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:subject>Truth and Reconciliation Commission of Canada</dc:subject>
+<dc:creator>Affaires autochtones et du Nord Canada</dc:creator>
+<dc:language>FR</dc:language>
+<dc:description>Site Web officiel d'AADNC sur les pensionnats indiens.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://www.aadnc-aandc.gc.ca/fra/1100100015576/1100100015577</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://www.aadnc-aandc.gc.ca/fra/1100100015594/1100100015595/</identifier>
+<datestamp>2017-04-25T18:36:29Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Paiement d'expérience commune</dc:title>
+<dc:subject>Indigenous peoples--Canada—Government relations</dc:subject>
+<dc:subject>Residential school survivors</dc:subject>
+<dc:creator>Affairs autochtones et du Nord Canada</dc:creator>
+<dc:language>FR</dc:language>
+<dc:description>Le Paiement d'expérience commune (PEC) est l'un des volets de la Convention de règlement relative aux pensionnats indiens.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://www.aadnc-aandc.gc.ca/fra/1100100015594/1100100015595/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://www.afn.ca/en/policy-areas/indian-residential-schools</identifier>
+<datestamp>2017-04-24T18:28:19Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Indian Residential Schools</dc:title>
+<dc:subject>Indigenous leadership</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:creator>Assembly of First Nations</dc:creator>
+<dc:description>A sub-page of the Assembly of First Nations on the Indian Residential Schools that includes the AFN's 2016 annual report advocating for the Indian Residential Schools Settlement Agreement. Resource also available in French.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://www.afn.ca/en/policy-areas/indian-residential-schools</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://www.afn.ca/fr/secteurs-de-politique/pensionnats-indiens/</identifier>
+<datestamp>2017-04-25T18:36:29Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Pensionnats indiens</dc:title>
+<dc:subject>Indigenous leadership</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:creator>Assemblée des Premières Nations</dc:creator>
+<dc:language>FR</dc:language>
+<dc:description>Une sous-page de l'Assemblée des Premières Nations sur les pensionnats indiens, qui comprend le rapport annuel de l'APN pour l'année 2016 qui préconise l'entente de règlement relative aux pensionnats indiens. Ressource également disponible en anglais.</dc:description>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://www.afn.ca/fr/secteurs-de-politique/pensionnats-indiens/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<record>
+<header>
+<identifier>http://wayback.archive-it.org/6602/*/http://www.ahf.ca/</identifier>
+<datestamp>2017-04-24T18:28:19Z</datestamp>
+<setSpec>collection:6602</setSpec>
+</header>
+<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:database="http://www.oclc.org/pears/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:coverage>Canada</dc:coverage>
+<dc:title>Aboriginal Healing Foundation</dc:title>
+<dc:subject>Indigenous peoples--Mental health services--North America</dc:subject>
+<dc:subject>Residential schools</dc:subject>
+<dc:creator>Aboriginal Healing Foundation</dc:creator>
+<dc:description>Archived website of the Aboriginal Healing Foundation, which closed on September 30, 2014 after sixteen years of operation.</dc:description>
+<dc:language>EN</dc:language>
+<dc:identifier>http://wayback.archive-it.org/6602/*/http://www.ahf.ca/</dc:identifier>
+</oai_dc:dc>
+</metadata>
+</record>
+<resumptionToken cursor="0" completeListSize="263">100,100,oai_dc,,</resumptionToken>
+</ListRecords>
+</OAI-PMH>

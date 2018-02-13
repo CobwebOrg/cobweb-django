@@ -1,9 +1,13 @@
 import unittest
+from pathlib import Path
+from unittest import mock
+
+import pytest
 from django import test
+from django.conf import settings
 
 from archives.models import Collection, Holding
 from core.models import Organization
-
 from datasources import models
 from datasources.tests.factories import AITPartnerImporterFactory
 
@@ -35,6 +39,31 @@ class AITPartnerImporterTests(test.TestCase):
             self.importer.get_set_identifier('organization'),
             None
         )
+
+
+def fake_get(url, params):
+    verb = params['verb']
+    doc = Path(settings.BASE_DIR + f'/datasources/tests/sample/{verb}.xml').read_text()
+    return doc
+
+
+@pytest.mark.skip
+@pytest.mark.django_db
+@mock.patch('sickle.app.requests.get', fake_get)
+def test_ait_partner_importer():
+    api = AITPartnerImporterFactory()
+    api.harvest()
+
+#
+# # Path('').read_text
+# @pytest.mark.django_db
+# @mock.patch.object('sickle.Sickle')
+# def test_mocked_sickle(mock_get):
+# api = AITPartnerImporterFactory()
+# with pytest.raises(ValueError):
+#     api.harvest()
+# mock_get.assert_called()
+
 
 @unittest.skip("Takes too long, already passed.")
 class LiveArchiveItTests(test.TestCase):

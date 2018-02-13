@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><OAI-PMH xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd" xmlns:ex="http://exslt.org/dates-and-times" xmlns:exslt="http://exslt.org/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.openarchives.org/OAI/2.0/">
+<responseDate>2018-02-12T20:58:14Z</responseDate>
+<request verb="Identify">http://archive-it.org/oai/organizations?verb=Identify</request>
+<Identify>
+<repositoryName>Archive-It Web Partner Url Seed Collections</repositoryName>
+<baseURL>http://archive-it.org/oai/organizations/591</baseURL>
+<protocolVersion>2.0</protocolVersion>
+<adminEmail>archiveit@archive.org</adminEmail>
+<earliestDatestamp>2005-09-22T00:00:00Z</earliestDatestamp>
+<deletedRecord>transient</deletedRecord>
+<granularity>YYYY-MM-DDThh:mm:ssZ</granularity>
+</Identify>
+</OAI-PMH>

@@ -167,8 +167,8 @@ class OAIPMHImporter(Importer):
         api_identify = self.sickle.Identify()
         metadata = dict(api_identify)
 
-        assert ( normalize_url( only_one( metadata.pop('baseURL') ))
-            == normalize_url(self.api.location) )
+        assert (normalize_url(only_one(metadata.pop('baseURL')))
+                == normalize_url(self.api.location))
 
         # For Archive-it it's always
         # "Archive-It Web Partner Url Seed Collections"

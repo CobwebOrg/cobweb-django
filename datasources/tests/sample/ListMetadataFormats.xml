@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><OAI-PMH xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd" xmlns:ex="http://exslt.org/dates-and-times" xmlns:exslt="http://exslt.org/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.openarchives.org/OAI/2.0/">
+<responseDate>2018-02-12T20:58:08Z</responseDate>
+<request verb="ListMetadataFormats">http://archive-it.org/oai/organizations?verb=ListMetadataFormats</request>
+<ListMetadataFormats>
+<metadataFormat xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/">
+<metadataPrefix>oai_dc</metadataPrefix>
+<schema>http://www.openarchives.org/OAI/2.0/oai_dc.xsd</schema>
+<metadataNamespace>http://www.openarchives.org/OAI/2.0/oai_dc/</metadataNamespace>
+</metadataFormat>
+<metadataFormat xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/">
+<metadataPrefix>oai_marc21</metadataPrefix>
+<schema>http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd</schema>
+<metadataNamespace>http://www.loc.gov/MARC21/slim</metadataNamespace>
+</metadataFormat>
+</ListMetadataFormats>
+</OAI-PMH>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><OAI-PMH xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd" xmlns:ex="http://exslt.org/dates-and-times" xmlns:exslt="http://exslt.org/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.openarchives.org/OAI/2.0/">
+<responseDate>2018-02-12T20:58:19Z</responseDate>
+<request verb="ListSets">http://archive-it.org/oai/organizations?verb=ListSets</request>
+<ListSets>
+<set>
+<setSpec>collection</setSpec>
+<setName>collection</setName>
+</set>
+<set>
+<setSpec>collection:6602</setSpec>
+<setName>Truth and Reconciliation Commission (TRC) | Commission de vérité et réconciliation (CVR)</setName>
+</set>
+</ListSets>
+</OAI-PMH>
