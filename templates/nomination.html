@@ -4,16 +4,37 @@
 {% block title %}Cobweb Nomination: {{ object }}{% endblock %}
 
 {% block content %}
-<div id="div_id_project" class="form-group">
-  <h3 name="project" id="id_project">
-    {{nomination.project}}
-  </h3>
-</div>
+
 
 <div id="div_id_resource" class="form-group">
-  <h4 name="resource" id="id_resource" type="url">
-    {% edit_link object user %}{{nomination.resource}}
+  <h4>{% edit_link object user %}
+    {% if nomination.title %}{{nomination.title}}<br />{% endif %}
+    <a href={{nomination.resource}}>{{nomination.resource}}</a>
   </h4>
+</div>
+
+<div class="row">
+  <div class="col-md-7">
+    <div class="form-section">
+      <div class="form-group">
+        <label for="id_project" class="form-control-label  requiredField">
+          Project
+        </label>
+        <div>{{nomination.project}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="formColumn col-md-5">
+    <div class="form-section">
+      <div id="div_id_status" class="form-group">
+        <label for="id_status" class="form-control-label  requiredField">
+          Status
+        </label>
+        <div class="">{{nomination.status}}</div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="form-section">

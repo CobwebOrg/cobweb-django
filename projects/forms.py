@@ -47,7 +47,7 @@ class ProjectForm(forms.ModelForm):
                 url='keyword_autocomplete',
                 attrs={'data-allow-clear': 'false'},
             ),
-            'nomination_policy': forms.RadioSelect
+            'nomination_policy': forms.RadioSelect,
         }
 
     def __init__(self, *args, **kwargs):
@@ -99,6 +99,7 @@ class NominationForm(forms.ModelForm):
         model = Nomination
         exclude = []
         widgets = {
+            'title': forms.TextInput,
             'keywords': autocomplete.ModelSelect2Multiple(
                 url='keyword_autocomplete'
             ),
@@ -108,13 +109,16 @@ class NominationForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
-            Field('project'),
-            Field('resource'),
+                Field('title', template='metadata_field.html'),
+                Field('resource', template='metadata_field.html'),
+            Row(
+                Column(FormSection(Field('project')), css_class='col-md-7'),
+                Column(FormSection(Field('status')), css_class='col-md-5'),
+            ),
             FormSection(
                 Field('description', template='metadata_field.html'),
                 Field('keywords', template='metadata_field.html'),
             ),
-            FormSection(Field('metadata', template='metadata_field.html')),
             FormActions(
                 CancelButton,
                 Submit('submit', 'Submit'),

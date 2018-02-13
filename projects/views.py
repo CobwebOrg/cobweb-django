@@ -160,24 +160,7 @@ class ClaimFormViewMixin(UserPassesTestMixin, RevisionMixin):
 class ClaimCreateView(ClaimFormViewMixin, CreateView):
 
     def get_initial(self):
-        return {
-            'nomination': self.kwargs['nomination_pk'],
-            'metadata': {
-                'description': [],
-                'keywords': [],
-                'scope': [],
-                'start_date': [],
-                'end_date': [],
-                'frequency': [],
-                'max_links': [],
-                'host_limit': [],
-                'time_limit': [],
-                'document_limit': [],
-                'data_limit': [],
-                'robot_exclusion_override': [],
-                'capture_software': [],
-            }
-        }
+        return {'nomination': self.kwargs['nomination_pk']}
 
     def get_form(self, *args, **kwargs):
         form = super().get_form(*args, **kwargs)

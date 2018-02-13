@@ -3,7 +3,7 @@ from django.db import models
 from django.urls import reverse
 
 from cobweb import settings
-from metadata.models import CobwebMetadataMixin
+from metadata.models import CobwebMetadataMixin, Keyword
 
 
 @reversion.register()
@@ -77,7 +77,8 @@ class Project(CobwebMetadataMixin, models.Model):
 
 
 @reversion.register()
-class Nomination(CobwebMetadataMixin, models.Model):
+class Nomination(models.Model):
+    title = models.TextField(null=True, blank=True)
     resource = models.ForeignKey(
         'webresources.Resource',
         on_delete=models.PROTECT,
@@ -86,7 +87,21 @@ class Nomination(CobwebMetadataMixin, models.Model):
     project = models.ForeignKey(Project, related_name='nominations',
                                 on_delete=models.PROTECT)
 
+    description = models.TextField('Description', null=True, blank=True)
+    keywords = models.ManyToManyField(Keyword, blank=True)
+
+    # descriptors =
+    # language =
+
+    # mutability =
+
+    status = models.CharField(max_length=11, default='Unclaimed', choices=[
+        (x, x) for x in ('Rejected', 'Unclaimed', 'Underclaimed', 'Claimed')])
     nominated_by = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
+
+    @property
+    def name(self) -> str:
+        return self.title or self.resource.url
 
     class Meta:
         unique_together = ('resource', 'project')

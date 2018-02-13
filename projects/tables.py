@@ -24,7 +24,7 @@ class ProjectTable(django_tables2.Table):
 class NominationTable(django_tables2.Table):
     """django_tables2.Table object for lists of nominations."""
 
-    resource = django_tables2.LinkColumn()
+    name = django_tables2.LinkColumn(default=str)
     keywords = django_tables2.TemplateColumn(
         """{% load badge from cobweb_look %}
         <small>

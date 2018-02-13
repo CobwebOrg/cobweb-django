@@ -1,6 +1,7 @@
+import hypothesis
+import pytest
 from django.db.utils import IntegrityError
 from django.test import TestCase
-import pytest
 
 from archives.tests.factories import CollectionFactory
 from projects.models import Project, Nomination, Claim
@@ -34,6 +35,15 @@ class NominationModelTests(TestCase):
     def test_str(self):
         """Tests that str(object) always returns a str."""
         self.assertIsInstance(str(self.test_instance), str)
+
+    @hypothesis.given(hypothesis.strategies.text(alphabet=hypothesis.strategies.characters(min_codepoint=1),
+                                                 min_size=1, average_size=15))
+    def test_name(self, title):
+        """Nomination.name returns title if the nomination has one, otherwise url."""
+        nomination = NominationFactory(title=None)
+        assert nomination.name == nomination.resource.url and nomination.name[:4] == 'http'
+        nomination.title = title
+        assert nomination.name == title
 
 
 @pytest.mark.django_db
