@@ -1,15 +1,15 @@
 """Tests for models in the cobweb-django app "archives": Collection, Holding."""
 
 import hypothesis
+from hypothesis.extra.django import TestCase
 import pytest
-
-from core.tests.factories import UserFactory
 
 from archives.tests.factories import CollectionFactory, HoldingFactory
 from archives.models import Collection, Holding
+from core.tests.factories import UserFactory
 
 
-class TestCollectionModels(hypothesis.extra.django.TestCase):
+class TestCollectionModels(TestCase):
     """Tests for archives.models.Collection."""
 
     @hypothesis.given(hypothesis.strategies.builds(CollectionFactory))
@@ -68,7 +68,7 @@ class TestCollectionModels(hypothesis.extra.django.TestCase):
         self.assertIsInstance(str(self.test_instance), str)
 
 
-class HoldingModelTests(hypothesis.extra.django.TestCase):
+class HoldingModelTests(TestCase):
     """Tests for archives.models.Holding."""
 
     @hypothesis.given(hypothesis.strategies.builds(HoldingFactory))
