@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load badge icon claim_button edit_link from cobweb_look %}
+{% load render_table from django_tables2 %}
 
 {% block title %}Cobweb Nomination: {{ object }}{% endblock %}
 
@@ -59,5 +60,6 @@
 </div>
 
 {% claim_button object user %}<h5>Claims</h5>
+{% render_table table %}
 
 {% endblock %}

@@ -1,6 +1,6 @@
 import django_tables2
 
-from projects.models import Project, Nomination
+from projects.models import Project, Nomination, Claim
 
 
 class ProjectTable(django_tables2.Table):
@@ -24,7 +24,7 @@ class ProjectTable(django_tables2.Table):
 class NominationTable(django_tables2.Table):
     """django_tables2.Table object for lists of nominations."""
 
-    name = django_tables2.LinkColumn(default=str)
+    name = django_tables2.LinkColumn()
     keywords = django_tables2.TemplateColumn(
         """{% load badge from cobweb_look %}
         <small>
@@ -47,3 +47,31 @@ class NominationTable(django_tables2.Table):
         fields = []
         # attrs = {'class': 'table table-hover'}
         empty_text = "No nominations."
+
+
+class ClaimTable(django_tables2.Table):
+    """django_tables2.Table object for lists of claims."""
+
+    collection = django_tables2.LinkColumn()
+    # keywords = django_tables2.TemplateColumn(
+    #     """{% load badge from cobweb_look %}
+    #     <small>
+    #         {% for keyword in record.keywords.all %}
+    #             {% badge keyword %}
+    #         {% endfor %}
+    #     </small>
+    #     """, default='', orderable=False
+    # )
+    # claims = django_tables2.TemplateColumn(
+    #     """{% load nomination_count_badge from cobweb_look %} –
+    #     {% nomination_count_badge record %}
+    #     <a href="{% url 'claim_create' nomination_pk=record.pk %}">[claim]</a>
+    #     """,
+    # )
+
+    class Meta:
+        model = Claim
+        show_header = False
+        fields = []
+        # attrs = {'class': 'table table-hover'}
+        empty_text = "No Claims."

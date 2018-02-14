@@ -280,7 +280,7 @@ class ProjectCreateViewTests(TestCase):
 
     def test_user_creates_project(self):
         """...
-        Should autmatically set: User"""
+        Should autmatically set: administrators"""
         pass
 
 
@@ -345,17 +345,3 @@ class ProjectUpdateViewTests(TestCase):
         }
         self.assertRedirects(self.client.post(self.url, project_data),
                              f'/accounts/login/?next={self.url}')
-
-
-class NominationCreateViewTests(TestCase):
-
-    def setUp(self):
-        pass
-
-    def test_anonymous_cannot_nominate_to_restricted_project(self):
-        pass
-
-    def test_user_creates_project(self):
-        """...
-        Should autmatically set: User"""
-        pass

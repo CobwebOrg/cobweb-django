@@ -29,7 +29,7 @@ def as_link(item):
     return format_html(
         '<a href="{url}">{item_name}</a>',
         item_name=item,
-        url='/'  # item.get_absolute_url()
+        url=item.get_absolute_url()
     )
 
 
@@ -41,7 +41,7 @@ def count_badge(queryset):
 
 @register.simple_tag
 def claim_button(nomination, user):
-    if user.collections_administered.count() > 0:
+    if hasattr(user, 'collections_administered') and user.collections_administered.count() > 0:
         return format_html(
             '<a href="{}" class="btn btn-primary float-right">Claim</a>',
             reverse('claim_create', kwargs={'nomination_pk': nomination.pk}),

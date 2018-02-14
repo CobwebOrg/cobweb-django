@@ -2,13 +2,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse
 from django.views.generic import DetailView, CreateView, UpdateView
 import django_tables2
-from django_tables2.utils import Accessor
 from reversion.views import RevisionMixin
 
 from webresources.models import Resource
 
 from projects import models, forms
-from projects.tables import ProjectTable, NominationTable
+from projects.tables import ProjectTable, NominationTable, ClaimTable
 
 
 class ProjectIndexView(django_tables2.SingleTableView):
@@ -66,10 +65,14 @@ class ProjectUpdateView(UserPassesTestMixin, RevisionMixin, UpdateView):
         return self.get_object().is_admin(self.request.user)
 
 
-class NominationDetailView(DetailView):
+class NominationDetailView(django_tables2.SingleTableMixin, DetailView):
     model = models.Nomination
     template_name = 'nomination.html'
     section = 'nomination'
+    table_class = ClaimTable
+
+    def get_table_data(self):
+        return self.object.claims.all()
 
 
 class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
