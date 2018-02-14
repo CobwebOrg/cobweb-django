@@ -44,8 +44,10 @@ class Collection(ModelValidationMixin, CobwebMetadataMixin, models.Model):
 
     def is_admin(self, user: User) -> bool:
         """Check whether *user* is in collection.administrators."""
-        return (user in self.administrators.all()
-                or self.administrators.all().count() == 0)
+        return user.is_authenticated and (
+            user in self.administrators.all()
+            or self.administrators.all().count() == 0
+        )
 
     def __str__(self) -> str:
         """Get user-readable string representation of collection."""

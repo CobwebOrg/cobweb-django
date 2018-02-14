@@ -2,6 +2,7 @@
 
 import hypothesis
 from hypothesis.extra.django import TestCase
+from django.contrib.auth.models import AnonymousUser
 import pytest
 
 from archives.tests.factories import CollectionFactory, HoldingFactory
@@ -41,6 +42,8 @@ class TestCollectionModels(TestCase):
     def test_is_admin(self):
         """is_admin() returns true if and only if user is collection administrator."""
         collection = CollectionFactory()
+        assert collection.is_admin(AnonymousUser()) is False
+
         user = UserFactory()
         assert collection.is_admin(user) is False
 
@@ -55,6 +58,8 @@ class TestCollectionModels(TestCase):
         Tests an interim behavior that should be eliminated before production.
         """
         collection = CollectionFactory()
+        assert collection.is_admin(AnonymousUser()) is False
+
         user = UserFactory()
         assert collection.is_admin(user) is True
 
