@@ -66,12 +66,15 @@ urlpatterns = [
         name='nomination_update'),
 
     # Claim
+    path('claim/<int:pk>',
+         projects.views.ClaimDetailView.as_view(),
+         name='claim_detail'),
     path('nomination/<int:nomination_pk>/claim',
          projects.views.ClaimCreateView.as_view(),
          name='claim_create'),
-    path('claim/<int:pk>',
-        projects.views.ClaimUpdateView.as_view(),
-        name='claim_update'),
+    path('claim/<int:pk>/edit',
+         projects.views.ClaimUpdateView.as_view(),
+         name='claim_update'),
 
     # Keyword
     url(r'^Keyword/(?P<pk>\d+)/$',

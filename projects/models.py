@@ -1,4 +1,5 @@
 import reversion
+from django.contrib.auth.models import AbstractBaseUser
 from django.db import models
 from django.urls import reverse
 
@@ -136,13 +137,19 @@ class Claim(models.Model):
     keywords = models.ManyToManyField(Keyword, blank=True)
 
     class Meta:
-       unique_together = ('nomination', 'collection')
+        unique_together = ('nomination', 'collection')
 
     def __str__(self):
         return f'{self.nomination} – Collection {self.collection}'
 
     def get_absolute_url(self):
+        return reverse('claim_detail', kwargs={'pk': self.pk})
+
+    def get_edit_url(self):
         return reverse('claim_update', kwargs={'pk': self.pk})
 
     def get_resource_set(self):
-        return self.collection
+        return self.nomination.project
+
+    def is_admin(self, user: AbstractBaseUser) -> bool:
+        return self.nomination.is_admin(user) or self.collection.is_admin(user)

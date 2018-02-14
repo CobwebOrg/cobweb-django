@@ -1,9 +1,12 @@
 import hypothesis
+from hypothesis import strategies as st
 import pytest
+from django.contrib.auth.models import AnonymousUser
 from django.db.utils import IntegrityError
 from django.test import TestCase
 
 from archives.tests.factories import CollectionFactory
+from core.tests.factories import UserFactory
 from projects.models import Project, Nomination, Claim
 from projects.tests.factories import ProjectFactory, NominationFactory, ClaimFactory
 
@@ -20,8 +23,20 @@ class ProjectModelTests(TestCase):
         """Tests that str(object) always returns a str."""
         self.assertIsInstance(str(self.test_instance), str)
 
-    def test_is_nominator_function(self):
-        pass
+    def test_is_admin(self):
+        assert self.test_instance.is_admin(AnonymousUser()) is False
+        user = UserFactory()
+        assert self.test_instance.is_admin(user) is False
+        self.test_instance.administrators.add(user)
+        assert self.test_instance.is_admin(user) is True
+
+    def test_is_nominator(self):
+        # TODO: more complicated logic involving nomination_policy
+        assert self.test_instance.is_nominator(AnonymousUser()) is False
+        user = UserFactory()
+        # assert self.test_instance.is_nominator(user) is False
+        self.test_instance.nominators.add(user)
+        assert self.test_instance.is_nominator(user) is True
 
 
 class NominationModelTests(TestCase):
@@ -70,7 +85,26 @@ class TestClaimModel:
         assert isinstance(str(NominationFactory), str)
 
     def test_Claim_get_resource_set(self):
-        """.get_resource_set() should return a collection object."""
+        """.get_resource_set() should return a Project object."""
 
-        collection = CollectionFactory()
-        assert ClaimFactory(collection=collection).get_resource_set() == collection
+        project = ProjectFactory()
+        nomination = NominationFactory(project=project)
+        assert ClaimFactory(nomination=nomination).get_resource_set() == project
+
+    def test_is_admin(self):
+        # TODO: complicated logic -> vary project nomination policy &c
+        claim = ClaimFactory()
+        assert claim.is_admin(AnonymousUser()) is False
+
+        user = UserFactory()
+        # assert claim.is_admin(user) is True
+
+        claim.nomination.project.administrators.add(user)
+        assert claim.is_admin(user) is True
+
+        claim.nomination.project.administrators.remove(user)
+        claim.collection.administrators.add(user)
+        assert claim.is_admin(user) is True
+
+        claim.nomination.project.administrators.add(user)
+        assert claim.is_admin(user) is True

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load badge icon claim_button edit_link from cobweb_look %}
+{% load render_table from django_tables2 %}
+
+{% block title %}Cobweb: {{ claim }}{% endblock %}
+
+{% block content %}
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-group">
+      <label class="form-control-label  requiredField">
+        Project
+      </label>
+      <div>{{claim.nomination.project}}</div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <h4>{% edit_link claim user %}{{claim.nomination.name}}</h4>
+  </div>
+</div>
+
+<div class="row">
+  <div class="formColumn col-md-12">
+    <div class="form-section">
+      <div id="div_id_collection" class="form-group">
+        <label for="id_collection" class="form-control-label  requiredField">
+          Collection
+        </label>
+        <div class="">{{claim.collection}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="form-section">
+  <div id="div_id_description" class="row form-group ">
+    <label for="id_description" class="col-md-2 form-control-label ">Description</label>
+    <div class="col-md ">{{claim.description | default:"[None]"}}</div>
+  </div>
+  <div id="div_id_keywords" class="row form-group ">
+    <label for="id_keywords" class="col-md-2 form-control-label ">Keywords</label>
+    <div class="col-md ">{% for keyword in claim.keywords.all %}{% badge keyword %}{% empty %}[None]{% endfor %}</div>
+  </div>
+</div>
+
+{% endblock %}

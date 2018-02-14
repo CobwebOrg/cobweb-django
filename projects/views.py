@@ -143,6 +143,12 @@ class NominationUpdateView(UserPassesTestMixin, RevisionMixin, UpdateView):
         return self.get_object().project.is_nominator(self.request.user)
 
 
+class ClaimDetailView(DetailView):
+    model = models.Claim
+    template_name = 'projects/claim.html'
+    section = 'claim'
+
+
 class ClaimFormViewMixin(UserPassesTestMixin, RevisionMixin):
     model = models.Claim
     template_name = 'generic_form.html'
