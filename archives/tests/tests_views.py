@@ -54,7 +54,6 @@ class CollectionDetailViewTests(TestCase):
     def test_absolute_url_method(self):
         self.assertTrue(callable(self.test_instance.get_absolute_url))
 
-    @pytest.mark.xfail(strict=True)
     def test_included_fields(self):
         for field in ('title', 'description'):
             self.assertContains(
