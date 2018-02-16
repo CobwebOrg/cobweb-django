@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+  solr:
+    image: solr:6
+    volumes:
+      - solr_data:/opt/solr/server/solr/mycores
+    entrypoint:
+      - docker-entrypoint.sh
+      - solr-precreate
+      - cobweb
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 2G
+    networks:
+      - cobwebnet
+  db:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - cobwebnet
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "1"
+          memory: 2G
+  web:
+    image: andrewwallace/cobweb:latest
+    volumes:
+      - web_usr_local:/usr/local
+      - solr_data:/solr_data
+    ports:
+      - "80:8000"
+    depends_on:
+      - db
+      - solr
+    working_dir: /code
+    environment:
+      DEBUG: 'true'
+    command: ['bash', '/code/start-production.sh']
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 500MB
+    networks:
+      - cobwebnet
+volumes:
+  postgres_data:
+  solr_data:
+  web_usr_local:
+networks:
+  cobwebnet:
