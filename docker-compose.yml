@@ -15,11 +15,6 @@ services:
     image: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-        test: ['CMD', 'psql', '-h', 'db', '-U', 'postgres', '-c', '\q']
-        interval: 30s
-        timeout: 10s
-        retries: 5
   web:
     image: python:3.6
     volumes:
