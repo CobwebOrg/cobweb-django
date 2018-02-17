@@ -1,6 +1,7 @@
 import reversion
 from django.contrib.auth.models import AbstractBaseUser
 from django.db import models
+from django.db.models.query import QuerySet
 from django.urls import reverse
 
 from cobweb import settings
@@ -45,7 +46,7 @@ class Project(CobwebMetadataMixin, models.Model):
     def some_nominations(self):
         return self.nominations.all().order_by('-id')[:20]
 
-    def __str__(self):
+    def __str__(self) -> str:
         """
         Return a string representation of project.
 
@@ -53,19 +54,19 @@ class Project(CobwebMetadataMixin, models.Model):
         """
         return self.title or 'Project {}'.format(self.pk)
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
         return reverse('project_detail', kwargs={'pk': self.pk})
 
-    def get_add_nomination_url(self):
+    def get_add_nomination_url(self) -> str:
         return reverse('nominate', kwargs={'project_id': self.pk})
 
-    def get_edit_url(self):
+    def get_edit_url(self) -> str:
         return reverse('project_update', kwargs={'pk': self.pk})
 
-    def is_admin(self, user):
+    def is_admin(self, user: AbstractBaseUser) -> bool:
         return user in self.administrators.all()
 
-    def is_nominator(self, user):
+    def is_nominator(self, user: AbstractBaseUser) -> bool:
         return (
             user not in self.nominator_blacklist.all()
             and (
@@ -107,16 +108,16 @@ class Nomination(models.Model):
     class Meta:
         unique_together = ('resource', 'project')
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
         return reverse('nomination_detail', kwargs={'pk': self.pk})
 
-    def get_edit_url(self):
+    def get_edit_url(self) -> str:
         return reverse('nomination_update', kwargs={'pk': self.pk})
 
-    def get_resource_set(self):
+    def get_resource_set(self) -> QuerySet:
         return self.project
 
-    def is_admin(self, user):
+    def is_admin(self, user: AbstractBaseUser) -> bool:
         return self.project.is_nominator(user)
 
     def __str__(self):
@@ -139,16 +140,16 @@ class Claim(models.Model):
     class Meta:
         unique_together = ('nomination', 'collection')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'{self.nomination} – Collection {self.collection}'
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
         return reverse('claim_detail', kwargs={'pk': self.pk})
 
-    def get_edit_url(self):
+    def get_edit_url(self) -> str:
         return reverse('claim_update', kwargs={'pk': self.pk})
 
-    def get_resource_set(self):
+    def get_resource_set(self) -> QuerySet:
         return self.nomination.project
 
     def is_admin(self, user: AbstractBaseUser) -> bool:

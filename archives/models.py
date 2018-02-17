@@ -1,7 +1,6 @@
-import typing
-
 import reversion
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AbstractBaseUser
 from django.db import models
 from django.urls import reverse
 
@@ -9,12 +8,12 @@ from metadata.models import CobwebMetadataMixin
 from webresources.models import NormalizedURLField
 
 
-User = get_user_model()
 class ModelValidationMixin(object):
     """Django currently doesn't force validation on the model level
     for compatibility reasons. We enforce here, that on each save,
     a full valdation run will be done the for model instance"""
-    def save(self, *args, **kwargs):
+
+    def save(self, *args, **kwargs) -> None:
         self.full_clean()
         super().save(*args, **kwargs)
 
@@ -23,7 +22,7 @@ class Collection(ModelValidationMixin, CobwebMetadataMixin, models.Model):
     title = models.TextField(null=True, blank=True)
 
     administrators = models.ManyToManyField(
-        User, blank=True,
+        get_user_model(), blank=True,
         related_name='collections_administered',
     )
 
@@ -42,7 +41,7 @@ class Collection(ModelValidationMixin, CobwebMetadataMixin, models.Model):
         """Return the edit url for collection."""
         return reverse('archives:collection_update', kwargs={'pk': self.pk})
 
-    def is_admin(self, user: User) -> bool:
+    def is_admin(self, user: AbstractBaseUser) -> bool:
         """Check whether *user* is in collection.administrators."""
         return user.is_authenticated and (
             user in self.administrators.all()

@@ -20,7 +20,7 @@ class User(AbstractUser):
     description = models.TextField('Description', null=True, blank=True)
     deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return (
             self.get_full_name() or self.username or 'User {}'.format(self.pk)
         )
@@ -48,10 +48,10 @@ class User(AbstractUser):
         #     )
         # )
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
         return reverse('user_detail', kwargs={'pk': self.pk})
 
-    def get_edit_url(self):
+    def get_edit_url(self) -> str:
         return reverse('admin:core_user_change', args=[self.pk])
         # return reverse('', kwargs={'object_id': self.pk})
 
@@ -98,7 +98,7 @@ class Organization(models.Model):
         null=True, blank=True, unique=True, editable=False
     )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return (
             self.name or self.identifier or 'Organization {}'.format(self.pk)
         )

@@ -15,7 +15,7 @@ class Keyword(models.Model):
 
     name = models.CharField(max_length=200, unique=True, db_index=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
         """Return keyword as string."""
         return self.name
 
