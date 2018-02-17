@@ -25,29 +25,6 @@ class User(AbstractUser):
             self.get_full_name() or self.username or 'User {}'.format(self.pk)
         )
 
-    def get_projects_and_collections(self, to_nominate=True):
-        # Performance will be awful - gotta re-implement w/ DB query
-        return [project for project in Project.objects.all()
-                if project.is_nominator(self)]
-
-        # open_noms = Q(nomination_policy__exact='Anonymous')
-        # if self.is_authenticated:
-        #     open_noms = open_noms | Q(nomination_policy__exact='Open')
-        # restricted_noms = Q(nomination_policy__exact='Restricted')
-
-        # is_admin = Q(administrators__contains=self)
-        # is_nom = Q(nominators__contains=self)
-        # not_blacklisted = Q(blacklisted_nominators__notcontains=self)
-
-        # return Project.objects.filter(
-        #     is_admin | (
-        #         not_blacklisted & (
-        #             open_noms
-        #             | (restricted_noms & is_nom)
-        #         )
-        #     )
-        # )
-
     def get_absolute_url(self) -> str:
         return reverse('user_detail', kwargs={'pk': self.pk})
 

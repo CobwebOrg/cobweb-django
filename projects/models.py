@@ -43,9 +43,6 @@ class Project(CobwebMetadataMixin, models.Model):
         choices=[(x, x) for x in STATUS]
     )
 
-    def some_nominations(self):
-        return self.nominations.all().order_by('-id')[:20]
-
     def __str__(self) -> str:
         """
         Return a string representation of project.

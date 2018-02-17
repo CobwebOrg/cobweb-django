@@ -50,27 +50,6 @@ def claim_button(nomination, user):
         return ''
 
 
-@register.simple_tag
-def cobweb_site_section(item):
-    try:
-        section = {
-            Project: 'Project',
-            Nomination: 'Project',
-            Claim: 'Project',
-            Collection: 'Collection',
-            Holding: 'Collection',
-            Resource: 'Resource'
-        }[item]
-    except KeyError:
-        try:
-            section = model_name(item).title_case()
-        except AttributeError:
-            section = item
-    print(f'###{section}###')
-
-    return section
-
-
 @register.inclusion_tag('edit_link.html')
 def edit_link(item, user):
     if item.is_admin(user):
@@ -108,6 +87,7 @@ def icon(item):
         format_html('<span title="{}" class="fas {}"></span>', *format_args)
     )
 
+
 @register.inclusion_tag('core/metadata_card.html')
 def metadata_card(item, **kwargs):
     kwargs['item'] = item
@@ -120,19 +100,6 @@ def badge(item):
         'icon_name': item.__class__.__name__,
         'item': item
      }
-
-
-@register.inclusion_tag('resource_count_badge.html')
-def resource_count_badge(item):
-    assert type(item) is Resource
-    nominations = item.nominations.count()
-    n_unclaimed = item.nominations.filter(claims=None).count()
-    holdings = item.holdings.count()
-    return {
-        'claimed': nominations-n_unclaimed,
-        'unclaimed': n_unclaimed,
-        'holdings': holdings,
-    }
 
 
 @register.inclusion_tag('project_count_badge.html')
@@ -155,11 +122,6 @@ def nomination_count_badge(item):
     assert type(item) is Nomination
     nclaims = item.claims.count()
     return {'nclaims': nclaims}
-
-
-@register.filter
-def resourceset_model_name(item):
-    return item.get_resource_set()._meta.verbose_name
 
 
 @register.inclusion_tag('searchbar.html')
