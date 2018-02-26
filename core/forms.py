@@ -1,35 +1,27 @@
 from crispy_forms.helper import FormHelper
-from crispy_forms import layout
-from django.forms import EmailField
-from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 
-from projects.forms import CancelButton
+from core.layout import Layout, CancelButton, Submit, Field, FormActions
+from core.models import User
 
 
 class UserForm(UserCreationForm):
 
-    email = EmailField(required=True)
-    # first_name
-    # last_name
+    class Meta:
+        model = User
+        fields = ('username',)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-        self.helper.add_input(
-            layout.Layout(
+        self.helper.layout = Layout(
+            Field('username'),
+            Field('password1'),
+            Field('password2'),
+
+            FormActions(
                 CancelButton,
-                layout.Submit('submit', 'Submit')
-            )
+                Submit('submit', 'Submit'),
+                css_class='float-right'
+            ),
         )
-
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.email = self.cleaned_data["email"]
-        if commit:
-            user.save()
-        return user
-
-    class Meta:
-        model = get_user_model()
-        fields = ("username", "email", "password1", "password2")
