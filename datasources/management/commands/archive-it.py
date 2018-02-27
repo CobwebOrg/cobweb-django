@@ -1,23 +1,22 @@
 from django.core.management.base import BaseCommand
+from django.db.models import Q
+from django.utils import timezone
 import random
 
-from datasources import models
+from datasources.models import APIEndpoint
 
 
 class Command(BaseCommand):
     help = 'Tells each APIEndpoint instance to harvest data.'
 
     def handle(self, *args, **kwargs):
-        archiveit = models.APIEndpoint.get_archiveit_root()
-        if models.APIEndpoint.objects.all().count() <= 1:
-            archiveit.harvest()
+        cutoff_datetime = timezone.now()
 
-        print("picking a random APIEndpoint...")
-        api_endpoints = [api for api in models.APIEndpoint.objects.all()
-                         if api != archiveit]
+        APIEndpoint.get_archiveit_root().harvest()
 
-        random.choice(api_endpoints).harvest()
-
-        # for api in models.APIEndpoint.objects.all():
-        #     print("Trying {} API at {}".format(api.organization, api))
-        #     api.harvest()
+        for api in APIEndpoint.objects.filter(Q(last_updated__lt=cutoff_datetime)
+                                              | Q(last_updated=None)):
+            try:
+                api.harvest()
+            except Exception as ex:
+                pass

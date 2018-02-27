@@ -141,7 +141,8 @@ HAYSTACK_CONNECTIONS = {
         'ADMIN_URL': 'http://solr:8983/solr/admin/cores',
     },
 }
-HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+# HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
