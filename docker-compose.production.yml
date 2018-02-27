@@ -51,6 +51,28 @@ services:
           memory: 500MB
     networks:
       - cobwebnet
+  worker:
+    image: andrewwallace/cobweb:latest
+    volumes:
+      - web_usr_local:/usr/local
+      - solr_data:/solr_data
+    depends_on:
+      - db
+      - solr
+    working_dir: /code
+    environment:
+      DEBUG: 'true'
+    command: ['bash', '/code/start-worker.sh']
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 500MB
+      restart_policy:
+        condition: none
+    networks:
+      - cobwebnet
 volumes:
   postgres_data:
   solr_data:
