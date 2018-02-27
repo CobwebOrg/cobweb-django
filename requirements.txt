@@ -10,7 +10,7 @@ git+https://github.com/mpauly/django-haystack
 ipython
 pysolr
 pyuca
-Sickle
+git+https://github.com/andrewbenedictwallace/sickle.git
 surt
 whitenoise
 
