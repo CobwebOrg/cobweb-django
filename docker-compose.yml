@@ -32,6 +32,10 @@ services:
     stdin_open: true
     tty: true
     command: ['bash', '/code/start-development.sh']
+  chrome:
+    ports:
+      - "4444:4444"
+    image: selenium/standalone-chrome
 volumes:
   postgres_data:
   solr_data:
