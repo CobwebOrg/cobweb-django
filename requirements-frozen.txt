@@ -4,6 +4,7 @@ chardet==3.0.4
 coverage==4.5.1
 decorator==4.2.1
 Django==2.0.2
+django-argonauts==1.2.0
 django-autocomplete-light==3.2.10
 django-crispy-forms==1.7.0
 django-debug-toolbar==1.9.1
@@ -33,13 +34,19 @@ py==1.5.2
 Pygments==2.2.0
 pysolr==3.7.0
 pytest==3.4.1
+pytest-base-url==1.4.1
 pytest-cov==2.5.1
 pytest-django==3.1.2
+pytest-html==1.16.1
+pytest-metadata==1.6.0
+pytest-selenium==1.11.4
+pytest-variables==1.7.1
 python-dateutil==2.6.1
 pytz==2018.3
 pyuca==1.2
 requests==2.18.4
 requests-file==1.4.3
+selenium==3.10.0
 Sickle==0.6.2
 simplegeneric==0.8.1
 six==1.11.0
