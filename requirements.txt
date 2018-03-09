@@ -6,7 +6,7 @@ django-crispy-forms~=1.7.0
 django-reversion
 django-webpack-loader
 django_tables2
-git+https://github.com/mpauly/django-haystack
+django-haystack~=2.8
 ipython
 pysolr
 pyuca
