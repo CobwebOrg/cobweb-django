@@ -16,12 +16,16 @@ whitenoise
 
 uWSGI
 
-coverage
 pytest
-pytest-cov
-pytest-django
-hypothesis[django]
+
+coverage
 django-debug-toolbar
 django-extensions
 factory-boy
+hypothesis[django]
 pdbpp
+pytest-cov
+pytest-django
+
+pytest-splinter
+pytest-bdd

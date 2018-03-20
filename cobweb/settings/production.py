@@ -57,7 +57,7 @@ ALLOWED_HOSTS = [
     'cobwebarchive.org',
     'ec2-54-149-185-238.us-west-2.compute.amazonaws.com', '35.166.33.245',
     '35.165.214.42',
-    'localhost', 'testserver', '127.0.0.1',
+    'localhost', 'testserver', '127.0.0.1', 'web',
 ]
 
 
