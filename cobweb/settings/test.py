@@ -9,6 +9,10 @@ DEBUG = False
 TESTING = True
 CRISPY_FAIL_SILENTLY = False
 
+ALLOWED_HOSTS += ('test',)
+
+DATABASES['default']['NAME'] = 'test_postgres'
+
 # Turn off automatic solr indexing when we add to the test db
 try:
     del(HAYSTACK_SIGNAL_PROCESSOR)

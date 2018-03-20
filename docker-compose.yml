@@ -15,6 +15,7 @@ services:
     image: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
   web:
     image: python:3.6
     volumes:
@@ -28,14 +29,36 @@ services:
       - solr
     working_dir: /code
     environment:
+      DJANGO_SETTINGS_MODULE: 'cobweb.settings.debug'
       DEBUG: 'true'
+      TEST: 'false'
+    command: ['bash', '/code/start-development.sh']
+
+  test:
+    image: python:3.6
+    volumes:
+      - web_usr_local:/usr/local
+      - .:/code
+      - solr_data:/solr_data
+    depends_on:
+      - db
+      - solr
+    working_dir: /code
+    environment:
+      DJANGO_SETTINGS_MODULE: 'cobweb.settings.test'
+      TEST: 'true'
+      DEBUG: 'false'
     stdin_open: true
     tty: true
-    command: ['bash', '/code/start-development.sh']
-  chrome:
+    command: ['bash', '/code/start-test.sh']
+
+  firefox:
     ports:
       - "4444:4444"
-    image: selenium/standalone-chrome
+    image: selenium/standalone-firefox
+    depends_on: [test]
+
+
 volumes:
   postgres_data:
   solr_data:
