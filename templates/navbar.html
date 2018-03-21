@@ -1,9 +1,9 @@
 {% load static %}
 
 <header class="container mb-2 position-relative">
-	<span style="position: absolute; top: 0; left: 0.875rem; z-index: 1100;">
+	<a href="{% url 'front_page' %}" style="position: absolute; top: 0; left: 0.875rem; z-index: 1100;">
 	    <img class='float-left mr-auto position-absolute' src="{% static 'images/cobweb_logo_b4.png' %}" alt="CobWeb logo">
-	</span>
+	</a>
 	<img class='float-left mr-auto position-absolute' src="" height=44>
 	<nav class="navbar row justify-content-end">
 		{% if user.is_authenticated %}
