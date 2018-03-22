@@ -42,7 +42,7 @@ services:
     working_dir: /code
     environment:
       DEBUG: 'true'
-    command: ['bash', '/code/start-production.sh']
+    command: ['pipenv', 'run', '/code/start-production.sh']
     deploy:
       replicas: 1
       resources:
@@ -62,7 +62,7 @@ services:
     working_dir: /code
     environment:
       DEBUG: 'true'
-    command: ['bash', '/code/start-worker.sh']
+    command: ['pipenv', 'run', '/code/start-worker.sh']
     deploy:
       replicas: 1
       resources:

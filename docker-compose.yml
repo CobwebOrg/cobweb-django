@@ -19,9 +19,10 @@ services:
   web:
     image: python:3.6
     volumes:
-      - web_usr_local:/usr/local
       - .:/code
       - solr_data:/solr_data
+      - web_usr_local:/usr/local
+      - web_dot_local:/root/.local
     ports:
       - "8000:8000"
     depends_on:
@@ -32,7 +33,8 @@ services:
       DJANGO_SETTINGS_MODULE: 'cobweb.settings.debug'
       DEBUG: 'true'
       TEST: 'false'
-    command: ['bash', '/code/start-development.sh']
+      SHELL: '/bin/bash'
+    command: ['pipenv', 'run', '/code/start-development.sh']
 
   test:
     image: python:3.6
@@ -40,6 +42,7 @@ services:
       - web_usr_local:/usr/local
       - .:/code
       - solr_data:/solr_data
+      - web_dot_local:/root/.local
     depends_on:
       - db
       - solr
@@ -50,7 +53,7 @@ services:
       DEBUG: 'false'
     stdin_open: true
     tty: true
-    command: ['bash', '/code/start-test.sh']
+    command: ['pipenv', 'run', '/code/start-test.sh']
 
   firefox:
     ports:
@@ -63,3 +66,4 @@ volumes:
   postgres_data:
   solr_data:
   web_usr_local:
+  web_dot_local:

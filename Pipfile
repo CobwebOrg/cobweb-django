@@ -1,0 +1,36 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+"psycopg2" = "*"
+django-autocomplete-light = "*"
+django-crispy-forms = "*"
+django-reversion = "*"
+django-webpack-loader = "*"
+"django-tables2" = "*"
+django-haystack = "*"
+ipython = "*"
+pysolr = "*"
+pyuca = "*"
+sickle = "*"
+surt = "*"
+whitenoise = "*"
+uwsgi = "*"
+
+[dev-packages]
+pytest = "*"
+behave-django = "*"
+coverage = "*"
+django-debug-toolbar = "*"
+factory-boy = "*"
+hypothesis = {extras = ["django"]}
+pdbpp = "*"
+pytest-cov = "*"
+pytest-django = "*"
+pytest-splinter = "*"
+
+[requires]
+python_version = "3.6"

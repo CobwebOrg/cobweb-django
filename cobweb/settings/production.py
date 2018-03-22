@@ -84,7 +84,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'crispy_forms',
-    'django_extensions',
     'django_tables2',
     'haystack',
     'reversion',

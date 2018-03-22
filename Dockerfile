@@ -1,7 +1,8 @@
 FROM python:3
 ENV PYTHONUNBUFFERED 1
+RUN pip install pipenv
 RUN mkdir /code
 WORKDIR /code
-ADD requirements.txt /code/
-RUN pip install -r requirements.txt
+ADD Pipfile.lock /code/
+RUN pipenv install
 ADD . /code/
