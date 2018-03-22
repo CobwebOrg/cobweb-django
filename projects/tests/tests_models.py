@@ -1,9 +1,8 @@
 import hypothesis
-from hypothesis import strategies as st
+from hypothesis.extra.django import TestCase
 import pytest
 from django.contrib.auth.models import AnonymousUser
 from django.db.utils import IntegrityError
-from django.test import TestCase
 
 from archives.tests.factories import CollectionFactory
 from core.tests.factories import UserFactory

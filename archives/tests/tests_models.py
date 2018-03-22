@@ -1,7 +1,6 @@
 """Tests for models in the cobweb-django app "archives": Collection, Holding."""
 
-import hypothesis
-from hypothesis.extra.django import TestCase
+from django.test import TestCase
 from django.contrib.auth.models import AnonymousUser
 import pytest
 
@@ -13,8 +12,7 @@ from core.tests.factories import UserFactory
 class TestCollectionModels(TestCase):
     """Tests for archives.models.Collection."""
 
-    @hypothesis.given(hypothesis.strategies.builds(CollectionFactory))
-    def setUp(self, test_collection):
+    def setUp(self):
         """Attaches a Collection instance to the TestCase object."""
         self.test_instance = CollectionFactory()
 
@@ -76,10 +74,9 @@ class TestCollectionModels(TestCase):
 class HoldingModelTests(TestCase):
     """Tests for archives.models.Holding."""
 
-    @hypothesis.given(hypothesis.strategies.builds(HoldingFactory))
-    def setUp(self, test_holding):
+    def setUp(self):
         """Create a test Holding instance."""
-        self.test_instance = test_holding
+        self.test_instance = HoldingFactory()
 
     def test_holding_creation(self):
         """Tests creation of Holding objects."""
