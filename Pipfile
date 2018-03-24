@@ -4,8 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "*"
-"psycopg2" = "*"
+Django = "*"
 django-autocomplete-light = "*"
 django-crispy-forms = "*"
 django-reversion = "*"
@@ -15,17 +14,18 @@ django-haystack = "*"
 ipython = "*"
 pysolr = "*"
 pyuca = "*"
-sickle = "*"
+Sickle = "*"
 surt = "*"
 whitenoise = "*"
-uwsgi = "*"
+uWSGI = "*"
+"psycopg2-binary" = "*"
 
 [dev-packages]
 pytest = "*"
 behave-django = "*"
 coverage = "*"
 django-debug-toolbar = "*"
-factory-boy = "*"
+factory_boy = "*"
 hypothesis = {extras = ["django"]}
 pdbpp = "*"
 pytest-cov = "*"
