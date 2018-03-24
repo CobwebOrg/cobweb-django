@@ -8,16 +8,16 @@
 	<nav class="navbar row justify-content-end">
 		{% if user.is_authenticated %}
 			<span class="nav-link my-0 py-0">Welcome, {{user}}</span> |
-			<a class="nav-link my-0 py-0" href="#">Account</a> |
-			<a class="nav-link my-0 py-0" href="{% url 'logout' %}?next={{request.path}}">Logout</a>
+			<a id="account_link" class="nav-link my-0 py-0" href="#">Account</a> |
+			<a id="logout_link" class="nav-link my-0 py-0" href="{% url 'logout' %}?next={{request.path}}">Logout</a>
 		{% else %}
 			<span class="nav-link my-0 py-0">Welcome!</span> |
-			<a class="nav-link my-0 py-0" href="{% url 'user_create' %}?next={{request.path}}">Sign Up</a> |
-			<a class="nav-link my-0 py-0" href="{% url 'login' %}?next={{request.path}}">Login</a>
+			<a id="signup_link" class="nav-link my-0 py-0" href="{% url 'user_create' %}?next={{request.path}}">Sign Up</a> |
+			<a id="login_link" class="nav-link my-0 py-0" href="{% url 'login' %}?next={{request.path}}">Login</a>
 		{% endif %}
 	</nav>
 
-    <nav class="navbar row navbar-dark bg-dark" style="margin-top: 10px;">
+  <nav class="navbar row navbar-dark bg-dark" style="margin-top: 10px;">
 		<span style="visibility: hidden;"><a class="nav-link text-uppercase mr-auto ml-auto text-ltprimary" href="/">
 			CobWeb home
 		</a></span>
@@ -25,7 +25,7 @@
 		<a class="nav-link text-uppercase mr-auto ml-auto text-ltprimary" href="{% url 'project_list' %}">
 			Projects
 		</a>
-		<a class="nav-link text-uppercase mr-auto ml-auto text-ltprimary" href="{% url 'archives:collection_list' %}"> 
+		<a class="nav-link text-uppercase mr-auto ml-auto text-ltprimary" href="{% url 'archives:collection_list' %}">
 			Collections
 		</a>
 		<a class="nav-link text-uppercase mr-auto ml-auto text-ltprimary" href="{% url 'webresources:list' %}">

@@ -3,7 +3,7 @@ Feature: registering new user accounts
   Scenario: "sign up" link appears when not logged in
     Given I'm not logged in
      When I visit any page
-     Then a "sign up" link appears above the navbar
+     Then the text "sign up" links to "/users/new"
 
   Scenario: "sign up link" does not appear after login
     Given I am logged in

@@ -7,6 +7,10 @@ from cobweb.settings.production import *
 
 DEBUG = False
 TESTING = True
+
+INSTALLED_APPS += ('behave_django',)
+
+
 CRISPY_FAIL_SILENTLY = False
 
 ALLOWED_HOSTS += ('test',)

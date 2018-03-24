@@ -51,6 +51,7 @@ services:
       DJANGO_SETTINGS_MODULE: 'cobweb.settings.test'
       TEST: 'true'
       DEBUG: 'false'
+      SHELL: '/bin/bash'
     stdin_open: true
     tty: true
     command: ['pipenv', 'run', '/code/start-test.sh']

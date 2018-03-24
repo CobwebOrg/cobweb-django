@@ -1,17 +1,17 @@
 Feature: creating projects
 
-  Scenario:
+  Scenario: Anonymous users don't get "add project" link.
     Given I'm not logged in
-     When I visit "{projects/}"
-     Then an "add project" link does not appear
+     When I visit /projects/
+     Then the text "add project" does not appear as a link
 
-  Scenario:
+  Scenario: Anonymous users can't add projects.
     Given I'm not logged in
-     When I visit "{projects/new}"
-     Then I get redirected to a the login page
+     When I visit /projects/new
+     Then taken to login page
       And I get an error message telling me I need to log in
-
-  Scenario:
-    Given I'm a logged in user
-     When I visit "{projects/}"
-     Then an "add project" link does appear
+  #
+  # Scenario:
+  #   Given I'm a logged in user
+  #    When I visit /projects/
+  #    Then an "add project" link does appear
