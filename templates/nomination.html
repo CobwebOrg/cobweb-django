@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load badge icon claim_button edit_link from cobweb_look %}
+{% load as_link badge icon claim_button edit_link from cobweb_look %}
 {% load render_table from django_tables2 %}
 
 {% block title %}Cobweb Nomination: {{ object }}{% endblock %}
@@ -21,7 +21,7 @@
         <label for="id_project" class="form-control-label  requiredField">
           Project
         </label>
-        <div>{{nomination.project}}</div>
+        <div>{{nomination.project | as_link}}</div>
       </div>
     </div>
   </div>
