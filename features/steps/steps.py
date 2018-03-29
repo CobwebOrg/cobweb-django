@@ -51,7 +51,7 @@ def step_impl(context):
 
 @then(u'I get an error message telling me I need to log in')
 def step_impl(context):
-    context.test.assertIn(context.browser.html, 'Please login to see this page.')
+    context.test.assertIn('Please login to see this page.', context.browser.html)
 
 
 @given(u'I am logged in')
