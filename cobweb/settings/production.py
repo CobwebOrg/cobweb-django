@@ -11,11 +11,12 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-import sys
+from pathlib import Path
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-# Refers to the path within docker container
-BASE_DIR = '/code'
+path = Path('__file__').absolute()
+while not (path.name == 'cobweb-django' or path.name == 'code'):
+    path = path.parent
+BASE_DIR = str(path)
 
 
 # Quick-start development settings - unsuitable for production

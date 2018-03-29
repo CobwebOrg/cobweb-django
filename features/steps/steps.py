@@ -3,14 +3,14 @@ from django.urls import reverse
 
 @given("I'm not logged in")
 def step_impl(context):
-    context.browser.visit('http://test:8000/' + reverse("logout"))
+    context.browser.visit(context.base_url + reverse("logout"))
 
 
 @when('I visit {url}')
 def step_impl(context, url):
     if url == 'any page':
         url = reverse('front_page')
-    context.browser.visit('http://test:8000' + url)
+    context.browser.visit(context.base_url + url)
 
 
 @then('the text "{text}" links to {url_name}')
@@ -18,7 +18,7 @@ def step_impl(context, text, url_name):
     links = context.browser.find_by_xpath(f'//a[text()="{text}"]/')
     assert len(links) == 1
     assert links[0].text == 'Sign Up'
-    target = 'http://test:8000' + reverse('user_create')
+    target = context.base_url + reverse('user_create')
     context.test.assertEqual(links[0]['href'][:len(target)], target)
 
 
@@ -30,7 +30,7 @@ def step_impl(context):
 @then('taken to {url_name} page')
 def step_impl(context, url_name):
     context.test.assertTrue(
-        context.browser.url.startswith('http://test:8000'+reverse(url_name))
+        context.browser.url.startswith(context.base_url+reverse(url_name))
     )
 
 
@@ -43,7 +43,7 @@ def step_impl(context, text):
 
 @then(u'I get redirected to a the login page')
 def step_impl(context):
-    target = 'http://test:8000' + reverse('login')
+    target = context.base_url + reverse('login')
     context.test.assertTrue(
         context.browser.url
     )

@@ -3,8 +3,8 @@ version: '3'
 services:
   solr:
     image: solr:6
-    # ports:
-    #   - "8983:8983"
+    ports:
+      - "8983:8983"
     volumes:
       - solr_data:/opt/solr/server/solr/mycores
     entrypoint:
@@ -15,7 +15,8 @@ services:
     image: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
+    ports:
+      - "5432:5432"
   web:
     image: python:3.6
     volumes:
