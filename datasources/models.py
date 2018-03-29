@@ -105,7 +105,10 @@ class OAIPMHImporter(Importer):
 
     def __init__(self, api):
         self.api = api
-        self.sickle = Sickle(self.api.location)
+        kwargs = {}
+        if hasattr(self, 'encoding'):
+            kwargs['encoding'] = self.encoding
+        self.sickle = Sickle(self.api.location, **kwargs)
 
     def harvest_all(self):
         print("Harvesting API Identification")
@@ -209,6 +212,8 @@ class AITCollectionsImporter(OAIPMHImporter):
     set_key = 'organization'
     record_key = 'identifier'
 
+    encoding = 'utf-8'
+
     def harvest_record(self, record):
         """Harvest a single record for an Archive-It collection."""
         super().harvest_record(record)
@@ -258,6 +263,8 @@ class AITPartnerImporter(OAIPMHImporter):
     record_class = Holding
     set_key = 'collection'
     record_key = 'resource'
+
+    encoding = 'utf-8'
 
     def harvest_record(self, record):
         """Harvest a single record for an Archive-It collection."""
