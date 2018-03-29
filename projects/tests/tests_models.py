@@ -50,8 +50,7 @@ class NominationModelTests(TestCase):
         """Tests that str(object) always returns a str."""
         self.assertIsInstance(str(self.test_instance), str)
 
-    @hypothesis.given(hypothesis.strategies.text(alphabet=hypothesis.strategies.characters(min_codepoint=1),
-                                                 min_size=1, average_size=15))
+    @hypothesis.given(hypothesis.strategies.text(alphabet=hypothesis.strategies.characters(min_codepoint=1), min_size=1))
     def test_name(self, title):
         """Nomination.name returns title if the nomination has one, otherwise url."""
         nomination = NominationFactory(title=None)
