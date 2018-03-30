@@ -15,9 +15,9 @@ def step_impl(context, url):
 
 @then('the text "{text}" links to {url_name}')
 def step_impl(context, text, url_name):
-    links = context.browser.find_by_xpath(f'//a[text()="{text}"]/')
-    assert len(links) == 1
-    assert links[0].text == 'Sign Up'
+    links = context.browser.find_by_text(text)
+    assert len(links) == 1, f'expected 1 "{text}", found {len(links)}'
+
     target = context.base_url + reverse('user_create')
     context.test.assertEqual(links[0]['href'][:len(target)], target)
 

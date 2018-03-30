@@ -1,18 +1,19 @@
 Feature: registering new user accounts
 
-  Scenario: "sign up" link appears when not logged in
+  Scenario: "Sign Up" link appears when not logged in
     Given I'm not logged in
      When I visit any page
-     Then the text "sign up" links to "/users/new"
+     Then the text "Sign Up" links to "/users/new"
 
-  Scenario: "sign up link" does not appear after login
+  Scenario: "Sign Up" link does not appear after login
     Given I am logged in
      When I visit any page
-     Then a "sign up" link does not appear above the navbar
+     Then the text "Sign Up" does not appear as a link
 
+  @wip
   Scenario: registering with email and password
     Given I'm not logged in
-     When I click the "sign up" link
+     When I click the "Sign Up" link
       And I enter my email and password in the registration form
       And I click submit
      Then A user account is created
