@@ -33,6 +33,7 @@ pytest-cov = "*"
 pytest-django = "*"
 pytest-splinter = "*"
 mypy = "*"
+ansible = "*"
 
 [requires]
 python_version = "3.6"
