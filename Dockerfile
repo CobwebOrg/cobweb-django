@@ -3,6 +3,10 @@ ENV PYTHONUNBUFFERED 1
 RUN pip install pipenv
 RUN mkdir /code
 WORKDIR /code
-ADD Pipfile.lock /code/
+COPY Pipfile /code/
+COPY Pipfile.lock /code/
 RUN pipenv install
-ADD . /code/
+COPY . /code/
+RUN ["pipenv", "run", "python3", "manage.py", "collectstatic"]
+# ENTRYPOINT ["pipenv", "run"]
+# CMD ["/code/start-production.sh"]

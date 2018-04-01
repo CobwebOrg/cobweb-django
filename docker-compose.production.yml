@@ -40,9 +40,9 @@ services:
       - db
       - solr
     working_dir: /code
+    command: ['sh', 'start-production.sh']
     environment:
-      DEBUG: 'true'
-    command: ['pipenv', 'run', '/code/start-production.sh']
+      DEBUG: 'false'
     deploy:
       replicas: 1
       resources:
@@ -62,7 +62,7 @@ services:
     working_dir: /code
     environment:
       DEBUG: 'true'
-    command: ['pipenv', 'run', '/code/start-worker.sh']
+    command: ['sh', '/code/start-worker.sh']
     deploy:
       replicas: 1
       resources:

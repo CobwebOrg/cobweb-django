@@ -19,6 +19,7 @@ surt = "*"
 whitenoise = "*"
 uWSGI = "*"
 "psycopg2-binary" = "*"
+uwsgi = "*"
 
 [dev-packages]
 pytest = "*"
