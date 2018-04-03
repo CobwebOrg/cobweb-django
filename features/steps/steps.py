@@ -1,3 +1,5 @@
+import re
+
 from django.urls import reverse
 
 from projects.tests.factories import NominationFactory
@@ -67,3 +69,9 @@ def step_impl(context, model_name):
         'nomination': NominationFactory,
     }[model_name]
     context.setattr(model_name, factory())
+
+
+@then(u'there is no link that matches {url_regex}')
+def step_impl(context, url_regex):
+    assert len([a for a in context.browser.find_by_tag('a')
+                if re.match(url_regex, a['href'])]) == 0
