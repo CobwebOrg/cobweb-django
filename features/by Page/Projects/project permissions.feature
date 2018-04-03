@@ -1,4 +1,4 @@
-Feature: creating projects
+Feature: project permissions
 
   Scenario: Anonymous users don't get "add project" link.
     Given I'm not logged in
