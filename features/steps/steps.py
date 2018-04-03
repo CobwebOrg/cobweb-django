@@ -1,5 +1,7 @@
 from django.urls import reverse
 
+from projects.tests.factories import NominationFactory
+
 
 @given("I'm not logged in")
 def step_impl(context):
@@ -57,3 +59,11 @@ def step_impl(context):
 @given(u'I am logged in')
 def step_impl(context):
     raise NotImplementedError(u'STEP: Given I\'m a logged in user')
+
+
+@given(u'there\'s a {model_name}')
+def step_impl(context, model_name):
+    factory = {
+        'nomination': NominationFactory,
+    }[model_name]
+    context.setattr(model_name, factory())
