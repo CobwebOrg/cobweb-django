@@ -1,11 +1,11 @@
 Feature: Claim Permissions
 
-  @may
+  @may @now
   Scenario Outline: Anonymous doesn't see claim links
     Given I'm not logged in
       And there's a nomination
      When I visit detail page for object <object>
-     Then there is no link that matches \/nomination\/\d+\/claim
+     Then there is no claim nomination link
 
       Examples:
       | object             |

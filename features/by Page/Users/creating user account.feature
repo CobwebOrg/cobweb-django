@@ -10,7 +10,6 @@ Feature: registering new user accounts
      When I visit any page
      Then the text "Sign Up" does not appear as a link
 
-  @wip
   Scenario: registering with email and password
     Given I'm not logged in
      When I click the "Sign Up" link
