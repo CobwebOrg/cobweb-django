@@ -55,7 +55,28 @@ services:
       SHELL: '/bin/bash'
     stdin_open: true
     tty: true
-    command: ['pipenv', 'run', '/code/start-test.sh']
+    entrypoint: ['pipenv', 'run', 'pytest', '--reuse-db', '--splinter-webdriver', 'remote', '--splinter-remote-url', "'http://firefox:4444/wd/hub'", "-n6"]
+    command: []
+
+  testserver:
+    image: python:3.6
+    volumes:
+      - .:/code
+      - solr_data:/solr_data
+      - web_usr_local:/usr/local
+      - web_dot_local:/root/.local
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+      - solr
+    working_dir: /code
+    environment:
+      DJANGO_SETTINGS_MODULE: 'cobweb.settings.debug'
+      DEBUG: 'true'
+      TEST: 'false'
+      SHELL: '/bin/bash'
+    command: ['pipenv', 'run', '/code/start-production.sh']
 
   firefox:
     ports:
