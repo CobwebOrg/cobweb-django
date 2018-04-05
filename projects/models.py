@@ -108,6 +108,9 @@ class Nomination(models.Model):
     def get_absolute_url(self) -> str:
         return reverse('nomination_detail', kwargs={'pk': self.pk})
 
+    def get_claim_url(self) -> str:
+        return reverse('claim_create', kwargs={'nomination_pk': self.pk})
+
     def get_edit_url(self) -> str:
         return reverse('nomination_update', kwargs={'pk': self.pk})
 

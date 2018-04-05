@@ -5,12 +5,26 @@ from django.urls import reverse
 from projects.tests.factories import NominationFactory
 
 
+@given("User is not logged in")
 @given("I'm not logged in")
 def step_impl(context):
     context.browser.visit(context.base_url + reverse("logout"))
 
 
-@when('I visit {url}')
+@when('I visit {object_name}\'s {page_name} page')
+@when('I visit {page_name} page for object {object_name}')
+def step_impl(context, object_name, page_name):
+    obj = context
+    for obj_name in object_name.split('.'):
+        obj = getattr(obj, obj_name)
+
+    if page_name == 'detail':
+        context.browser.visit(context.get_url(obj))
+    else:
+        raise Exception('z;sdfghj')
+
+
+@when('I visit url {url}')
 def step_impl(context, url):
     if url == 'any page':
         url = reverse('front_page')
@@ -68,10 +82,10 @@ def step_impl(context, model_name):
     factory = {
         'nomination': NominationFactory,
     }[model_name]
-    context.setattr(model_name, factory())
+    setattr(context, model_name, factory())
 
 
-@then(u'there is no link that matches {url_regex}')
+@then(u'there is no claim nomination link')
 def step_impl(context, url_regex):
-    assert len([a for a in context.browser.find_by_tag('a')
-                if re.match(url_regex, a['href'])]) == 0
+    claim_url = context.get_url(context.nomination.get_claim_url())
+    assert len(context.browser.find_by_link_href(claim_url)) == 0
