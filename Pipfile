@@ -4,14 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-Django = "*"
+django = "~=2.0"
 django-autocomplete-light = "*"
 django-crispy-forms = "*"
 django-reversion = "*"
 django-webpack-loader = "*"
 "django-tables2" = "*"
 django-haystack = "*"
-ipython = "*"
 pysolr = "*"
 pyuca = "*"
 Sickle = "*"
@@ -19,7 +18,6 @@ surt = "*"
 whitenoise = "*"
 uWSGI = "*"
 "psycopg2-binary" = "*"
-pytest-xdist = "*"
 
 [dev-packages]
 pytest = "*"
@@ -34,6 +32,9 @@ pytest-django = "*"
 pytest-splinter = "*"
 mypy = "*"
 ansible = "*"
+pytest-bdd = "*"
+pytest-xdist = "*"
+ipython = "*"
 
 [requires]
 python_version = "3.6"
