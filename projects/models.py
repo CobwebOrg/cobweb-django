@@ -9,8 +9,11 @@ from metadata.models import CobwebMetadataMixin, Tag
 
 
 @reversion.register()
-class Project(CobwebMetadataMixin, models.Model):
+class Project(models.Model):
     """Django ORM model for a Cobweb project."""
+
+    title = models.CharField(max_length=500)
+    description = models.TextField(null=True, blank=True)
 
     administrators = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
@@ -20,13 +23,18 @@ class Project(CobwebMetadataMixin, models.Model):
 
     nomination_policy = models.CharField(
         max_length=10, default='Open', choices=(
-            ('Anonymous', "Anonymous: anyone can nominate, even if they're not logged in."),
-            ('Open', 'Open: anyone with a Cobweb account can nominate.'),
-            ('Restricted', 'Restricted: only selected users can nominate.'),
+            ('Public', "Public: anyone can nominate, even if they're not logged in."),
+            ('Cobweb Users', 'Cobweb Users: anyone with a Cobweb account can nominate.'),
+            ('Restricted', 'Restricted: only selected users and organizations can nominate.'),
         )
     )
 
-    nominators = models.ManyToManyField(
+    nominator_orgs = models.ManyToManyField(
+        'core.Organization', blank=True,
+        related_name='projects_nominating',
+    )
+
+    nominator_users = models.ManyToManyField(
         settings.AUTH_USER_MODEL, blank=True,
         related_name='projects_nominating',
     )
@@ -37,11 +45,29 @@ class Project(CobwebMetadataMixin, models.Model):
         related_name='projects_blacklisted',
     )
 
-    STATUS = ('Active', 'Inactive', 'Deleted')
     status = models.CharField(
         max_length=8, default='Active',
-        choices=[(x, x) for x in STATUS]
+        choices=(
+            (
+                ('Open', 'Open for Nomination'),
+                ('Deprecated', "Deprecated (no further nominations recommended)"),
+                ('Inactive', 'Inactive (closed to nomination)'),
+                ('Deleted', 'Deleted'),
+            )
+        )
     )
+
+    @property
+    def impact_factor(self) -> int:
+        # TODO: Fix this stub – not sure I understand the FRs...
+        return self.nominations.exclude(claims=None)
+
+    # resources = models.ManyToManyField('webresources.Resource',
+    #                                    through='projects.Nomination')
+
+    tags = models.ManyToManyField('metadata.Tag', blank=True)
+    # subject_headings = models.ManyToManyField('metadata.SubjectHeading',
+    #                                           blank=True)
 
     def __str__(self) -> str:
         """
