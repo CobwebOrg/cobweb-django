@@ -1,6 +1,6 @@
 Feature: Claim Permissions
 
-  @may @now
+  @may
   Scenario Outline: Anonymous doesn't see claim links
     Given I'm not logged in
       And there's a nomination
