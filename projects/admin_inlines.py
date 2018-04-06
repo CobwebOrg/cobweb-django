@@ -8,7 +8,7 @@ class ProjectInline(admin.TabularInline):
     extra = 0
     show_change_link = True
 
-    fields = ['title', 'keywords']
+    fields = ['title', 'tags']
     readonly_fields = fields
 
 
@@ -18,7 +18,7 @@ class NominationInline(admin.TabularInline):
     show_change_link = True
 
     fields = ['title', 'resource', 'project']
-    readonly_fields = fields
+    # readonly_fields = fields
 
 
 class ClaimInline(admin.TabularInline):

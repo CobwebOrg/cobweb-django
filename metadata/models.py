@@ -10,13 +10,13 @@ class MetadataJSONField(JSONField):
 
 
 @reversion.register()
-class Keyword(models.Model):
-    """A single keyword."""
+class Tag(models.Model):
+    """A single tag."""
 
     name = models.CharField(max_length=200, unique=True, db_index=True)
 
     def __str__(self) -> str:
-        """Return keyword as string."""
+        """Return tag as string."""
         return self.name
 
 
@@ -25,7 +25,7 @@ class CobwebMetadataMixin(models.Model):
 
     title = models.TextField(null=True, blank=True)
     description = models.TextField('Description', null=True, blank=True)
-    keywords = models.ManyToManyField(Keyword, blank=True)
+    tags = models.ManyToManyField(Tag, blank=True)
     metadata = MetadataJSONField(null=True, blank=True)
 
     class Meta:

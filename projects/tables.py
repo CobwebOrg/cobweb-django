@@ -25,11 +25,11 @@ class NominationTable(django_tables2.Table):
     """django_tables2.Table object for lists of nominations."""
 
     name = django_tables2.LinkColumn()
-    keywords = django_tables2.TemplateColumn(
+    tags = django_tables2.TemplateColumn(
         """{% load badge from cobweb_look %}
         <small>
-            {% for keyword in record.keywords.all %}
-                {% badge keyword %}
+            {% for tag in record.tags.all %}
+                {% badge tag %}
             {% endfor %}
         </small>
         """, default='', orderable=False
@@ -53,11 +53,11 @@ class ClaimTable(django_tables2.Table):
     """django_tables2.Table object for lists of claims."""
 
     collection = django_tables2.LinkColumn()
-    # keywords = django_tables2.TemplateColumn(
+    # tags = django_tables2.TemplateColumn(
     #     """{% load badge from cobweb_look %}
     #     <small>
-    #         {% for keyword in record.keywords.all %}
-    #             {% badge keyword %}
+    #         {% for tag in record.tags.all %}
+    #             {% badge tag %}
     #         {% endfor %}
     #     </small>
     #     """, default='', orderable=False

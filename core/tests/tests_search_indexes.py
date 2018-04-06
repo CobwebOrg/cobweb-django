@@ -1,7 +1,7 @@
 import django.test
 
 import core.search_indexes
-from metadata.tests.factories import KeywordFactory
+from metadata.tests.factories import TagFactory
 from projects.tests.factories import ProjectFactory
 
 
@@ -16,14 +16,14 @@ class ProjectIndexTest(django.test.TestCase):
             metadata={'a': [1], 'b': [2, 3]}
         )
         project.save()
-        project.keywords.add(KeywordFactory())
-        project.keywords.add(KeywordFactory())
+        project.tags.add(TagFactory())
+        project.tags.add(TagFactory())
 
         solr_dict = index.prepare(project)
         solr_document = solr_dict['text']
 
         self.assertIn('Project Name', solr_document)
-        for kw in project.keywords.all():
+        for kw in project.tags.all():
             self.assertIn(str(kw), solr_document)
         for key, values in project.metadata.items():
             for value in values:

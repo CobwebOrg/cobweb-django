@@ -306,7 +306,7 @@ class ProjectUpdateViewTests(TestCase):
 
     def test_included_fields(self):
         for field_name in ['title', 'administrators', 'nomination_policy',
-                           'nominators', 'status', 'description', 'keywords']:
+                           'nominators', 'status', 'description', 'tags']:
             try:
                 self.assertContains(
                     self.response,

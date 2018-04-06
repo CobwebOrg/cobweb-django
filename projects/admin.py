@@ -8,7 +8,6 @@ from projects.admin_inlines import NominationInline
 @admin.register(Project)
 class ProjectAdmin(VersionAdmin):
     inlines = [NominationInline]
-    filter_horizontal = ['keywords', 'administrators', 'nominators']
 
 
 @admin.register(Nomination)

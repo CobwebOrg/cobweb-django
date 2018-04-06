@@ -4,20 +4,20 @@
     <div class="card-body">
         <h4>{{item | model_name | capfirst}}</h4>
         in {{item.get_resource_set | as_link}}
-        {% if item.description or item.keywords or item.metadata %}
+        {% if item.description or item.tags or item.metadata %}
             {% if item.description %}
                 <p>{{ item.description }}</p>
             {# {% else %} #}
                 {# <p>No Description</p> #}
             {% endif %}
 
-            {% if item.keywords.count > 0 or item.metadata %}
+            {% if item.tags.count > 0 or item.metadata %}
                 <dl>
-                    {% if item.keywords.count > 0 %}
-                        <dt>Keywords</dt>
+                    {% if item.tags.count > 0 %}
+                        <dt>Tags</dt>
                         <dd>
-                            {% for keyword in item.keywords.all %}
-                                {% badge keyword %}
+                            {% for tag in item.tags.all %}
+                                {% badge tag %}
                             {% endfor %}
                         </dd>
                     {% endif %}

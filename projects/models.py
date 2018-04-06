@@ -5,7 +5,7 @@ from django.db.models.query import QuerySet
 from django.urls import reverse
 
 from cobweb import settings
-from metadata.models import CobwebMetadataMixin, Keyword
+from metadata.models import CobwebMetadataMixin, Tag
 
 
 @reversion.register()
@@ -87,7 +87,7 @@ class Nomination(models.Model):
                                 on_delete=models.PROTECT)
 
     description = models.TextField('Description', null=True, blank=True)
-    keywords = models.ManyToManyField(Keyword, blank=True)
+    tags = models.ManyToManyField(Tag, blank=True)
 
     # descriptors =
     # language =

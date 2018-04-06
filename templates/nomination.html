@@ -43,9 +43,9 @@
     <label for="id_description" class="col-md-2 form-control-label ">Description</label>
     <div class="col-md ">{{object.description | default:"[None]"}}</div>
   </div>
-  <div id="div_id_keywords" class="row form-group ">
-    <label for="id_keywords" class="col-md-2 form-control-label ">Keywords</label>
-    <div class="col-md ">{% for keyword in nomination.keywords.all %}{% badge keyword %}{% empty %}[None]{% endfor %}</div>
+  <div id="div_id_tags" class="row form-group ">
+    <label for="id_tags" class="col-md-2 form-control-label ">Tags</label>
+    <div class="col-md ">{% for tag in nomination.tags.all %}{% badge tag %}{% empty %}[None]{% endfor %}</div>
   </div>
 	{% for key, values in collection.metadata.items %}
 		<div id="div_id_{{key}}" class="row form-group ">

@@ -6,10 +6,10 @@ from metadata import models
 
 
 class MetadataAdminMixin:
-    fields = ['description', 'keywords', 'metadata']
+    fields = ['description', 'tags', 'metadata']
 
 
-@admin.register(models.Keyword)
-class KeywordAdmin(VersionAdmin):
-    model = models.Keyword
+@admin.register(models.Tag)
+class TagAdmin(VersionAdmin):
+    model = models.Tag
     # inlines = [ ProjectInline ]

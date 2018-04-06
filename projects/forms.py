@@ -43,8 +43,8 @@ class ProjectForm(forms.ModelForm):
                 url='user_autocomplete',
                 attrs={'data-allow-clear': 'false'},
             ),
-            'keywords': autocomplete.ModelSelect2Multiple(
-                url='keyword_autocomplete',
+            'tags': autocomplete.ModelSelect2Multiple(
+                url='tag_autocomplete',
                 attrs={'data-allow-clear': 'false'},
             ),
             'nomination_policy': forms.RadioSelect,
@@ -70,7 +70,7 @@ class ProjectForm(forms.ModelForm):
 
             FormSection(
                 Field('description', template='metadata_field.html'),
-                Field('keywords', template='metadata_field.html'),
+                Field('tags', template='metadata_field.html'),
             ),
 
             FormSection(
@@ -100,8 +100,8 @@ class NominationForm(forms.ModelForm):
         exclude = []
         widgets = {
             'title': forms.TextInput,
-            'keywords': autocomplete.ModelSelect2Multiple(
-                url='keyword_autocomplete'
+            'tags': autocomplete.ModelSelect2Multiple(
+                url='tag_autocomplete'
             ),
         }
 
@@ -117,7 +117,7 @@ class NominationForm(forms.ModelForm):
             ),
             FormSection(
                 Field('description', template='metadata_field.html'),
-                Field('keywords', template='metadata_field.html'),
+                Field('tags', template='metadata_field.html'),
             ),
             FormActions(
                 CancelButton,
@@ -140,8 +140,8 @@ class ClaimForm(forms.ModelForm):
         model = Claim
         fields = ('__all__')
         widgets = {
-            'keywords': autocomplete.ModelSelect2Multiple(
-                url='keyword_autocomplete'
+            'tags': autocomplete.ModelSelect2Multiple(
+                url='tag_autocomplete'
             ),
 
         }
@@ -153,7 +153,7 @@ class ClaimForm(forms.ModelForm):
         #     Field('nomination', css_class='form-control-plaintext'),
         #     Field('collection'),
         #     Field('description'),
-        #     Field('keywords'),
+        #     Field('tags'),
         #     FormActions(
         #         CancelButton,
         #         Submit('submit', 'Submit'),

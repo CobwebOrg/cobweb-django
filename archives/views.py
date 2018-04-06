@@ -31,12 +31,12 @@ class HoldingTable(django_tables2.Table):
         'webresources:detail',
         kwargs={'url': Accessor('resource.url')}
     )
-    keywords = django_tables2.TemplateColumn(
+    tags = django_tables2.TemplateColumn(
         """
         {% load badge from cobweb_look %}
         <small>
-            {% for keyword in record.keywords.all %}
-                {% badge keyword %}
+            {% for tag in record.tags.all %}
+                {% badge tag %}
             {% endfor %}
         </small>
         """, default='', orderable=False
@@ -45,7 +45,7 @@ class HoldingTable(django_tables2.Table):
     class Meta:
         model = models.Holding
         show_header = False
-        fields = ['resource', 'keywords']
+        fields = ['resource', 'tags']
         empty_text = "No records."
 
 

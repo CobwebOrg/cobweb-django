@@ -6,4 +6,4 @@
 
 {{ object.description }}
 
-{# {% for keyword in object.keywords.all %}{{ keyword }} {% endfor %}#}
+{# {% for tag in object.tags.all %}{{ tag }} {% endfor %}#}

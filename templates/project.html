@@ -54,12 +54,12 @@
 					</p>
 				</div>
 			</div>
-			<div id="div_id_keywords" class="row form-group ">
-				<label for="id_keywords" class="col-md-2 form-control-label">
-					Keywords:
+			<div id="div_id_tags" class="row form-group ">
+				<label for="id_tags" class="col-md-2 form-control-label">
+					Tags:
 				</label>
 				<div class="col-md ">
-					{% for keyword in project.keywords.all %}{% badge keyword %}{% endfor %}
+					{% for tag in project.tags.all %}{% badge tag %}{% endfor %}
 				</div>
 			</div>
 		</div>

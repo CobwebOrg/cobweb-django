@@ -9,7 +9,7 @@ import core.views
 import projects.views
 import metadata.views
 
-# from metadata.models import Keyword
+# from metadata.models import Tag
 
 
 urlpatterns = [
@@ -76,13 +76,12 @@ urlpatterns = [
          projects.views.ClaimUpdateView.as_view(),
          name='claim_update'),
 
-    # Keyword
-    url(r'^Keyword/(?P<pk>\d+)/$',
-        metadata.views.KeywordDetailView.as_view(),
-        name='keyword_detail'),
-    url(r'^keywords/autocomplete/$',
-        metadata.views.KeywordAutocomplete.as_view(create_field='name'),
-        name='keyword_autocomplete'),
+    # Tags
+    path('tags/<int:pk>/', metadata.views.TagDetailView.as_view(),
+         name='tag_detail'),
+    path('tags/autocomplete/',
+         metadata.views.TagAutocomplete.as_view(create_field='name'),
+         name='tag_autocomplete'),
 
     # Resource
     url(r'^resources/', include('webresources.urls')),
@@ -90,7 +89,7 @@ urlpatterns = [
     # Auth
     url(r'^accounts/', include('django.contrib.auth.urls')),
 
-    url(r'^admin/?', admin.site.urls),
+    path('admin', admin.site.urls),
 ]
 
 

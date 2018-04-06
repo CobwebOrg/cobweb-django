@@ -5,31 +5,31 @@ from django.views.generic import ListView, DetailView, CreateView
 from metadata import models  # , forms
 
 
-class KeywordIndexView(ListView):
-    model = models.Keyword
-    template_name = "keyword_list.html"
+class TagIndexView(ListView):
+    model = models.Tag
+    template_name = "tag_list.html"
     section = 'metadata'
 
 
-class KeywordDetailView(DetailView):
-    model = models.Keyword
-    template_name = "keyword_detail.html"
+class TagDetailView(DetailView):
+    model = models.Tag
+    template_name = "tag_detail.html"
     section = 'metadata'
 
 
-class KeywordCreateView(LoginRequiredMixin, CreateView):
-    model = models.Keyword
+class TagCreateView(LoginRequiredMixin, CreateView):
+    model = models.Tag
     template_name = 'md_test.html'
-    # form_class = forms.KeywordForm
+    # form_class = forms.TagForm
     section = 'metadata'
 
 
-class KeywordAutocomplete(autocomplete.Select2QuerySetView):
+class TagAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         if not self.request.user.is_authenticated:
-            return models.Keyword.objects.none()
+            return models.Tag.objects.none()
 
-        qs = models.Keyword.objects.all()
+        qs = models.Tag.objects.all()
 
         if self.q:
             qs = qs.filter(name__istartswith=self.q)

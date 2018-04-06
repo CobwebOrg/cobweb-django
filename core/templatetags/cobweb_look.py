@@ -65,7 +65,7 @@ def icon(item):
 
     format_args = {
         'User': ('User', 'fa-user'),
-        'Keyword': ('Keyword', 'fa-tag'),
+        'Tag': ('Tag', 'fa-tag'),
         'Organization': ('Organization', 'fa-institution'),
         'Project': ('Project', 'fa-tasks'),
         'Collection': ('Collection', 'fa-archive'),

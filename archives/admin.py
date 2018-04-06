@@ -39,6 +39,6 @@ class HoldingAdmin(VersionAdmin):
         'resource_link',
         'collection',
         'description',
-        'keywords',
+        'tags',
         'metadata',
     ]
