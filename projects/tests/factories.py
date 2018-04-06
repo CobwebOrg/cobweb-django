@@ -1,5 +1,6 @@
 from factory import DjangoModelFactory, Faker, SubFactory
 
+from core.tests.factories import OrganizationFactory
 from archives.tests.factories import CollectionFactory
 from projects.models import Project, Nomination, Claim
 from webresources.tests.factories import ResourceFactory
@@ -28,4 +29,4 @@ class ClaimFactory(DjangoModelFactory):
         # django_get_or_create = ('resource', 'collection')
 
     nomination = SubFactory(NominationFactory)
-    collection = SubFactory(CollectionFactory)
+    organization = SubFactory(OrganizationFactory)

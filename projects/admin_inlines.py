@@ -27,7 +27,8 @@ class ClaimInline(admin.TabularInline):
     show_change_link = True
 
     fields = [
-        'nomination',
-        'collection',
+        'project',
+        'resource',
+        'organization',
     ]
     readonly_fields = fields

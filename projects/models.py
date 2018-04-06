@@ -129,19 +129,38 @@ class Nomination(models.Model):
 
 @reversion.register()
 class Claim(models.Model):
+    @property
+    def project(self) -> Project:
+        return self.nomination.project
+
+    @property
+    def resource(self) -> models.Model:
+        return self.nomination.resource
+
     nomination = models.ForeignKey(Nomination, related_name='claims',
                                    on_delete=models.PROTECT)
-    collection = models.ForeignKey('archives.Collection', related_name='claims',
-                                   on_delete=models.PROTECT)
 
-    description = models.TextField('Description', null=True, blank=True)
-    keywords = models.ManyToManyField(Keyword, blank=True)
+    organization =  models.ForeignKey('core.Organization', related_name='claims',
+                                      null=False, blank=False, on_delete=models.PROTECT)
+
+    status = models.CharField(max_length=20, default='Active', choices=[
+        (x, x) for x in ('Active', 'Deprecated', 'Inactive', 'Deleted')])
+
+    @property
+    def impact_factor(self) -> bool:
+        has_holding = [c.holdings.filter(url=self.resource.url).count() > 0
+                       for c in self.organization.collections.all()]
+        return True in has_holding
+
+    # scope =
 
     class Meta:
-        unique_together = ('nomination', 'collection')
+        unique_together = ('nomination', 'organization')
 
     def __str__(self) -> str:
         return f'{self.nomination} – Collection {self.collection}'
+
+
 
     def get_absolute_url(self) -> str:
         return reverse('claim_detail', kwargs={'pk': self.pk})
@@ -153,4 +172,4 @@ class Claim(models.Model):
         return self.nomination.project
 
     def is_admin(self, user: AbstractBaseUser) -> bool:
-        return self.nomination.is_admin(user) or self.collection.is_admin(user)
+        return self.nomination.is_admin(user) or self.organization.is_admin(user)

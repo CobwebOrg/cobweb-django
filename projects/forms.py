@@ -149,14 +149,14 @@ class ClaimForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-        self.helper.layout = Layout(
-            Field('nomination', css_class='form-control-plaintext'),
-            Field('collection'),
-            Field('description'),
-            Field('keywords'),
-            FormActions(
-                CancelButton,
-                Submit('submit', 'Submit'),
-                css_class='float-right'
-            ),
-        )
+        # self.helper.layout = Layout(
+        #     Field('nomination', css_class='form-control-plaintext'),
+        #     Field('collection'),
+        #     Field('description'),
+        #     Field('keywords'),
+        #     FormActions(
+        #         CancelButton,
+        #         Submit('submit', 'Submit'),
+        #         css_class='float-right'
+        #     ),
+        # )

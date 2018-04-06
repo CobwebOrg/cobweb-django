@@ -3,7 +3,6 @@ from django.contrib import admin
 from reversion.admin import VersionAdmin
 
 from metadata.admin import MetadataAdminMixin
-from projects.admin_inlines import ClaimInline
 
 from archives import models, admin_inlines
 
@@ -12,7 +11,6 @@ from archives import models, admin_inlines
 class CollectionAdmin(MetadataAdminMixin, VersionAdmin):
     fields = ['title', 'administrators', 'organization', 'identifier'] + MetadataAdminMixin.fields
     inlines = [
-        ClaimInline,
         admin_inlines.HoldingInline,
     ]
 
