@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "~=2.0"
+Django = "~=2.0"
 django-autocomplete-light = "*"
 django-crispy-forms = "*"
 django-reversion = "*"
@@ -35,6 +35,7 @@ ansible = "*"
 pytest-bdd = "*"
 pytest-xdist = "*"
 ipython = "*"
+pylint = "*"
 
 [requires]
 python_version = "3.6"
