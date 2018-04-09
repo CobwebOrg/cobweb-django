@@ -75,7 +75,7 @@ class ProjectDetailViewTests(TestCase):
                 resource=ResourceFactory(url=url),
             )
             for username in users:
-                nom.nominated_by.add(UserFactory(username=username))
+                nom.endorsements.add(UserFactory(username=username))
 
         self.client.logout()
         self.test_response = self.client.get(

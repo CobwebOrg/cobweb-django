@@ -37,7 +37,7 @@ class Resource(models.Model):
     def get_resource_records(self) -> typing.Iterable:
         return chain(
             self.nominations.all(),
-            self.holdings.all(),
+            self.tags.all(),
         )
 
     def get_url(self) -> str:
@@ -49,5 +49,5 @@ class Resource(models.Model):
     def resource_record_count(self) -> int:
         return (
             self.nominations.count()
-            + self.holdings.count()
+            + self.tags.count()
         )

@@ -9,4 +9,4 @@
 {% for values in object.metadata.values %}{{values|join:', '}}
 {% endfor %}
 
-{{ object.nominated_by }}
+{{ object.endorsements }}

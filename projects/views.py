@@ -90,7 +90,7 @@ class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
 
     def get_initial(self):
         return {
-            'nominated_by': [self.request.user],
+            'endorsements': [self.request.user],
             'project': self.get_project(),
         }
 
@@ -114,7 +114,7 @@ class ResourceNominateView(RevisionMixin, CreateView):
 
     def get_initial(self):
         return {
-            'nominated_by': [self.request.user],
+            'endorsements': [self.request.user],
             'resource': self.kwargs['url'],
         }
 

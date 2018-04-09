@@ -20,7 +20,7 @@ class NominationFactory(DjangoModelFactory):
 
     resource = SubFactory(ResourceFactory)
     project = SubFactory(ProjectFactory)
-    # nominated_by = SubFactory(UserFactory)
+    # endorsements = SubFactory(UserFactory)
 
 
 class ClaimFactory(DjangoModelFactory):
