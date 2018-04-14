@@ -1,13 +1,14 @@
 from django.contrib import admin
 from reversion.admin import VersionAdmin
 
+from core.admin_inlines import NoteInline
 from projects.models import Nomination, Project, Claim
 from projects.admin_inlines import NominationInline
 
 
 @admin.register(Project)
 class ProjectAdmin(VersionAdmin):
-    inlines = [NominationInline]
+    inlines = [NominationInline, NoteInline]
 
 
 @admin.register(Nomination)

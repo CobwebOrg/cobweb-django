@@ -62,12 +62,14 @@ class Project(models.Model):
         # TODO: Fix this stub – not sure I understand the FRs...
         return self.nominations.exclude(claims=None)
 
-    # resources = models.ManyToManyField('webresources.Resource',
-    #                                    through='projects.Nomination')
+    @property
+    def resources(self) -> models.QuerySet:
+        # TODO: this is a bad, inefficient implementation
+        return Resource.objects.filter(nomination__project=Self)
 
     tags = models.ManyToManyField('core.Tag', blank=True)
-    # subject_headings = models.ManyToManyField('core.SubjectHeading',
-    #                                           blank=True)
+    subject_headings = models.ManyToManyField('core.SubjectHeading',
+                                              blank=True)
 
     notes = GenericRelation('core.Note')
 

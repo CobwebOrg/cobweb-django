@@ -17,7 +17,7 @@ class NominationInline(admin.TabularInline):
     extra = 0
     show_change_link = True
 
-    fields = ['title', 'resource', 'project']
+    fields = ['resource', 'project']
     # readonly_fields = fields
 
 
@@ -32,3 +32,4 @@ class ClaimInline(admin.TabularInline):
         'organization',
     ]
     readonly_fields = fields
+
