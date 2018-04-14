@@ -1,11 +1,11 @@
 import reversion
-from enum import Enum
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import AbstractUser
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.postgres.fields import JSONField
 
-from projects.models import Project
 from webresources.models import NormalizedURLField
 
 
@@ -31,16 +31,6 @@ class User(AbstractUser):
     def get_edit_url(self) -> str:
         return reverse('admin:core_user_change', args=[self.pk])
         # return reverse('', kwargs={'object_id': self.pk})
-
-
-# @reversion.register()
-# class AgentIdentifier(models.Model):
-#     agent = models.ForeignKey('Agent', on_delete=models.CASCADE)
-#     AGENT_IDENTIFIER_TYPES = {'ORCID', 'ResearcherID', 'Scopus',
-#                               'Twitter Handle', 'Other'}
-#     id_type = models.CharField('Type', max_length=3,
-#         choices=[(x, x) for x in AGENT_IDENTIFIER_TYPES])
-#     value = models.TextField()
 
 
 @reversion.register()
@@ -80,12 +70,14 @@ class Organization(models.Model):
             self.name or self.identifier or 'Organization {}'.format(self.pk)
         )
 
-# @reversion.register()
-# class OrganizationIdentifier(models.Model):
-#     organization = models.ForeignKey(Organization, on_delete=models.PROTECT)
 
-#     ORGANIZATION_IDENTIFIER_TYPES = {'ISNI','Ringgold','Other'}
-#     id_type = models.CharField('Type', max_length=3,
-#         choices=[(x, x) for x in ORGANIZATION_IDENTIFIER_TYPES])
 
-#     value = models.TextField('Value')
+@reversion.register()
+class Tag(models.Model):
+    """A single tag."""
+
+    name = models.CharField(max_length=200, unique=True, db_index=True)
+
+    def __str__(self) -> str:
+        """Return tag as string."""
+        return self.name

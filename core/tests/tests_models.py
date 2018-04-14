@@ -1,10 +1,7 @@
-from django.contrib.auth import get_user_model
 from django.test import TestCase
 
-from projects.tests.factories import ProjectFactory
-
-from core.models import Organization
-from core.tests.factories import UserFactory, OrganizationFactory
+from core.models import User, Organization, Tag
+from core.tests.factories import UserFactory, OrganizationFactory, TagFactory
 
 
 class UserModelTests(TestCase):
@@ -13,7 +10,7 @@ class UserModelTests(TestCase):
         self.test_instance = UserFactory()
 
     def test_creation(self):
-        self.assertIsInstance(self.test_instance, get_user_model())
+        self.assertIsInstance(self.test_instance, User)
 
     def test_str(self):
         """Tests that str(object) always returns a str."""
@@ -34,11 +31,14 @@ class OrganizationModelTests(TestCase):
         """Tests that str(object) always returns a str."""
         self.assertIsInstance(str(self.test_instance), str)
 
-        # # Make sure it works even if the usual fields are blank
-        # try:
-        #     self.assertIsInstance(
-        #         str(OrganizationFactory(title=None, identifier=None)),
-        #         str,
-        #     )
-        # except:
-        #     pass
+
+class TagModelTests(TestCase):
+
+    def setUp(self):
+        self.test_instance = TagFactory()
+
+    def test_creation(self):
+        self.assertIsInstance(self.test_instance, Tag)
+
+    def test_str(self):
+        self.assertIsInstance(str(self.test_instance), str)

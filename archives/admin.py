@@ -2,17 +2,15 @@ from django.urls import reverse
 from django.contrib import admin
 from reversion.admin import VersionAdmin
 
-from metadata.admin import MetadataAdminMixin
-
 from archives import models, admin_inlines
 
 
 @admin.register(models.Collection)
-class CollectionAdmin(MetadataAdminMixin, VersionAdmin):
-    fields = ['title', 'administrators', 'organization', 'identifier'] + MetadataAdminMixin.fields
-    inlines = [
+class CollectionAdmin(VersionAdmin):
+    fields = ('title', 'administrators', 'organization', 'identifier')
+    inlines = (
         admin_inlines.HoldingInline,
-    ]
+    )
 
 
 @admin.register(models.Holding)

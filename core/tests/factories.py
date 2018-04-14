@@ -1,14 +1,11 @@
 import factory
 
-from django.contrib.auth import get_user_model
-
-from core.models import Organization
+from core.models import User, Organization, Tag
 
 
 class UserFactory(factory.DjangoModelFactory):
     class Meta:
-        model = get_user_model()
-        django_get_or_create = ['username']
+        model = User
 
     first_name = factory.Faker('first_name')
     last_name = factory.Faker('last_name')
@@ -24,3 +21,10 @@ class OrganizationFactory(factory.DjangoModelFactory):
     name = factory.Faker('company')
     address = factory.Faker('address')
     description = factory.Faker('paragraph')
+
+
+class TagFactory(DjangoModelFactory):
+    class Meta:
+        model = Tag
+
+    name = Faker('word')

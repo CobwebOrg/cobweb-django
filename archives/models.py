@@ -4,21 +4,10 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.db import models
 from django.urls import reverse
 
-from metadata.models import CobwebMetadataMixin
 from webresources.models import NormalizedURLField
 
 
-class ModelValidationMixin(object):
-    """Django currently doesn't force validation on the model level
-    for compatibility reasons. We enforce here, that on each save,
-    a full valdation run will be done the for model instance"""
-
-    def save(self, *args, **kwargs) -> None:
-        self.full_clean()
-        super().save(*args, **kwargs)
-
-
-class Collection(ModelValidationMixin, CobwebMetadataMixin, models.Model):
+class Collection(models.Model):
     title = models.TextField(null=True, blank=True)
 
     administrators = models.ManyToManyField(
@@ -54,7 +43,7 @@ class Collection(ModelValidationMixin, CobwebMetadataMixin, models.Model):
 
 
 @reversion.register()
-class Holding(CobwebMetadataMixin, models.Model):
+class Holding(models.Model):
     resource = models.ForeignKey(
         'webresources.Resource',
         on_delete=models.PROTECT,

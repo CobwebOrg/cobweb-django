@@ -7,9 +7,7 @@ from django.views.generic import TemplateView
 # import archives.views
 import core.views
 import projects.views
-import metadata.views
 
-# from metadata.models import Tag
 
 
 urlpatterns = [
@@ -62,8 +60,8 @@ urlpatterns = [
         projects.views.ResourceNominateView.as_view(),
         name='nominate_resource'),
     path('nomination/<int:pk>/edit',
-        projects.views.NominationUpdateView.as_view(),
-        name='nomination_update'),
+         projects.views.NominationUpdateView.as_view(),
+         name='nomination_update'),
 
     # Claim
     path('claim/<int:pk>',
@@ -77,11 +75,12 @@ urlpatterns = [
          name='claim_update'),
 
     # Tags
-    path('tags/<int:pk>/', metadata.views.TagDetailView.as_view(),
-         name='tag_detail'),
-    path('tags/autocomplete/',
-         metadata.views.TagAutocomplete.as_view(create_field='name'),
-         name='tag_autocomplete'),
+    # path('tags/<int:pk>/',
+    #      core.views.TagDetailView.as_view(),
+    #      name='tag_detail'),
+    # path('tags/autocomplete/',
+    #      core.views.TagAutocomplete.as_view(create_field='name'),
+    #      name='tag_autocomplete'),
 
     # Resource
     url(r'^resources/', include('webresources.urls')),

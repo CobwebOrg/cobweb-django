@@ -1,6 +1,5 @@
 from django.contrib import admin, auth
 from reversion.admin import VersionAdmin
-from django.contrib.postgres import fields as postgres_fields
 
 from archives.admin_inlines import CollectionInline
 from datasources.admin import APIEndpointInline
@@ -19,3 +18,9 @@ class UserAdmin(VersionAdmin, auth.admin.UserAdmin):
 @admin.register(models.Organization)
 class OrganizationAdmin(VersionAdmin):
     inlines = [CollectionInline, APIEndpointInline]
+
+
+@admin.register(models.Tag)
+class TagAdmin(VersionAdmin):
+    model = models.Tag
+    # inlines = [ ProjectInline ]

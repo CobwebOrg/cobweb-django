@@ -93,7 +93,6 @@ INSTALLED_APPS = [
     'archives',
     'core',
     'datasources',
-    'metadata',
     'projects',
     'webresources',
 ]

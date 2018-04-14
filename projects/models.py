@@ -5,7 +5,6 @@ from django.db.models.query import QuerySet
 from django.urls import reverse
 
 from cobweb import settings
-from metadata.models import CobwebMetadataMixin, Tag
 
 
 @reversion.register()
@@ -65,8 +64,8 @@ class Project(models.Model):
     # resources = models.ManyToManyField('webresources.Resource',
     #                                    through='projects.Nomination')
 
-    tags = models.ManyToManyField('metadata.Tag', blank=True)
-    # subject_headings = models.ManyToManyField('metadata.SubjectHeading',
+    tags = models.ManyToManyField('core.Tag', blank=True)
+    # subject_headings = models.ManyToManyField('core.SubjectHeading',
     #                                           blank=True)
 
     def __str__(self) -> str:
@@ -114,7 +113,7 @@ class Nomination(models.Model):
     description = models.TextField(null=True, blank=True)
     rationale = models.TextField(null=True, blank=True)
 
-    tags = models.ManyToManyField(Tag, blank=True)
+    tags = models.ManyToManyField('core.Tag', blank=True)
     # subject_headings
 
     # mutability =
