@@ -1,5 +1,6 @@
 import reversion
 from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.db.models.query import QuerySet
 from django.urls import reverse
@@ -67,6 +68,8 @@ class Project(models.Model):
     tags = models.ManyToManyField('core.Tag', blank=True)
     # subject_headings = models.ManyToManyField('core.SubjectHeading',
     #                                           blank=True)
+
+    notes = GenericRelation('core.Note')
 
     def __str__(self) -> str:
         """

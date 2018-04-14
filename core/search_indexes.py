@@ -3,7 +3,7 @@
 from haystack import indexes
 
 from archives.models import Collection
-from core.models import User, Organization
+from core.models import User, Organization, Note
 from projects.models import Project
 from webresources.models import Resource
 
@@ -70,3 +70,11 @@ class OrganizationIndex(indexes.ModelSearchIndex, indexes.Indexable):
         """OrganizationIndex metaclass."""
 
         model = Organization
+
+
+class NoteIndex(indexes.ModelSearchIndex, indexes.Indexable):
+    text = indexes.CharField(document=True, use_template=True)
+
+    class Meta:
+        model = Note
+

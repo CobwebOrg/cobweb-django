@@ -71,6 +71,36 @@ class Organization(models.Model):
         )
 
 
+@reversion.register()
+class Note(models.Model):
+    """A note about an object tracked in Cobweb.
+
+    Fields:
+    author : User
+        (Null if the original author's account is deleted)
+    when_created : DateTime
+    ref : GenericForeignKey
+    visibility : str / enum
+        'Public', 'Organizational', or 'Project'
+    text : str
+    """
+
+    author = models.ForeignKey(User, null=True, blank=False,
+                               on_delete=models.SET_NULL, related_name='notes')
+    when_created = models.DateTimeField(auto_now_add=True)
+
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    ref = GenericForeignKey('content_type', 'object_id')
+
+    visibility = models.CharField(max_length=20, default='Public', choices=(
+        ('Public', 'Public'),
+        ('Organizational', 'Organizational'),
+        ('Project', 'Project'),
+    ))
+
+    text = models.TextField()
+
 
 @reversion.register()
 class Tag(models.Model):

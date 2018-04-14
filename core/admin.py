@@ -20,7 +20,13 @@ class OrganizationAdmin(VersionAdmin):
     inlines = [CollectionInline, APIEndpointInline]
 
 
+@admin.register(models.Note)
+class NoteAdmin(VersionAdmin):
+    pass
+
+
 @admin.register(models.Tag)
 class TagAdmin(VersionAdmin):
     model = models.Tag
     # inlines = [ ProjectInline ]
+
