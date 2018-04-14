@@ -1,6 +1,6 @@
 from django.forms.widgets import URLInput
 
-from webresources.models import Resource
+from core.models import Resource
 
 class ResourceInput(URLInput):
     """

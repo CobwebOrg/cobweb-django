@@ -23,7 +23,3 @@ from projects.tests import *
 from datasources.models import *
 from datasources.views import *
 from datasources.tests import *
-
-from webresources.models import *
-from webresources.views import *
-from webresources.tests import *

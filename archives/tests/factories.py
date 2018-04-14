@@ -1,6 +1,6 @@
 from factory import DjangoModelFactory, Faker, SubFactory
 
-from webresources.tests.factories import ResourceFactory
+from core.tests.factories import ResourceFactory
 from archives.models import Collection, Holding
 
 

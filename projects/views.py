@@ -4,7 +4,7 @@ from django.views.generic import DetailView, CreateView, UpdateView
 import django_tables2
 from reversion.views import RevisionMixin
 
-from webresources.models import Resource
+from core.models import Resource
 
 from projects import models, forms
 from projects.tables import ProjectTable, NominationTable, ClaimTable

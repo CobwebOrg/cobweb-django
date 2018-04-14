@@ -7,7 +7,7 @@ from hypothesis.extra.django.models import models
 
 from projects.tests.factories import ClaimFactory
 from projects.models import Project, Nomination, Claim
-from webresources.tests.factories import ResourceFactory
+from core.tests.factories import ResourceFactory
 
 
 def generate_with_claims(nomination):

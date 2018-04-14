@@ -84,9 +84,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.staticfiles',
 
+    'countries_plus',
     'crispy_forms',
     'django_tables2',
     'haystack',
+    'languages_plus',
     'reversion',
     'webpack_loader',
 
@@ -94,7 +96,6 @@ INSTALLED_APPS = [
     'core',
     'datasources',
     'projects',
-    'webresources',
 ]
 
 MIDDLEWARE = [

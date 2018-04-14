@@ -18,6 +18,8 @@ surt = "*"
 whitenoise = "*"
 uWSGI = "*"
 "psycopg2-binary" = "*"
+django-languages-plus = "*"
+django-countries-plus = "*"
 
 [dev-packages]
 pytest = "*"

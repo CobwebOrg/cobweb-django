@@ -1,6 +1,6 @@
 import factory
 
-from core.models import User, Organization, Tag
+from core.models import User, Organization, Tag, Resource
 
 
 class UserFactory(factory.DjangoModelFactory):
@@ -23,8 +23,16 @@ class OrganizationFactory(factory.DjangoModelFactory):
     description = factory.Faker('paragraph')
 
 
-class TagFactory(DjangoModelFactory):
+class TagFactory(factory.DjangoModelFactory):
     class Meta:
         model = Tag
 
     name = Faker('word')
+
+
+class ResourceFactory(factory.DjangoModelFactory):
+    class Meta:
+        model = Resource
+        django_get_or_create = ['url']
+
+    url = Faker('url')

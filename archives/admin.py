@@ -19,7 +19,7 @@ class HoldingAdmin(VersionAdmin):
 
     def resource_link(self, instance):
         if instance.id:
-            changeform_url = reverse('admin:webresources_resource_change',
+            changeform_url = reverse('admin:core_resource_change',
                                      args=(instance.resource.id,))
             return (
                 '<a href="{changeform_url}" target="_blank">{resource}</a>'

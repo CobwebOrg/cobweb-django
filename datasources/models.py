@@ -13,7 +13,7 @@ from sickle import Sickle
 
 from archives.models import Collection, Holding
 from core.models import Organization
-from webresources.models import normalize_url, Resource
+from core.models import normalize_url, Resource
 
 # from datasources.importers import importers
 

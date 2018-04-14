@@ -41,7 +41,7 @@ from crispy_forms.bootstrap import (
     UneditableField,
 )
 
-from webresources.models import Resource
+from core.models import Resource
 
 from archives.models import Collection
 

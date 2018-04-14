@@ -5,7 +5,7 @@ from haystack import indexes
 from archives.models import Collection
 from core.models import User, Organization, Note
 from projects.models import Project
-from webresources.models import Resource
+from core.models import Resource
 
 
 class ProjectIndex(indexes.ModelSearchIndex, indexes.Indexable):

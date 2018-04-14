@@ -9,7 +9,7 @@ from django.utils.safestring import mark_safe
 from archives.models import Collection, Holding
 from core.models import User
 from projects.models import Project, Nomination, Claim
-from webresources.models import Resource
+from core.models import Resource
 
 
 register = template.Library()

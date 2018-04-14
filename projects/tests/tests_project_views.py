@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 
 from core.tests.factories import UserFactory
-from webresources.tests.factories import ResourceFactory
+from core.tests.factories import ResourceFactory
 
 from projects.tests.factories import ProjectFactory, NominationFactory
 from projects.models import Project

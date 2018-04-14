@@ -1,7 +1,9 @@
+from django.db.utils import IntegrityError
 from django.test import TestCase
 
-from core.models import User, Organization, Tag
-from core.tests.factories import UserFactory, OrganizationFactory, TagFactory
+from core.models import User, Organization, Tag, Resource
+from core.tests.factories import (UserFactory, OrganizationFactory, TagFactory,
+                                  ResourceFactory)
 
 
 class UserModelTests(TestCase):
@@ -42,3 +44,22 @@ class TagModelTests(TestCase):
 
     def test_str(self):
         self.assertIsInstance(str(self.test_instance), str)
+
+
+class ResourceModelTests(TestCase):
+
+    def setUp(self):
+        self.test_instance = ResourceFactory()
+
+    def test_creation(self):
+        self.assertIsInstance(self.test_instance, Resource)
+
+    def test_str(self):
+        """Tests that str(object) always returns a str."""
+        self.assertIsInstance(str(self.test_instance), str)
+
+        # Make sure it works or db rejects if the usual fields are blank
+        try:
+            self.assertIsInstance(str(ResourceFactory(url=None)), str)
+        except IntegrityError:
+            pass

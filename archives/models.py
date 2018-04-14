@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.db import models
 from django.urls import reverse
 
-from webresources.models import NormalizedURLField
+from core.models import NormalizedURLField
 
 
 class Collection(models.Model):
@@ -45,7 +45,7 @@ class Collection(models.Model):
 @reversion.register()
 class Holding(models.Model):
     resource = models.ForeignKey(
-        'webresources.Resource',
+        'core.Resource',
         on_delete=models.PROTECT,
         related_name='holdings'
     )

@@ -17,8 +17,8 @@ from core.layout import (
     UneditableField,
 )
 from projects.models import Project, Nomination, Claim
-from webresources.models import Resource
-from webresources.widgets import ResourceInput
+from core.models import Resource
+from core.widgets import ResourceInput
 
 
 class ProjectForm(forms.ModelForm):

@@ -28,7 +28,7 @@ class CollectionTable(django_tables2.Table):
 class HoldingTable(django_tables2.Table):
 
     resource = django_tables2.LinkColumn(
-        'webresources:detail',
+        'core:detail',
         kwargs={'url': Accessor('resource.url')}
     )
     tags = django_tables2.TemplateColumn(

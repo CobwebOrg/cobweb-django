@@ -4,15 +4,15 @@ from faker import Faker
 
 from archives.tests.factories import HoldingFactory
 from projects.tests.factories import NominationFactory, ClaimFactory
-from webresources.tests.factories import ResourceFactory
+from core.tests.factories import ResourceFactory
 
-from webresources import models, views
+from core import models, views
 
 
 class ResourceIndexViewTests(TestCase):
 
     def test_loads(self):
-        response = self.client.get(reverse('webresources:list'))
+        response = self.client.get(reverse('resource_list'))
         assert response.status_code == 200
 
 
@@ -52,12 +52,12 @@ class ResourceDetailViewTests(TestCase):
         not_url = 'not a url'
 
         # # non-cannonical url should redirect
-        bad_path = reverse('webresources:detail', kwargs={'url': bad_url})
-        good_path = reverse('webresources:detail', kwargs={'url': good_url})
+        bad_path = reverse('resource_detail', kwargs={'url': bad_url})
+        good_path = reverse('resource_detail', kwargs={'url': good_url})
         self.assertRedirects(self.client.get(bad_path), good_path)
 
         # invalid url raises 404
-        invalid_path = reverse('webresources:detail', kwargs={'url': not_url})
+        invalid_path = reverse('resource_detail', kwargs={'url': not_url})
         self.assertEqual(self.client.get(invalid_path).status_code, 404)
 
     def test_get_object(self):

@@ -4,7 +4,7 @@ from django.urls import reverse
 from lxml import html
 
 from core.tests.factories import UserFactory
-from webresources.tests.factories import ResourceFactory
+from core.tests.factories import ResourceFactory
 
 from projects.tests.factories import ProjectFactory, NominationFactory, ClaimFactory
 from projects.models import Project

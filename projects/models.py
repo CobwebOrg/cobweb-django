@@ -108,7 +108,7 @@ class Project(models.Model):
 @reversion.register()
 class Nomination(models.Model):
     resource = models.ForeignKey(
-        'webresources.Resource',
+        'core.Resource',
         on_delete=models.PROTECT,
         related_name='nominations'
     )

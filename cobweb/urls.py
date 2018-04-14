@@ -83,7 +83,8 @@ urlpatterns = [
     #      name='tag_autocomplete'),
 
     # Resource
-    url(r'^resources/', include('webresources.urls')),
+    path('resources/', core.views.ResourceListView.as_view(), name='resource_list'),
+    path('resources/<str:url>', core.views.ResourceDetailView.as_view(), name='resource_detail'),
 
     # Auth
     url(r'^accounts/', include('django.contrib.auth.urls')),
