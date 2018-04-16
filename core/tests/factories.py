@@ -1,6 +1,8 @@
 import factory
 
-from core.models import User, Organization, Tag, Resource
+from core.models import User, Organization
+from core.models import Note, Tag, SubjectHeading
+from core.models import Resource, ResourceScan, ResourceDescription
 
 
 class UserFactory(factory.DjangoModelFactory):
@@ -23,11 +25,27 @@ class OrganizationFactory(factory.DjangoModelFactory):
     description = factory.Faker('paragraph')
 
 
+class NoteFactory(factory.DjangoModelFactory):
+    class Meta:
+        model = Note
+
+    author = factory.SubFactory(UserFactory)
+    ref = factory.SubFactory(OrganizationFactory)
+    text = factory.Faker('paragraph')
+
+
 class TagFactory(factory.DjangoModelFactory):
     class Meta:
         model = Tag
 
-    name = Faker('word')
+    name = factory.Faker('word')
+
+
+class SubjectHeadingFactory(factory.DjangoModelFactory):
+    class Meta:
+        model = SubjectHeading
+
+    name = factory.Faker('word')
 
 
 class ResourceFactory(factory.DjangoModelFactory):
@@ -35,4 +53,39 @@ class ResourceFactory(factory.DjangoModelFactory):
         model = Resource
         django_get_or_create = ['url']
 
-    url = Faker('url')
+    url = factory.Faker('url')
+
+
+class ResourceDescriptionFactory(factory.DjangoModelFactory):
+    class Meta:
+        model = ResourceDescription
+
+    resource = factory.SubFactory(ResourceFactory)
+    asserted_by = factory.SubFactory(UserFactory)
+
+    # title = factory.Faker('')
+    description = factory.Faker('paragraph')
+
+    @factory.post_generation
+    def tags(self, create, extracted, **kwargs):
+        """Add tags.
+
+        cf.
+        http://factoryboy.readthedocs.io/en/latest/recipes.html#simple-many-to-many-relationship
+        """
+        if not create:
+            # Simple build, do nothing.
+            return
+
+        if extracted:
+            for tag in extracted:
+                if isinstance(tag, str):
+                    tag = TagFactory(name=tag)
+                self.tags.add(tag)
+
+
+class ResourceScanFactory(factory.DjangoModelFactory):
+    class Meta:
+        model = ResourceScan
+
+    resource = factory.SubFactory(ResourceFactory)

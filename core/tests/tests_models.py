@@ -1,65 +1,68 @@
+import pytest
 from django.db.utils import IntegrityError
 from django.test import TestCase
 
-from core.models import User, Organization, Tag, Resource
-from core.tests.factories import (UserFactory, OrganizationFactory, TagFactory,
-                                  ResourceFactory)
+from core.models import User, Organization
+from core.models import Note, Tag, SubjectHeading
+from core.models import Resource, ResourceDescription, ResourceScan
+from core.tests.factories import UserFactory, OrganizationFactory
+from core.tests.factories import NoteFactory, TagFactory, SubjectHeadingFactory
+from core.tests.factories import ResourceFactory, ResourceDescriptionFactory, ResourceScanFactory
 
 
-class UserModelTests(TestCase):
-
-    def setUp(self):
-        self.test_instance = UserFactory()
-
-    def test_creation(self):
-        self.assertIsInstance(self.test_instance, User)
-
-    def test_str(self):
-        """Tests that str(object) always returns a str."""
-        self.assertIsInstance(str(self.test_instance), str)
+@pytest.mark.django_db
+def test_user_model():
+    user = UserFactory()
+    assert isinstance(user, User)
+    assert isinstance(str(user), str)
 
 
-class OrganizationModelTests(TestCase):
-
-    def setUp(self):
-        self.test_instance = OrganizationFactory()
-
-    def test_organization_creation(self):
-        """Tests creation of Organization objects"""
-
-        self.assertIsInstance(self.test_instance, Organization)
-
-    def test_str(self):
-        """Tests that str(object) always returns a str."""
-        self.assertIsInstance(str(self.test_instance), str)
+@pytest.mark.django_db
+def test_organization_model():
+    org = OrganizationFactory()
+    assert isinstance(org, Organization)
+    assert isinstance(str(org), str)
 
 
-class TagModelTests(TestCase):
-
-    def setUp(self):
-        self.test_instance = TagFactory()
-
-    def test_creation(self):
-        self.assertIsInstance(self.test_instance, Tag)
-
-    def test_str(self):
-        self.assertIsInstance(str(self.test_instance), str)
+@pytest.mark.django_db
+def test_note_model():
+    note = NoteFactory()
+    assert isinstance(note, Note)
+    assert isinstance(str(note), str)
 
 
-class ResourceModelTests(TestCase):
+@pytest.mark.django_db
+def test_tag_model():
+    tag = TagFactory()
+    assert isinstance(tag, Tag)
+    assert isinstance(str(tag), str)
 
-    def setUp(self):
-        self.test_instance = ResourceFactory()
 
-    def test_creation(self):
-        self.assertIsInstance(self.test_instance, Resource)
+@pytest.mark.django_db
+def test_subjectheading_model():
+    subject_heading = SubjectHeadingFactory()
+    assert isinstance(subject_heading, SubjectHeading)
+    assert isinstance(str(subject_heading), str)
 
-    def test_str(self):
-        """Tests that str(object) always returns a str."""
-        self.assertIsInstance(str(self.test_instance), str)
 
-        # Make sure it works or db rejects if the usual fields are blank
-        try:
-            self.assertIsInstance(str(ResourceFactory(url=None)), str)
-        except IntegrityError:
-            pass
+@pytest.mark.django_db
+def test_resource_model():
+    resource = ResourceFactory()
+    assert isinstance(resource, Resource)
+    assert isinstance(str(resource), str)
+    with pytest.raises(IntegrityError):
+        str(ResourceFactory(url=None))
+
+
+@pytest.mark.django_db
+def test_resource_description_model():
+    resource_description = ResourceDescriptionFactory()
+    assert isinstance(resource_description, ResourceDescription)
+    assert isinstance(str(resource_description), str)
+
+
+@pytest.mark.django_db
+def test_resource_scan_model():
+    resource_scan = ResourceScanFactory()
+    assert isinstance(resource_scan, ResourceScan)
+    assert isinstance(str(resource_scan), str)

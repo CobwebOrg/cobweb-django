@@ -188,7 +188,8 @@ class ResourceDescription(models.Model):
     description = models.TextField(null=True, blank=True)
 
     # TODO: setup required - see https://github.com/cordery/django-languages-plus
-    language = models.ForeignKey('languages_plus.Language', on_delete=models.PROTECT)
+    language = models.ForeignKey('languages_plus.Language', null=True, blank=True,
+                                 on_delete=models.PROTECT)
 
     tags = models.ManyToManyField(Tag, blank=True)
     subject_headings = models.ManyToManyField(SubjectHeading, blank=True)
@@ -215,4 +216,5 @@ class ResourceScan(models.Model):
     ))
 
     title = models.CharField(max_length=200, null=True, blank=True)
-    language = models.ForeignKey('languages_plus.Language', on_delete=models.PROTECT)
+    language = models.ForeignKey('languages_plus.Language', null=True, blank=True,
+                                 on_delete=models.PROTECT)
