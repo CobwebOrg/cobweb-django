@@ -18,6 +18,8 @@ surt = "*"
 whitenoise = "*"
 uWSGI = "*"
 "psycopg2-binary" = "*"
+djangorestframework = "*"
+drf-haystack = "*"
 django-languages-plus = "*"
 django-countries-plus = "*"
 

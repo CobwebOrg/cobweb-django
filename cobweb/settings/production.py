@@ -89,6 +89,7 @@ INSTALLED_APPS = [
     'django_tables2',
     'haystack',
     'languages_plus',
+    'rest_framework',
     'reversion',
     'webpack_loader',
 
