@@ -115,21 +115,23 @@ class Nomination(models.Model):
     project = models.ForeignKey(Project, related_name='nominations',
                                 on_delete=models.PROTECT)
 
-    description = models.TextField(null=True, blank=True)
-    rationale = models.TextField(null=True, blank=True)
-
-    tags = models.ManyToManyField('core.Tag', blank=True)
-    # subject_headings
-
-    # mutability =
-
     status = models.CharField(max_length=11, default='Unclaimed', choices=[
         (x, x) for x in ('Rejected', 'Unclaimed', 'Underclaimed', 'Claimed', 'Deprecated')])
+
     nominated_by = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
 
     @property
     def impact_factor(self):
         return self.endorsements.count() + self.claims.count()  # + self.holdings.count()
+
+    rationale = models.TextField(null=True, blank=False)
+
+    tags = models.ManyToManyField('core.Tag', blank=True)
+    subject_headings = models.ManyToManyField('core.SubjectHeading', blank=True)
+
+    # mutability =
+
+    notes = GenericRelation('core.Note')
 
     @property
     def name(self) -> str:
@@ -185,7 +187,7 @@ class Claim(models.Model):
                        for c in self.organization.collections.all()]
         return True in has_holding
 
-    # scope =
+    notes = GenericRelation('core.Note')
 
     class Meta:
         unique_together = ('nomination', 'organization')
