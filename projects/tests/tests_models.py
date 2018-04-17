@@ -5,58 +5,73 @@ from django.contrib.auth.models import AnonymousUser
 from django.db.utils import IntegrityError
 
 from archives.tests.factories import CollectionFactory
-from core.tests.factories import UserFactory
+from core.tests.factories import UserFactory, OrganizationFactory
 from projects.models import Project, Nomination, Claim
 from projects.tests.factories import ProjectFactory, NominationFactory, ClaimFactory
 
 
-class ProjectModelTests(TestCase):
+class TestProjectModel:
 
-    def setUp(self):
-        self.test_instance = ProjectFactory()
+    @pytest.mark.django_db
+    def test_project_model(self):
+        project = ProjectFactory()
+        assert isinstance(project, Project)
+        assert isinstance(str(project), str)
 
-    def test_creation(self):
-        self.assertIsInstance(self.test_instance, Project)
-
-    def test_str(self):
-        """Tests that str(object) always returns a str."""
-        self.assertIsInstance(str(self.test_instance), str)
-
+    @pytest.mark.django_db
     def test_is_admin(self):
-        assert self.test_instance.is_admin(AnonymousUser()) is False
+        project = ProjectFactory()
+        assert project.is_admin(AnonymousUser()) is False
         user = UserFactory()
-        assert self.test_instance.is_admin(user) is False
-        self.test_instance.administrators.add(user)
-        assert self.test_instance.is_admin(user) is True
+        assert project.is_admin(user) is False
+        project.administrators.add(user)
+        assert project.is_admin(user) is True
 
+    @pytest.mark.django_db
     def test_is_nominator(self):
-        # TODO: more complicated logic involving nomination_policy
-        assert self.test_instance.is_nominator(AnonymousUser()) is False
-        user = UserFactory()
-        # assert self.test_instance.is_nominator(user) is False
-        self.test_instance.nominators.add(user)
-        assert self.test_instance.is_nominator(user) is True
+        project = ProjectFactory()
+
+        anon_user = AnonymousUser()
+
+        blacklisted_user = UserFactory()
+        project.nominator_blacklist.add(blacklisted_user)
+
+        random_user = UserFactory()
+
+        nominator_user = UserFactory()
+        project.nominators.add(nominator_user)
+
+        admin_user = UserFactory()
+        project.administrators.add(admin_user)
+
+        for policy, user, result in (
+            ('Public', blacklisted_user, False),
+            ('Public', anon_user, True),
+            ('Public', random_user, True),
+            ('Public', nominator_user, True),
+            ('Public', admin_user, True),
+
+            ('Cobweb Users', anon_user, False),
+            ('Cobweb Users', blacklisted_user, False),
+            ('Cobweb Users', random_user, True),
+            ('Cobweb Users', nominator_user, True),
+            ('Cobweb Users', admin_user, True),
+
+            ('Restricted', anon_user, False),
+            ('Restricted', blacklisted_user, False),
+            ('Restricted', random_user, False),
+            ('Restricted', nominator_user, True),
+            ('Restricted', admin_user, True),
+        ):
+            project.nomination_policy = policy
+            assert project.is_nominator(user) == result, f'policy={policy}'
 
 
-class NominationModelTests(TestCase):
-
-    def setUp(self):
-        self.test_instance = NominationFactory()
-
-    def test_creation(self):
-        self.assertIsInstance(self.test_instance, Nomination)
-
-    def test_str(self):
-        """Tests that str(object) always returns a str."""
-        self.assertIsInstance(str(self.test_instance), str)
-
-    @hypothesis.given(hypothesis.strategies.text(alphabet=hypothesis.strategies.characters(min_codepoint=1), min_size=1))
-    def test_name(self, title):
-        """Nomination.name returns title if the nomination has one, otherwise url."""
-        nomination = NominationFactory(title=None)
-        assert nomination.name == nomination.resource.url and nomination.name[:4] == 'http'
-        nomination.title = title
-        assert nomination.name == title
+@pytest.mark.django_db
+def test_nomination_model():
+    nomination = NominationFactory()
+    assert isinstance(nomination, Nomination)
+    assert isinstance(str(nomination), str)
 
 
 @pytest.mark.django_db
@@ -66,7 +81,7 @@ class TestClaimModel:
         """Tests creation of Claim objects"""
 
         good_claim_data = {'nomination': NominationFactory(),
-                           'collection': CollectionFactory()}
+                           'organization': OrganizationFactory()}
         Claim.objects.create(**good_claim_data).save()
 
         # Duplicate data should raise error
@@ -90,9 +105,10 @@ class TestClaimModel:
         assert ClaimFactory(nomination=nomination).get_resource_set() == project
 
     def test_is_admin(self):
-        # TODO: complicated logic -> vary project nomination policy &c
+        """Claim.is_admin(user) returns true for Claim's Project and Organization admins."""
+
         claim = ClaimFactory()
-        assert claim.is_admin(AnonymousUser()) is False
+        assert claim.is_admin(AnonymousUser()) is True
 
         user = UserFactory()
 
@@ -100,15 +116,11 @@ class TestClaimModel:
         assert claim.is_admin(user) is True
 
         claim.nomination.project.administrators.remove(user)
-        claim.collection.administrators.add(user)
+        claim.organization.administrators.add(user)
         assert claim.is_admin(user) is True
 
         claim.nomination.project.administrators.add(user)
         assert claim.is_admin(user) is True
-
-    def test_project(self):
-        claim = ClaimFactory()
-        assert claim.project == claim.nomination.project
 
     def test_project(self):
         claim = ClaimFactory()
@@ -117,7 +129,3 @@ class TestClaimModel:
     def test_resource(self):
         claim = ClaimFactory()
         assert claim.resource == claim.nomination.resource
-
-    def test_impact_factor(self):
-        claim = ClaimFactory()
-        claim.resource.holdings.delete()

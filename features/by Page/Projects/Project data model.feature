@@ -12,7 +12,7 @@ Feature: project data model
       | administrators      | ManyToManyField(User)         |
       | nomination_policy   | enum                          |
       | nominator_orgs      | ManyToManyField(Organization) |
-      | nominator_users     | ManyToManyField(User)         |
+      | nominators          | ManyToManyField(User)         |
       | nominator_blacklist | ManyToManyField               |
       | status              | enum                          |
       # | impact_factor       | int??? | # <- computed

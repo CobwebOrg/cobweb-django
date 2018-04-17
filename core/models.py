@@ -1,6 +1,7 @@
 import typing
 
 import reversion
+from django.conf import settings
 from django.core.validators import URLValidator
 from django.db import models
 from django.urls import reverse
@@ -65,6 +66,11 @@ class Organization(models.Model):
     parent = models.ForeignKey('self', on_delete=models.SET_NULL,
                                null=True, blank=True)
 
+    administrators = models.ManyToManyField(
+        User, null=True,
+        related_name='organizations_administered',
+    )
+
     address = models.TextField('Address', null=True, blank=True)
 
     description = models.TextField('Description', null=True, blank=True)
@@ -95,6 +101,9 @@ class Organization(models.Model):
         return (
             self.name or self.identifier or 'Organization {}'.format(self.pk)
         )
+
+    def is_admin(self, user):
+        return user in self.administrators.all()
 
 
 @reversion.register()

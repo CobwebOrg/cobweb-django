@@ -16,13 +16,13 @@ class Project(models.Model):
     description = models.TextField(null=True, blank=True)
 
     administrators = models.ManyToManyField(
-        settings.AUTH_USER_MODEL,
+        settings.AUTH_USER_MODEL, null=True,
         related_name='projects_administered',
         verbose_name='administrators'
     )
 
     nomination_policy = models.CharField(
-        max_length=10, default='Open', choices=(
+        max_length=10, default='Public', choices=(
             ('Public', "Public: anyone can nominate, even if they're not logged in."),
             ('Cobweb Users', 'Cobweb Users: anyone with a Cobweb account can nominate.'),
             ('Restricted', 'Restricted: only selected users and organizations can nominate.'),
@@ -34,7 +34,7 @@ class Project(models.Model):
         related_name='projects_nominating',
     )
 
-    nominator_users = models.ManyToManyField(
+    nominators = models.ManyToManyField(
         settings.AUTH_USER_MODEL, blank=True,
         related_name='projects_nominating',
     )
@@ -97,8 +97,8 @@ class Project(models.Model):
         return (
             user not in self.nominator_blacklist.all()
             and (
-                self.nomination_policy == 'Anonymous'
-                or (self.nomination_policy == 'Open' and not user.is_anonymous)
+                self.nomination_policy == 'Public'
+                or (self.nomination_policy == 'Cobweb Users' and not user.is_anonymous)
                 or user in self.administrators.all()
                 or user in self.nominators.all()
             )
@@ -175,8 +175,8 @@ class Claim(models.Model):
     nomination = models.ForeignKey(Nomination, related_name='claims',
                                    on_delete=models.PROTECT)
 
-    organization =  models.ForeignKey('core.Organization', related_name='claims',
-                                      null=False, blank=False, on_delete=models.PROTECT)
+    organization = models.ForeignKey('core.Organization', related_name='claims',
+                                     null=False, blank=False, on_delete=models.PROTECT)
 
     status = models.CharField(max_length=20, default='Active', choices=[
         (x, x) for x in ('Active', 'Deprecated', 'Inactive', 'Deleted')])
@@ -193,9 +193,7 @@ class Claim(models.Model):
         unique_together = ('nomination', 'organization')
 
     def __str__(self) -> str:
-        return f'{self.nomination} – Collection {self.collection}'
-
-
+        return f'{self.nomination} – Organization {self.organization}'
 
     def get_absolute_url(self) -> str:
         return reverse('claim_detail', kwargs={'pk': self.pk})
