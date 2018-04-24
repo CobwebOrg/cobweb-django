@@ -16,9 +16,9 @@ urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='landing_page.html'), name='front_page'),
 
     # User
-    url(r'^users/(?P<pk>\d+)/edit/$',
-        core.views.UserUpdateView.as_view(),
-        name='user_update'),
+    path('users/<pk>/edit/',
+         core.views.UserUpdateView.as_view(),
+         name='user_update'),
     url(r'^users/(?P<pk>\d+)/$',
         core.views.UserDetailView.as_view(),
         name='user_detail'),

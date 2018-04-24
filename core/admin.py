@@ -11,9 +11,17 @@ from core.admin_inlines import NoteInline, ResourceScanInline, ResourceDescripti
 admin.site.unregister(auth.models.Group)
 
 
-@admin.register(auth.get_user_model())
+@admin.register(models.User)
 class UserAdmin(VersionAdmin, auth.admin.UserAdmin):
-    pass
+    model = models.User
+
+    fieldsets = (
+        (None, {'fields': ('username', 'password')}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'email',
+                           'affiliations')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser')}),
+        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+    )
 
 
 @admin.register(models.Organization)

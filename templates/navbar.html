@@ -8,7 +8,7 @@
 	<nav class="navbar row justify-content-end">
 		{% if user.is_authenticated %}
 			<span class="nav-link my-0 py-0">Welcome, {{user}}</span> |
-			<a id="account_link" class="nav-link my-0 py-0" href="#">Account</a> |
+			<a id="account_link" class="nav-link my-0 py-0" href="{% url 'user_update' pk=request.user.pk %}">Account</a> |
 			<a id="logout_link" class="nav-link my-0 py-0" href="{% url 'logout' %}?next={{request.path}}">Logout</a>
 		{% else %}
 			<span class="nav-link my-0 py-0">Welcome!</span> |
@@ -28,13 +28,13 @@
 		<a class="nav-link text-uppercase mr-auto ml-auto text-ltprimary" href="{% url 'archives:collection_list' %}">
 			Collections
 		</a>
-		<a class="nav-link text-uppercase mr-auto ml-auto text-ltprimary" href="{% url 'core:list' %}">
+		<a class="nav-link text-uppercase mr-auto ml-auto text-ltprimary" href="{% url 'resource_list' %}">
 			Resources
 		</a>
-		<a class="nav-link text-uppercase mr-auto ml-auto text-light" href="{% url 'core:list' %}">
+		<a class="nav-link text-uppercase mr-auto ml-auto text-light" href="{% url 'resource_list' %}">
 			Organizations
 		</a>
-		<a class="nav-link text-uppercase mr-auto ml-auto text-light" href="{% url 'core:list' %}">
+		<a class="nav-link text-uppercase mr-auto ml-auto text-light" href="{% url 'resource_list' %}">
 			Users
 		</a>
 	</nav>

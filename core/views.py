@@ -1,6 +1,5 @@
 import django_tables2
 from dal import autocomplete
-from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.http import Http404
@@ -9,41 +8,41 @@ from django.views import generic
 from reversion.views import RevisionMixin
 
 from core import models
-from core.forms import UserForm
+from core.forms import SignUpForm, UserProfileForm
 
 
 class UserIndexView(generic.ListView):
-    model = get_user_model()
+    model = models.User
     template_name = "user_list.html"
     section = 'user'
 
 
 class UserDetailView(generic.DetailView):
-    model = get_user_model()
+    model = models.User
     template_name = "user_detail.html"
     section = 'user'
 
 
 class UserCreateView(RevisionMixin, generic.CreateView):
-    model = get_user_model()
+    model = models.User
     template_name = "generic_form.html"
-    form_class = UserForm
+    form_class = SignUpForm
     section = 'user'
 
 
 class UserUpdateView(RevisionMixin, generic.UpdateView):
-    model = get_user_model()
+    model = models.User
     template_name = "generic_form.html"
-    form_class = UserForm
+    form_class = UserProfileForm
     section = 'user'
 
 
 class UserAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         if not self.request.user.is_authenticated:
-            return get_user_model().objects.none()
+            return models.User.objects.none()
 
-        qs = get_user_model().objects.all()
+        qs = models.User.objects.all()
 
         if self.q:
             qs = qs.filter(

@@ -36,15 +36,21 @@ class NormalizedURLField(models.URLField):
 
 @reversion.register()
 class User(AbstractUser):
-    # TODO: inherit from ABU??? AU??? use builtin User???
 
-    affiliations = models.ManyToManyField(
-        'Organization',
-        related_name="affiliated_users"
-    )
+    affiliations = models.ManyToManyField('Organization', blank=True,
+                                          related_name="affiliated_users")
+    # professional_title TODO
 
-    description = models.TextField('Description', null=True, blank=True)
-    deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
+    url = NormalizedURLField(null=True, blank=True)
+
+    # Preferences
+    get_notification_emails = models.BooleanField(default=True)
+
+    @property
+    def impact_factor(self):
+        # TODO: actuall implement functional requirement
+        # (this is just a placeholder)
+        return self.projects_administered.count()
 
     def __str__(self) -> str:
         return (
