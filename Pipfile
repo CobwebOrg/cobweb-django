@@ -20,6 +20,7 @@ uWSGI = "*"
 "psycopg2-binary" = "*"
 django-languages-plus = "*"
 django-countries-plus = "*"
+django-phonenumber-field = "*"
 
 [dev-packages]
 pytest = "*"

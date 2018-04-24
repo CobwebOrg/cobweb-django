@@ -1,7 +1,12 @@
 from django.contrib import admin
 from django.contrib.contenttypes.admin import GenericStackedInline
 
-from core.models import Note, ResourceDescription, ResourceScan
+from core.models import Organization, Note, ResourceDescription, CrawlScope
+
+
+class OrganizationInline(admin.TabularInline):
+    model = Organization
+    # exclude = []
 
 
 class NoteInline(GenericStackedInline):
@@ -9,6 +14,7 @@ class NoteInline(GenericStackedInline):
     fields = ('when_created', 'author', 'visibility', 'text')
     readonly_fields = ('when_created',)
     extra = 0
+
 
 class ResourceDescriptionInline(admin.StackedInline):
     model = ResourceDescription

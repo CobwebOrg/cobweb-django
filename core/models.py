@@ -1,15 +1,14 @@
 import typing
 
 import reversion
-from django.conf import settings
 from django.core.validators import URLValidator
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.postgres.fields import JSONField
 from itertools import chain
+from phonenumber_field.modelfields import PhoneNumberField
 from surt import handyurl
 from surt.DefaultIAURLCanonicalizer import canonicalize
 
@@ -68,40 +67,48 @@ class User(AbstractUser):
 
 @reversion.register()
 class Organization(models.Model):
-    name = models.TextField('Name', null=True)
-    parent = models.ForeignKey('self', on_delete=models.SET_NULL,
-                               null=True, blank=True)
+
+    full_name = models.CharField(max_length=2000, verbose_name="full legal name")
+    short_name = models.CharField(max_length=200, null=True, blank=True,
+                                  verbose_name="short name, nickname, or acronym")
 
     administrators = models.ManyToManyField(
-        User, null=True,
+        User,
         related_name='organizations_administered',
     )
 
-    address = models.TextField('Address', null=True, blank=True)
+    address = models.TextField(null=True, blank=True)
+    telephone_number = PhoneNumberField(null=True, blank=True)
+    url = NormalizedURLField(null=True, blank=True)
+    email_address = models.EmailField(null=True, blank=True)
 
-    description = models.TextField('Description', null=True, blank=True)
+    contact = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
 
-    metadata = JSONField(null=True, blank=True)
+    parent_organization = models.ForeignKey('self', on_delete=models.SET_NULL,
+                                            null=True, blank=True)
 
-    SECTORS = ('Academic', 'Corporate', 'Government', 'Non-Profit', 'Other')
-    sector = models.CharField('Sector', max_length=10, null=True, blank=True,
-                              choices=[(x, x) for x in SECTORS])
-
-    ORGANIZATION_TYPES = ('Archive', 'Datacenter', 'Department', 'Division',
-                          'Laboratory', 'Library', 'Museum', 'Project', 'Other')
-    organization_type = models.CharField(
-        'Type', max_length=10, null=True, blank=True,
-        choices=[(x, x) for x in ORGANIZATION_TYPES]
+    description = models.TextField(
+        null=True, blank=True,
+        verbose_name='description of mission and collecting policy',
     )
-
-    # country = ???
-    created = models.DateTimeField('Date Created', auto_now_add=True)
-    deprecated = models.DateTimeField('Date Deprecated', null=True, blank=True)
 
     identifier = NormalizedURLField(
         "Archive-It.org Identifier",
         null=True, blank=True, unique=True, editable=False
     )
+
+    @property
+    def name(self):
+        return self.short_name or self.full_name
+
+    @property
+    def impact_factor(self):
+        # TODO: actuall implement functional requirement
+        # (this is just a placeholder)
+        return self.claims.count() + self.holdings.count()
+
+    def __repr__(self) -> str:
+        return f"<Organization '{self.name}'>"
 
     def __str__(self) -> str:
         return (

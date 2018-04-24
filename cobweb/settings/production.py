@@ -89,6 +89,7 @@ INSTALLED_APPS = [
     'django_tables2',
     'haystack',
     'languages_plus',
+    'phonenumber_field',
     'reversion',
     'webpack_loader',
 

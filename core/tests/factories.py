@@ -20,7 +20,7 @@ class OrganizationFactory(factory.DjangoModelFactory):
     class Meta:
         model = Organization
 
-    name = factory.Faker('company')
+    full_name = factory.Faker('company')
     address = factory.Faker('address')
     description = factory.Faker('paragraph')
 
