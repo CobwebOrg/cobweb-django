@@ -16,7 +16,7 @@ class Project(models.Model):
     description = models.TextField(null=True, blank=True)
 
     administrators = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, null=True,
+        settings.AUTH_USER_MODEL,
         related_name='projects_administered',
         verbose_name='administrators'
     )
@@ -115,23 +115,25 @@ class Nomination(models.Model):
     project = models.ForeignKey(Project, related_name='nominations',
                                 on_delete=models.PROTECT)
 
-    status = models.CharField(max_length=11, default='Unclaimed', choices=[
-        (x, x) for x in ('Rejected', 'Unclaimed', 'Underclaimed', 'Claimed', 'Deprecated')])
+    # STATUS
+    needs_claim = models.BooleanField(default=True)
+    deleted = models.BooleanField(default=False)
 
     nominated_by = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
+
+    rationale = models.TextField(null=True, blank=True)
+
+    suggested_crawl_frequency = models.CharField(
+        null=True, blank=True, max_length=50,
+        choices=[(x, x) for x in ('Hourly', 'Daily', 'Weekly', 'Monthly')]
+    )
+    suggested_crawl_end_date = models.DateTimeField(null=True, blank=True)
+
+    notes = GenericRelation('core.Note')
 
     @property
     def impact_factor(self):
         return self.endorsements.count() + self.claims.count()  # + self.holdings.count()
-
-    rationale = models.TextField(null=True, blank=False)
-
-    tags = models.ManyToManyField('core.Tag', blank=True)
-    subject_headings = models.ManyToManyField('core.SubjectHeading', blank=True)
-
-    # mutability =
-
-    notes = GenericRelation('core.Note')
 
     @property
     def name(self) -> str:
@@ -164,30 +166,25 @@ class Nomination(models.Model):
 
 @reversion.register()
 class Claim(models.Model):
-    @property
-    def project(self) -> Project:
-        return self.nomination.project
-
-    @property
-    def resource(self) -> models.Model:
-        return self.nomination.resource
-
     nomination = models.ForeignKey(Nomination, related_name='claims',
                                    on_delete=models.PROTECT)
 
     organization = models.ForeignKey('core.Organization', related_name='claims',
                                      null=False, blank=False, on_delete=models.PROTECT)
 
-    status = models.CharField(max_length=20, default='Active', choices=[
-        (x, x) for x in ('Active', 'Deprecated', 'Inactive', 'Deleted')])
+    # STATUS
+    active = models.BooleanField(default=True)
+    deleted = models.BooleanField(default=False)
+
+    crawl_scope = models.ForeignKey('core.CrawlScope', null=True, blank=True,
+                                    on_delete=models.CASCADE)
+    notes = GenericRelation('core.Note')
 
     @property
     def impact_factor(self) -> bool:
         has_holding = [c.holdings.filter(url=self.resource.url).count() > 0
                        for c in self.organization.collections.all()]
         return True in has_holding
-
-    notes = GenericRelation('core.Note')
 
     class Meta:
         unique_together = ('nomination', 'organization')

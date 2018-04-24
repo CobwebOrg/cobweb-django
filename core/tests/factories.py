@@ -2,7 +2,7 @@ import factory
 
 from core.models import User, Organization
 from core.models import Note, Tag, SubjectHeading
-from core.models import Resource, ResourceScan, ResourceDescription
+from core.models import Resource, ResourceDescription
 
 
 class UserFactory(factory.DjangoModelFactory):
@@ -82,10 +82,3 @@ class ResourceDescriptionFactory(factory.DjangoModelFactory):
                 if isinstance(tag, str):
                     tag = TagFactory(name=tag)
                 self.tags.add(tag)
-
-
-class ResourceScanFactory(factory.DjangoModelFactory):
-    class Meta:
-        model = ResourceScan
-
-    resource = factory.SubFactory(ResourceFactory)

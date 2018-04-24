@@ -125,7 +125,6 @@ class Note(models.Model):
 
     Fields:
     author : User
-        (Null if the original author's account is deleted)
     when_created : DateTime
     ref : GenericForeignKey
     visibility : str / enum
@@ -143,8 +142,9 @@ class Note(models.Model):
 
     visibility = models.CharField(max_length=20, default='Public', choices=(
         ('Public', 'Public'),
-        ('Organizational', 'Organizational'),
-        ('Project', 'Project'),
+        # ('Organizational', 'Organizational'),
+        ('Project Members', 'Project Members'),
+        ('Project Admins', 'Project Administrators'),
     ))
 
     text = models.TextField()
@@ -175,6 +175,19 @@ class SubjectHeading(models.Model):
 class Resource(models.Model):
     url = NormalizedURLField(max_length=1000, null=False, blank=False,
                              unique=True)
+
+    when_checked = models.DateTimeField(null=True, blank=True)
+    status = models.CharField(max_length=50, default='Unknown', choices=(
+        ('Active', 'Active'),
+        ('Redirected', 'Redirected'),
+        ('Inactive', 'Inactive'),
+        ('Unknown', 'Unknown'),
+    ))
+
+    title = models.CharField(max_length=200, null=True, blank=True)
+    language = models.ForeignKey('languages_plus.Language', null=True, blank=True,
+                                 on_delete=models.PROTECT)
+
     notes = GenericRelation(Note)
 
     def __str__(self) -> str:
@@ -216,7 +229,6 @@ class ResourceDescription(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
     subject_headings = models.ManyToManyField(SubjectHeading, blank=True)
 
-
     class Meta:
         unique_together = ('resource', 'asserted_by')
 
@@ -224,19 +236,37 @@ class ResourceDescription(models.Model):
         return f'{self.resource} asserted_by={self.asserted_by}'
 
 
-@reversion.register()
-class ResourceScan(models.Model):
-    """Descriptive metadata about a Resource, retrieved automatically."""
+@reversion.register
+class CrawlScope(models.Model):
+    max_time = models.PositiveIntegerField(null=True, blank=True)
+    max_size = models.PositiveIntegerField(null=True, blank=True)
+    max_resources = models.PositiveIntegerField(null=True, blank=True)
 
-    resource = models.ForeignKey(Resource, on_delete=models.PROTECT)
-    when = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=50, default='Unknown', choices=(
-        ('Active', 'Active'),
-        ('Redirected', 'Redirected'),
-        ('Inactive', 'Inactive'),
-        ('Unknown', 'Unknown'),
-    ))
+    override_robot_exclusion = models.NullBooleanField(null=True, blank=True, default=False)
 
-    title = models.CharField(max_length=200, null=True, blank=True)
-    language = models.ForeignKey('languages_plus.Language', null=True, blank=True,
-                                 on_delete=models.PROTECT)
+    boundary_behavior = models.CharField(max_length=200, null=True, blank=True,
+                                         choices=(
+                                            ('Page', 'Page'),
+                                            ('Site', 'Site'),
+                                            ('Host', 'Host'),
+                                            ('Domain', 'Domain'),
+                                         ))
+
+    max_embedded_links = models.PositiveIntegerField(null=True, blank=True)
+    max_content_links = models.PositiveIntegerField(null=True, blank=True)
+
+    format_behavior = models.CharField(
+        max_length=200, null=True, blank=True, default='All', choices=(
+            ('All', 'All'),
+            ('PDF-Only', 'PDF-Only'),
+        )
+    )
+
+    technology = models.CharField(
+        max_length=200, null=True, blank=True,
+        choices=[(x, x) for x in ('Archive-It', 'Brozzler', 'Crawler4j', 'Crawljax',
+                                  'Heritrix', 'HTTrack', 'NetarchiveSuite', 'Nutch',
+                                  'Social Feed Manager', 'WebRecorder', 'Wget', 'Other',
+                                  'Unknown')],
+        default='Unknown',
+    )

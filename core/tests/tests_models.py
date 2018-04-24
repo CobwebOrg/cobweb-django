@@ -1,13 +1,12 @@
 import pytest
 from django.db.utils import IntegrityError
-from django.test import TestCase
 
 from core.models import User, Organization
 from core.models import Note, Tag, SubjectHeading
-from core.models import Resource, ResourceDescription, ResourceScan
+from core.models import Resource, ResourceDescription
 from core.tests.factories import UserFactory, OrganizationFactory
 from core.tests.factories import NoteFactory, TagFactory, SubjectHeadingFactory
-from core.tests.factories import ResourceFactory, ResourceDescriptionFactory, ResourceScanFactory
+from core.tests.factories import ResourceFactory, ResourceDescriptionFactory
 
 
 @pytest.mark.django_db
@@ -59,10 +58,3 @@ def test_resource_description_model():
     resource_description = ResourceDescriptionFactory()
     assert isinstance(resource_description, ResourceDescription)
     assert isinstance(str(resource_description), str)
-
-
-@pytest.mark.django_db
-def test_resource_scan_model():
-    resource_scan = ResourceScanFactory()
-    assert isinstance(resource_scan, ResourceScan)
-    assert isinstance(str(resource_scan), str)

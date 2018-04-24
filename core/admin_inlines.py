@@ -20,6 +20,7 @@ class ResourceDescriptionInline(admin.StackedInline):
     model = ResourceDescription
     extra = 0
 
-class ResourceScanInline(admin.StackedInline):
-    model = ResourceScan
+
+class CrawlScopeInline(admin.StackedInline):
+    model = CrawlScope
     extra = 0

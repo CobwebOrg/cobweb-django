@@ -1,7 +1,7 @@
 from django.contrib import admin
 from reversion.admin import VersionAdmin
 
-from core.admin_inlines import NoteInline
+from core.admin_inlines import NoteInline, CrawlScopeInline
 from projects.models import Nomination, Project, Claim
 from projects.admin_inlines import NominationInline
 
@@ -13,9 +13,9 @@ class ProjectAdmin(VersionAdmin):
 
 @admin.register(Nomination)
 class NominationAdmin(VersionAdmin):
-    pass
+    inlines = [NoteInline]
 
 
 @admin.register(Claim)
 class ClaimAdmin(VersionAdmin):
-    pass
+    inlines = [NoteInline]

@@ -5,7 +5,7 @@ from archives.admin_inlines import CollectionInline
 from datasources.admin import APIEndpointInline
 
 from core import models
-from core.admin_inlines import NoteInline, ResourceScanInline, ResourceDescriptionInline
+from core.admin_inlines import NoteInline, ResourceDescriptionInline
 
 
 admin.site.unregister(auth.models.Group)
@@ -43,4 +43,4 @@ class TagAdmin(VersionAdmin):
 @admin.register(models.Resource)
 class ResourceAdmin(VersionAdmin):
     model = models.Resource
-    inlines = (ResourceScanInline, ResourceDescriptionInline, NoteInline)
+    inlines = (ResourceDescriptionInline, NoteInline)
