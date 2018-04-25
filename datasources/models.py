@@ -46,7 +46,7 @@ class APIEndpoint(models.Model):
                 'organization': Organization
                     .objects.get_or_create(
                         identifier='http://archive-it.org/',
-                        defaults={'name': "Archive-It.org"}
+                        defaults={'full_name': "Archive-It"}
                     )[0],
             }
         )[0]

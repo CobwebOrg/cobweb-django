@@ -1,4 +1,3 @@
-from django.template import Context, Template
 from django.test import TestCase
 
 from core.models import User

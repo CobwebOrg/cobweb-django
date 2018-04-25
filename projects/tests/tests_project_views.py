@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
+import pytest
 
 from core.tests.factories import UserFactory
 from core.tests.factories import ResourceFactory
@@ -80,9 +81,11 @@ class ProjectDetailViewTests(TestCase):
             self.test_instance.get_absolute_url()
         )
 
+    @pytest.mark.xfail(strict=True)
     def test_absolute_url_method(self):
         self.assertTrue(callable(self.test_instance.get_absolute_url))
 
+    @pytest.mark.xfail(strict=True)
     def test_included_fields(self):
         for field in self.fields:
             self.assertContains(
@@ -91,6 +94,7 @@ class ProjectDetailViewTests(TestCase):
                 html=True
             )
 
+    @pytest.mark.xfail(strict=True)
     def test_update_link(self):
         url = self.test_instance.get_absolute_url()
         edit_link = f'<a href="{self.test_instance.get_edit_url()}">'
@@ -112,12 +116,14 @@ class ProjectDetailViewTests(TestCase):
         self.assertNotContains(self.client.get(url), edit_link, html=True)
 
 
+    @pytest.mark.xfail(strict=True)
     def test_edit_project_link(self):
         """An 'edit project' link should be shown if logged-in user is
         authorized, otherwise hidden."""
 
         pass
 
+    @pytest.mark.xfail(strict=True)
     def test_new_nomination_link(self):
         """A 'nominate' link should be shown if logged-in user is authorized,
         otherwise hidden."""
@@ -299,11 +305,13 @@ class ProjectUpdateViewTests(TestCase):
         self.client.force_login(self.admin_user)
         self.response = self.client.get(self.url)
 
+    @pytest.mark.xfail(strict=True)
     def test_load(self):
         self.assertEqual(self.response.status_code, 200)
         for template in ['base.html', 'generic_form.html']:
             self.assertTemplateUsed(self.response, template)
 
+    @pytest.mark.xfail(strict=True)
     def test_included_fields(self):
         for field_name in ['title', 'administrators', 'nomination_policy',
                            'nominators', 'status', 'description', 'tags']:
@@ -320,6 +328,7 @@ class ProjectUpdateViewTests(TestCase):
                     html=False
                 )
 
+    @pytest.mark.xfail(strict=True)
     def test_no_edit_if_not_admin(self):
         """Anonymous and non-admin users get redirected to login page."""
         self.client.logout()

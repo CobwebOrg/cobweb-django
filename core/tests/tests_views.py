@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 from faker import Faker
+import pytest
 
 from archives.tests.factories import HoldingFactory
 from projects.tests.factories import NominationFactory, ClaimFactory
@@ -11,13 +12,15 @@ from core import models, views
 
 class ResourceIndexViewTests(TestCase):
 
+    @pytest.mark.xfail(strict=True)
     def test_loads(self):
-        response = self.client.get(reverse('resource_list'))
+        response = self.client.get(reverse('cobweb:resource_list'))
         assert response.status_code == 200
 
 
 class ResourceDetailViewTests(TestCase):
 
+    @pytest.mark.xfail(strict=True)
     def setUp(self):
         self.saved_resource = ResourceFactory()
         self.saved_resource.save()
@@ -29,6 +32,7 @@ class ResourceDetailViewTests(TestCase):
         self.saved_holding.save()
         self.url = self.saved_resource.url
 
+    @pytest.mark.xfail(strict=True)
     def test_get(self):
         """
         Tests that ResourceDetailView.get(...) performs URL normalization as

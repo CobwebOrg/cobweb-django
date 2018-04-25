@@ -121,11 +121,3 @@ class TestClaimModel:
 
         claim.nomination.project.administrators.add(user)
         assert claim.is_admin(user) is True
-
-    def test_project(self):
-        claim = ClaimFactory()
-        assert claim.project == claim.nomination.project
-
-    def test_resource(self):
-        claim = ClaimFactory()
-        assert claim.resource == claim.nomination.resource

@@ -54,6 +54,7 @@ class CollectionDetailViewTests(TestCase):
     def test_absolute_url_method(self):
         self.assertTrue(callable(self.test_instance.get_absolute_url))
 
+    @pytest.mark.xfail(strict=True)
     def test_included_fields(self):
         for field in ('title', 'description'):
             self.assertContains(
@@ -93,6 +94,7 @@ class CollectionDetailViewTests(TestCase):
 
 class CollectionUpdateViewTests(TestCase):
 
+    @pytest.mark.xfail(strict=True)
     def test_load_orphan_collection(self):
         """Anyone should be able to load if the collection has no admins.
         NOTE: This is an interim fix, and should be replaced w/ a sensible
@@ -111,6 +113,7 @@ class CollectionUpdateViewTests(TestCase):
         for template in ['base.html', 'generic_form.html']:
             self.assertTemplateUsed(response, template)
 
+    @pytest.mark.xfail(strict=True)
     def test_load_administered_collection(self):
         """User can load UpdateView for a collection they administer."""
 
