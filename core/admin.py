@@ -22,11 +22,12 @@ class UserAdmin(VersionAdmin, auth.admin.UserAdmin):
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
+    inlines = [NoteInline]
 
 
 @admin.register(models.Organization)
 class OrganizationAdmin(VersionAdmin):
-    inlines = [CollectionInline, APIEndpointInline]
+    inlines = [CollectionInline, APIEndpointInline, NoteInline]
 
 
 @admin.register(models.Note)
