@@ -36,57 +36,21 @@ services:
       TEST: 'false'
       SHELL: '/bin/bash'
     command: ['pipenv', 'run', '/code/start-development.sh']
-
-  test:
-    image: python:3.6
-    volumes:
-      - web_usr_local:/usr/local
-      - .:/code
-      - solr_data:/solr_data
-      - web_dot_local:/root/.local
-    depends_on:
-      - db
-      - solr
-    working_dir: /code
-    environment:
-      DJANGO_SETTINGS_MODULE: 'cobweb.settings.test'
-      TEST: 'true'
-      DEBUG: 'false'
-      SHELL: '/bin/bash'
-    stdin_open: true
-    tty: true
-    entrypoint: ['pipenv', 'run', 'pytest', '--reuse-db', '--splinter-webdriver', 'remote', '--splinter-remote-url', "'http://firefox:4444/wd/hub'", "-n6"]
-    command: []
-
-  testserver:
-    image: python:3.6
+  
+  node:
+    image: node
     volumes:
       - .:/code
-      - solr_data:/solr_data
-      - web_usr_local:/usr/local
-      - web_dot_local:/root/.local
-    ports:
-      - "8080:80"
-    depends_on:
-      - db
-      - solr
+      - node_modules:/node_modules
     working_dir: /code
     environment:
-      DJANGO_SETTINGS_MODULE: 'cobweb.settings.debug'
-      DEBUG: 'true'
-      TEST: 'false'
-      SHELL: '/bin/bash'
-    command: ['pipenv', 'run', '/code/start-production.sh']
-
-  firefox:
-    ports:
-      - "4444:4444"
-    image: selenium/standalone-firefox
-    depends_on: [test]
+      NODE_PATH: '/node_modules'
+    command: ['npx', 'webpack', '--config', 'webpack.config.js', '--watch']
 
 
 volumes:
   postgres_data:
   solr_data:
-  web_usr_local:
-  web_dot_local:
+  # web_usr_local:
+  # web_dot_local:
+  node_modules:
