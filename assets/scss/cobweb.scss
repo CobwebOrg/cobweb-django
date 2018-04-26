@@ -9,44 +9,37 @@ $h1-font-size:                $font-size-base * 2;
 // $h5-font-size:                $font-size-base * 1.25;
 // $h6-font-size:                $font-size-base;
 
-$white:     #fff;
+$white:       #f8f9fa;
+$gray-dark:   #444444;
+$gray:        #999999;
+$gray-light:  #dddddd;
+$black:       #000000;
 
-$blue:      #2373cd;
-$indigo:    #5e56c2;
-$purple:    #7b6382;
-$pink:      #e45597;
-$red:       #db4d3e;
-$orange:    #c8923d;
-$yellow:    #e4cd53;
-$green:     #41a45f;
-$teal:      #2db089;
-$cyan:      #62aca5;
-$lime:      #aac066;
+$purple:      #7B6382;
+$lime-light:  #DDE1A0;   
+$lime:        #AAC066;
+$cyan-light:  #A9D8CA;   
+$cyan:        #62ACA5;
+$cyan-dark:   #3D8079;
+$orange:      #C8923D;
+$yellow:      #E4CD53;
+$red:         #DB4D3E;
 
-$ltcyan:    #a9d8ca;
-$ltlime:    lighten(#dde1a0, 15%);
-
-$gray-600:  #999999;  // bootstrap "gray"
-$gray-800:  #444444;  // bootstrap "gray-dark"
-
-
-$primary:   darken(#4ea29a, 10%);
-// $secondary: $purple;
-$secondary: darken($white, 30%);
-$success:   $green;
+$primary:   $cyan;
+$secondary: $gray;
+// $success:   $green;
 $info:      $lime;
 $warning:   $yellow;
 $danger:    $red;
-$light:     #f8f9fa;
-$dark:      #343a40;
+// $light:     #f8f9fa;
+// $dark:      #343a40;
 
 $theme-colors: (
-  "gray": lighten($gray-600, 15%),
-  "ltlime":  $ltlime,
-  "ltprimary": lighten($primary, 25%),
-  "metadata": lighten($cyan, 44%),
+  "gray": $gray-light,
+  "ltprimary": $cyan-light,
+  "metadata":  $cyan-light,
 
-  "tag": $ltlime,
+  "tag": $lime-light,
   "user": lighten($purple, 50%)
 );
 
