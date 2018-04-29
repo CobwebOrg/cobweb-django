@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "8574fb353a27bf94a08ac0544621024f977f0a7a46b6507834700c50d4760038"
+            "sha256": "d14573ea8bc1ed06af7b4043cb2f2cadadc5c10dab1e353c582370845f55d50e"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -113,6 +113,22 @@
             "index": "pypi",
             "version": "==0.6.0"
         },
+        "djangorestframework": {
+            "hashes": [
+                "sha256:b6714c3e4b0f8d524f193c91ecf5f5450092c2145439ac2769711f7eba89a9d9",
+                "sha256:c375e4f95a3a64fccac412e36fb42ba36881e52313ec021ef410b40f67cddca4"
+            ],
+            "index": "pypi",
+            "version": "==3.8.2"
+        },
+        "drf-haystack": {
+            "hashes": [
+                "sha256:178e9f308d1eb9680cb87cf3e28f20826159227f7baa297871784ef1c7ce80aa",
+                "sha256:c31b47f769fe5f4f78111efa34d22a637d3b87b88090891d3b3505b85bc9f8c3"
+            ],
+            "index": "pypi",
+            "version": "==1.8.1"
+        },
         "idna": {
             "hashes": [
                 "sha256:2c6a5de3089009e3da7c5dde64a141dbc8551d5b7f6cf4ed7c2568d0cc520a8f",
@@ -192,6 +208,13 @@
             ],
             "index": "pypi",
             "version": "==3.7.0"
+        },
+        "python-dateutil": {
+            "hashes": [
+                "sha256:3220490fb9741e2342e1cf29a503394fdac874bc39568288717ee67047ff29df",
+                "sha256:9d8074be4c993fbe4947878ce593052f71dac82932a677d49194d8ce9778002e"
+            ],
+            "version": "==2.7.2"
         },
         "pytz": {
             "hashes": [
@@ -276,10 +299,10 @@
     "develop": {
         "ansible": {
             "hashes": [
-                "sha256:51f0c9411344741fb4f6dd8757e0fb6a52c4dcf53a1bfbbfee413e067e65001a"
+                "sha256:a95483f3b33e0f97d03badaad073392ed03a2b2f526bec4ddf598edfc1c03ae5"
             ],
             "index": "pypi",
-            "version": "==2.5.1"
+            "version": "==2.5.2"
         },
         "apipkg": {
             "hashes": [
@@ -792,11 +815,11 @@
         },
         "pytest": {
             "hashes": [
-                "sha256:6266f87ab64692112e5477eba395cfedda53b1933ccd29478e671e73b420c19c",
-                "sha256:fae491d1874f199537fd5872b5e1f0e74a009b979df9d53d1553fd03da1703e1"
+                "sha256:54713b26c97538db6ff0703a12b19aeaeb60b5e599de542e7fca0ec83b9038e8",
+                "sha256:829230122facf05a5f81a6d4dfe6454a04978ea3746853b2b84567ecf8e5c526"
             ],
             "index": "pypi",
-            "version": "==3.5.0"
+            "version": "==3.5.1"
         },
         "pytest-bdd": {
             "hashes": [

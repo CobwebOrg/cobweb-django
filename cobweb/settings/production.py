@@ -90,6 +90,7 @@ INSTALLED_APPS = [
     'haystack',
     'languages_plus',
     'phonenumber_field',
+    'rest_framework',
     'reversion',
     'webpack_loader',
 

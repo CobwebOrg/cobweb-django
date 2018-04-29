@@ -3,14 +3,28 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.urls import path
 from django.views.generic import TemplateView
+from rest_framework.routers import DefaultRouter
 
+from api.views import (UserViewSet, OrganizationViewSet, ProjectViewSet,
+                       NominationViewSet, ClaimViewSet)
 # import archives.views
 import core.views
 import projects.views
 
 
+router = DefaultRouter()
+
+router.register(r'users', UserViewSet)
+router.register(r'organizations', OrganizationViewSet)
+
+router.register(r'projects', ProjectViewSet)
+router.register(r'nominations', NominationViewSet)
+router.register(r'claims', ClaimViewSet)
 
 urlpatterns = [
+    path('api/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
     url(r'^search/', include('haystack.urls')),
 
     url(r'^$', TemplateView.as_view(template_name='landing_page.html'), name='front_page'),
