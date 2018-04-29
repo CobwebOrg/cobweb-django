@@ -51,6 +51,6 @@ services:
 volumes:
   postgres_data:
   solr_data:
-  # web_usr_local:
-  # web_dot_local:
+  web_usr_local:
+  web_dot_local:
   node_modules:
