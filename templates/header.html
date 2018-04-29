@@ -1,0 +1,59 @@
+{% load static %}
+
+<header class="container mb-2 position-relative">
+	<a href="{% url 'front_page' %}" style="position: absolute; top: 0; left: 0.875rem; z-index: 1100;">
+	    <img class='float-left mr-auto position-absolute' src="{% static 'images/cobweb_logo_b4.png' %}" alt="CobWeb logo">
+	</a>
+	<nav class="navbar row justify-content-end align-items-center">
+		{% if user.is_authenticated %}
+			<span class="nav-link my-0 py-0">Welcome, {{user}}</span> •
+			<a id="account_link" class="nav-link text-uppercase my-0 py-0" href="{% url 'user_update' pk=request.user.pk %}">Account</a> •
+			<a id="logout_link" class="nav-link text-uppercase my-0 py-0" href="{% url 'logout' %}?next={{request.path}}">Logout</a>
+		{% else %}
+			<span class="nav-link my-0 py-0">Welcome!</span> •
+			<a id="signup_link" class="nav-link text-uppercase my-0 py-0" href="{% url 'user_create' %}?next={{request.path}}">Sign Up</a> •
+			<a id="login_link" class="nav-link text-uppercase my-0 py-0" href="{% url 'login' %}?next={{request.path}}">Login</a>
+		{% endif %}
+	</nav>
+
+  <nav class="navbar row navbar-dark bg-dark" style="margin-top: 10px;">
+		<span style="visibility: hidden;"><a class="nav-link text-uppercase mr-auto ml-auto text-ltprimary" href="/">
+			CobWeb home
+		</a></span>
+
+		<a class="nav-link text-uppercase mr-auto ml-auto text-ltprimary" href="{% url 'resource_list' %}">
+			Resources
+		</a>
+		<!-- <div class="dropdown show"> -->
+			<!-- <a class="nav-link text-uppercase mr-auto ml-auto text-ltprimary dropdown-toggle" href="{% url 'resource_list' %}" -->
+				<!-- role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
+				<!-- Resources -->
+			<!-- </a> -->
+			<!-- <div class="Dropdown-menu" aria-labelledby="dropdownMenuLink"> -->
+				<!-- <a class="dropdown-item" href="#">All Resources</a> -->
+				<!-- <div class="dropdown-divider"></div> -->
+				<!-- <a class="dropdown-item" href="#">Unclaimed Nominations</a> -->
+				<!-- <a class="dropdown-item" href="#">Claimed Nominations</a> -->
+				<!-- <a class="dropdown-item" href="#">Held Nominations</a> -->
+			<!-- </div> -->
+		<!-- </div> -->
+		<a class="nav-link text-uppercase mr-auto ml-auto text-ltprimary" href="{% url 'project_list' %}">
+			Projects
+		</a>
+		<a class="nav-link text-uppercase mr-auto ml-auto text-light">
+			Organizations
+		</a>
+		<a class="nav-link text-uppercase mr-auto ml-auto text-light" href="{% url 'user_list' %}">
+			Users
+		</a>
+		<a class="nav-link text-uppercase mr-auto ml-auto text-light">
+			Help
+		</a>
+	</nav>
+</header>
+
+
+<a class="nav-link text-uppercase mr-auto ml-auto text-ltprimary dropdown-toggle" href="{% url 'resource_list' %}"
+role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+Resources
+</a>
