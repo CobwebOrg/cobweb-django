@@ -45,6 +45,8 @@ class User(AbstractUser):
     # Preferences
     get_notification_emails = models.BooleanField(default=True)
 
+    notes = GenericRelation('Note')
+
     @property
     def impact_factor(self):
         # TODO: actuall implement functional requirement
