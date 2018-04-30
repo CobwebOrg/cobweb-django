@@ -1,12 +1,17 @@
 from django.contrib import admin
 from django.contrib.contenttypes.admin import GenericStackedInline
 
-from core.models import Organization, Note, ResourceDescription, CrawlScope
+from core.models import Organization, Affiliation, Note, ResourceDescription, CrawlScope
+
+
+class AffiliationInline(admin.TabularInline):
+    model = Affiliation
+    fields = ('professional_title', 'organization')
+    extra = 1
 
 
 class OrganizationInline(admin.TabularInline):
     model = Organization
-    # exclude = []
 
 
 class NoteInline(GenericStackedInline):

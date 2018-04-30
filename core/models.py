@@ -36,7 +36,7 @@ class NormalizedURLField(models.URLField):
 @reversion.register()
 class User(AbstractUser):
 
-    affiliations = models.ManyToManyField('Organization', blank=True,
+    affiliations = models.ManyToManyField('Organization', blank=True, through='Affiliation',
                                           related_name="affiliated_users")
     # professional_title TODO
 
@@ -118,6 +118,12 @@ class Organization(models.Model):
     def is_admin(self, user):
         return user in self.administrators.all()
 
+
+@reversion.register()
+class Affiliation(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    professional_title = models.CharField(max_length=200, null=True, blank=True)
 
 @reversion.register()
 class Note(models.Model):

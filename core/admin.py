@@ -5,7 +5,7 @@ from archives.admin_inlines import CollectionInline
 from datasources.admin import APIEndpointInline
 
 from core import models
-from core.admin_inlines import NoteInline, ResourceDescriptionInline
+from core.admin_inlines import AffiliationInline, NoteInline, ResourceDescriptionInline
 
 
 admin.site.unregister(auth.models.Group)
@@ -17,12 +17,11 @@ class UserAdmin(VersionAdmin, auth.admin.UserAdmin):
 
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
-        ('Personal info', {'fields': ('first_name', 'last_name', 'email',
-                           'affiliations')}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'email')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
-    inlines = [NoteInline]
+    inlines = [AffiliationInline, NoteInline]
 
 
 @admin.register(models.Organization)
