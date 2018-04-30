@@ -35,13 +35,13 @@ services:
       DEBUG: 'true'
       TEST: 'false'
       SHELL: '/bin/bash'
-    command: ['pipenv', 'run', '/code/start-development.sh']
+    command: ['/code/start-development.sh']
   
   node:
     image: node
     volumes:
       - .:/code
-      - node_modules:/node_modules
+      - node_modules:/code/node_modules
     working_dir: /code
     environment:
       NODE_PATH: '/node_modules'
