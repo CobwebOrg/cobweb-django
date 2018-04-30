@@ -23,10 +23,10 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
 
 class NominationViewSet(viewsets.ModelViewSet):
-    queryset = Nomination.objects.exclude(status='Deleted')
+    queryset = Nomination.objects.exclude(deleted=True)
     serializer_class = serializers.NominationSerializer
 
 
 class ClaimViewSet(viewsets.ModelViewSet):
-    queryset = Claim.objects.exclude(status='Deleted')
+    queryset = Claim.objects.exclude(deleted=True)
     serializer_class = serializers.ClaimSerializer
