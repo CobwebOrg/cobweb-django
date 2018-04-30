@@ -61,27 +61,6 @@ textarea {
   @extend .rounded;
 }
 
-.note {
-  @extend .card, .border-info, .bg-white, .mb-3;
-  font-size: 0.8rem;
-}
-
-.note-header {
-  @extend .card-header, .bg-info, .card-title, .p-2;
-}
-
-.note-body {
-  @extend .card-body, .p-2;
-}
-
-.note-warning {
-  @extend .note, .border-warning;
-}
-
-.note-warning > .note-header {
-  @extend .note-header, .bg-warning;
-}
-
 .badge-left {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
