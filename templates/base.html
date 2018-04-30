@@ -33,16 +33,17 @@
       </div>
     </div> <!-- /container -->
 
+    {% include 'footer.html' %}
 
-{# <br><br><br><br><br><br><br><br><br><br><p style='{padding-top: 3cm}'><pre> {% filter force_escape %} {% debug %} {% endfilter %} </pre> #}
+    {# <br><br><br><br><br><br><br><br><br><br><p style='{padding-top: 3cm}'><pre> {% filter force_escape %} {% debug %} {% endfilter %} </pre> #}
 
     <script src="http://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous"></script>
 
-  <!-- Form DOT Media -->
-  {{ form.media }}
+    <!-- Form DOT Media -->
+    {{ form.media }}
 
-  <!-- End of base.html content -->
-</body>
+    <!-- End of base.html content -->
+  </body>
 </html>
