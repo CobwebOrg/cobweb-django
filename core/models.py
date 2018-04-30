@@ -203,7 +203,7 @@ class Resource(models.Model):
         return self.url or 'Resource {}'.format(self.pk)
 
     def get_absolute_url(self) -> str:
-        return reverse('core:detail', kwargs={'url': self.url})
+        return reverse('resource_detail', kwargs={'url': self.url})
 
     def resource_record_count(self) -> int:
         return (
