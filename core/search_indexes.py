@@ -8,37 +8,6 @@ from projects.models import Project
 from core.models import Resource
 
 
-class ProjectIndex(indexes.ModelSearchIndex, indexes.Indexable):
-    """Django-haystack index of Project model."""
-
-    text = indexes.CharField(document=True, use_template=True)
-
-    class Meta:
-        """ProjectIndex metaclass."""
-
-        model = Project
-        excludes = ['nominator_blacklist']
-
-    def index_queryset(self, using=None):
-        """
-        Use to update the entire index for model.
-
-        Excludes projects whose status is 'deleted'.
-        """
-        return self.get_model().objects.exclude(status='d')
-
-
-class CollectionIndex(indexes.ModelSearchIndex, indexes.Indexable):
-    """Django-haystack index of Collection model."""
-
-    text = indexes.CharField(document=True, use_template=True)
-
-    class Meta:
-        """CollectionIndex metaclass."""
-
-        model = Collection
-
-
 class ResourceIndex(indexes.ModelSearchIndex, indexes.Indexable):
     """Django-haystack index of Resource model."""
 
