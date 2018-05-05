@@ -5,8 +5,7 @@ RUN mkdir /code
 WORKDIR /code
 COPY Pipfile /code/
 COPY Pipfile.lock /code/
-RUN pipenv install
+RUN ['pipenv', 'install', '--system', '--ignore-pipfile']
 COPY . /code/
-RUN ["pipenv", "run", "python3", "manage.py", "collectstatic"]
-# ENTRYPOINT ["pipenv", "run"]
-# CMD ["/code/start-production.sh"]
+RUN ["python3", "manage.py", "collectstatic"]
+CMD ["/code/start-production.sh"]
