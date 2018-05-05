@@ -2,15 +2,11 @@ version: '3'
 
 services:
   solr:
-    image: solr:6
+    build:
+      context: .
+      dockerfile: Dockerfile.solr
     ports:
       - "8983:8983"
-    volumes:
-      - solr_data:/opt/solr/server/solr/mycores
-    entrypoint:
-      - docker-entrypoint.sh
-      - solr-precreate
-      - cobweb
   db:
     image: postgres
     volumes:
@@ -21,7 +17,6 @@ services:
     image: python:3.6
     volumes:
       - .:/code
-      - solr_data:/solr_data
       - web_usr_local:/usr/local
       - web_dot_local:/root/.local
     ports:
@@ -50,7 +45,6 @@ services:
 
 volumes:
   postgres_data:
-  solr_data:
   web_usr_local:
   web_dot_local:
   node_modules:
