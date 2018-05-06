@@ -22,7 +22,6 @@ class CollectionIndexViewTests(TestCase):
         self.assertEqual(self.response.status_code, 200)
         self.assertTemplateUsed(self.response, 'base.html')
         self.assertTemplateUsed(self.response, 'generic_index.html')
-        self.assertTemplateUsed(self.response, 'generic_table.html')
 
     def test_title(self):
         self.assertContains(self.response, '<h3>Collections',
