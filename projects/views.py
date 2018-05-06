@@ -1,7 +1,8 @@
+import django_tables2
+import haystack
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse
 from django.views.generic import DetailView, CreateView, UpdateView
-import django_tables2
 from reversion.views import RevisionMixin
 
 from core.models import Resource
@@ -10,11 +11,14 @@ from projects import models, forms
 from projects.tables import ProjectTable, NominationTable, ClaimTable
 
 
-class ProjectIndexView(django_tables2.SingleTableView):
+class ProjectIndexView(haystack.generic_views.SearchMixin,
+                       django_tables2.SingleTableView,
+                       ):
     model = models.Project
     template_name = "generic_index.html"
     table_class = ProjectTable
     section = 'project'
+    queryset = haystack.query.SearchQuerySet().filter(django_ct='projects.project')
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
