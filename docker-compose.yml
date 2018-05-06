@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.solr
+    image: andrewwallace/cobweb_solr:latest
     ports:
       - "8983:8983"
   db:

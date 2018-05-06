@@ -2,7 +2,7 @@ version: '3'
 
 services:
   solr:
-    image: solr:6
+    image: andrewwallace/cobweb_solr:latest
     volumes:
       - solr_data:/opt/solr/server/solr/mycores
     entrypoint:
