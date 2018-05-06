@@ -56,8 +56,7 @@ TESTING = False
 INTERNAL_IPS = ['72.18.0.1']
 ALLOWED_HOSTS = [
     'cobwebarchive.org',
-    'ec2-54-149-185-238.us-west-2.compute.amazonaws.com', '35.166.33.245',
-    '35.165.214.42',
+    'dev.cobwebarchive.org',
     'localhost', 'testserver', '127.0.0.1', 'web',
 ]
 
@@ -131,8 +130,6 @@ TEMPLATES = [
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-DJANGO_TABLES2_TEMPLATE = 'generic_table.html'
-
 WSGI_APPLICATION = 'cobweb.wsgi.application'
 
 
@@ -144,7 +141,7 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
-# HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
