@@ -60,7 +60,7 @@ class Project(models.Model):
     @property
     def impact_factor(self) -> int:
         # TODO: Fix this stub – not sure I understand the FRs...
-        return self.nominations.exclude(claims=None)
+        return self.nominations.exclude(claims=None).count()
 
     @property
     def resources(self) -> models.QuerySet:
@@ -103,6 +103,25 @@ class Project(models.Model):
                 or user in self.nominators.all()
             )
         )
+    
+    @property
+    def nominations_unclaimed(self) -> QuerySet:
+        return self.nominations.filter(claims=None)
+    
+    @property
+    def n_unclaimed(self) -> int:
+        return self.nominations_unclaimed.count()
+    
+    @property
+    def nominations_claimed(self) -> QuerySet:
+        return self.nominations.exclude(claims=None)  #.filter(holdings=None)
+    
+    @property
+    def n_claimed(self) -> int:
+        return self.nominations_claimed.count()
+    
+    # def nominations_held(self) -> QuerySet:
+    #     return self.nominations.exclude(claims=None).exclude(holdings=None)
 
 
 @reversion.register()
