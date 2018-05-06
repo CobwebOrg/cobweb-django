@@ -1,4 +1,5 @@
 import django_tables2
+from haystack.generic_views import SearchView as HaystackSearchView
 from dal import autocomplete
 from django.core.exceptions import ValidationError
 from django.db.models import Q
@@ -184,3 +185,7 @@ class ResourceDetailView(generic.DetailView):
             obj = super().get_object(queryset)
 
         return obj
+        return obj
+
+class SearchView(django_tables2.views.SingleTableMixin, HaystackSearchView):
+    pass

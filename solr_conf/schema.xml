@@ -133,15 +133,25 @@
     
     <field name="get_notification_emails" type="boolean" indexed="true" stored="true" multiValued="false" />
     
-    <field name="pk" type="long" indexed="false" stored="true" multiValued="false" />
+    <field name="active" type="boolean" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="deleted" type="boolean" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="needs_claim" type="boolean" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="rationale" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="suggested_crawl_frequency" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="suggested_crawl_end_date" type="date" indexed="true" stored="true" multiValued="false" />
     
     <field name="nomination_policy" type="text_en" indexed="true" stored="true" multiValued="false" />
     
     <field name="impact_factor" type="long" indexed="true" stored="true" multiValued="false" />
     
-    <field name="author" type="text_en" indexed="true" stored="true" multiValued="false" />
+    <field name="unclaimed_nominations" type="long" indexed="true" stored="true" multiValued="false" />
     
-    <field name="pub_date" type="date" indexed="true" stored="true" multiValued="false" />
+    <field name="claimed_nominations" type="long" indexed="true" stored="true" multiValued="false" />
     
     <uniqueKey>id</uniqueKey>
 

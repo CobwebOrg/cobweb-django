@@ -25,7 +25,7 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
-    url(r'^search/', include('haystack.urls')),
+    url(r'^search/', core.views.SearchView.as_view(), name='search'),
 
     url(r'^$', TemplateView.as_view(template_name='landing_page.html'), name='front_page'),
 

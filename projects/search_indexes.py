@@ -31,3 +31,16 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     def index_queryset(self, using=None):
         return self.get_model().objects.exclude(status='Deleted')
 
+
+class NominationIndex(indexes.ModelSearchIndex, indexes.Indexable):
+    text = indexes.CharField(document=True, use_template=False)
+
+    class Meta:
+        model = Nomination
+
+
+class ClaimIndex(indexes.ModelSearchIndex, indexes.Indexable):
+    text = indexes.CharField(document=True, use_template=False)
+
+    class Meta:
+        model = Claim
