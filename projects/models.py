@@ -62,11 +62,6 @@ class Project(models.Model):
         # TODO: Fix this stub – not sure I understand the FRs...
         return self.nominations.exclude(claims=None).count()
 
-    @property
-    def resources(self) -> models.QuerySet:
-        # TODO: this is a bad, inefficient implementation
-        return Resource.objects.filter(nomination__project=Self)
-
     tags = models.ManyToManyField('core.Tag', blank=True)
     subject_headings = models.ManyToManyField('core.SubjectHeading',
                                               blank=True)
@@ -132,7 +127,7 @@ class Nomination(models.Model):
         related_name='nominations'
     )
     project = models.ForeignKey(Project, related_name='nominations',
-                                on_delete=models.PROTECT)
+                                on_delete=models.CASCADE)
 
     # STATUS
     needs_claim = models.BooleanField(default=True)
@@ -186,7 +181,7 @@ class Nomination(models.Model):
 @reversion.register()
 class Claim(models.Model):
     nomination = models.ForeignKey(Nomination, related_name='claims',
-                                   on_delete=models.PROTECT)
+                                   on_delete=models.CASCADE)
 
     organization = models.ForeignKey('core.Organization', related_name='claims',
                                      null=False, blank=False, on_delete=models.PROTECT)
@@ -194,16 +189,22 @@ class Claim(models.Model):
     # STATUS
     active = models.BooleanField(default=True)
     deleted = models.BooleanField(default=False)
+    has_holding = models.BooleanField(default=False)
+
+    imported_record = models.ForeignKey('archives.Holding', null=True, blank=True,
+                                        on_delete=models.SET_NULL, related_name='claims')
 
     crawl_scope = models.ForeignKey('core.CrawlScope', null=True, blank=True,
                                     on_delete=models.CASCADE)
+
     notes = GenericRelation('core.Note')
 
     @property
-    def impact_factor(self) -> bool:
-        has_holding = [c.holdings.filter(url=self.resource.url).count() > 0
-                       for c in self.organization.collections.all()]
-        return True in has_holding
+    def impact_factor(self) -> int:
+        if self.has_holding:
+            return 2
+        else:
+            return 1
 
     class Meta:
         unique_together = ('nomination', 'organization')
