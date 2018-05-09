@@ -42,6 +42,11 @@ services:
     environment:
       NODE_PATH: '/node_modules'
     command: ['npx', 'webpack', '--config', 'webpack.config.js', '--watch']
+  
+  production:
+    build: .
+    image: andrewwallace/cobweb:latest
+    command: "echo 'Built production web image. Bye!''"
 
 
 volumes:
