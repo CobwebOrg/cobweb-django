@@ -27,7 +27,7 @@ class OrganizationIndex(indexes.ModelSearchIndex, indexes.Indexable):
 
 
 class NoteIndex(indexes.ModelSearchIndex, indexes.Indexable):
-    text = indexes.CharField(document=True, use_template=True)
+    text = indexes.CharField(document=True, use_template=False)
 
     class Meta:
         model = Note
