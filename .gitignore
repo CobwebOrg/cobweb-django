@@ -24,6 +24,8 @@ import_errors.txt
 data/solr/cobweb/data/**
 data/postgres/
 
+.mypy_cache
+
 # Created by https://www.gitignore.io
 
 ### OSX ###
