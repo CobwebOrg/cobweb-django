@@ -5,16 +5,6 @@
 	    <img class='float-left mr-auto position-absolute' src="{% static 'images/cobweb_logo_b4.png' %}" alt="CobWeb logo">
 	</a>
 	<nav class="navbar row justify-content-end align-items-center">
-		<form id="searchform" action="{% url 'search' %}" method="get" accept-charset="utf-8">
-			<div class="input-group">
-				<input class="form-control" id="searchbox" name="q" type="text" placeholder="Search..."
-					   aria-label="Search query">
-				<div class="input-group-append">
-					<button class="btn btn-outline-secondary" type="button"><span class="fa fa-search"></span></button>
-				</div>
-			</div>
-		</form>
-
 		{% if user.is_authenticated %}
 			<span class="nav-link my-0 py-0">Welcome, {{user}}</span> •
 			<a id="account_link" class="nav-link text-uppercase my-0 py-0" href="{% url 'user_update' pk=request.user.pk %}">Profile</a> •
@@ -31,6 +21,15 @@
 			CobWeb home
 		</a></span>
 
+		<form id="searchform" action="{% url 'search' %}" method="get" accept-charset="utf-8">
+			<div class="input-group">
+				<input class="form-control" id="searchbox" name="q" type="text" placeholder="Search..."
+					   aria-label="Search query">
+				<div class="input-group-append">
+					<button class="btn btn-outline-secondary" type="button"><span class="fa fa-search"></span></button>
+				</div>
+			</div>
+		</form>
 		<div class="dropdown show">
 			<a class="dropdown-toggle nav-link text-uppercase text-ltprimary" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				URLs
@@ -46,14 +45,8 @@
 		<a class="nav-link text-uppercase text-ltprimary" href="{% url 'project_list' %}">
 			Projects
 		</a>
-		<a class="nav-link text-uppercase text-ltprimary" href="{% url 'archives:collection_list' %}">
-			Collections
-		</a>
 		<a class="nav-link text-uppercase text-light">
 			Organizations
-		</a>
-		<a class="nav-link text-uppercase text-ltprimary" href="{% url 'user_list' %}">
-			Contributors
 		</a>
 		<a class="nav-link text-uppercase text-light">
 			Help
