@@ -27,7 +27,6 @@ phonenumbers = "*"
 
 [dev-packages]
 pytest = "*"
-behave-django = "*"
 coverage = "*"
 django-debug-toolbar = "*"
 factory_boy = "*"
@@ -40,9 +39,7 @@ ansible = "*"
 pytest-bdd = "*"
 pytest-xdist = "*"
 ipython = "*"
-pylint = "*"
 mypy = "*"
-"flake8" = "*"
 pylint-django = "*"
 
 [requires]
