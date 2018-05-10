@@ -1,7 +1,7 @@
 from crispy_forms.helper import FormHelper
 from django.contrib.auth.forms import UserCreationForm
 
-from core.layout import (Layout, CancelButton, Submit, Field, FormActions, Fieldset,
+from core.layout import (Layout, Column, Row, CancelButton, Submit, Field, FormActions, Fieldset,
                          UneditableField, HTML, Hidden)
 from core.models import User
 
@@ -10,21 +10,34 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username',)
+        fields = ('username', 'first_name', 'last_name', 'email')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
-            Field('username'),
-            Field('password1'),
-            Field('password2'),
+            Row(Column(HTML('<h1>Sign up for a new user account</h1>'), css_class='col-12')),
+            Row(
+                Column(
+                    Field('first_name'),
+                    Field('last_name'),
+                    Field('email'),
+                    HTML('[[TERMS OF USE]]'),
+                    css_class='col-7',
+                ),
+                Column(
+                    Field('username'),
+                    Field('password1'),
+                    Field('password2'),
 
-            FormActions(
-                CancelButton,
-                Submit('submit', 'Submit'),
-                css_class='float-right'
-            ),
+                    FormActions(
+                        CancelButton,
+                        Submit('submit', 'Submit'),
+                        css_class='float-right',
+                    ),
+                    css_class='col-5',
+                )
+            )
         )
 
 

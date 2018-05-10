@@ -45,6 +45,10 @@ $theme-colors: (
 
 @import "~bootstrap/scss/bootstrap";
 
+.asteriskField, .invalid-feedback, .is_invalid {
+  color: $danger;
+}
+
 textarea {
   resize: none;
 }
@@ -76,3 +80,4 @@ textarea {
 .badge-mid {
   @extend .badge-left, .badge-right;
 }
+

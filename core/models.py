@@ -36,6 +36,10 @@ class NormalizedURLField(models.URLField):
 @reversion.register()
 class User(AbstractUser):
 
+    first_name = models.CharField(max_length=200, null=True, blank=False)
+    last_name = models.CharField(max_length=200, null=True, blank=False)
+    email = models.EmailField(null=True, blank=False)
+
     affiliations = models.ManyToManyField('Organization', blank=True, through='Affiliation',
                                           related_name="affiliated_users")
     # professional_title TODO
