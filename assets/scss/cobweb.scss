@@ -45,6 +45,58 @@ $theme-colors: (
 
 @import "~bootstrap/scss/bootstrap";
 
+// WINDOW LAYOUT
+
+html, body {
+  height: 100%;
+}
+
+.cobweb-container {
+  @extend .container-fluid, .d-flex, .flex-column ;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 0.1rem;
+  padding-bottom: 0.5rem;
+}
+
+.cobweb-content {
+  @extend .flex-grow-1 ;
+}
+
+// HEADER AND FOOTER
+
+.navbar {
+  @extend .row, .justify-content-end ;
+}
+
+.navbar-auth {
+  @extend .navbar, .align-items-end ;
+}
+
+.navbar-pages {
+  @extend .navbar, .align-items-center, .navbar-dark, .bg-dark, ;
+}
+
+.navbar-pages>input{
+  padding-top: 0rem;
+  padding-bottom: 0rem;
+}
+
+#searchform{
+  @extend .flex-grow-1 ;
+  max-width: 25rem;
+}
+
+#searchform>input, #searchform>button {
+  @extend .py-0 ;
+}
+
+footer>hr {
+  margin-bottom: 0.25rem;
+}
+
+// 
+
 .asteriskField, .invalid-feedback, .is_invalid {
   color: $danger;
 }
@@ -54,30 +106,30 @@ textarea {
 }
 
 .navbar {
-  padding: 0.2rem 0.5rem;
+  padding: 0.2rem 0.5rem ;
 }
 
 .form-section {
-  @extend .border, .border-gray;
-  @extend .form-group;
-  @extend .bg-metadata;
-  @extend .p-2;
-  @extend .rounded;
+  @extend .border, .border-gray ;
+  @extend .form-group ;
+  @extend .bg-metadata ;
+  @extend .p-2 ;
+  @extend .rounded ;
 }
 
 .badge-left {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  margin-right: 0;
+  border-top-right-radius: 0 ;
+  border-bottom-right-radius: 0 ;
+  margin-right: 0 ;
 }
 
 .badge-right {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  margin-left: 0;
+  border-top-left-radius: 0 ;
+  border-bottom-left-radius: 0 ;
+  margin-left: 0 ;
 }
 
 .badge-mid {
-  @extend .badge-left, .badge-right;
+  @extend .badge-left, .badge-right ;
 }
 

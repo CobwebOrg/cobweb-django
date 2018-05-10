@@ -18,24 +18,18 @@
     {% render_bundle 'main' %}
   </head>
 
-  <body>
-    {% include 'header.html' %}
+  <body class="cobweb-container">
+      {% include 'header.html' %}
 
-    <div class="container">
-      <div class="row flex-column-reverse flex-sm-row">
-        <div class="col">
-          {% block content %}{% endblock %}
-        </div>
+      <div class="cobweb-content">
+        {% block content %}{% endblock %}
       </div>
-    </div> <!-- /container -->
 
-    {% include 'footer.html' %}
-
-    {# <br><br><br><br><br><br><br><br><br><br><p style='{padding-top: 3cm}'><pre> {% filter force_escape %} {% debug %} {% endfilter %} </pre> #}
+      {% include 'footer.html' %}
 
     <script src="http://code.jquery.com/jquery-3.2.1.min.js"
-        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-        crossorigin="anonymous"></script>
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
 
     <!-- Form DOT Media -->
     {{ form.media }}

@@ -17,22 +17,22 @@
   },
   "homepage": "https://github.com/CobwebOrg/cobweb-django#readme",
   "dependencies": {
-    "@fortawesome/fontawesome": "^1.1.0",
-    "@fortawesome/fontawesome-free-solid": "^5.0.2",
-    "jquery": "^3.2.1",
-    "popper.js": "^1.12.9",
-    "webpack": "^3.10.0",
+    "@fortawesome/fontawesome": "^1.1.8",
+    "@fortawesome/fontawesome-free-solid": "^5.0.13",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.3",
+    "webpack": "^3.11.0",
     "webpack-bundle-tracker": "^0.2.1"
   },
   "devDependencies": {
-    "autoprefixer": "^7.2.4",
-    "bootstrap": "^4.0.0-beta.3",
-    "clean-webpack-plugin": "^0.1.17",
-    "css-loader": "^0.28.7",
-    "node-sass": "^4.7.2",
-    "postcss-loader": "^2.0.9",
+    "autoprefixer": "^7.2.6",
+    "bootstrap": "^4.1",
+    "clean-webpack-plugin": "^0.1.19",
+    "css-loader": "^0.28.11",
+    "node-sass": "^4.9.0",
+    "postcss-loader": "^2.1.5",
     "precss": "^2.0.0",
-    "sass-loader": "^6.0.6",
+    "sass-loader": "^6.0.7",
     "style-loader": "^0.19.1"
   }
 }

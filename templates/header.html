@@ -1,32 +1,38 @@
 {% load static %}
 
-<header class="container mb-2 position-relative">
+<header class="mb-2 position-relative">
 	<a href="{% url 'front_page' %}" style="position: absolute; top: 0; left: 0.875rem; z-index: 1100;">
 	    <img class='float-left mr-auto position-absolute' src="{% static 'images/cobweb_logo_b4.png' %}" alt="CobWeb logo">
 	</a>
-	<nav class="navbar row justify-content-end align-items-center">
+	<nav class="navbar-auth">
 		{% if user.is_authenticated %}
 			<span class="nav-link my-0 py-0">Welcome, {{user}}</span> •
-			<a id="account_link" class="nav-link text-uppercase my-0 py-0" href="{% url 'user_update' pk=request.user.pk %}">Profile</a> •
-			<a id="logout_link" class="nav-link text-uppercase my-0 py-0" href="{% url 'logout' %}?next={{request.path}}">Logout</a>
+			<a id="account_link" class="nav-link text-uppercase my-0 py-0" 
+			   href="{% url 'user_update' pk=request.user.pk %}">Profile</a> •
+			<a id="logout_link" class="nav-link text-uppercase my-0 py-0" 
+			   href="{% url 'logout' %}?next={{request.path}}">Logout</a>
 		{% else %}
 			<span class="nav-link my-0 py-0">Welcome!</span> •
-			<a id="signup_link" class="nav-link text-uppercase my-0 py-0" href="{% url 'user_create' %}?next={{request.path}}">Sign Up</a> •
-			<a id="login_link" class="nav-link text-uppercase my-0 py-0" href="{% url 'login' %}?next={{request.path}}">Login</a>
+			<a id="signup_link" class="nav-link text-uppercase my-0 py-0" 
+			   href="{% url 'user_create' %}?next={{request.path}}">Sign Up</a> •
+			<a id="login_link" class="nav-link text-uppercase my-0 py-0" 
+			   href="{% url 'login' %}?next={{request.path}}">Login</a>
 		{% endif %}
 	</nav>
 
-   <nav class="navbar row navbar-dark bg-dark">
+   <nav class="navbar-pages">
 		<span style="visibility: hidden;"><a class="nav-link text-uppercase mr-auto text-ltprimary" href="/">
 			CobWeb home
 		</a></span>
 
 		<form id="searchform" action="{% url 'search' %}" method="get" accept-charset="utf-8">
 			<div class="input-group">
-				<input class="form-control" id="searchbox" name="q" type="text" placeholder="Search..."
-					   aria-label="Search query">
+				<input id="searchbox" class="form-control" name="q" type="text"
+				 	   placeholder="Search..." aria-label="Search query">
 				<div class="input-group-append">
-					<button class="btn btn-outline-secondary" type="button"><span class="fa fa-search"></span></button>
+					<button class="btn btn-primary" type="button">
+						<span class="fa fa-search"></span>
+					</button>
 				</div>
 			</div>
 		</form>
