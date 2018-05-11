@@ -45,6 +45,11 @@ urlpatterns = [
     url(r'^users/autocomplete/$',
         core.views.UserAutocomplete.as_view(),
         name='user_autocomplete'),
+    
+    # Organization
+    path('organizations/',
+         core.views.OrganizationIndexView.as_view(),
+         name='organization_list'),
 
     # Project
     url(r'^projects/$',

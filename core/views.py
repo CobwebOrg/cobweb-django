@@ -1,4 +1,5 @@
 import django_tables2
+import haystack
 from haystack.generic_views import SearchView as HaystackSearchView
 from dal import autocomplete
 from django.core.exceptions import ValidationError
@@ -10,12 +11,15 @@ from reversion.views import RevisionMixin
 
 from core import models
 from core.forms import SignUpForm, UserProfileForm
+from core.tables import UserTable, OrganizationTable, ResourceTable
 
 
-class UserIndexView(generic.ListView):
+class UserIndexView(haystack.generic_views.SearchMixin,
+                    django_tables2.SingleTableView):
     model = models.User
-    template_name = "user_list.html"
-    section = 'user'
+    template_name = "generic_index.html"
+    table_class = UserTable
+    queryset = haystack.query.SearchQuerySet().filter(django_ct='core.user')
 
 
 class UserDetailView(generic.DetailView):
@@ -56,38 +60,25 @@ class UserAutocomplete(autocomplete.Select2QuerySetView):
         return qs
 
 
-class ResourceTable(django_tables2.Table):
-
-    url = django_tables2.LinkColumn()
-    nominations = django_tables2.TemplateColumn(
-        '{% load count_badge from cobweb_look %}'
-        '{% count_badge record.nominations %}',
-        default='', orderable=False
-    )
-    holdings = django_tables2.TemplateColumn(
-        '{% load count_badge from cobweb_look %}'
-        '{% count_badge record.holdings %}',
-        default='', orderable=False
-    )
-
-    class Meta:
-        model = models.Resource
-        show_header = False
-        exclude = ['id']
-        empty_text = "No records."
+class OrganizationIndexView(haystack.generic_views.SearchMixin,
+                            django_tables2.SingleTableView):
+    model = models.Organization
+    template_name = "generic_index.html"
+    table_class = OrganizationTable
+    queryset = haystack.query.SearchQuerySet().filter(django_ct='core.organization')
 
 
 class ResourceListView(django_tables2.SingleTableView):
     model = models.Resource
-    template_name = "webresources/resource_list.html"
+    template_name = "generic_index.html"
     table_class = ResourceTable
-    section = 'resource'
+    queryset = haystack.query.SearchQuerySet().filter(django_ct='core.resource')
 
     def get_queryset(self):
-        result = super().get_queryset().exclude(nominations=None, holdings=None)
+        result = super().get_queryset()
         query = self.request.GET.get('q')
         if query:
-            result = result.filter(url__icontains=query)
+            result = result.filter(q=query)
         return result
 
     def get_context_data(self, **kwargs):

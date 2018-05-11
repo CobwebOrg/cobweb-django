@@ -7,8 +7,7 @@ from projects.models import Project, Nomination, Claim
 class ProjectTable(django_tables2.Table):
     """django_tables2.Table object for lists of projects."""
 
-    title = django_tables2.LinkColumn(viewname='project_detail', kwargs={'pk': Accessor('pk')})#,
-                                    #   text=lambda record: print(record, record.title, record.get_stored_fields()['title']))
+    title = django_tables2.LinkColumn(viewname='project_detail', kwargs={'pk': Accessor('pk')})
     unclaimed_nominations = django_tables2.Column()
     claimed_nominations = django_tables2.Column()
 

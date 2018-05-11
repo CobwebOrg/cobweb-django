@@ -12,8 +12,7 @@ from projects.tables import ProjectTable, NominationTable, ClaimTable
 
 
 class ProjectIndexView(haystack.generic_views.SearchMixin,
-                       django_tables2.SingleTableView,
-                       ):
+                       django_tables2.SingleTableView):
     model = models.Project
     template_name = "generic_index.html"
     table_class = ProjectTable
