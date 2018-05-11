@@ -65,35 +65,73 @@ html, body {
 
 // HEADER AND FOOTER
 
-.navbar {
-  @extend .row, .justify-content-end ;
-}
+$grey-bar-height: 2.7rem;
+$navbar-padding: 0.35rem;
+$logo-width: $grey-bar-height * 133 / 35;
 
-.navbar-auth {
-  @extend .navbar, .align-items-end ;
-}
+header{
 
-.navbar-pages {
-  @extend .navbar, .align-items-center, .navbar-dark, .bg-dark, ;
-}
+  .navbar {
+    @extend .row, .justify-content-end ;
+    padding: $navbar-padding ;
+  }
 
-.navbar-pages>input{
-  padding-top: 0rem;
-  padding-bottom: 0rem;
-}
+  .nav-link { @extend .text-uppercase, .my-0, .py-0 ; }
 
-#searchform{
-  @extend .flex-grow-1 ;
-  max-width: 25rem;
-}
+  .navbar-auth {
+    @extend .navbar, .align-items-end ;
+    height: $grey-bar-height * 48 / 35;
 
-#searchform>input, #searchform>button {
-  @extend .py-0 ;
-}
+    background-image: url("/static/images/logo_cobweb_web.png");
+    background-repeat: no-repeat;
+    background-size: $logo-width, $grey-bar-height * 48 / 35;
+  }
 
-footer>hr {
+  .navbar-pages {
+    @extend .navbar, .align-items-center, .navbar-dark, .bg-dark ;
+    height: $grey-bar-height;
+
+    background-image: url("/static/images/logo_cobweb_text.png");
+    background-repeat: no-repeat;
+    background-size: $logo-width, $grey-bar-height;
+
+    #searchform{
+      @extend .flex-grow-1 ;
+      max-width: 25rem;
+      max-height: $grey-bar-height - (2 * $navbar-padding);
+
+      .form-control {
+      //   // @extend .my-0, .py-0 ;
+        max-height: $grey-bar-height - (2 * $navbar-padding);
+      }
+
+      .btn {
+      //   // @extend .my-0, .py-0 ;
+        height: $grey-bar-height - (2 * $navbar-padding);
+      }
+    }
+
+    .nav-link { 
+      @extend .my-0, .py-0 ;
+      font-size: 120%;
+    }
+
+    .logo-text {
+      @extend .my-0, .p-0,  ;
+
+      margin-left: 1rem;
+      margin-right: auto;
+
+      font-size: 175%;
+      font-weight: bold; 
+      color: $red;
+      // opacity: 0;
+    }
+  }
+}
+footer { hr {
   margin-bottom: 0.25rem;
-}
+}}
 
 // 
 
@@ -103,10 +141,6 @@ footer>hr {
 
 textarea {
   resize: none;
-}
-
-.navbar {
-  padding: 0.2rem 0.5rem ;
 }
 
 .form-section {
