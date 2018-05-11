@@ -18,7 +18,7 @@ class ProjectTable(django_tables2.Table):
         attrs = {'class': 'table table-hover'}
         empty_text = "No projects."
         order_by = ('-impact_factor', '-pk')
-
+    
 
 class NominationTable(django_tables2.Table):
     """django_tables2.Table object for lists of nominations."""
