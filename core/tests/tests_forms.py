@@ -14,6 +14,9 @@ fake = faker.Faker()
 def test_new_user_form():
     test_form = SignUpForm(data={
         'username': fake.user_name(),
+        'first_name': fake.first_name(),
+        'last_name': fake.last_name(),
+        'email': fake.email(),
         'password1': 't3stpassw0rd',
         'password2': 't3stpassw0rd',
     })
