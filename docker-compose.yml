@@ -31,7 +31,7 @@ services:
       DEBUG: 'true'
       TEST: 'false'
       SHELL: '/bin/bash'
-    command: ['/code/start-development.sh']
+    command: ["/code/start-development.sh"]
   
   node:
     image: node
@@ -41,12 +41,12 @@ services:
     working_dir: /code
     environment:
       NODE_PATH: '/node_modules'
-    command: ['npx', 'webpack', '--config', 'webpack.config.js', '--watch']
+    command: ["npx", "webpack", "--config", "webpack.config.js", "--watch"]
   
   production:
     build: .
     image: andrewwallace/cobweb:latest
-    command: "echo 'Built production web image. Bye!''"
+    command: "echo 'Built production web image. Bye!'"
 
 
 volumes:
