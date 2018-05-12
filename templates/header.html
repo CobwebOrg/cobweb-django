@@ -3,17 +3,18 @@
 <header class="mb-2 position-relative">
 	<nav class="navbar-auth">
 		{% if user.is_authenticated %}
-			<span class="nav-link text-lowercase">Welcome, {{user}}</span> •
+			{% comment %} TODO: "px-3" should be something that *automatically* matches nav-item padding {% endcomment %}
+			<span class="px-3">Welcome, {{user}}</span> •
 			<a id="account_link" class="nav-link" 
 			   href="{% url 'user_update' pk=request.user.pk %}">Profile</a> •
 			<a id="logout_link" class="nav-link" 
-			   href="{% url 'logout' %}?next={{request.path}}">Logout</a>
+			   href="{% url 'logout' %}?next={{request.path}}">Logout</a> •
 		{% else %}
 			<span class="nav-link text-capitalize">Welcome!</span> •
 			<a id="signup_link" class="nav-link" 
 			   href="{% url 'user_create' %}?next={{request.path}}">Sign Up</a> •
 			<a id="login_link" class="nav-link" 
-			   href="{% url 'login' %}?next={{request.path}}">Login</a>
+			   href="{% url 'login' %}?next={{request.path}}">Login</a> •
 		{% endif %}
 		<a class="nav-link disabled">
 			Help
@@ -21,21 +22,10 @@
 	</nav>
 
    <nav class="navbar-pages">
-		<a style="visibility: hidden" class="logo-text mr-auto" href="/">
+		<a class="logo-text mr-auto" href="/">
 			CobWeb
 		</a>
 
-		<form id="searchform" action="{% url 'search' %}" method="get" accept-charset="utf-8">
-			<div class="input-group">
-				<input id="searchbox" class="form-control" name="q" type="text"
-				 	   placeholder="Search..." aria-label="Search query">
-				<div class="input-group-append">
-					<button class="btn btn-primary" type="button">
-						<span class="fa fa-search"></span>
-					</button>
-				</div>
-			</div>
-		</form>
 		<div class="dropdown show">
 			<a class="dropdown-toggle nav-link text-uppercase text-ltprimary" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				URLs
@@ -48,12 +38,38 @@
 				<a class="dropdown-item">Holdings</a>
 			</div>
 		</div>
-		<a class="nav-link text-uppercase text-ltprimary" href="{% url 'project_list' %}">
+
+		<div class="dropdown show">
+			<a class="dropdown-toggle nav-link text-uppercase text-ltprimary" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Activities
+			</a>
+		
+			<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+				<a class="dropdown-item" href="{% url 'project_list' %}">Projects</a>
+				<a class="dropdown-item" href="{% url 'archives:collection_list' %}">Collections</a>
+			</div>
+		</div>
+		
+		{% comment %} <a class="nav-link text-uppercase text-ltprimary"
+		   href="{% url 'project_list' %}">
 			Projects
-		</a>
-		<a class="nav-link text-uppercase text-light">
+		</a> {% endcomment %}
+		<a class="nav-link text-uppercase text-ltprimary"
+		   href="{% url 'organization_list' %}">
 			Organizations
 		</a>
+		
+		<form id="searchform" action="{% url 'search' %}" method="get" accept-charset="utf-8">
+			<div class="input-group">
+				<input id="searchbox" class="form-control" name="q" type="text"
+						placeholder="Search..." aria-label="Search query">
+				<div class="input-group-append">
+					<button class="btn btn-primary" type="button">
+						<span class="fa fa-search"></span>
+					</button>
+				</div>
+			</div>
+		</form>
 	</nav>
 </header>
 

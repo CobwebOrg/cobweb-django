@@ -47,9 +47,7 @@ $theme-colors: (
 
 // WINDOW LAYOUT
 
-html, body {
-  height: 100%;
-}
+html, body { height: 100%; }
 
 .cobweb-container {
   @extend .container-fluid, .d-flex, .flex-column ;
@@ -71,15 +69,19 @@ $logo-width: $grey-bar-height * 133 / 35;
 
 header{
 
-  .navbar {
+  %navbar {
     @extend .row, .justify-content-end ;
-    padding: $navbar-padding ;
+    padding-top: $navbar-padding;
+    padding-bottom: $navbar-padding;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .nav-link { @extend .text-uppercase, .my-0, .py-0 ; }
 
   .navbar-auth {
-    @extend .navbar, .align-items-end ;
+    @extend %navbar, .align-items-end ;
+    padding-bottom: 1rem;
     height: $grey-bar-height * 48 / 35;
 
     background-image: url("/static/images/logo_cobweb_web.png");
@@ -88,12 +90,14 @@ header{
   }
 
   .navbar-pages {
-    @extend .navbar, .align-items-center, .navbar-dark, .bg-dark ;
+    @extend %navbar, .align-items-center, .navbar-dark, .bg-dark ;
     height: $grey-bar-height;
 
     background-image: url("/static/images/logo_cobweb_text.png");
     background-repeat: no-repeat;
     background-size: $logo-width, $grey-bar-height;
+
+    line-height: 0;
 
     #searchform{
       @extend .flex-grow-1 ;
@@ -106,7 +110,8 @@ header{
       }
 
       .btn {
-      //   // @extend .my-0, .py-0 ;
+        @extend .my-0, .py-0 ;
+        border: 0;
         height: $grey-bar-height - (2 * $navbar-padding);
       }
     }
@@ -116,32 +121,31 @@ header{
       font-size: 120%;
     }
 
+    .dropdown-item {
+      line-height: 1.2;
+    }
+
     .logo-text {
       @extend .my-0, .p-0,  ;
 
-      margin-left: 1rem;
+      margin-left: 0.6rem;
       margin-right: auto;
+      letter-spacing: 0.085rem;
 
-      font-size: 175%;
+      font-size: 0.7 * $grey-bar-height;
       font-weight: bold; 
       color: $red;
-      // opacity: 0;
+      opacity: 0;
     }
   }
 }
-footer { hr {
-  margin-bottom: 0.25rem;
-}}
+footer hr { margin-bottom: 0.25rem; }
 
-// 
+// MISC
 
-.asteriskField, .invalid-feedback, .is_invalid {
-  color: $danger;
-}
+.asteriskField, .invalid-feedback, .is_invalid { color: $danger; }
 
-textarea {
-  resize: none;
-}
+textarea { resize: none; }
 
 .form-section {
   @extend .border, .border-gray ;
@@ -152,18 +156,16 @@ textarea {
 }
 
 .badge-left {
-  border-top-right-radius: 0 ;
-  border-bottom-right-radius: 0 ;
-  margin-right: 0 ;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-right: 0;
 }
 
 .badge-right {
-  border-top-left-radius: 0 ;
-  border-bottom-left-radius: 0 ;
-  margin-left: 0 ;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-left: 0;
 }
 
-.badge-mid {
-  @extend .badge-left, .badge-right ;
-}
+.badge-mid { @extend .badge-left, .badge-right ; }
 
