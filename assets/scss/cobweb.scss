@@ -77,7 +77,7 @@ header{
     padding-right: 1rem;
   }
 
-  .nav-link { @extend .text-uppercase, .my-0, .py-0 ; }
+  .nav-link { @extend .text-uppercase, .m-0, .p-0 ; }
 
   .navbar-auth {
     @extend %navbar, .align-items-end ;
@@ -87,6 +87,14 @@ header{
     background-image: url("/static/images/logo_cobweb_web.png");
     background-repeat: no-repeat;
     background-size: $logo-width, $grey-bar-height * 48 / 35;
+
+    .nav-link { @extend .mx-3 }
+
+    .nav-welcome {
+      @extend .mx-3 ;
+      text-transform: none;
+      font-style: italic;
+    }
   }
 
   .navbar-pages {
@@ -117,8 +125,8 @@ header{
     }
 
     .nav-link { 
-      @extend .my-0, .py-0 ;
-      font-size: 120%;
+      @extend .mr-5 ;
+      font-size: 130%;
     }
 
     .dropdown-item {

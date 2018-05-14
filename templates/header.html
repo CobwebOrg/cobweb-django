@@ -4,7 +4,7 @@
 	<nav class="navbar-auth">
 		{% if user.is_authenticated %}
 			{% comment %} TODO: "px-3" should be something that *automatically* matches nav-item padding {% endcomment %}
-			<span class="px-3">Welcome, {{user}}</span> •
+			<span class="nav-welcome">Welcome, {{user}}</span> •
 			<a id="account_link" class="nav-link" 
 			   href="{% url 'user_update' pk=request.user.pk %}">Profile</a> •
 			<a id="logout_link" class="nav-link" 
