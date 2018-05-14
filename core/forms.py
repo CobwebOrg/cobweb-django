@@ -23,7 +23,7 @@ class SignUpForm(UserCreationForm):
                     Field('last_name'),
                     Field('email'),
                     HTML('[[TERMS OF USE]]'),
-                    css_class='col-7',
+                    css_class='col-6',
                 ),
                 Column(
                     Field('username'),
@@ -35,7 +35,7 @@ class SignUpForm(UserCreationForm):
                         Submit('submit', 'Submit'),
                         css_class='float-right',
                     ),
-                    css_class='col-5',
+                    css_class='col-6',
                 )
             )
         )
