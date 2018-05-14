@@ -3,14 +3,13 @@
 <header class="mb-2 position-relative">
 	<nav class="navbar-auth">
 		{% if user.is_authenticated %}
-			{% comment %} TODO: "px-3" should be something that *automatically* matches nav-item padding {% endcomment %}
 			<span class="nav-welcome">Welcome, {{user}}</span> •
 			<a id="account_link" class="nav-link" 
 			   href="{% url 'user_update' pk=request.user.pk %}">Profile</a> •
 			<a id="logout_link" class="nav-link" 
 			   href="{% url 'logout' %}?next={{request.path}}">Logout</a> •
 		{% else %}
-			<span class="nav-link text-capitalize">Welcome!</span> •
+			<span class="nav-welcome">Welcome!</span> •
 			<a id="signup_link" class="nav-link" 
 			   href="{% url 'user_create' %}?next={{request.path}}">Sign Up</a> •
 			<a id="login_link" class="nav-link" 
