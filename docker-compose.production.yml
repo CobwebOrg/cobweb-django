@@ -3,8 +3,6 @@ version: '3'
 services:
   solr:
     image: andrewwallace/cobweb_solr:latest
-    volumes:
-      - solr_data:/opt/solr/server/solr/mycores
     entrypoint:
       - docker-entrypoint.sh
       - solr-precreate
@@ -31,9 +29,6 @@ services:
           memory: 2G
   web:
     image: andrewwallace/cobweb:latest
-    volumes:
-      - web_usr_local:/usr/local
-      - solr_data:/solr_data
     ports:
       - "80:8000"
     depends_on:
@@ -53,9 +48,6 @@ services:
       - cobwebnet
   worker:
     image: andrewwallace/cobweb:latest
-    volumes:
-      - web_usr_local:/usr/local
-      - solr_data:/solr_data
     depends_on:
       - db
       - solr
@@ -75,7 +67,5 @@ services:
       - cobwebnet
 volumes:
   postgres_data:
-  solr_data:
-  web_usr_local:
 networks:
   cobwebnet:

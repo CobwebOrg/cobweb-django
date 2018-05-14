@@ -2,17 +2,17 @@
   - hosts: localhost
     tasks:
       # - name: make sure git status is clean
-      - name: run full test suite
-        command: pipenv run pytest
-      - name: build 'web' docker image
-        command: docker build . -t andrewwallace/cobweb:latest
+      # - name: run full test suite
+      #   command: pipenv run pytest
+      - name: build docker images
+        command: docker-compose build
       - name: push 'web' docker image to dockerhub
-        command: docker push andrewwallace/cobweb:latest
+        command: docker-compose push
       - name: copy docker-compose.production.yml to server
         command: scp docker-compose.production.yml cobweb:~/docker-compose.production.yml
-  - hosts: cobweb
+  - hosts: cobwebdev
     tasks:
-      - name: pull image from dockerhub
-        command: docker pull andrewwallace/cobweb:latest
+      - name: pull images from dockerhub
+        command: docker pull andrewwallace/cobweb:latest && docker pull andrewwallace/cobweb_solr:latest
       - name: redeploy docker stack
         command: docker stack deploy -c docker-compose.production.yml cobweb
