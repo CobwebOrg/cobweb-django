@@ -1,13 +1,14 @@
 from django.conf import settings
 from django.conf.urls import include, url
-from django.contrib import admin
+from django.contrib import admin, auth
 from django.urls import path
-from django.views.generic import TemplateView
+from django.views.generic import FormView
 from rest_framework.routers import DefaultRouter
 
 from api.views import (UserViewSet, OrganizationViewSet, ProjectViewSet,
                        NominationViewSet, ClaimViewSet)
 # import archives.views
+import core.forms
 import core.views
 import projects.views
 
@@ -27,7 +28,10 @@ urlpatterns = [
 
     url(r'^search/', core.views.SearchView.as_view(), name='search'),
 
-    url(r'^$', TemplateView.as_view(template_name='landing_page.html'), name='front_page'),
+    url(r'^$', auth.views.LoginView.as_view(
+        template_name='landing_page.html',
+        form_class=core.forms.LoginForm
+    ), name='front_page',),
 
     # User
     path('users/<pk>/edit/',

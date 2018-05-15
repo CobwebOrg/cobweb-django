@@ -1,9 +1,28 @@
 from crispy_forms.helper import FormHelper
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 from core.layout import (Layout, Column, Row, CancelButton, Submit, Field, FormActions, Fieldset,
-                         UneditableField, HTML, Hidden)
+                         UneditableField, HTML, Hidden, Reset, Div)
 from core.models import User
+
+
+class LoginForm(AuthenticationForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout(
+            Div(
+                Field('username'),
+                Field('password'),
+                FormActions(
+                    Reset('reset', 'Reset'),
+                    Submit('submit', 'Submit'),
+                    css_class='float-right',
+                ),
+                css_class='mt-5'
+            ),
+        )
 
 
 class SignUpForm(UserCreationForm):

@@ -1,14 +1,9 @@
 {% extends "base.html" %}
+{% load static crispy_forms_tags %}
 {% block content %}
-  <div class="card">
-    <div class="card-header">
-      <h1 class="card-title">About Cobweb</h1>
-      <p class="card-subtitle">
-        Collaborative Collection Development for Web Archives
-      </p>
-    </div>
+  <div class="row px-5">
 
-    <div class="card-body">
+    <div class="col-6 p-5">
       <p>Cobweb is a partnership between the California Digital Library, UCLA, and
       Harvard University.</p>
 
@@ -31,5 +26,12 @@
 
       <p><a href="https://www.cdlib.org/cobweb/">Learn more from CDL</a></p>
     </div>
+
+    <div class="col-6 p-5">
+      <img src="{% static 'images/cobweb_logo_300.png' %}" style="max-width: 100%">
+
+      {% crispy form %}
+    </div>
+
   </div>
 {% endblock %}
