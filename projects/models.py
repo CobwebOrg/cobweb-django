@@ -107,16 +107,29 @@ class Project(models.Model):
     def n_unclaimed(self) -> int:
         return self.nominations_unclaimed.count()
     
-    @property
-    def nominations_claimed(self) -> QuerySet:
-        return self.nominations.exclude(claims=None)  #.filter(holdings=None)
-    
+    # @property
+    # def nominations_claimed(self) -> QuerySet:
+        # TODO: this doesn't work - see below
+        # return self.nominations.exclude(claims=None).filter(has_holding=False)
+
     @property
     def n_claimed(self) -> int:
-        return self.nominations_claimed.count()
+        # TODO: this is expensive to compute - might be done better with 
+        #       annotation/aggregation??? any, at least it gets cached in Solr
+        return sum([1 for n in self.nominations.all()
+                    if n.claims.filter(has_holding__exact=False)])
     
+    # @property
     # def nominations_held(self) -> QuerySet:
-    #     return self.nominations.exclude(claims=None).exclude(holdings=None)
+        # TODO: this doesn't work - see below
+        # return self.nominations.exclude(claims=None).filter(has_holding=True)
+
+    @property
+    def n_held(self) -> int:
+        # TODO: this is expensive to compute - might be done better with 
+        #       annotation/aggregation??? any, at least it gets cached in Solr
+        return sum([1 for n in self.nominations.all()
+                    if n.claims.filter(has_holding__exact=True)])
 
 
 @reversion.register()
@@ -167,6 +180,10 @@ class Nomination(models.Model):
 
     def get_resource_set(self) -> QuerySet:
         return self.project
+    
+    @property
+    def has_holding(self) -> bool:
+        return self.claims.filter(has_holding=True).count() > 0
 
     def is_admin(self, user: AbstractBaseUser) -> bool:
         return self.project.is_nominator(user)

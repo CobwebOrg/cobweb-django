@@ -17,7 +17,7 @@ class ProjectIndexView(haystack.generic_views.SearchMixin,
     template_name = "generic_index.html"
     table_class = ProjectTable
     section = 'project'
-    queryset = haystack.query.SearchQuerySet().filter(django_ct='projects.project')
+    queryset = haystack.query.SearchQuerySet().filter(django_ct__exact='projects.project')
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)

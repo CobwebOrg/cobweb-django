@@ -24,6 +24,7 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     # notes
     unclaimed_nominations = indexes.IntegerField(model_attr='n_unclaimed', indexed=True, stored=True)
     claimed_nominations = indexes.IntegerField(model_attr='n_claimed', indexed=True, stored=True)
+    held_nominations = indexes.IntegerField(model_attr='n_held', indexed=True, stored=True)
 
     def get_model(self):
         return Project

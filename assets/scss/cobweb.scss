@@ -40,7 +40,11 @@ $theme-colors: (
   "metadata":  $cyan-light,
 
   "tag": $lime-light,
-  "user": lighten($purple, 50%)
+  "user": lighten($purple, 50%),
+
+  "unclaimed": $red,
+  "claimed": $yellow,
+  "held": $lime,
 );
 
 @import "~bootstrap/scss/bootstrap";
@@ -161,6 +165,13 @@ textarea { resize: none; }
   @extend .bg-metadata ;
   @extend .p-2 ;
   @extend .rounded ;
+}
+
+
+@each $nomination_type in (unclaimed, claimed, held) {
+  .#{$nomination_type}-count {
+    @extend .badge, .badge-pill, .badge-#{$nomination_type} ;
+  }
 }
 
 .badge-left {

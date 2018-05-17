@@ -1,3 +1,4 @@
+from django.utils.html import format_html
 import django_tables2
 from django_tables2.utils import Accessor
 
@@ -8,15 +9,47 @@ class ProjectTable(django_tables2.Table):
     """django_tables2.Table object for lists of projects."""
 
     title = django_tables2.LinkColumn(viewname='project_detail', kwargs={'pk': Accessor('pk')})
-    unclaimed_nominations = django_tables2.Column()
-    claimed_nominations = django_tables2.Column()
+    unclaimed_nominations = django_tables2.Column(
+        verbose_name='Unclaimed',
+        attrs={'cell': {'class': 'text-center'}},
+    )
+    claimed_nominations = django_tables2.Column(
+        verbose_name='Claimed',
+        attrs={'cell': {'class': 'text-center'}},
+    )
+    held_nominations = django_tables2.Column(
+        verbose_name='Held',
+        attrs={'cell': {'class': 'text-center'}},
+    )
 
     class Meta:
         model = Project
-        fields = ['title', 'unclaimed_nominations', 'claimed_nominations']
+        fields = ('title', 'unclaimed_nominations', 'claimed_nominations',
+                  'held_nominations')
         attrs = {'class': 'table table-hover'}
         empty_text = "No projects."
         order_by = ('-impact_factor', '-pk')
+
+    def render_unclaimed_nominations(self, value):
+        if value == 0:
+            return ''
+        else:
+            return format_html('<span class="unclaimed-count">{}</span>',
+                               value)
+
+    def render_claimed_nominations(self, value):
+        if value == 0:
+            return ''
+        else:
+            return format_html('<span class="claimed-count">{}</span>',
+                               value)
+
+    def render_held_nominations(self, value):
+        if value == 0:
+            return ''
+        else:
+            return format_html('<span class="held-count">{}</span>',
+                               value)
     
 
 class NominationTable(django_tables2.Table):

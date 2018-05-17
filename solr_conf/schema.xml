@@ -155,6 +155,8 @@
     
     <field name="claimed_nominations" type="long" indexed="true" stored="true" multiValued="false" />
     
+    <field name="held_nominations" type="long" indexed="true" stored="true" multiValued="false" />
+    
     <uniqueKey>id</uniqueKey>
 
     <!--
