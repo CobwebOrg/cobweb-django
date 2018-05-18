@@ -14,12 +14,18 @@ from core.forms import SignUpForm, UserProfileForm
 from core.tables import UserTable, OrganizationTable, ResourceTable
 
 
-class UserIndexView(haystack.generic_views.SearchMixin,
-                    django_tables2.SingleTableView):
-    model = models.User
+class CobwebBaseIndexView(haystack.generic_views.SearchMixin,
+                          django_tables2.SingleTableView):
     template_name = "generic_index.html"
+
+    def get_queryset(self):
+        return haystack.query.SearchQuerySet().filter(django_ct__exact=self.django_ct)
+
+
+class UserIndexView(CobwebBaseIndexView):
+    model = models.User
     table_class = UserTable
-    queryset = haystack.query.SearchQuerySet().filter(django_ct='core.user')
+    django_ct = 'core.user'    
 
 
 class UserDetailView(generic.DetailView):
@@ -60,19 +66,16 @@ class UserAutocomplete(autocomplete.Select2QuerySetView):
         return qs
 
 
-class OrganizationIndexView(haystack.generic_views.SearchMixin,
-                            django_tables2.SingleTableView):
+class OrganizationIndexView(CobwebBaseIndexView):
     model = models.Organization
-    template_name = "generic_index.html"
     table_class = OrganizationTable
-    queryset = haystack.query.SearchQuerySet().filter(django_ct='core.organization')
+    django_ct = 'core.organization'
 
 
-class ResourceListView(django_tables2.SingleTableView):
+class ResourceListView(CobwebBaseIndexView):
     model = models.Resource
-    template_name = "generic_index.html"
     table_class = ResourceTable
-    queryset = haystack.query.SearchQuerySet().filter(django_ct='core.resource')
+    django_ct = 'core.resource'
 
     def get_queryset(self):
         result = super().get_queryset()

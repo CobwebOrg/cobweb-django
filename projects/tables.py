@@ -2,10 +2,11 @@ from django.utils.html import format_html
 import django_tables2
 from django_tables2.utils import Accessor
 
+from core.tables import CobwebBaseTable
 from projects.models import Project, Nomination, Claim
 
 
-class ProjectTable(django_tables2.Table):
+class ProjectTable(CobwebBaseTable):
     """django_tables2.Table object for lists of projects."""
 
     title = django_tables2.LinkColumn(viewname='project_detail', kwargs={'pk': Accessor('pk')})
@@ -21,14 +22,16 @@ class ProjectTable(django_tables2.Table):
         verbose_name='Held',
         attrs={'cell': {'class': 'text-center'}},
     )
+    impact_factor = django_tables2.Column(
+        verbose_name='Impact',
+        attrs={'cell': {'class': 'text-center'}},
+    )
 
-    class Meta:
+    class Meta(CobwebBaseTable.Meta):
         model = Project
-        fields = ('title', 'unclaimed_nominations', 'claimed_nominations',
-                  'held_nominations')
-        attrs = {'class': 'table table-hover'}
+        fields = ('impact_factor', 'title', 'unclaimed_nominations',
+                  'claimed_nominations', 'held_nominations')
         empty_text = "No projects."
-        order_by = ('-impact_factor', '-pk')
 
     def render_unclaimed_nominations(self, value):
         if value == 0:
