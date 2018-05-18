@@ -3,10 +3,6 @@ version: '3'
 services:
   solr:
     image: andrewwallace/cobweb_solr:latest
-    entrypoint:
-      - docker-entrypoint.sh
-      - solr-precreate
-      - cobweb
     deploy:
       replicas: 1
       resources:
