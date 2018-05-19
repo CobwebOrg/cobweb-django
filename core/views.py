@@ -17,9 +17,13 @@ from core.tables import UserTable, OrganizationTable, ResourceTable
 class CobwebBaseIndexView(haystack.generic_views.SearchMixin,
                           django_tables2.SingleTableView):
     template_name = "generic_index.html"
+    queryset = None
 
     def get_queryset(self):
-        return haystack.query.SearchQuerySet().filter(django_ct__exact=self.django_ct)
+        if not self.queryset:
+            self.queryset = (haystack.query.SearchQuerySet()
+                             .filter(django_ct__exact=self.django_ct))
+        return self.queryset
 
 
 class UserIndexView(CobwebBaseIndexView):

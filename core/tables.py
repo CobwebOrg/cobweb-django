@@ -8,6 +8,7 @@ class CobwebBaseTable(django_tables2.Table):
 
     class Meta:
         abstract=True
+        template_name = 'generic_table.html'
         attrs={'class': 'table table-hover'}
         order_by = ('-impact_factor', '-pk')
 

@@ -6,14 +6,14 @@
 {% block title %}Cobweb: {{view.model | model_name_plural | capfirst}} Index{% endblock %}
 
 {% block content %}
-<h3>
-  {{view.model | model_name_plural | capfirst}}
+<h1>
+  {{view.get_queryset.count}} {{view.model | model_name_plural | capfirst}}
   {% if new_item_link %}
   	<a href="{{ new_item_link }}" class="float-right btn btn-sm btn-primary">
       <strong>+</strong> New {{view.model | model_name | capfirst}}
     </a>
   {% endif %}
-</h3>
+</h1>
 
 {% render_table table %}
 

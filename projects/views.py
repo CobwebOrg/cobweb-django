@@ -6,18 +6,16 @@ from django.views.generic import DetailView, CreateView, UpdateView
 from reversion.views import RevisionMixin
 
 from core.models import Resource
+from core.views import CobwebBaseIndexView
 
 from projects import models, forms
 from projects.tables import ProjectTable, NominationTable, ClaimTable
 
 
-class ProjectIndexView(haystack.generic_views.SearchMixin,
-                       django_tables2.SingleTableView):
+class ProjectIndexView(CobwebBaseIndexView):
     model = models.Project
-    template_name = "generic_index.html"
     table_class = ProjectTable
-    section = 'project'
-    queryset = haystack.query.SearchQuerySet().filter(django_ct__exact='projects.project')
+    django_ct = 'projects.project'
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)

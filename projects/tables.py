@@ -9,7 +9,10 @@ from projects.models import Project, Nomination, Claim
 class ProjectTable(CobwebBaseTable):
     """django_tables2.Table object for lists of projects."""
 
-    title = django_tables2.LinkColumn(viewname='project_detail', kwargs={'pk': Accessor('pk')})
+    title = django_tables2.LinkColumn(
+        viewname='project_detail',
+        kwargs={'pk': Accessor('pk')},
+    )
     unclaimed_nominations = django_tables2.Column(
         verbose_name='Unclaimed',
         attrs={'cell': {'class': 'text-center'}},
