@@ -41,6 +41,7 @@ pytest-xdist = "*"
 ipython = "*"
 mypy = "*"
 pylint-django = "*"
+pytest-django-haystack = "*"
 
 [requires]
 python_version = "3.6"

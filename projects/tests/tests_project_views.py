@@ -9,6 +9,17 @@ from projects.tests.factories import ProjectFactory, NominationFactory
 from projects.models import Project
 
 
+class TestProjectIndexView:
+
+    @pytest.mark.xfail(strict=True)
+    def test_project_table(self):
+        """The table should be paginated correctly and include all projects."""
+        # Fill the haystack index with projects
+
+        # Test that all projects are listed and pagination works
+        raise NotImplementedError
+
+
 class ProjectIndexViewTests(TestCase):
 
     def setUp(self):
@@ -19,7 +30,7 @@ class ProjectIndexViewTests(TestCase):
         ]
         self.response = self.client.get('/projects/')
 
-    @pytest.mark.xfail
+    @pytest.mark.xfail(strict=True)
     def test_links_to_all_projects(self):
         self.assertTemplateUsed(self.response, 'base.html')
         self.assertTemplateUsed(self.response, 'generic_index.html')

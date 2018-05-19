@@ -24,9 +24,11 @@ class CollectionIndexViewTests(TestCase):
         self.assertTemplateUsed(self.response, 'generic_index.html')
 
     def test_title(self):
-        self.assertContains(self.response, '<h3>Collections',
+        # TODO: mock SearchQuerySet.count() and test for #, <h1>... 
+        self.assertContains(self.response, 'Collections',
                             count=1, html=True)
 
+    # @pytest.mark.xfail(strict=True)
     def test_links_to_all_collections(self):
         self.assertContains(self.response, 'Boring Collection')
         self.assertContains(self.response, 'Exciting Collection')
