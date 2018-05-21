@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "48b460ac41d66c619850c17e3c4bfa6ef9c18497cbefdfa678b1a411e758021c"
+            "sha256": "5082cbfc2939a773eb21968a3cdbed0cf612f43859c060010210a013daa3f498"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -89,6 +89,14 @@
             ],
             "index": "pypi",
             "version": "==2.0.0"
+        },
+        "django-polymorphic": {
+            "hashes": [
+                "sha256:317bde04d5b218fa1ad07734dfbbbd3947c9495650ba7e015c5d4f6def00c879",
+                "sha256:e1821d7b5874509a158a0f22bebf544330e0944c481c5a3e6da6cac8887e4e88"
+            ],
+            "index": "pypi",
+            "version": "==2.0.2"
         },
         "django-reversion": {
             "hashes": [
@@ -545,10 +553,10 @@
         },
         "hypothesis": {
             "hashes": [
-                "sha256:0a7839861fb6a43182a0afe475317e38322b489d226c53558e55f61bd5a05ace"
+                "sha256:ceb4d9b582184b041adc5647121fbafe3fcf49b7fbd218195d903c3fc6bc7916"
             ],
             "index": "pypi",
-            "version": "==3.56.10"
+            "version": "==3.57.0"
         },
         "idna": {
             "hashes": [
@@ -685,10 +693,10 @@
         },
         "parso": {
             "hashes": [
-                "sha256:62bd6bf7f04ab5c817704ff513ef175328676471bdef3629d4bdd46626f75551",
-                "sha256:a75a304d7090d2c67bd298091c14ef9d3d560e3c53de1c239617889f61d1d307"
+                "sha256:cdef26e8adc10d589f3ec4eb444bd0a29f3f1eb6d72a4292ab8afcb9d68976a6",
+                "sha256:f0604a40b96e062b0fd99cf134cc2d5cdf66939d0902f8267d938b0d5b26707f"
             ],
-            "version": "==0.2.0"
+            "version": "==0.2.1"
         },
         "pdbpp": {
             "hashes": [
@@ -914,6 +922,13 @@
                 "sha256:e863072cdf4c72eebf179342c94e6989c67185842d9997960b3e69290b2fa269"
             ],
             "version": "==3.12"
+        },
+        "rope": {
+            "hashes": [
+                "sha256:a09edfd2034fd50099a67822f9bd851fbd0f4e98d3b87519f6267b60e50d80d1"
+            ],
+            "index": "pypi",
+            "version": "==0.10.7"
         },
         "selenium": {
             "hashes": [

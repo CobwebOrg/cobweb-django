@@ -89,6 +89,7 @@ INSTALLED_APPS = [
     'haystack',
     'languages_plus',
     'phonenumber_field',
+    'polymorphic',
     'rest_framework',
     'reversion',
     'webpack_loader',
@@ -97,6 +98,7 @@ INSTALLED_APPS = [
     'core',
     'datasources',
     'projects',
+    'webarchives',
 ]
 
 MIDDLEWARE = [
@@ -137,6 +139,11 @@ HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
         'URL': 'http://solr:8983/solr/cobweb',
+        'ADMIN_URL': 'http://solr:8983/solr/admin/cores',
+    },
+    'test': {
+        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+        'URL': 'http://solr:8983/solr/test',
         'ADMIN_URL': 'http://solr:8983/solr/admin/cores',
     },
 }

@@ -31,7 +31,7 @@ services:
       DEBUG: 'true'
       TEST: 'false'
       SHELL: '/bin/bash'
-    command: ["/code/start-development.sh"]
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
   
   node:
     image: node
