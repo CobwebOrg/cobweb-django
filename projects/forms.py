@@ -69,8 +69,8 @@ class ProjectForm(forms.ModelForm):
             ),
 
             FormSection(
-                Field('description', template='metadata_field.html'),
-                Field('tags', template='metadata_field.html'),
+                Field('description', template='field_horizontal.html'),
+                Field('tags', template='field_horizontal.html'),
             ),
 
             FormSection(
@@ -109,15 +109,15 @@ class NominationForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
-                Field('title', template='metadata_field.html'),
-                Field('resource', template='metadata_field.html'),
+                Field('title', template='field_horizontal.html'),
+                Field('resource', template='field_horizontal.html'),
             Row(
                 Column(FormSection(Field('project')), css_class='col-md-7'),
                 Column(FormSection(Field('status')), css_class='col-md-5'),
             ),
             FormSection(
-                Field('description', template='metadata_field.html'),
-                Field('tags', template='metadata_field.html'),
+                Field('description', template='field_horizontal.html'),
+                Field('tags', template='field_horizontal.html'),
             ),
             FormActions(
                 CancelButton,

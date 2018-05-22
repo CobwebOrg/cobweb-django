@@ -60,7 +60,7 @@ class ProjectDetailViewTests(TestCase):
     def setUp(self):
         self.test_instance = ProjectFactory()
         self.fields = ['title', 'description']
-        self.templates = ['base.html', 'project.html']
+        self.templates = ['base.html', 'projects/project.html']
 
         # Add some users
         self.admin_user = UserFactory()

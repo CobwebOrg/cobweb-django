@@ -118,7 +118,7 @@ class ResourceListView(CobwebBaseIndexView):
 
 class ResourceDetailView(generic.DetailView):
     model = models.Resource
-    template_name = "webresources/resource.html"
+    template_name = "core/resource.html"
     section = 'resource'
 
     def get(self, request, *args, **kwargs):

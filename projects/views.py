@@ -28,7 +28,7 @@ class ProjectIndexView(CobwebBaseIndexView):
 
 class ProjectDetailView(django_tables2.SingleTableMixin, DetailView):
     model = models.Project
-    template_name = "project.html"
+    template_name = "projects/project.html"
     table_class = NominationTable
     section = 'project'
 
@@ -68,7 +68,7 @@ class ProjectUpdateView(UserPassesTestMixin, RevisionMixin, UpdateView):
 
 class NominationDetailView(django_tables2.SingleTableMixin, DetailView):
     model = models.Nomination
-    template_name = 'nomination.html'
+    template_name = 'projects/nomination.html'
     section = 'nomination'
     table_class = ClaimTable
 
