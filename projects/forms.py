@@ -97,7 +97,7 @@ class NominationForm(forms.ModelForm):
 
     class Meta:
         model = Nomination
-        exclude = []
+        fields = ('__all__')
         widgets = {
             'title': forms.TextInput,
             'tags': autocomplete.ModelSelect2Multiple(
