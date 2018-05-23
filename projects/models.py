@@ -13,12 +13,12 @@ class Project(models.Model):
     """Django ORM model for a Cobweb project."""
 
     title = models.CharField(max_length=500)
-    description = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=False)
 
     administrators = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         related_name='projects_administered',
-        verbose_name='administrators'
+        verbose_name='administrators',
     )
 
     nomination_policy = models.CharField(

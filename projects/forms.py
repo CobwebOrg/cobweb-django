@@ -33,22 +33,22 @@ class ProjectForm(forms.ModelForm):
         fields = ('__all__')
         widgets = {
             'title': forms.TextInput,
-            # 'administrators': autocomplete.ModelSelect2Multiple(
-            #     url='user_autocomplete',
-            #     attrs={'data-allow-clear': 'false'},
-            # ),
-            # 'nominators': autocomplete.ModelSelect2Multiple(
-            #     url='user_autocomplete',
-            #     attrs={'data-allow-clear': 'false'},
-            # ),
-            # 'nominator_blacklist': autocomplete.ModelSelect2Multiple(
-            #     url='user_autocomplete',
-            #     attrs={'data-allow-clear': 'false'},
-            # ),
-            # 'tags': autocomplete.ModelSelect2Multiple(
-            #     url='tag_autocomplete',
-            #     attrs={'data-allow-clear': 'false'},
-            # ),
+            'administrators': autocomplete.ModelSelect2Multiple(
+                url='user_autocomplete',
+                attrs={'data-allow-clear': 'false'},
+            ),
+            'nominators': autocomplete.ModelSelect2Multiple(
+                url='user_autocomplete',
+                attrs={'data-allow-clear': 'false'},
+            ),
+            'nominator_blacklist': autocomplete.ModelSelect2Multiple(
+                url='user_autocomplete',
+                attrs={'data-allow-clear': 'false'},
+            ),
+            'tags': autocomplete.ModelSelect2Multiple(
+                url='tag_autocomplete',
+                attrs={'data-allow-clear': 'false'},
+            ),
             'nomination_policy': forms.RadioSelect,
         }
 
@@ -65,7 +65,7 @@ class ProjectForm(forms.ModelForm):
         self.helper.layout = Layout(
             Pane(
                 Row(Column(Field('title')), css_class='d-none'),
-                
+
                 Row(Column(HField('description'))),
 
                 Row(

@@ -185,5 +185,26 @@ class ResourceDetailView(generic.DetailView):
         return obj
         return obj
 
+
+
+class TagAutocomplete(autocomplete.Select2QuerySetView):
+    
+    create_field = 'name'
+
+    def get_queryset(self):
+        if not self.request.user.is_authenticated:
+            return models.Tag.objects.none()
+
+        qs = models.Tag.objects.all()
+        if self.q:
+            qs = qs.filter(name__istartswith=self.q)
+
+        return qs
+    
+    def has_add_permission(self, request):
+        """Return True if the user has the permission to add a model."""
+        return request.user.is_authenticated
+
+
 class SearchView(django_tables2.views.SingleTableMixin, HaystackSearchView):
     pass

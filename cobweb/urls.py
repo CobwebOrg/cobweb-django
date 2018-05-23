@@ -101,9 +101,9 @@ urlpatterns = [
     # path('tags/<int:pk>/',
     #      core.views.TagDetailView.as_view(),
     #      name='tag_detail'),
-    # path('tags/autocomplete/',
-    #      core.views.TagAutocomplete.as_view(create_field='name'),
-    #      name='tag_autocomplete'),
+    path('tags/autocomplete/',
+         core.views.TagAutocomplete.as_view(create_field='name'),
+         name='tag_autocomplete'),
 
     # Resource
     path('resources/', core.views.ResourceListView.as_view(), name='resource_list'),
