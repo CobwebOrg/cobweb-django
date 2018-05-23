@@ -58,7 +58,7 @@ html, body { height: 100%; }
   padding-left: 2rem;
   padding-right: 2rem;
   padding-top: 0.1rem;
-  padding-bottom: 0.5rem;
+  padding-bottom: 2rem;
 }
 
 .cobweb-content { @extend .flex-grow-1 ; }
@@ -151,7 +151,20 @@ header{
   }
 }
 
-footer hr { margin-bottom: 0.25rem; }
+footer {
+  @extend .fixed-bottom ;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 0;
+  padding-bottom: 0.2rem;
+  z-index: 1000;
+  background-color: white;
+
+  hr {
+    margin-bottom: 0.2rem;
+    margin-top: 0;
+  }
+}
 
 // INFO TABS
 
