@@ -65,23 +65,23 @@ html, body { height: 100%; }
 
 // HEADER AND FOOTER
 
-$grey-bar-height: 2.7rem;
-$navbar-padding: 0.35rem;
+$grey-bar-height: 2.3rem;
+$navbar-padding: 0.3rem;
 $logo-width: $grey-bar-height * 133 / 35;
 
 header{
 
   %navbar {
     @extend .row, .justify-content-end ;
-    padding-top: $navbar-padding;
-    padding-bottom: $navbar-padding;
+    padding-top: 0;
+    padding-bottom: 0;
     padding-left: 1rem;
     padding-right: 1rem;
   }
 
   .nav-link { @extend .text-uppercase, .m-0, .p-0 ; }
 
-  .navbar-auth {
+  .navbar-account {
     @extend %navbar, .align-items-end ;
     padding-bottom: 1rem;
     height: $grey-bar-height * 48 / 35;
@@ -110,25 +110,26 @@ header{
     line-height: 0;
 
     #searchform{
+      $searchform-height: $grey-bar-height * 0.8;
+
       @extend .flex-grow-1 ;
       max-width: 25rem;
-      max-height: $grey-bar-height - (2 * $navbar-padding);
+      max-height: $searchform-height;
 
       .form-control {
-      //   // @extend .my-0, .py-0 ;
-        max-height: $grey-bar-height - (2 * $navbar-padding);
+        max-height: $searchform-height;
       }
 
       .btn {
         @extend .my-0, .py-0 ;
         border: 0;
-        height: $grey-bar-height - (2 * $navbar-padding);
+        height: $searchform-height;
       }
     }
 
     .nav-link { 
       @extend .mr-5 ;
-      font-size: 130%;
+      font-size: $grey-bar-height * 0.4;
     }
 
     .dropdown-item {
