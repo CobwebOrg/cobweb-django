@@ -61,9 +61,7 @@ html, body { height: 100%; }
   padding-bottom: 0.5rem;
 }
 
-.cobweb-content {
-  @extend .flex-grow-1 ;
-}
+.cobweb-content { @extend .flex-grow-1 ; }
 
 // HEADER AND FOOTER
 
@@ -154,6 +152,24 @@ header{
 
 footer hr { margin-bottom: 0.25rem; }
 
+// INFO TABS
+
+.nav-infotabs {
+  @extend .text-uppercase, .justify-content-around ;
+
+  .active {
+    border-bottom: 3px solid $gray;
+  }
+}
+
+.summary {
+  @extend .text-uppercase, .text-center, .py-4 ;
+
+  @each $nomination_type in (unclaimed, claimed, held) {
+    .n-#{$nomination_type} { @extend .display-3, .text-#{$nomination_type} }
+  }
+}
+
 // MISC
 
 .asteriskField, .invalid-feedback, .is_invalid { color: $danger; }
@@ -188,6 +204,8 @@ textarea { resize: none; }
 }
 
 .badge-mid { @extend .badge-left, .badge-right ; }
+
+.pane { @extend .border, .h-100, .p-3 ; }
 
 .table {
   @extend .table-hover ;

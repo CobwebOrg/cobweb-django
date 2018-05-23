@@ -3,9 +3,11 @@ from dal import autocomplete
 from django import forms
 
 from core.layout import (
+    Pane,
     CancelButton,
     Column,
     Field,
+    HField,
     FormActions,
     FormSection,
     Hidden,
@@ -31,22 +33,22 @@ class ProjectForm(forms.ModelForm):
         fields = ('__all__')
         widgets = {
             'title': forms.TextInput,
-            'administrators': autocomplete.ModelSelect2Multiple(
-                url='user_autocomplete',
-                attrs={'data-allow-clear': 'false'},
-            ),
-            'nominators': autocomplete.ModelSelect2Multiple(
-                url='user_autocomplete',
-                attrs={'data-allow-clear': 'false'},
-            ),
-            'nominator_blacklist': autocomplete.ModelSelect2Multiple(
-                url='user_autocomplete',
-                attrs={'data-allow-clear': 'false'},
-            ),
-            'tags': autocomplete.ModelSelect2Multiple(
-                url='tag_autocomplete',
-                attrs={'data-allow-clear': 'false'},
-            ),
+            # 'administrators': autocomplete.ModelSelect2Multiple(
+            #     url='user_autocomplete',
+            #     attrs={'data-allow-clear': 'false'},
+            # ),
+            # 'nominators': autocomplete.ModelSelect2Multiple(
+            #     url='user_autocomplete',
+            #     attrs={'data-allow-clear': 'false'},
+            # ),
+            # 'nominator_blacklist': autocomplete.ModelSelect2Multiple(
+            #     url='user_autocomplete',
+            #     attrs={'data-allow-clear': 'false'},
+            # ),
+            # 'tags': autocomplete.ModelSelect2Multiple(
+            #     url='tag_autocomplete',
+            #     attrs={'data-allow-clear': 'false'},
+            # ),
             'nomination_policy': forms.RadioSelect,
         }
 
@@ -61,19 +63,16 @@ class ProjectForm(forms.ModelForm):
             title_field = title_form_field
 
         self.helper.layout = Layout(
-            Row(title_field, css_class='my-2'),
+            Pane(
+                Row(Column(Field('title')), css_class='d-none'),
+                
+                Row(Column(HField('description'))),
 
-            Row(
-                Column(FormSection(Field('status')), css_class='col-md-5'),
-                Column(FormSection(Field('administrators')), css_class='col-md-7'),
-            ),
+                Row(
+                    Column(Field('status'), css_class='col-md-5'),
+                    Column(Field('administrators'), css_class='col-md-7'),
+                ),
 
-            FormSection(
-                Field('description', template='field_horizontal.html'),
-                Field('tags', template='field_horizontal.html'),
-            ),
-
-            FormSection(
                 Row(
                     Field('nomination_policy', wrapper_class='col-md-5'),
                     Column(
@@ -81,13 +80,21 @@ class ProjectForm(forms.ModelForm):
                         Field('nominator_blacklist'),
                         css_class='col-md-7'
                     ),
+                ),
+
+                Row(Column(Field('tags'))),
+
+                Row(
+                    Column(
+                        FormActions(
+                            CancelButton,
+                            Submit('submit', 'Submit'),
+                            css_class='justify-content-end'
+                        ),
+                        css_class='col-12'
+                    )
                 )
-            ),
-            FormActions(
-                CancelButton,
-                Submit('submit', 'Submit'),
-                css_class='float-right'
-            ),
+            )
         )
 
 

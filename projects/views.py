@@ -58,7 +58,7 @@ class ProjectCreateView(LoginRequiredMixin, RevisionMixin, CreateView):
 
 class ProjectUpdateView(UserPassesTestMixin, RevisionMixin, UpdateView):
     model = models.Project
-    template_name = 'generic_form.html'
+    template_name = 'object_detail.html'
     form_class = forms.ProjectForm
     section = 'project'
 

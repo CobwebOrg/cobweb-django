@@ -3,9 +3,8 @@
 from haystack import indexes
 
 from archives.models import Collection
-from core.models import User, Organization, Note
+from core.models import User, Organization, Note, Tag, Resource
 from projects.models import Project
-from core.models import Resource
 
 
 class UserIndex(indexes.ModelSearchIndex, indexes.Indexable):
@@ -31,6 +30,15 @@ class NoteIndex(indexes.ModelSearchIndex, indexes.Indexable):
 
     class Meta:
         model = Note
+
+
+class TagIndex(indexes.ModelSearchIndex, indexes.Indexable):
+    class Meta:
+        model = Tag
+
+    text = indexes.CharField(document=True, use_template=False)
+    tag_auto = indexes.NgramField()
+
 
 
 class ResourceIndex(indexes.ModelSearchIndex, indexes.Indexable):

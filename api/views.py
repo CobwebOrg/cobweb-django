@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 
 import api.serializers as serializers
-from core.models import User, Organization
+from core.models import User, Organization, Tag
 from projects.models import Project, Nomination, Claim
 
 
@@ -15,6 +15,11 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     # TODO: status
     queryset = Organization.objects.all()  # .exclude(status='Deleted')
     serializer_class = serializers.OrganizationSerializer
+
+
+class TagViewSet(viewsets.ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = serializers.TagSerializer
 
 
 class ProjectViewSet(viewsets.ModelViewSet):

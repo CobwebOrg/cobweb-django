@@ -1,7 +1,11 @@
 from rest_framework import serializers
 
-from core.models import User, Organization
+from core.models import User, Organization, Tag
 from projects.models import Project, Nomination, Claim
+
+
+# from drf_haystack.serializers import HaystackSerializer
+# from drf_haystack.viewsets import HaystackViewSet
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -30,3 +34,8 @@ class ClaimSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Claim
         exclude = ()
+
+
+class TagSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Tag

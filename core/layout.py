@@ -2,7 +2,7 @@ from crispy_forms.layout import (
     BaseInput,
     Button,
     ButtonHolder,
-    Column,
+    # Column,
     Div,
     Field,
     Fieldset,
@@ -58,6 +58,29 @@ CancelButton = HTML("""
     </a>
 """)
 
+class Pane(Div):
+    def __init__(self, *args, **kwargs):
+        try:
+            kwargs['css_class'] += ' pane'
+        except KeyError:
+            kwargs['css_class'] = 'pane'
+        super().__init__(*args, **kwargs)
+
+
+class Column(Div):
+    """
+    Layout object. It wraps fields in a div whose default class is "col".
+
+    For Cobweb, we override the default django_crispy_forms Column, which uses
+    the bootstrap-incompatible class name "formColumn".
+    
+    Example::
+
+        Column('form_field_1', 'form_field_2')
+    """
+    css_class = 'col'
+
+
 class FormSection(Div):
     def __init__(self, *args, **kwargs):
         try:
@@ -65,3 +88,6 @@ class FormSection(Div):
         except KeyError:
             kwargs['css_class'] = 'form-section'
         super().__init__(*args, **kwargs)
+
+class HField(Field):
+    template = 'field_horizontal.html'
