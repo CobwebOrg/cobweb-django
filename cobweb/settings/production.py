@@ -141,11 +141,6 @@ HAYSTACK_CONNECTIONS = {
         'URL': 'http://solr:8983/solr/cobweb',
         'ADMIN_URL': 'http://solr:8983/solr/admin/cores',
     },
-    'test': {
-        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
-        'URL': 'http://solr:8983/solr/test',
-        'ADMIN_URL': 'http://solr:8983/solr/admin/cores',
-    },
 }
 
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'

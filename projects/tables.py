@@ -25,14 +25,10 @@ class ProjectTable(CobwebBaseTable):
         verbose_name='Held',
         attrs={'cell': {'class': 'text-center'}},
     )
-    impact_factor = django_tables2.Column(
-        verbose_name='Impact',
-        attrs={'cell': {'class': 'text-center'}},
-    )
 
     class Meta(CobwebBaseTable.Meta):
         model = Project
-        fields = ('impact_factor', 'title', 'unclaimed_nominations',
+        fields = ('title', 'unclaimed_nominations',
                   'claimed_nominations', 'held_nominations')
         empty_text = "No projects."
 
