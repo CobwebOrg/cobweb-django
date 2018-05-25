@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load django_tables2 %}
+{% block content %}
+  <div class="row">
+    <div class="col-3 p-3">
+        <div class="border p-4">
+            <h1 class="mb-2 text-user-dark">{{ request.user }}</h1>
+            {% for org in request.user.affiliations.all %}
+                <p class="mb-2"><a href="{{org.get_absolute_url}}"
+                      class="text-user-dark">{{org}}</a></p>
+            {% endfor %}
+            <p class="mb-4 text-user-dark">Last login: {{user.last_login|date:"M d, Y"}}</p>
+
+            <table>
+                <tr><td class="pr-2">Replies to notes:</td><td>0</td</tr>
+                <tr><td class="pr-2">New notes:</td><td>2</td></tr>
+                <tr><td class="pr-2">Activity alerts:</td><td>5</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-9 p-3 accordion" id="accordion">
+        <div class="nav nav-infotabs">
+            {% for table in tables %}
+                <a class="btn btn-link{% if notforloop.first %} collapsed{% endif %} nav-link" data-toggle="collapse"
+                   href="#{{table.title|slugify}}">{{ table.title }}</a>
+            {% endfor %}
+            
+            {% for table in tables %}
+                <div class="collapse{% if forloop.first %} show{% endif %}"
+                     id="{{table.title|slugify}}" data-parent="#accordion">
+                    {% render_table table %}
+                </div>
+            {% endfor %}
+            
+            {% comment %} <a class="nav-link {% if view.summary %}active disabled{% endif %}"
+                    href="{% url 'project_summary' pk=object.pk %}">Summary</a>
+                <a class="nav-link {% if view.nominations %}active disabled{% endif %}"
+                    href="{% url 'project_nominations' pk=object.pk %}">Nominations</a>
+                <a class="nav-link {% if view.notes %}active disabled{% endif %}">Notes</a> {% endcomment %}
+        </div>
+    </div>
+
+  </div>
+{% endblock %}

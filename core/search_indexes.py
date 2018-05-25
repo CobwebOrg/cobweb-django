@@ -41,11 +41,11 @@ class TagIndex(indexes.ModelSearchIndex, indexes.Indexable):
 
 
 
-# class ResourceIndex(indexes.ModelSearchIndex, indexes.Indexable):
-#     """Django-haystack index of Resource model."""
+class ResourceIndex(indexes.ModelSearchIndex, indexes.Indexable):
+    """Django-haystack index of Resource model."""
 
-#     text = indexes.CharField(document=True, use_template=True)
+    text = indexes.CharField(document=True, use_template=True)
 
-#     class Meta:
-#         model = Resource
+    class Meta:
+        model = Resource
 

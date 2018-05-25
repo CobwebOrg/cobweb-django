@@ -1,7 +1,9 @@
 import django_tables2
 import haystack
+from haystack.query import SearchQuerySet
 from haystack.generic_views import SearchView as HaystackSearchView
 from dal import autocomplete
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.http import Http404
@@ -12,18 +14,44 @@ from reversion.views import RevisionMixin
 from core import models
 from core.forms import SignUpForm, UserProfileForm
 from core.tables import UserTable, OrganizationTable, ResourceTable
+from projects.tables import ProjectTable, NominationTable, ClaimTable
 
 
 class CobwebBaseIndexView(haystack.generic_views.SearchMixin,
                           django_tables2.SingleTableView):
-    template_name = "generic_index.html"
+    template_name = 'generic_index.html'
     queryset = None
 
     def get_queryset(self):
         if not self.queryset:
-            self.queryset = (haystack.query.SearchQuerySet()
+            self.queryset = (SearchQuerySet()
                              .filter(django_ct__exact=self.django_ct))
         return self.queryset
+
+
+class DashboardView(LoginRequiredMixin,
+                    django_tables2.MultiTableMixin,
+                    generic.TemplateView):
+
+    template_name = 'dashboard.html'
+
+    def get_tables(self):
+        # TODO: filter by user
+        user = self.request.user
+        return (
+            ProjectTable(
+                data=SearchQuerySet().filter(django_ct__exact='projects.project'),
+                title='my projects',
+            ),
+            NominationTable(
+                data=SearchQuerySet().filter(django_ct__exact='projects.nomination'),
+                title='my nominations',
+            ),
+            ClaimTable(
+                data=SearchQuerySet().filter(django_ct__exact='projects.claim'),
+                title='my claims and holdings',
+            ),
+        )
 
 
 class UserIndexView(CobwebBaseIndexView):

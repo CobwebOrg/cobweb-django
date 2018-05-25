@@ -51,6 +51,10 @@ class User(AbstractUser):
 
     notes = GenericRelation('Note')
 
+    # @property
+    # def projects(self):
+    #     return 
+
     @property
     def impact_factor(self):
         # TODO: actuall implement functional requirement

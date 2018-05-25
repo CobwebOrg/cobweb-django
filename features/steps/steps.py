@@ -27,7 +27,7 @@ def step_impl(context, object_name, page_name):
 @when('I visit url {url}')
 def step_impl(context, url):
     if url == 'any page':
-        url = reverse('front_page')
+        url = reverse('landing_page')
     context.browser.visit(context.base_url + url)
 
 

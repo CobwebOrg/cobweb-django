@@ -63,8 +63,7 @@ class NominationTable(CobwebBaseTable):
         empty_text = "No nominations."
 
     url = django_tables2.LinkColumn(viewname='nomination',
-                                    kwargs={'pk': Accessor('pk')},
-    )
+                                    kwargs={'pk': Accessor('pk')})
     status = django_tables2.TemplateColumn(
         '<span class="badge-{{record.status}}">{{record.status|capfirst}}</span>',
         attrs={'cell': {'class': 'text-center'}},
@@ -75,10 +74,18 @@ class NominationTable(CobwebBaseTable):
     )
 
 
-class ClaimTable(django_tables2.Table):
+class ClaimTable(CobwebBaseTable):
     """django_tables2.Table object for lists of claims."""
 
-    collection = django_tables2.LinkColumn()
+    class Meta(CobwebBaseTable.Meta):
+        model = Claim
+        fields = ('nomination', 'collection')
+        empty_text = "No Claims."
+
+    nomination = django_tables2.LinkColumn(viewname='nomination',
+                                    kwargs={'pk': Accessor('pk')})
+    organization = django_tables2.LinkColumn(viewname='organization_detail',
+                                    kwargs={'pk': Accessor('pk')})
     # tags = django_tables2.TemplateColumn(
     #     """{% load badge from cobweb_look %}
     #     <small>
@@ -95,9 +102,3 @@ class ClaimTable(django_tables2.Table):
     #     """,
     # )
 
-    class Meta:
-        model = Claim
-        show_header = False
-        fields = ('collection')
-        # attrs = {'class': 'table table-hover'}
-        empty_text = "No Claims."

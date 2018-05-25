@@ -28,10 +28,14 @@ urlpatterns = [
 
     url(r'^search/', core.views.SearchView.as_view(), name='search'),
 
-    url(r'^$', auth.views.LoginView.as_view(
-        template_name='landing_page.html',
+    url(r'^$', core.views.DashboardView.as_view(), name='dashboard',),
+
+    # Auth: /login, /logout, /password_change, /password_reset, /reset
+    path('accounts/login', auth.views.LoginView.as_view(
+        template_name='login.html',
         form_class=core.forms.LoginForm
-    ), name='front_page',),
+    ), name='login',),
+    path('', include('django.contrib.auth.urls')),
 
     # User
     path('users/<pk>/edit/',
@@ -105,9 +109,6 @@ urlpatterns = [
     # Resource
     path('resources/', core.views.ResourceListView.as_view(), name='resource_list'),
     path('resources/<path:url>', core.views.ResourceDetailView.as_view(), name='resource_detail'),
-
-    # Auth
-    url(r'^accounts/', include('django.contrib.auth.urls')),
 
     path('admin', admin.site.urls),
 ]

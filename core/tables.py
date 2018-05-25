@@ -11,6 +11,10 @@ class CobwebBaseTable(django_tables2.Table):
         template_name = 'generic_table.html'
         attrs={'class': 'table table-hover'}
         order_by = ('-impact_factor', '-pk')
+    
+    def __init__(self, *args, title=None, **kwargs):
+        self.title = title
+        super().__init__(*args, **kwargs)
 
 
 
