@@ -6,7 +6,7 @@
 <div class="table-container table-responsive">
     {% if table.page and table.paginator.num_pages > 1 %}
     {% block pagination %}
-        <div class="btn-group" role="group" aria-label="Pagination links">
+        <div class="btn-group float-right" role="group" aria-label="Pagination links">
             {% if table.page.has_previous %}
                 {% block pagination.previous %}
                         <a href="{% querystring table.prefixed_page_field=table.page.previous_page_number %}"
@@ -24,8 +24,8 @@
         
             {% if table.page.has_next %}
                 {% block pagination.next %}
-                        <a href="{% querystring table.prefixed_page_field=table.page.next_page_number %}"
-                        class="btn btn-outline-secondary">{% trans "Next" %}</a>
+                    <a href="{% querystring table.prefixed_page_field=table.page.next_page_number %}"
+                       class="btn btn-outline-secondary">{% trans "Next" %}</a>
                 {% endblock pagination.next %}
             {% endif %}
         </div>

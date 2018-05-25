@@ -64,36 +64,34 @@ class ProjectForm(forms.ModelForm):
             title_field = title_form_field
 
         self.helper.layout = Layout(
-            Pane(
-                Row(Column(Field('title')), css_class='d-none'),
+            Row(Column(Field('title')), css_class='d-none'),
 
-                Row(Column(HField('description', edit=admin_version))),
+            Row(Column(HField('description', edit=admin_version))),
 
-                Row(
-                    Column(Field('status', edit=admin_version), css_class='col-md-5'),
-                    Column(Field('administrators', edit=admin_version), css_class='col-md-7'),
+            Row(
+                Column(Field('status', edit=admin_version), css_class='col-md-5'),
+                Column(Field('administrators', edit=admin_version), css_class='col-md-7'),
+            ),
+
+            Row(
+                Field('nomination_policy', edit=admin_version, wrapper_class='col-md-5'),
+                Column(
+                    Field('nominators', edit=admin_version),
+                    Field('nominator_blacklist', edit=admin_version, show=admin_version),
+                    css_class='col-md-7'
                 ),
+            ),
 
-                Row(
-                    Field('nomination_policy', edit=admin_version, wrapper_class='col-md-5'),
-                    Column(
-                        Field('nominators', edit=admin_version),
-                        Field('nominator_blacklist', edit=admin_version, show=admin_version),
-                        css_class='col-md-7'
+            Row(Column(Field('tags', edit=admin_version))),
+
+            Row(
+                Column(
+                    FormActions(
+                        CancelButton,
+                        Submit('submit', 'Submit'),
+                        css_class='justify-content-end'
                     ),
-                ),
-
-                Row(Column(Field('tags', edit=admin_version))),
-
-                Row(
-                    Column(
-                        FormActions(
-                            CancelButton,
-                            Submit('submit', 'Submit'),
-                            css_class='justify-content-end'
-                        ),
-                        css_class='col-12'
-                    )
+                    css_class='col-12'
                 )
             )
         )
