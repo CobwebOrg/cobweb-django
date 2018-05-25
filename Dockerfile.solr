@@ -1,3 +1,2 @@
 FROM solr
 COPY ./solr_conf /opt/solr/server/solr/configsets/cobweb/conf
-ENTRYPOINT ["docker-entrypoint.sh", "solr-precreate", "cobweb", "/opt/solr/server/solr/configsets/cobweb"]
