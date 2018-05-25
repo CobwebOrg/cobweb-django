@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^$', core.views.DashboardView.as_view(), name='dashboard',),
 
     # Auth: /login, /logout, /password_change, /password_reset, /reset
-    path('accounts/login', auth.views.LoginView.as_view(
+    path('accounts/login/', auth.views.LoginView.as_view(
         template_name='login.html',
         form_class=core.forms.LoginForm
     ), name='login',),
