@@ -62,7 +62,7 @@ class NominationTable(CobwebBaseTable):
         fields = ('url', 'status', 'claim_link')
         empty_text = "No nominations."
 
-    url = django_tables2.LinkColumn(viewname='nomination_detail',
+    url = django_tables2.LinkColumn(viewname='nomination',
                                     kwargs={'pk': Accessor('pk')},
     )
     status = django_tables2.TemplateColumn(

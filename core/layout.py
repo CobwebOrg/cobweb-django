@@ -16,7 +16,7 @@ from crispy_forms.layout import (
     Submit,
     # TemplateNameMixin,
 )
-from crispy_forms.layout import Field as CrispyField
+import crispy_forms.layout as crispy
 from crispy_forms.bootstrap import (
     Accordion,
     AccordionGroup,
@@ -38,20 +38,17 @@ from crispy_forms.bootstrap import (
 )
 
 
-class Field(CrispyField):
+class Field(crispy.Field):
     def __init__(self, *args, show=True, edit=False, **kwargs):
         self.show = show
         self.edit = edit
-        if not self.edit:
-            if 'css_class' in kwargs:
-                kwargs['css_class'] += ' form-control-plaintext'
-            else:
-                kwargs['css_class'] = 'form-control-plaintext'
         super().__init__(*args, **kwargs)
 
     def render(self, *args, **kwargs):
-        if self.show == False:
+        if not self.show:
             return ''
+        # elif not self.edit:
+        #     return args[0].
         else:
             return super().render(*args, **kwargs)
 

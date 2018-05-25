@@ -80,7 +80,7 @@ class Project(models.Model):
         return reverse('project_summary', kwargs={'pk': self.pk})
 
     def get_add_nomination_url(self) -> str:
-        return reverse('nominate', kwargs={'project_id': self.pk})
+        return reverse('project_nominate', kwargs={'project_id': self.pk})
 
     def is_admin(self, user: AbstractBaseUser) -> bool:
         return user in self.administrators.all()
@@ -168,13 +168,10 @@ class Nomination(models.Model):
         unique_together = ('resource', 'project')
 
     def get_absolute_url(self) -> str:
-        return reverse('nomination_detail', kwargs={'pk': self.pk})
+        return reverse('nomination', kwargs={'pk': self.pk})
 
     def get_claim_url(self) -> str:
         return reverse('claim_create', kwargs={'nomination_pk': self.pk})
-
-    def get_edit_url(self) -> str:
-        return reverse('nomination_update', kwargs={'pk': self.pk})
 
     def get_resource_set(self) -> QuerySet:
         return self.project

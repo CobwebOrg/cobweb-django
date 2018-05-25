@@ -1,6 +1,7 @@
 from crispy_forms.helper import FormHelper
 from dal import autocomplete
 from django import forms
+from django.contrib.auth.models import AnonymousUser
 
 from core.layout import (
     Pane,
@@ -8,10 +9,12 @@ from core.layout import (
     Column,
     Field,
     HField,
+    HTML,
     FormActions,
     FormSection,
     Hidden,
     Layout,
+    Reset,
     Row,
     Submit,
     title_form_field,
@@ -111,25 +114,25 @@ class NominationForm(forms.ModelForm):
             ),
         }
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, user=AnonymousUser(), **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
-                Field('title', template='field_horizontal.html'),
-                Field('resource', template='field_horizontal.html'),
+            Row(Column(Field('project')), css_class='d-none'),
+            # Row(Column(Field('title')), css_class='d-none'),
+            Row(Column(Field('resource', css_class='d-none  form-control-plaintext'))),
+
+            Row(Column(Field('rationale'))),
+            Row(Column(Field('suggested_crawl_frequency'), css_class='col-6'),
+                Column(Field('suggested_crawl_end_date'), css_class='col-6')),
+
             Row(
-                Column(FormSection(Field('project')), css_class='col-md-7'),
-                Column(FormSection(Field('status')), css_class='col-md-5'),
-            ),
-            FormSection(
-                Field('description', template='field_horizontal.html'),
-                Field('tags', template='field_horizontal.html'),
-            ),
-            FormActions(
-                CancelButton,
-                Submit('submit', 'Submit'),
-                css_class='float-right'
-            ),
+                Column(
+                    Reset('reset', 'Cancel'),
+                    Submit('submit', 'Submit', css_class='ml-3'),
+                    css_class='col-12 d-flex flex-row justify-content-end'
+                )
+            )
         )
 
     def clean_resource(self):
@@ -141,10 +144,10 @@ class NominationForm(forms.ModelForm):
 
 
 class ClaimForm(forms.ModelForm):
-
     class Meta:
         model = Claim
-        fields = ('__all__')
+        template_name = 'projects/claim_form.html'
+        fields = ('nomination', 'organization', 'active', 'has_holding')
         widgets = {
             'tags': autocomplete.ModelSelect2Multiple(
                 url='tag_autocomplete'
@@ -155,14 +158,10 @@ class ClaimForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-        # self.helper.layout = Layout(
-        #     Field('nomination', css_class='form-control-plaintext'),
-        #     Field('collection'),
-        #     Field('description'),
-        #     Field('tags'),
-        #     FormActions(
-        #         CancelButton,
-        #         Submit('submit', 'Submit'),
-        #         css_class='float-right'
-        #     ),
-        # )
+        self.helper.layout = Layout(
+            Row(Column(HTML('<h4>Claim</h4>'))),
+            Row(Column(Field('nomination', css_class='d-none'))),
+            Row(Column(Field('organization'))),
+            Row(Column(Field('active'), css_class='col-6'),
+                Column(Field('has_holding'), css_class='col-6')),
+        )

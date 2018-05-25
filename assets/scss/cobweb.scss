@@ -190,6 +190,10 @@ footer {
 
 textarea { resize: none; }
 
+.form-actions {
+  @extend .w-100, .flex-row, .justify-content-end ;
+}
+
 .form-section {
   @extend .border, .border-gray ;
   @extend .form-group ;

@@ -25,6 +25,7 @@ django-countries-plus = "*"
 django-phonenumber-field = "*"
 phonenumbers = "*"
 django-polymorphic = "*"
+django-extra-views = "*"
 
 [dev-packages]
 pytest = "*"

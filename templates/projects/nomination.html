@@ -1,65 +1,31 @@
 {% extends "base.html" %}
-{% load as_link badge icon claim_button edit_link from cobweb_look %}
+{% load crispy from crispy_forms_tags %}
+{% load model_name from cobweb_look %}
 {% load render_table from django_tables2 %}
 
-{% block title %}Cobweb Nomination: {{ object }}{% endblock %}
+{% block window_title %}Cobweb: {{nomination}}{% endblock %}
 
 {% block content %}
+    <div class="row"><div class="col mt-1 mb-3">
+        <h2>PROJECT: {{nomination.project}}</h2>
+        <h3>NOMINATION: {{nomination}}</h3>
+    </div></div>
 
-
-<div id="div_id_resource" class="form-group">
-  <h4>{% edit_link object user %}
-    {% if nomination.title %}{{nomination.title}}<br />{% endif %}
-    <a href={{nomination.resource}}>{{nomination.resource}}</a>
-  </h4>
-</div>
-
-<div class="row">
-  <div class="col-md-7">
-    <div class="form-section">
-      <div class="form-group">
-        <label for="id_project" class="form-control-label  requiredField">
-          Project
-        </label>
-        <div>{{nomination.project | as_link}}</div>
-      </div>
+    <div class="row">
+        <div class="col-6"><div class="pane">{% crispy form %}</div></div>
+        
+        <div class="col-6">
+            <div class="pane">
+                <form method="post">
+                    {% crispy formset %}
+                    {% comment %} {{ formset.management_form }}
+                    <table>
+                        {% for formset_form in formset %}
+                        {% include 'projects/claim_form.html' with claim=formset_form %}
+                        {% endfor %}
+                    </table> {% endcomment %}
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
-
-  <div class="formColumn col-md-5">
-    <div class="form-section">
-      <div id="div_id_status" class="form-group">
-        <label for="id_status" class="form-control-label  requiredField">
-          Status
-        </label>
-        <div class="">{{nomination.status}}</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="form-section">
-  <div id="div_id_description" class="row form-group ">
-    <label for="id_description" class="col-md-2 form-control-label ">Description</label>
-    <div class="col-md ">{{object.description | default:"[None]"}}</div>
-  </div>
-  <div id="div_id_tags" class="row form-group ">
-    <label for="id_tags" class="col-md-2 form-control-label ">Tags</label>
-    <div class="col-md ">{% for tag in nomination.tags.all %}{% badge tag %}{% empty %}[None]{% endfor %}</div>
-  </div>
-	{% for key, values in collection.metadata.items %}
-		<div id="div_id_{{key}}" class="row form-group ">
-			<label for="id_{{key}}" class="col-md-3 col-lg-2 form-control-label">
-				{{key|capfirst}}:
-		    </label>
-			<div class="col-md ">
-				{{values|join:', '}}
-			</div>
-		</div>
-	{% endfor %}
-</div>
-
-{% claim_button object user %}<h5>Claims</h5>
-{% render_table table %}
-
 {% endblock %}

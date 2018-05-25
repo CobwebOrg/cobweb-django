@@ -69,22 +69,16 @@ urlpatterns = [
         projects.views.ProjectCreateView.as_view(),
         name='project_create'),
 
-    # Collection
-    url(r'^collections/', include('archives.urls')),
-
     # Nomination
-    url(r'^nomination/(?P<pk>\d+)/$',
-        projects.views.NominationDetailView.as_view(),
-        name='nomination_detail'),
-    url(r'^project/(?P<project_id>\d+)/nominate/$',
+    path('nomination/<int:pk>',
+        projects.views.NominationView.as_view(),
+        name='nomination'),
+    path('p/<int:project_id>/nominate',
         projects.views.NominationCreateView.as_view(),
-        name='nominate'),
-    url(r'^nominate/(?P<url>.+)$',
+        name='project_nominate'),
+    path('nominate/<path:url>',
         projects.views.ResourceNominateView.as_view(),
         name='nominate_resource'),
-    path('nomination/<int:pk>/edit',
-         projects.views.NominationUpdateView.as_view(),
-         name='nomination_update'),
 
     # Claim
     path('claim/<int:pk>',
@@ -96,6 +90,9 @@ urlpatterns = [
     path('claim/<int:pk>/edit',
          projects.views.ClaimUpdateView.as_view(),
          name='claim_update'),
+
+    # Collection
+    url(r'^collections/', include('archives.urls')),
 
     # Tags
     # path('tags/<int:pk>/',

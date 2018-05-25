@@ -3,6 +3,7 @@ import haystack
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse
 from django.views.generic import DetailView, CreateView, UpdateView
+from extra_views import InlineFormSetView
 from reversion.views import RevisionMixin
 
 from core.models import Resource
@@ -73,9 +74,6 @@ class ProjectSummaryView(RevisionMixin, UpdateView):
     def notes(self):
         return False  # type(self) is ProjectNotesView
 
-    # def test_func(self):
-    #     return self.get_object().is_admin(self.request.user)
-    
     def get_form_kwargs(self):
         """Return the keyword arguments for instantiating the form."""
         kwargs = super().get_form_kwargs()
@@ -95,14 +93,23 @@ class ProjectNominationsView(django_tables2.SingleTableMixin, ProjectSummaryView
                 .filter(django_ct__exact='projects.nomination')
                 .filter(project_pk__exact=self.get_object().pk))
 
-class NominationDetailView(django_tables2.SingleTableMixin, DetailView):
+class NominationView(RevisionMixin, InlineFormSetView, UpdateView):
     model = models.Nomination
+    inline_model = models.Claim
     template_name = 'projects/nomination.html'
-    section = 'nomination'
-    table_class = ClaimTable
-
-    def get_table_data(self):
-        return self.object.claims.all()
+    form_class = forms.NominationForm
+    
+    def get_form_kwargs(self):
+        """Return the keyword arguments for instantiating the form."""
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+    
+    def get_factory_kwargs(self):
+        kwargs = super().get_factory_kwargs()
+        kwargs['extra'] = 1
+        kwargs['form'] = forms.ClaimForm
+        return kwargs
 
 
 class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
