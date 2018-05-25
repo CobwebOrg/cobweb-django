@@ -56,14 +56,42 @@ class ProjectCreateView(LoginRequiredMixin, RevisionMixin, CreateView):
     #     return super().form_valid(form)
 
 
-class ProjectUpdateView(UserPassesTestMixin, RevisionMixin, UpdateView):
+class ProjectSummaryView(RevisionMixin, UpdateView):
     model = models.Project
-    template_name = 'object_detail.html'
+    template_name = 'projects/project.html'
     form_class = forms.ProjectForm
-    section = 'project'
+    
+    @property
+    def summary(self):
+        return type(self) is ProjectSummaryView
 
-    def test_func(self):
-        return self.get_object().is_admin(self.request.user)
+    @property
+    def nominations(self):
+        return type(self) is ProjectNominationsView
+
+    @property
+    def notes(self):
+        return False  # type(self) is ProjectNotesView
+
+    # def test_func(self):
+    #     return self.get_object().is_admin(self.request.user)
+    
+    def get_form_kwargs(self):
+        """Return the keyword arguments for instantiating the form."""
+        kwargs = super().get_form_kwargs()
+        if self.summary and hasattr(self, 'object'):
+            kwargs.update({
+                'admin_version': self.get_object().is_admin(self.request.user)
+            })
+        return kwargs
+
+
+class ProjectNominationsView(django_tables2.SingleTableMixin, ProjectSummaryView):
+    table_class = NominationTable
+    right_panel = 'nominations'
+
+    def get_table_data(self):
+        return self.object.nominations.all()
 
 
 class NominationDetailView(django_tables2.SingleTableMixin, DetailView):

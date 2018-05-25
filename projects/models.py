@@ -77,13 +77,10 @@ class Project(models.Model):
         return self.title or 'Project {}'.format(self.pk)
 
     def get_absolute_url(self) -> str:
-        return reverse('project_detail', kwargs={'pk': self.pk})
+        return reverse('project_summary', kwargs={'pk': self.pk})
 
     def get_add_nomination_url(self) -> str:
         return reverse('nominate', kwargs={'project_id': self.pk})
-
-    def get_edit_url(self) -> str:
-        return reverse('project_update', kwargs={'pk': self.pk})
 
     def is_admin(self, user: AbstractBaseUser) -> bool:
         return user in self.administrators.all()

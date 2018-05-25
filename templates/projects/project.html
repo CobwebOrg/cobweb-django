@@ -1,98 +1,45 @@
 {% extends "base.html" %}
-{# {% load static %} #}
-{# {% load humanize %} #}
-{% load cobweb_look %}
+{% load crispy from crispy_forms_tags %}
+{% load model_name from cobweb_look %}
 {% load render_table from django_tables2 %}
 
-{% block page_title %}{{ project.title }}{% endblock %}
-{% block title %}{{ project.title }}{% endblock %}
+{% block window_title %}Cobweb: {{object.title}}{% endblock %}
 
 {% block content %}
-<div class="row">
-	<h3 class="editable_title col-md-12 collapse show">
-		{{project.title}}{% edit_link project user %}
-	</h3>
-</div>
+    <div class="row">
+        <h2 class="col mt-1 mb-3">{{object|model_name|upper}}: {{object.title}}</h2>
+    </div>
 
-<div class="row">
-	<div class="col-md-5">
-		<div id="div_id_status" class="form-section">
-      <div class="form-group">
-				<label for="id_status" class="form-control-label">
-					Status:
-				</label>
-				<div class="">
-					{{project.status}}
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-7">
-		<div id="div_id_administrators" class="form-section">
-      <div class="form-group">
-				<label for="id_administrators" class="form-control-label">
-					Administrators:
-				</label>
-				<div class="">
-					{% for user in project.administrators.all %}{% badge user %}{% endfor %}
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="row">
-	<div class="col-12">
-		<div class="form-section">
-			<div id="div_id_description" class="row form-group">
-				<label for="id_description" class="col-md-2 form-control-label">
-					Description:
-				</label>
-				<div class="col-md ">
-					<p id="id_description">
-						{{project.description}}
-					</p>
-				</div>
-			</div>
-			<div id="div_id_tags" class="row form-group ">
-				<label for="id_tags" class="col-md-2 form-control-label">
-					Tags:
-				</label>
-				<div class="col-md ">
-					{% for tag in project.tags.all %}{% badge tag %}{% endfor %}
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="row">
-    <div class="col-12">
-        <div class="form-section">
-            <div class="row">
-                <div id="div_id_nomination_policy" class="form-group col-md-5">
-                    <label for="id_nomination_policy_0" class="form-control-label">
-                        Nomination policy:
-                    </label>
-                    <div class="">
-                        {{project.nomination_policy}}
-                    </div>
+    <div class="row">
+        <div class="col-6">{% crispy form %}</div>
+        
+        <div class="col-6">
+            <div class="pane">
+                <div class="nav nav-infotabs">
+                        <a class="nav-link {% if view.summary %}active disabled{% endif %}"
+                           href="{% url 'project_summary' pk=object.pk %}">Summary</a>
+                        <a class="nav-link {% if view.nominations %}active disabled{% endif %}"
+                           href="{% url 'project_nominations' pk=object.pk %}">Nominations</a>
+                        <a class="nav-link {% if view.notes %}active disabled{% endif %}">Notes</a>
                 </div>
-                <div id="div_id_nominators" class="form-group col-md-7">
-                    <label for="id_nominators_0" class="form-control-label">
-                        Nominators:
-                    </label>
-                    <div class="">
-                        {% for nominator in project.nominators.all %}{% badge nominator %}{% endfor %}
+
+                {% if view.summary %}
+                    <div class="summary">
+                        <div class="n-unclaimed">{{object.n_unclaimed}}</div>
+                        <br>unclaimed nominations
                     </div>
-                </div>
+                    <div class="summary">
+                        <div class="n-claimed">{{object.n_claimed}}</div>
+                        <br>claimed nominations
+                    </div>
+                    <div class="summary">
+                        <div class="n-held">{{object.n_held}}</div>
+                        held nominations
+                    </div>
+                {% elif view.nominations %}
+                    {% render_table table %}
+                {% endif %}
             </div>
         </div>
     </div>
-</div>
-
-<h4>Nominations<div class="float-right">{% add_nomination_link project user %}</div></h4>
-
-{% render_table table %}
-
 {% endblock %}

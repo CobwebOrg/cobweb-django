@@ -4,7 +4,6 @@ from crispy_forms.layout import (
     ButtonHolder,
     # Column,
     Div,
-    Field,
     Fieldset,
     HTML,
     Hidden,
@@ -17,6 +16,7 @@ from crispy_forms.layout import (
     Submit,
     # TemplateNameMixin,
 )
+from crispy_forms.layout import Field as CrispyField
 from crispy_forms.bootstrap import (
     Accordion,
     AccordionGroup,
@@ -38,6 +38,24 @@ from crispy_forms.bootstrap import (
 )
 
 
+class Field(CrispyField):
+    def __init__(self, *args, show=True, edit=False, **kwargs):
+        self.show = show
+        self.edit = edit
+        if not self.edit:
+            if 'css_class' in kwargs:
+                kwargs['css_class'] += ' form-control-plaintext'
+            else:
+                kwargs['css_class'] = 'form-control-plaintext'
+        super().__init__(*args, **kwargs)
+
+    def render(self, *args, **kwargs):
+        if self.show == False:
+            return ''
+        else:
+            return super().render(*args, **kwargs)
+
+
 title_plaintext_field = Layout(
     HTML("""
         {% load cobweb_look %}
@@ -52,12 +70,14 @@ title_plaintext_field = Layout(
 )
 title_form_field = Field('title', wrapper_class="col-md-12")
 
+
 CancelButton = HTML("""
     <a href="{{object.get_absolute_url}}" class="btn btn-light btn btn-outline-dark mr-1">
         Cancel
     </a>
 """)
 
+    
 class Pane(Div):
     def __init__(self, *args, **kwargs):
         try:

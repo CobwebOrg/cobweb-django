@@ -52,8 +52,9 @@ class ProjectForm(forms.ModelForm):
             'nomination_policy': forms.RadioSelect,
         }
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, admin_version=False,  **kwargs):
         """Initialize ProjectForm, adding crispy_forms helper and layout."""
+
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
 
@@ -66,23 +67,23 @@ class ProjectForm(forms.ModelForm):
             Pane(
                 Row(Column(Field('title')), css_class='d-none'),
 
-                Row(Column(HField('description'))),
+                Row(Column(HField('description', edit=admin_version))),
 
                 Row(
-                    Column(Field('status'), css_class='col-md-5'),
-                    Column(Field('administrators'), css_class='col-md-7'),
+                    Column(Field('status', edit=admin_version), css_class='col-md-5'),
+                    Column(Field('administrators', edit=admin_version), css_class='col-md-7'),
                 ),
 
                 Row(
-                    Field('nomination_policy', wrapper_class='col-md-5'),
+                    Field('nomination_policy', edit=admin_version, wrapper_class='col-md-5'),
                     Column(
-                        UneditableField('nominators'),
-                        Field('nominator_blacklist'),
+                        Field('nominators', edit=admin_version),
+                        Field('nominator_blacklist', edit=admin_version, show=admin_version),
                         css_class='col-md-7'
                     ),
                 ),
 
-                Row(Column(Field('tags'))),
+                Row(Column(Field('tags', edit=admin_version))),
 
                 Row(
                     Column(

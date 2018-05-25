@@ -56,18 +56,18 @@ urlpatterns = [
          name='organization_list'),
 
     # Project
-    url(r'^projects/$',
+    path('p/projects',
         projects.views.ProjectIndexView.as_view(),
         name='project_list'),
-    url(r'^projects/(?P<pk>\d+)/$',
-        projects.views.ProjectDetailView.as_view(),
-        name='project_detail'),
-    url(r'^projects/new$',
+    path('p/<int:pk>',
+        projects.views.ProjectSummaryView.as_view(),
+        name='project_summary'),
+    path('p/<int:pk>/nominations',
+        projects.views.ProjectNominationsView.as_view(),
+        name='project_nominations'),
+    path('p/new',
         projects.views.ProjectCreateView.as_view(),
         name='project_create'),
-    url(r'^projects/(?P<pk>\d+)/edit$',
-        projects.views.ProjectUpdateView.as_view(),
-        name='project_update'),
 
     # Collection
     url(r'^collections/', include('archives.urls')),
