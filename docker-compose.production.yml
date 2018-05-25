@@ -3,6 +3,13 @@ version: '3'
 services:
   solr:
     image: andrewwallace/cobweb_solr:latest
+    # volumes:
+    #   - solr_data:/opt/solr/server/solr/mycores
+    entrypoint:
+      - docker-entrypoint.sh
+      - solr-precreate
+      - cobweb
+      - /opt/solr/server/solr/configsets/cobweb
     deploy:
       replicas: 1
       resources:
@@ -63,5 +70,6 @@ services:
       - cobwebnet
 volumes:
   postgres_data:
+  # solr_data:
 networks:
   cobwebnet:
