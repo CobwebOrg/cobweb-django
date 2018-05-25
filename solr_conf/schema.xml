@@ -107,10 +107,6 @@
     
     <field name="description" type="text_en" indexed="true" stored="true" multiValued="false" />
     
-    <field name="when_checked" type="date" indexed="true" stored="true" multiValued="false" />
-    
-    <field name="status" type="text_en" indexed="true" stored="true" multiValued="false" />
-    
     <field name="tag_auto" type="ngram" indexed="true" stored="true" multiValued="false" />
     
     <field name="name" type="text_en" indexed="true" stored="true" multiValued="false" />
@@ -143,13 +139,11 @@
     
     <field name="has_holding" type="boolean" indexed="true" stored="true" multiValued="false" />
     
-    <field name="needs_claim" type="boolean" indexed="true" stored="true" multiValued="false" />
+    <field name="project_pk" type="long" indexed="true" stored="true" multiValued="false" />
     
-    <field name="rationale" type="text_en" indexed="true" stored="true" multiValued="false" />
+    <field name="status" type="text_en" indexed="true" stored="true" multiValued="false" />
     
-    <field name="suggested_crawl_frequency" type="text_en" indexed="true" stored="true" multiValued="false" />
-    
-    <field name="suggested_crawl_end_date" type="date" indexed="true" stored="true" multiValued="false" />
+    <field name="nominated_by" type="text_en" indexed="true" stored="true" multiValued="true" />
     
     <field name="nomination_policy" type="text_en" indexed="true" stored="true" multiValued="false" />
     

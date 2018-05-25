@@ -91,8 +91,9 @@ class ProjectNominationsView(django_tables2.SingleTableMixin, ProjectSummaryView
     right_panel = 'nominations'
 
     def get_table_data(self):
-        return self.object.nominations.all()
-
+        return (haystack.query.SearchQuerySet()
+                .filter(django_ct__exact='projects.nomination')
+                .filter(project_pk__exact=self.get_object().pk))
 
 class NominationDetailView(django_tables2.SingleTableMixin, DetailView):
     model = models.Nomination

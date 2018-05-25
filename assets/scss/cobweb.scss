@@ -200,7 +200,7 @@ textarea { resize: none; }
 
 
 @each $nomination_type in (unclaimed, claimed, held) {
-  .#{$nomination_type}-count {
+  .badge-#{$nomination_type} {
     @extend .badge, .badge-pill, .badge-#{$nomination_type} ;
   }
 }

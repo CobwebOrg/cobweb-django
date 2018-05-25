@@ -136,7 +136,11 @@ class Nomination(models.Model):
                                 on_delete=models.CASCADE)
 
     # STATUS
-    needs_claim = models.BooleanField(default=True)
+    # needs_claim = models.BooleanField(default=True)
+    @property
+    def needs_claim(self):
+        return self.claims.count() == 0
+
     deleted = models.BooleanField(default=False)
 
     nominated_by = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
@@ -152,8 +156,9 @@ class Nomination(models.Model):
     notes = GenericRelation('core.Note')
 
     @property
-    def impact_factor(self):
-        return self.endorsements.count() + self.claims.count()  # + self.holdings.count()
+    def impact_factor(self) -> int:
+        return (self.endorsements.count() + self.claims.count() +
+                self.claims.filter(has_holding=True).count())
 
     @property
     def name(self) -> str:
@@ -176,7 +181,18 @@ class Nomination(models.Model):
     
     @property
     def has_holding(self) -> bool:
-        return self.claims.filter(has_holding=True).count() > 0
+        return not self.needs_claim and self.claims.filter(has_holding=True).count() > 0
+
+    @property
+    def status(self) -> str:
+        if self.deleted:
+            return 'deleted'
+        elif self.needs_claim:
+            return 'unclaimed'
+        elif not self.has_holding:
+            return 'claimed'
+        else:
+            return 'held'
 
     def is_admin(self, user: AbstractBaseUser) -> bool:
         return self.project.is_nominator(user)
