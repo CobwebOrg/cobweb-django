@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load crispy from crispy_forms_tags %}
-{% load model_name from cobweb_look %}
+{% load model_name as_link from cobweb_look %}
 {% load render_table from django_tables2 %}
 
 {% block window_title %}Cobweb: {{nomination}}{% endblock %}
@@ -8,7 +8,7 @@
 {% block content %}
     <div class="row"><div class="col mt-1 mb-3">
         <h2>PROJECT: {{nomination.project}}</h2>
-        <h3>NOMINATION: {{nomination}}</h3>
+        <h3>NOMINATION: {{nomination.resource|as_link}}</h3>
     </div></div>
 
     <div class="row">
