@@ -28,13 +28,12 @@ urlpatterns = [
 
     url(r'^search/', core.views.SearchView.as_view(), name='search'),
 
-    url(r'^$', core.views.DashboardView.as_view(), name='dashboard',),
+    url(r'^$', core.views.get_landing_page_view, name='landing_page'),
+    
+    path('dashboard', core.views.DashboardView.as_view(), name='dashboard'),
 
     # Auth: /login, /logout, /password_change, /password_reset, /reset
-    path('accounts/login/', auth.views.LoginView.as_view(
-        template_name='login.html',
-        form_class=core.forms.LoginForm
-    ), name='login',),
+    path('accounts/login/', core.views.LoginView.as_view(), name='login'),
     path('', include('django.contrib.auth.urls')),
 
     # User

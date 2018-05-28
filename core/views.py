@@ -1,20 +1,21 @@
 import django_tables2
 import haystack
-from haystack.query import SearchQuerySet
-from haystack.generic_views import SearchView as HaystackSearchView
 from dal import autocomplete
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView as django_LoginView
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import redirect, reverse
 from django.views import generic
+from haystack.generic_views import SearchView as HaystackSearchView
+from haystack.query import SearchQuerySet
 from reversion.views import RevisionMixin
 
 from core import models
-from core.forms import SignUpForm, UserProfileForm
-from core.tables import UserTable, OrganizationTable, ResourceTable
-from projects.tables import ProjectTable, NominationTable, ClaimTable
+from core.forms import LoginForm, SignUpForm, UserProfileForm
+from core.tables import OrganizationTable, ResourceTable, UserTable
+from projects.tables import ClaimTable, NominationTable, ProjectTable
 
 
 class CobwebBaseIndexView(haystack.generic_views.SearchMixin,
@@ -52,6 +53,19 @@ class DashboardView(LoginRequiredMixin,
                 title='my claims and holdings',
             ),
         )
+
+
+class LoginView(django_LoginView):
+    template_name='login.html'
+    form_class=LoginForm
+
+
+def get_landing_page_view(request):
+    if request.user.is_authenticated:
+        return DashboardView.as_view()(request)
+    else:
+        return LoginView.as_view()(request)
+
 
 
 class UserIndexView(CobwebBaseIndexView):
