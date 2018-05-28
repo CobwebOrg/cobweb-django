@@ -7,7 +7,7 @@
 
 {% block content %}
     <div class="row"><div class="col mt-1 mb-3">
-        <h2>PROJECT: {{nomination.project}}</h2>
+        <h2>PROJECT: {{nomination.project|as_link}}</h2>
         <h3>NOMINATION: {{nomination.resource|as_link}}</h3>
     </div></div>
 
