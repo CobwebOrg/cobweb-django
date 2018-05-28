@@ -93,6 +93,12 @@ class ProjectNominationsView(django_tables2.SingleTableMixin, ProjectSummaryView
                 .filter(django_ct__exact='projects.nomination')
                 .filter(project_pk__exact=self.get_object().pk))
 
+    def get_table_kwargs(self):
+        if self.request.user.can_claim():
+            return {}
+        else:
+            return {'exclude': 'claim_link'}
+
 class NominationView(RevisionMixin, InlineFormSetView, UpdateView):
     model = models.Nomination
     inline_model = models.Claim

@@ -61,10 +61,17 @@ class User(AbstractUser):
         # (this is just a placeholder)
         return self.projects_administered.count()
 
+    def __repr__(self) -> str:
+        return f'User(username="{self.username}")'
+
     def __str__(self) -> str:
-        return (
-            self.get_full_name() or self.username or 'User {}'.format(self.pk)
-        )
+        return self.get_full_name() or self.username or 'User {}'.format(self.pk)
+
+    def can_claim(self, organization=None):
+        if organization:
+            return organization in user.affiliations
+        else:
+            return self.affiliations.count() > 0
 
     def get_absolute_url(self) -> str:
         return reverse('user_detail', kwargs={'pk': self.pk})
