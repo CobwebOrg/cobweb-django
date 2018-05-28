@@ -69,7 +69,7 @@ class NominationTable(CobwebBaseTable):
         attrs={'cell': {'class': 'text-center'}},
     )
     claim_link = django_tables2.TemplateColumn(
-        """<a href="{% url 'claim_create' nomination_pk=record.pk %}">[claim]</a>""",
+        """<a href="{% url 'nomination_claims' project_id=record.project_pk url=record.url %}">[claim]</a>""",
         verbose_name='', orderable=False,
     )
 

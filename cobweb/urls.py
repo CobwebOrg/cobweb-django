@@ -84,6 +84,9 @@ urlpatterns = [
         name='nominate_resource'),
 
     # Claim
+    path('p/<int:project_id>/claim/<path:url>',
+         projects.views.NominationClaimView.as_view(),
+         name='nomination_claims'),
     path('claim/<int:pk>',
          projects.views.ClaimDetailView.as_view(),
          name='claim_detail'),

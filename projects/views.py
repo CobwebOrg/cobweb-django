@@ -185,28 +185,50 @@ class NominationUpdateView(UserPassesTestMixin, RevisionMixin, UpdateView):
     def test_func(self):
         return self.get_object().project.is_nominator(self.request.user)
 
+class NominationClaimView(RevisionMixin, InlineFormSetView, UpdateView):
+    model = models.Nomination
+    inline_model = models.Claim
+    template_name = 'projects/nomination.html'
+    form_class = forms.NominationForm
+    slug_url_kwarg = 'url'
+    
+    def get_factory_kwargs(self):
+        kwargs = super().get_factory_kwargs()
+        kwargs['extra'] = 1
+        kwargs['form'] = forms.ClaimForm
+        return kwargs
+    
+    def get_form_kwargs(self):
+        """Return the keyword arguments for instantiating the form."""
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+    
+    def get_object(self, queryset=None):
+        if queryset is None:
+            queryset = self.get_queryset()
+        return queryset.filter(project_id=self.kwargs['project_id']).get(resource__url=self.kwargs['url'])
+
 
 class ClaimDetailView(DetailView):
     model = models.Claim
     template_name = 'projects/claim.html'
-    section = 'claim'
 
 
 class ClaimFormViewMixin(UserPassesTestMixin, RevisionMixin):
     model = models.Claim
     template_name = 'generic_form.html'
     form_class = forms.ClaimForm
-    section = 'claim'
 
     def get_form(self, *args, **kwargs):
         form = super().get_form(*args, **kwargs)
-        form.fields['collection'].queryset = (
+        form.fields['organization'].queryset = (
             self.request.user.collections_administered
         )
         return form
 
     def test_func(self):
-        return self.request.user.collections_administered.count() > 0
+        return self.request.user.can_claim()
 
 
 class ClaimCreateView(ClaimFormViewMixin, CreateView):
