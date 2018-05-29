@@ -19,11 +19,13 @@
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.8",
     "@fortawesome/fontawesome-free-solid": "^5.0.13",
-    "jquery": "^3.3.1",
     "bootstrap": "^4.1",
+    "jquery": "^3.3.1",
     "popper.js": "^1.14.3",
     "react": "^16.4.0",
-    "react-dom": "^16.4.0"
+    "react-dom": "^16.4.0",
+    "react-table": "^6.8.6",
+    "react-tabs": "^2.2.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.2.6",

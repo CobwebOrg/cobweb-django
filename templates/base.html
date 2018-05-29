@@ -15,10 +15,10 @@
     <title>{% block window_title %}Cobweb{% endblock %}</title>
   </head>
 
-  <body class="cobweb-container">
+  <body>
       {% include 'header.html' %}
 
-      <div class="cobweb-content">
+      <div id="cobweb-content">
         {% block content %}{% endblock %}
       </div>
 

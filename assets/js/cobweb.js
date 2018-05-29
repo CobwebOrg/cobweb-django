@@ -25,6 +25,6 @@ window.$$ = $ // Expose *this* jquery to browser console - $ gets overloaded
 
 ReactDOM.render(
   <Dashboard />,
-  document.getElementById('dashboard')
+  document.getElementById('cobweb-content')
 );
 

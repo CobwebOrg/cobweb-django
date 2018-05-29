@@ -54,7 +54,7 @@ $theme-colors: (
 
 html, body { height: 100%; }
 
-.cobweb-container {
+body {
   @extend .container-fluid, .d-flex, .flex-column ;
   padding-left: 2rem;
   padding-right: 2rem;
@@ -62,7 +62,7 @@ html, body { height: 100%; }
   padding-bottom: 2rem;
 }
 
-.cobweb-content { @extend .flex-grow-1 ; }
+#cobweb-content { @extend .flex-grow-1 ; }
 
 // HEADER AND FOOTER
 
@@ -170,9 +170,11 @@ footer {
 // INFO TABS
 
 .nav-infotabs {
-  @extend .text-uppercase, .justify-content-around ;
+  @extend .nav, .text-uppercase, .justify-content-around ;
 
+  .nav-link { @extend .btn-link ; }
   .active {
+    @extend .disabled ;
     border-bottom: 3px solid $gray;
   }
 }
