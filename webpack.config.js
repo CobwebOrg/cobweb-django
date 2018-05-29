@@ -19,7 +19,14 @@ module.exports = {
   ],
 
   module: {
-      rules: [
+      rules: [      
+        {
+          test: /\.(js|jsx)$/,
+          exclude: /node_modules/,
+          use: {
+            loader: "babel-loader"
+          }
+        },
         {
           test: /\.(scss)$/,
           use: [{

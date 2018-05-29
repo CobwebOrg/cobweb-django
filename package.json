@@ -20,19 +20,27 @@
     "@fortawesome/fontawesome": "^1.1.8",
     "@fortawesome/fontawesome-free-solid": "^5.0.13",
     "jquery": "^3.3.1",
+    "bootstrap": "^4.1",
     "popper.js": "^1.14.3",
-    "webpack": "^3.11.0",
-    "webpack-bundle-tracker": "^0.2.1"
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.2.6",
-    "bootstrap": "^4.1",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
     "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^0.28.11",
     "node-sass": "^4.9.0",
     "postcss-loader": "^2.1.5",
     "precss": "^2.0.0",
+    "prop-types": "^15.6.1",
     "sass-loader": "^6.0.7",
-    "style-loader": "^0.19.1"
+    "style-loader": "^0.19.1",
+    "webpack": "^3.11.0",
+    "webpack-bundle-tracker": "^0.2.1"
   }
 }

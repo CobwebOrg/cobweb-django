@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load django_tables2 %}
 {% block content %}
-  <div class="row">
+  <div id="dashboard" class="row">
     <div class="col-3 p-3">
         <div class="border p-4">
             <h1 class="mb-2 text-user-dark">{{ request.user }}</h1>
@@ -32,12 +32,6 @@
                     {% render_table table %}
                 </div>
             {% endfor %}
-            
-            {% comment %} <a class="nav-link {% if view.summary %}active disabled{% endif %}"
-                    href="{% url 'project_summary' pk=object.pk %}">Summary</a>
-                <a class="nav-link {% if view.nominations %}active disabled{% endif %}"
-                    href="{% url 'project_nominations' pk=object.pk %}">Nominations</a>
-                <a class="nav-link {% if view.notes %}active disabled{% endif %}">Notes</a> {% endcomment %}
         </div>
     </div>
 
