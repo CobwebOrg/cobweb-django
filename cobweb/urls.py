@@ -59,16 +59,16 @@ urlpatterns = [
          name='organization_list'),
 
     # Project
-    path('p/projects',
+    path('proj/projects',
         projects.views.ProjectIndexView.as_view(),
         name='project_list'),
-    path('p/<int:pk>',
+    path('proj/<int:pk>',
         projects.views.ProjectSummaryView.as_view(),
         name='project_summary'),
-    path('p/<int:pk>/nominations',
+    path('proj/<int:pk>/nominations',
         projects.views.ProjectNominationsView.as_view(),
         name='project_nominations'),
-    path('p/new',
+    path('proj/new',
         projects.views.ProjectCreateView.as_view(),
         name='project_create'),
 
@@ -76,7 +76,7 @@ urlpatterns = [
     path('nomination/<int:pk>',
         projects.views.NominationView.as_view(),
         name='nomination'),
-    path('p/<int:project_id>/nominate',
+    path('proj/<int:project_id>/nominate',
         projects.views.NominationCreateView.as_view(),
         name='project_nominate'),
     path('nominate/<path:url>',
@@ -84,7 +84,7 @@ urlpatterns = [
         name='nominate_resource'),
 
     # Claim
-    path('p/<int:project_id>/claim/<path:url>',
+    path('proj/<int:project_id>/claim/<path:url>',
          projects.views.NominationClaimsView.as_view(),
          name='nomination_claims'),
     path('claim/<int:pk>',

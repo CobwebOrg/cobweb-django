@@ -24,13 +24,13 @@ class TestProjectIndexView:
         """A 'new project' link should be shown if logged-in user is authorized,
         otherwise hidden."""
 
-        link_html = '<a href="/p/new"'
+        link_html = '<a href="/proj/new"'
 
         client.logout()
-        assert link_html not in client.get('/p/projects').rendered_content
+        assert link_html not in client.get('/proj/projects').rendered_content
 
         client.force_login(UserFactory())
-        assert link_html in client.get('/p/projects').rendered_content
+        assert link_html in client.get('/proj/projects').rendered_content
 
 
 class ProjectIndexViewTests(TestCase):
@@ -41,7 +41,7 @@ class ProjectIndexViewTests(TestCase):
             ProjectFactory(title="Exciting Project"),
             ProjectFactory(title="Other Project"),
         ]
-        self.response = self.client.get('/p/')
+        self.response = self.client.get('/proj/')
 
     @pytest.mark.xfail(strict=True)
     def test_links_to_all_projects(self):
@@ -282,7 +282,7 @@ class TestProjectCreateView:
         client.logout()
         response = client.get(reverse('project_create'))
         assert (response.status_code==302 and 
-                response.url=='/accounts/login/?next=/p/new')
+                response.url=='/accounts/login/?next=/proj/new')
 
         project_data = {
             'title': 'Test Project for test_anonymous_cant_create_project',
@@ -292,7 +292,7 @@ class TestProjectCreateView:
 
         response2 = client.post(reverse('project_create'), project_data)
         assert (response.status_code==302 and 
-                response.url=='/accounts/login/?next=/p/new')
+                response.url=='/accounts/login/?next=/proj/new')
         assert Project.objects.filter(title=project_data['title']).count() == 0
 
     @pytest.mark.xfail(strict=True)
