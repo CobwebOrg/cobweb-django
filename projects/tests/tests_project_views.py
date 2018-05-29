@@ -19,6 +19,19 @@ class TestProjectIndexView:
         # Test that all projects are listed and pagination works
         raise NotImplementedError
 
+    @pytest.mark.django_db
+    def test_new_project_link(self, client):
+        """A 'new project' link should be shown if logged-in user is authorized,
+        otherwise hidden."""
+
+        link_html = '<a href="/p/new"'
+
+        client.logout()
+        assert link_html not in client.get('/p/projects').rendered_content
+
+        client.force_login(UserFactory())
+        assert link_html in client.get('/p/projects').rendered_content
+
 
 class ProjectIndexViewTests(TestCase):
 
@@ -28,7 +41,7 @@ class ProjectIndexViewTests(TestCase):
             ProjectFactory(title="Exciting Project"),
             ProjectFactory(title="Other Project"),
         ]
-        self.response = self.client.get('/projects/')
+        self.response = self.client.get('/p/')
 
     @pytest.mark.xfail(strict=True)
     def test_links_to_all_projects(self):
@@ -37,22 +50,6 @@ class ProjectIndexViewTests(TestCase):
         self.assertContains(self.response, 'Boring Project')
         self.assertContains(self.response, 'Exciting Project')
         self.assertContains(self.response, 'Other Project')
-
-    def test_new_project_link(self):
-        """A 'new project' link should be shown if logged-in user is authorized,
-        otherwise hidden."""
-
-        link_html = """
-            <a href="/projects/new" class="float-right btn btn-sm btn-primary">
-                <strong>+</strong> New Project
-            </a>
-        """
-
-        self.client.logout()
-        self.assertNotContains(self.client.get('/projects/'), link_html, html=True)
-
-        self.client.force_login(UserFactory())
-        self.assertContains(self.client.get('/projects/'), link_html, html=True)
 
 
 class ProjectDetailViewTests(TestCase):
@@ -278,12 +275,14 @@ class ProjectDetailViewTests(TestCase):
         )
 
 
-class ProjectCreateViewTests(TestCase):
+class TestProjectCreateView:
 
-    def test_anonymous_cant_create_project(self):
-        self.client.logout()
-        response = self.client.get(reverse('project_create'))
-        self.assertRedirects(response, '/accounts/login/?next=/projects/new')
+    @pytest.mark.django_db
+    def test_anonymous_cant_create_project(self, client):
+        client.logout()
+        response = client.get(reverse('project_create'))
+        assert (response.status_code==302 and 
+                response.url=='/accounts/login/?next=/p/new')
 
         project_data = {
             'title': 'Test Project for test_anonymous_cant_create_project',
@@ -291,14 +290,16 @@ class ProjectCreateViewTests(TestCase):
             'nomination_policy': 'Open',
         }
 
-        response2 = self.client.post(reverse('project_create'), project_data)
-        self.assertRedirects(response2, '/accounts/login/?next=/projects/new')
+        response2 = client.post(reverse('project_create'), project_data)
+        assert (response.status_code==302 and 
+                response.url=='/accounts/login/?next=/p/new')
         assert Project.objects.filter(title=project_data['title']).count() == 0
 
+    @pytest.mark.xfail(strict=True)
     def test_user_creates_project(self):
         """...
         Should autmatically set: administrators"""
-        pass
+        raise NotImplementedError
 
 
 class ProjectUpdateViewTests(TestCase):
