@@ -38,7 +38,7 @@ services:
       - db
       - solr
     working_dir: /code
-    command: ['sh', 'start-production.sh']
+    command: ['sh', '/code/scripts/start-production.sh']
     environment:
       DEBUG: 'false'
     deploy:
@@ -57,7 +57,7 @@ services:
     working_dir: /code
     environment:
       DEBUG: 'true'
-    command: ['sh', '/code/start-worker.sh']
+    command: ['sh', '/code/scripts/start-worker.sh']
     deploy:
       replicas: 1
       resources:
