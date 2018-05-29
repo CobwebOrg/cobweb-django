@@ -176,16 +176,16 @@ class ResourceNominateView(RevisionMixin, CreateView):
         # return self.get_project().is_nominator(self.request.user)
 
 
-class NominationUpdateView(UserPassesTestMixin, RevisionMixin, UpdateView):
-    model = models.Nomination
-    template_name = 'generic_form.html'
-    form_class = forms.NominationForm
-    section = 'nomination'
+# class NominationUpdateView(UserPassesTestMixin, RevisionMixin, UpdateView):
+#     model = models.Nomination
+#     template_name = 'generic_form.html'
+#     form_class = forms.NominationForm
+#     section = 'nomination'
 
-    def test_func(self):
-        return self.get_object().project.is_nominator(self.request.user)
+#     def test_func(self):
+#         return self.get_object().project.is_nominator(self.request.user)
 
-class NominationClaimView(RevisionMixin, InlineFormSetView, UpdateView):
+class NominationClaimsView(RevisionMixin, InlineFormSetView, UpdateView):
     model = models.Nomination
     inline_model = models.Claim
     template_name = 'projects/nomination.html'
