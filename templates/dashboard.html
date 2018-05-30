@@ -35,5 +35,13 @@
         </div>
     </div>
 
+    {% block load_react_script %}
+        <script>
+            window.ReactDOM.render(
+            window.React.createElement(window.Dashboard, {}, null),
+            document.getElementById('cobweb-content')
+            );
+        </script>
+    {% endblock %}
   </div>
 {% endblock %}

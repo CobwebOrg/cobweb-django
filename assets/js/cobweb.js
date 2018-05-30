@@ -18,13 +18,7 @@ $('textarea').each(function () {
   this.style.height = (this.scrollHeight) + 'px';
 });
 
-window.$$ = $ // Expose *this* jquery to browser console - $ gets overloaded
-
-
-// React stuff
-
-ReactDOM.render(
-  <Dashboard />,
-  document.getElementById('cobweb-content')
-);
-
+window.$$ = $; // Expose *this* jquery to browser console - $ gets overloaded
+window.Dashboard = Dashboard;
+window.ReactDOM = ReactDOM;
+window.React = React;

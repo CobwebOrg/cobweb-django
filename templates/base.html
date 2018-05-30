@@ -13,6 +13,7 @@
     <meta content="text/html">
 
     <title>{% block window_title %}Cobweb{% endblock %}</title>
+    {% render_bundle 'main' %}
   </head>
 
   <body>
@@ -26,7 +27,6 @@
 
 
     <!-- Webpack bundle -->
-    {% render_bundle 'main' %}
     
     <script src="http://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -34,7 +34,8 @@
 
     <!-- Form DOT Media -->
     {{ form.media }}
-
+    
+    {% block load_react_script %}{% endblock %}
     <!-- End of base.html content -->
   </body>
 </html>

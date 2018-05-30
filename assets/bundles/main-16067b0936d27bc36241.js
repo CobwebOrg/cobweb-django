@@ -11780,11 +11780,9 @@ $('textarea').each(function () {
 });
 
 window.$$ = $; // Expose *this* jquery to browser console - $ gets overloaded
-
-
-// React stuff
-
-_reactDom2.default.render(_react2.default.createElement(_Dashboard2.default, null), document.getElementById('cobweb-content'));
+window.Dashboard = _Dashboard2.default;
+window.ReactDOM = _reactDom2.default;
+window.React = _react2.default;
 
 /***/ }),
 /* 23 */
