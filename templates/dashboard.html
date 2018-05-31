@@ -23,12 +23,12 @@
         <div class="nav nav-infotabs">
             {% for table in tables %}
                 <a class="btn btn-link{% if notforloop.first %} collapsed{% endif %} nav-link" data-toggle="collapse"
-                   href="#{{table.title|slugify}}">{{ table.title }}</a>
+                   href="#{{table.table_title|slugify}}">{{ table.table_title }}</a>
             {% endfor %}
             
             {% for table in tables %}
                 <div class="collapse{% if forloop.first %} show{% endif %}"
-                     id="{{table.title|slugify}}" data-parent="#accordion">
+                     id="{{table.table_title|slugify}}" data-parent="#accordion">
                     {% render_table table %}
                 </div>
             {% endfor %}

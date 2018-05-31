@@ -42,15 +42,15 @@ class DashboardView(LoginRequiredMixin,
         return (
             ProjectTable(
                 data=SearchQuerySet().filter(django_ct__exact='projects.project'),
-                title='my projects',
+                table_title='my projects',
             ),
             NominationTable(
                 data=SearchQuerySet().filter(django_ct__exact='projects.nomination'),
-                title='my nominations',
+                table_title='my nominations',
             ),
             ClaimTable(
                 data=SearchQuerySet().filter(django_ct__exact='projects.claim'),
-                title='my claims and holdings',
+                table_title='my claims and holdings',
             ),
         )
 

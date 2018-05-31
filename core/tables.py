@@ -5,15 +5,16 @@ from core.models import User, Organization, Resource
 
 
 class CobwebBaseTable(django_tables2.Table):
-
+    
     class Meta:
         abstract=True
         template_name = 'generic_table.html'
         attrs={'class': 'table table-hover'}
         order_by = ('-impact_factor', '-pk')
     
-    def __init__(self, *args, title=None, **kwargs):
-        self.title = title
+    def __init__(self, *args, table_title=None, can_add=False, **kwargs):
+        self.table_title = table_title
+        self.can_add = can_add
         super().__init__(*args, **kwargs)
 
 
