@@ -25,6 +25,12 @@ class ProjectIndexView(CobwebBaseIndexView):
                 'new_item_link': reverse('project_create'),
             })
         return context_data
+    
+    def get_table_kwargs(self):
+        kwargs = super().get_table_kwargs()
+        if self.request.user.is_authenticated:
+            kwargs.update({'new_item_link': reverse('project_create')})
+        return kwargs
 
 
 class ProjectDetailView(django_tables2.SingleTableMixin, DetailView):
@@ -94,10 +100,16 @@ class ProjectNominationsView(django_tables2.SingleTableMixin, ProjectSummaryView
                 .filter(project_pk__exact=self.get_object().pk))
 
     def get_table_kwargs(self):
-        if self.request.user.can_claim():
-            return {}
-        else:
-            return {'exclude': 'claim_link'}
+        kwargs = super().get_table_kwargs()
+        proj = self.get_object()
+
+        if proj.is_nominator(self.request.user):
+            kwargs.update({'new_item_link': proj.get_add_nomination_url()})
+
+        if not self.request.user.can_claim():
+            kwargs.update({'exclude': ('claim_link',)})
+        
+        return kwargs
 
 class NominationView(RevisionMixin, InlineFormSetView, UpdateView):
     model = models.Nomination
