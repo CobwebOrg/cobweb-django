@@ -33,16 +33,6 @@ class ProjectIndexView(CobwebBaseIndexView):
         return kwargs
 
 
-class ProjectDetailView(django_tables2.SingleTableMixin, DetailView):
-    model = models.Project
-    template_name = "projects/project.html"
-    table_class = NominationTable
-    section = 'project'
-
-    def get_table_data(self):
-        return self.object.nominations.all()
-
-
 class ProjectCreateView(LoginRequiredMixin, RevisionMixin, CreateView):
     model = models.Project
     template_name = 'generic_form.html'
