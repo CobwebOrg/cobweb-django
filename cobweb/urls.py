@@ -59,7 +59,7 @@ urlpatterns = [
          name='organization_list'),
 
     # Project
-    path('proj/projects',
+    path('proj/',
         projects.views.ProjectIndexView.as_view(),
         name='project_list'),
     path('proj/<int:pk>',
