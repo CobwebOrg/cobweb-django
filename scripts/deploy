@@ -1,8 +1,9 @@
 #! /usr/bin/env sh
 
+git push &
+scp docker-compose.production.yml cobwebdev:~/docker-compose.production.yml &
 docker-compose build
 docker-compose push
-scp docker-compose.production.yml cobwebdev:~/docker-compose.production.yml
 ssh cobwebdev docker pull andrewwallace/cobweb:latest
 ssh cobwebdev docker pull andrewwallace/cobweb_solr:latest
 ssh cobwebdev docker stack deploy -c docker-compose.production.yml cobweb
