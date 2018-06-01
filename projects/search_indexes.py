@@ -19,7 +19,7 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     # nominator_blacklist
     status = indexes.CharField(model_attr='status', indexed=True, stored=True)
     impact_factor = indexes.IntegerField(model_attr='impact_factor', indexed=True, stored=True)
-    # tags
+    # tags = indexes.MultiValueField()
     # subject_headings
     # notes
     unclaimed_nominations = indexes.IntegerField(model_attr='n_unclaimed', indexed=True, stored=True)
@@ -35,6 +35,8 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
 
 class NominationIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=False)
+
+    name = indexes.CharField(model_attr='name', indexed=True, stored=True)
 
     project_pk = indexes.IntegerField(model_attr='project__pk', indexed=True, stored=True)
     url = indexes.CharField(model_attr='resource__url')

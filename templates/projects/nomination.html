@@ -2,17 +2,29 @@
 {% load crispy from crispy_forms_tags %}
 {% load model_name as_link from cobweb_look %}
 {% load render_table from django_tables2 %}
+{% load edit_link from cobweb_look %}
 
 {% block window_title %}Cobweb: {{nomination}}{% endblock %}
 
 {% block content %}
-    <div class="row"><div class="col mt-1 mb-3">
-        <h2>PROJECT: {{nomination.project|as_link}}</h2>
-        <h3>NOMINATION: {{nomination.resource|as_link}}</h3>
+    <div class="row"><div class="col mx-3 my-1">
+        <h2>
+            <a href={{nomination.project.get_absolute_url}}>PROJECT:</a>
+            {{nomination.project}}
+        </h2>
     </div></div>
 
     <div class="row">
-        <div class="col-6"><div class="pane">{% crispy form %}</div></div>
+        <div class="col-6">
+            <div class="pane">
+                <h3 class="mb-4">
+                    {% edit_link nomination request.user %}
+                    NOMINATION:
+                    <a href={{nomination.resource.url}}>{{nomination.resource}}</a>
+                </h3>
+                {% crispy form %}
+            </div>
+        </div>
         
         <div class="col-6">
             <div class="pane">

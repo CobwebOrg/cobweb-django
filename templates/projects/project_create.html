@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load crispy from crispy_forms_tags %}
+{% load model_name from cobweb_look %}
+{% load render_table from django_tables2 %}
+
+{% block window_title %}Cobweb: New Project{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <h2 class="col mt-1 mb-3">New project</h2>
+    </div>
+
+    <div class="row h-100">
+        <div class="col-6"><div class="pane">{% crispy form %}</div></div>
+        
+        <div class="col-6">
+            <div class="pane">
+                <div class="nav nav-infotabs">
+                        <a class="nav-link">Nominations</a>
+                        <a class="nav-link active disabled">Notes</a>
+                </div>
+
+                <h2>Project Notes</h2>
+
+                <form class="p-3 mb-3"><fieldset>
+                    <textarea class="w-100 p-2">Add a note...</textarea>
+                    <br>
+                    Visibility:
+                    <br>
+                    <input type="radio" name="visibility"><label>Public</label>
+                    <input type="radio" name="visibility"><label>Organization</label>
+                    <input type="radio" name="visibility"><label>Project</label>
+                    <button class="ml-auto btn float-right">ADD</button>
+                </fieldset></form>
+                <form class="p-3 mb-3"><fieldset disabled>
+                    <h4>Cobweb Developer
+                    <br><small class="h6">May 31, 2018 at 1:30 PM PST</small></h4>
+                    <textarea class="w-100 p-2">Just a mockup so far...</textarea>
+                </fieldset></form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

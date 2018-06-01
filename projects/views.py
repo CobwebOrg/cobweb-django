@@ -35,22 +35,19 @@ class ProjectIndexView(CobwebBaseIndexView):
 
 class ProjectCreateView(LoginRequiredMixin, RevisionMixin, CreateView):
     model = models.Project
-    template_name = 'generic_form.html'
+    template_name = 'projects/project_create.html'
     form_class = forms.ProjectForm
-    section = 'project'
 
     def get_initial(self):
         initial = super().get_initial()
         initial['administrators'] = {self.request.user.pk}
         print(initial)
         return initial
-
-    # def form_valid(self, form):
-    #     candidate = form.save(commit=False)
-    #     candidate.administrators.add(self.request.user)
-
-    #     candidate.save()
-    #     return super().form_valid(form)
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['editable'] = True
+        return kwargs
 
 
 class ProjectSummaryView(RevisionMixin, UpdateView):
@@ -75,7 +72,7 @@ class ProjectSummaryView(RevisionMixin, UpdateView):
         kwargs = super().get_form_kwargs()
         if self.summary and hasattr(self, 'object'):
             kwargs.update({
-                'admin_version': self.get_object().is_admin(self.request.user)
+                'editable': self.get_object().is_admin(self.request.user)
             })
         return kwargs
 
@@ -101,46 +98,58 @@ class ProjectNominationsView(django_tables2.SingleTableMixin, ProjectSummaryView
         
         return kwargs
 
-class NominationView(RevisionMixin, InlineFormSetView, UpdateView):
+
+class NominationUpdateView(RevisionMixin, UpdateView):
     model = models.Nomination
-    inline_model = models.Claim
-    template_name = 'projects/nomination.html'
+    template_name = 'generic_form.html'
     form_class = forms.NominationForm
     
     def get_form_kwargs(self):
         """Return the keyword arguments for instantiating the form."""
         kwargs = super().get_form_kwargs()
-        kwargs.update({'user': self.request.user})
-        return kwargs
-    
-    def get_factory_kwargs(self):
-        kwargs = super().get_factory_kwargs()
-        kwargs['extra'] = 1
-        kwargs['form'] = forms.ClaimForm
+        project = self.get_object().project
+        kwargs['editable'] = project.is_nominator(self.request.user)
         return kwargs
 
 
 class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
     model = models.Nomination
+    # template_name = 'projects/nomination_create.html'
     template_name = 'generic_form.html'
     form_class = forms.NominationForm
-    section = 'nomination'
+    _project = None
 
-    def form_valid(self, form):
-        candidate = form.save(commit=False)
-        candidate.project = self.get_project()
-        self.success_url = candidate.project.get_absolute_url()
-        candidate.save()
-        return super().form_valid(form)
+    # def form_valid(self, form):
+    #     candidate = form.save(commit=False)
+    #     candidate.project = self.get_project()
+    #     self.success_url = candidate.project.get_absolute_url()
+    #     candidate.save()
+    #     return super().form_valid(form)
 
     def get_initial(self):
         return {
-            'endorsements': [self.request.user],
+            'nominated_by': (self.request.user,),
             'project': self.get_project(),
         }
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        proj = self.get_project()
+        context.update({
+            'project': proj,
+            # 'project_form': forms.ProjectForm(instance=proj),
+        })
+        return context
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['editable'] = True
+        return kwargs
 
     def get_project(self):
-        return models.Project.objects.get(pk=self.kwargs['project_id'])
+        if not (hasattr(self, '_project') and isinstance(self._project, models.Project)):
+          self._project = models.Project.objects.get(pk=self.kwargs['project_id'])
+        return self._project
 
     def test_func(self):
         return self.get_project().is_nominator(self.request.user)
@@ -177,39 +186,38 @@ class ResourceNominateView(RevisionMixin, CreateView):
         return True
         # return self.get_project().is_nominator(self.request.user)
 
-
-# class NominationUpdateView(UserPassesTestMixin, RevisionMixin, UpdateView):
-#     model = models.Nomination
-#     template_name = 'generic_form.html'
-#     form_class = forms.NominationForm
-#     section = 'nomination'
-
-#     def test_func(self):
-#         return self.get_object().project.is_nominator(self.request.user)
-
 class NominationClaimsView(RevisionMixin, InlineFormSetView, UpdateView):
     model = models.Nomination
     inline_model = models.Claim
+    form_class = forms.NominationDisplayForm
     template_name = 'projects/nomination.html'
-    form_class = forms.NominationForm
-    slug_url_kwarg = 'url'
+
+    def get_object(self, queryset=None):
+        assert queryset is None, "NominationClaimsView doesn't take a queryset."
+        try:
+            # Get the single item from the filtered queryset
+            obj =  models.Nomination.objects.filter(
+                project__pk=self.kwargs['project_pk'],
+                resource__url=self.kwargs['url'],
+            ).get()
+        except queryset.model.DoesNotExist:
+            raise Http404(_("No %(verbose_name)s found matching the query") %
+                        {'verbose_name': queryset.model._meta.verbose_name})
+        return obj
+        
+    
+    def get_form_kwargs(self):
+        """Return the keyword arguments for instantiating the form."""
+        kwargs = super().get_form_kwargs()
+        project = self.get_object().project
+        kwargs['editable'] = False
+        return kwargs
     
     def get_factory_kwargs(self):
         kwargs = super().get_factory_kwargs()
         kwargs['extra'] = 1
         kwargs['form'] = forms.ClaimForm
         return kwargs
-    
-    def get_form_kwargs(self):
-        """Return the keyword arguments for instantiating the form."""
-        kwargs = super().get_form_kwargs()
-        kwargs.update({'user': self.request.user})
-        return kwargs
-    
-    def get_object(self, queryset=None):
-        if queryset is None:
-            queryset = self.get_queryset()
-        return queryset.filter(project_id=self.kwargs['project_id']).get(resource__url=self.kwargs['url'])
 
 
 class ClaimDetailView(DetailView):

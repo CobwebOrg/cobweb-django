@@ -52,22 +52,42 @@ class ProjectTable(CobwebBaseTable):
         else:
             return format_html('<span class="badge-held">{}</span>',
                                value)
+
+
+def get_name(nom):
+    import pdb; pdb.set_trace()
+    return nom.name or nom.title or str(nom.resource)
+
+
+class NominationColumn(django_tables2.LinkColumn):
+
+    def text(self, record):
+        return record.name
     
+    def render_link(self, uri, record, value, attrs=None):
+        import pdb; pdb.set_trace()
+        return super().render_link(self, uri, record, value, attrs=None)
 
 class NominationTable(CobwebBaseTable):
     """django_tables2.Table object for lists of nominations."""
 
     class Meta(CobwebBaseTable.Meta):
         model = Nomination
-        fields = ('url', 'status', 'claim_link')
+        fields = ('name', 'status', 'claim_link')
         empty_text = "No nominations."
 
-    url = django_tables2.LinkColumn(viewname='nomination',
-                                    kwargs={'pk': Accessor('pk')})
+    name = django_tables2.LinkColumn(
+        viewname='nomination_claims',
+        kwargs={'project_pk': Accessor('project_pk'),
+                'url': Accessor('url')},
+        verbose_name='Nomination',
+    )
+
     status = django_tables2.TemplateColumn(
         '<span class="badge-{{record.status}}">{{record.status|capfirst}}</span>',
         attrs={'cell': {'class': 'text-center'}},
     )
+    
     claim_link = django_tables2.TemplateColumn(
         """<a href="{% url 'nomination_claims' project_id=record.project_pk url=record.url %}">[claim]</a>""",
         verbose_name='', orderable=False,

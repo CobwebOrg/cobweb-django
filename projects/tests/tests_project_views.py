@@ -25,12 +25,13 @@ class TestProjectIndexView:
         otherwise hidden."""
 
         link_html = '<a href="/proj/new"'
+        project_index_url = reverse('project_list')
 
         client.logout()
-        assert link_html not in client.get('/proj/projects').rendered_content
+        assert link_html not in client.get(project_index_url).rendered_content
 
         client.force_login(UserFactory())
-        assert link_html in client.get('/proj/projects').rendered_content
+        assert link_html in client.get(project_index_url).rendered_content
 
 
 class ProjectIndexViewTests(TestCase):

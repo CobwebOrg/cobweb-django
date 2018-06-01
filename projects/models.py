@@ -80,7 +80,7 @@ class Project(models.Model):
         return reverse('project_summary', kwargs={'pk': self.pk})
 
     def get_add_nomination_url(self) -> str:
-        return reverse('project_nominate', kwargs={'project_id': self.pk})
+        return reverse('project_nominate', kwargs={'project_pk': self.pk})
 
     def is_admin(self, user: AbstractBaseUser) -> bool:
         return user in self.administrators.all()
@@ -135,6 +135,16 @@ class Nomination(models.Model):
     project = models.ForeignKey(Project, related_name='nominations',
                                 on_delete=models.CASCADE)
 
+    # TODO: move to ResourceDescription
+
+    title = models.CharField(max_length=200, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    tags = models.ManyToManyField('core.Tag', blank=True)
+    subject_headings = models.ManyToManyField('core.SubjectHeading', blank=True)
+    language = models.ForeignKey('languages_plus.Language', null=True, blank=True,
+                                 on_delete=models.PROTECT)
+    # TODO: setup required - see https://github.com/cordery/django-languages-plus
+    
     # STATUS
     # needs_claim = models.BooleanField(default=True)
     @property
@@ -162,13 +172,21 @@ class Nomination(models.Model):
 
     @property
     def name(self) -> str:
-        return self.title or self.resource.url
+        return self.title or self.resource.title or self.resource.url
 
     class Meta:
         unique_together = ('resource', 'project')
 
     def get_absolute_url(self) -> str:
-        return reverse('nomination', kwargs={'pk': self.pk})
+        return reverse('nomination_claims', kwargs={'project_pk': self.project.pk,
+                                                    'url': self.resource.url})
+
+    def get_edit_url(self) -> str:
+        return reverse('nomination_update', kwargs={
+            # 'pk': self.pk,
+            'project_pk': self.project.pk,
+            'url': self.resource.url,
+        })
 
     def get_claim_url(self) -> str:
         return reverse('claim_create', kwargs={'nomination_pk': self.pk})

@@ -40,15 +40,15 @@ from crispy_forms.bootstrap import (
 
 class Field(crispy.Field):
     def __init__(self, *args, show=True, edit=False, **kwargs):
+        super().__init__(*args, **kwargs)
         self.show = show
         self.edit = edit
-        super().__init__(*args, **kwargs)
+        if not edit:
+            self.attrs['disabled'] = True
 
     def render(self, *args, **kwargs):
         if not self.show:
             return ''
-        # elif not self.edit:
-        #     return args[0].
         else:
             return super().render(*args, **kwargs)
 
@@ -77,11 +77,11 @@ CancelButton = HTML("""
     
 class Pane(Div):
     def __init__(self, *args, **kwargs):
-        try:
-            kwargs['css_class'] += ' pane'
-        except KeyError:
-            kwargs['css_class'] = 'pane'
-        super().__init__(*args, **kwargs)
+        # try:
+        #     kwargs['css_class'] += ' pane'
+        # except KeyError:
+        #     kwargs['css_class'] = 'pane'
+        super().__init__(Div(*args, css_class='pane d-flex flex-column'), **kwargs)
 
 
 class Column(Div):
@@ -98,6 +98,13 @@ class Column(Div):
     css_class = 'col'
 
 
+FormButtons = FormActions(
+    Reset('reset', 'Cancel'),
+    Submit('submit', 'Submit'),
+    css_class='mt-auto d-flex flex-row justify-content-end',
+    # field_class='d-flex flex-row justify-content-end',
+)
+
 class FormSection(Div):
     def __init__(self, *args, **kwargs):
         try:
@@ -106,5 +113,35 @@ class FormSection(Div):
             kwargs['css_class'] = 'form-section'
         super().__init__(*args, **kwargs)
 
+
 class HField(Field):
     template = 'field_horizontal.html'
+
+
+class BaseHeader(Layout):
+    def __init__(self, *args, **kwargs):
+        super().__init__(HTML(f'<h{self.n}>'), *args, HTML(f'</h{self.n}>'), **kwargs)
+
+
+class H1(BaseHeader):
+    n=1
+
+
+class H2(BaseHeader):
+    n=2
+
+
+class H3(BaseHeader):
+    n=3
+
+
+class H4(BaseHeader):
+    n=4
+
+
+class H5(BaseHeader):
+    n=5
+
+
+class H6(BaseHeader):
+    n=6
