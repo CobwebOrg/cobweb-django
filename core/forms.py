@@ -13,8 +13,8 @@ class LoginForm(AuthenticationForm):
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
             Div(
-                Field('username'),
-                Field('password'),
+                Field('username', edit=True),
+                Field('password', edit=True),
                 FormActions(
                     Reset('reset', 'Reset'),
                     Submit('submit', 'Submit'),
