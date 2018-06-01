@@ -1,0 +1,7 @@
+{
+    "python.pythonPath": "/Users/andy/.local/share/virtualenvs/cobweb-django-gzHky_-W/bin/python",
+    "files.exclude": {
+        "node_modules/": true,
+        ".mypy_cache": true
+    }
+}

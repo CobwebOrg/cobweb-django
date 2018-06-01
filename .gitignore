@@ -15,15 +15,6 @@ node_modules/
 .tags
 .tags_swap
 .ropeproject/
-.vscode
-
-### Sublime Text ###
-cobweb-django.sublime-project
-cobweb-django.sublime-workspace
-
-import_errors.txt
-data/solr/cobweb/data/**
-data/postgres/
 
 .mypy_cache
 
