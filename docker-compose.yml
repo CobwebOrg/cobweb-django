@@ -10,7 +10,6 @@ services:
       - "8983:8983"
     volumes:
       - ./solr_conf:/opt/solr/server/solr/configsets/cobweb/conf
-      - solr_data:/opt/solr/server/solr/mycores
     entrypoint:
       - docker-entrypoint.sh
       - solr-precreate
@@ -62,4 +61,3 @@ volumes:
   web_usr_local:
   web_dot_local:
   node_modules:
-  solr_data:
