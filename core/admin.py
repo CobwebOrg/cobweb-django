@@ -1,8 +1,7 @@
 from django.contrib import admin, auth
 from reversion.admin import VersionAdmin
 
-from archives.admin_inlines import CollectionInline
-from datasources.admin import APIEndpointInline
+from webarchives.admin import APIEndpointInline
 
 from core import models
 from core.admin_inlines import AffiliationInline, NoteInline, ResourceDescriptionInline
@@ -26,7 +25,7 @@ class UserAdmin(VersionAdmin, auth.admin.UserAdmin):
 
 @admin.register(models.Organization)
 class OrganizationAdmin(VersionAdmin):
-    inlines = [CollectionInline, APIEndpointInline, NoteInline]
+    inlines = [APIEndpointInline, NoteInline]
 
 
 @admin.register(models.Note)

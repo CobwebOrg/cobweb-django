@@ -9,8 +9,8 @@ class APIEndpointInline(admin.TabularInline):
     extra = 0
     show_change_link = True
 
-    fields = [ 'location', 'importer_class_name' ]
-    readonly_fields = fields
+    fields = ('__all__',)
+    # readonly_fields = fields
 
 @admin.register(models.APIEndpoint)
 class APIEndpointAdmin(admin.ModelAdmin):

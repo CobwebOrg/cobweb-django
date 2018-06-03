@@ -7,7 +7,6 @@ from rest_framework.routers import DefaultRouter
 
 from api.views import (UserViewSet, OrganizationViewSet, ProjectViewSet,
                        NominationViewSet, ClaimViewSet)
-# import archives.views
 import core.forms
 import core.views
 import projects.views
@@ -99,9 +98,6 @@ urlpatterns = [
     path('claim/<int:pk>/edit',
          projects.views.ClaimUpdateView.as_view(),
          name='claim_update'),
-
-    # Collection
-    url(r'^collections/', include('archives.urls')),
 
     # Tags
     # path('tags/<int:pk>/',

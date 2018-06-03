@@ -13,7 +13,7 @@ from polymorphic.models import PolymorphicModel
 import reversion
 from sickle import Sickle
 
-from archives.models import Collection, Holding
+from cobweb.models import CobwebModelMixin
 from core.models import Organization
 from core.models import normalize_url, Resource
 
