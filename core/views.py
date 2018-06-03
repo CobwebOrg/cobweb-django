@@ -8,7 +8,8 @@ from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import redirect, reverse
 from django.views import generic
-from haystack.generic_views import SearchView as HaystackSearchView
+from haystack.generic_views import SearchView as HaystackGenericSearchView
+from haystack.views import SearchView as HaystackWeirdSearchView
 from haystack.query import SearchQuerySet
 from reversion.views import RevisionMixin
 
@@ -248,5 +249,11 @@ class TagAutocomplete(autocomplete.Select2QuerySetView):
         return request.user.is_authenticated
 
 
-class SearchView(django_tables2.views.SingleTableMixin, HaystackSearchView):
+class SearchView(HaystackWeirdSearchView):
     pass
+
+    # def get_queryset(self, *args, **kwargs):
+    #     q = self.request.GET.get('q')
+    #     qs = SearchQuerySet().filter(content__fuzzy=q)
+    #     qs.order_by('impact_factor')
+    #     return qs

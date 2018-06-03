@@ -36,12 +36,12 @@
     </div>
 
     {% block load_react_script %}
-        <script>
+        {% comment %} <script>
             window.ReactDOM.render(
             window.React.createElement(window.Dashboard, {}, null),
             document.getElementById('cobweb-content')
             );
-        </script>
+        </script> {% endcomment %}
     {% endblock %}
   </div>
 {% endblock %}

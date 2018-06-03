@@ -1,3 +1,4 @@
+import haystack.forms
 from crispy_forms.helper import FormHelper
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
@@ -94,3 +95,20 @@ class UserProfileForm(UserCreationForm):
                 css_class='float-right'
             ),
         )
+
+
+class SearchForm(haystack.forms.SearchForm):
+    def search(self):
+        if not self.is_valid():
+            return self.no_query_found()
+
+        if not self.cleaned_data.get('q'):
+            sqs = self.searchqueryset
+            # return self.no_query_found()
+
+        sqs = self.searchqueryset.auto_query(self.cleaned_data['q'])
+
+        if self.load_all:
+            sqs = sqs.load_all()
+
+        return sqs

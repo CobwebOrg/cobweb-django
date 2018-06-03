@@ -1,3 +1,4 @@
+import haystack
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin, auth
@@ -25,7 +26,9 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
-    url(r'^search/', core.views.SearchView.as_view(), name='search'),
+    url(r'^search/',
+        haystack.views.SearchView(form_class=core.forms.SearchForm),
+        name='search'),
 
     url(r'^$', core.views.get_landing_page_view, name='landing_page'),
     

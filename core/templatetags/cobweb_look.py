@@ -1,12 +1,14 @@
 from collections import defaultdict
+from inspect import isclass
+
 from django import template
 from django.contrib import auth
 from django.db.models import Model
 from django.urls import reverse
 from django.utils.html import format_html  # , conditional_escape
 from django.utils.safestring import mark_safe
+from haystack.models import SearchResult
 
-from archives.models import Collection, Holding
 from core.models import User
 from projects.models import Project, Nomination, Claim
 from core.models import Resource
@@ -58,6 +60,7 @@ def edit_link(item, user):
         return dict()
 
 
+@register.filter
 @register.simple_tag
 def icon(item):
     if not isinstance(item, str):
@@ -66,13 +69,12 @@ def icon(item):
     format_args = {
         'User': ('User', 'fa-user'),
         'Tag': ('Tag', 'fa-tag'),
-        'Organization': ('Organization', 'fa-institution'),
-        'Project': ('Project', 'fa-tasks'),
-        'Collection': ('Collection', 'fa-archive'),
+        'Organization': ('Organization', 'fa-university'),
+        'Project': ('Project', 'fa-folder-open'),
         'Nomination': ('Nomination', 'fa-paperclip'),
         'Claim': ('Claim', 'fa-check'),
         'Holding': ('Holding', 'fa-inbox'),
-        'Resource': ('Resource', 'fa-link'),
+        'Resource': ('Resource', 'fa-desktop'),
 
         'profile': ('profile', 'fa-id-card'),
 
@@ -110,13 +112,6 @@ def project_count_badge(item):
     return {'claimed': nresources-n_unclaimed, 'unclaimed': n_unclaimed}
 
 
-@register.inclusion_tag('collection_count_badge.html')
-def collection_count_badge(item):
-    assert type(item) is Collection
-    nresources = item.holdings.count()
-    return {'holdings': nresources}
-
-
 @register.inclusion_tag('nomination_count_badge.html')
 def nomination_count_badge(item):
     assert type(item) is Nomination
@@ -127,6 +122,20 @@ def nomination_count_badge(item):
 @register.inclusion_tag('searchbar.html')
 def searchbar(view_name):
     return {'view_name': view_name}
+
+
+@register.filter
+def model(item):
+    model = None
+    if isclass(item) and issubclass(item, Model):
+        model = item
+    elif isinstance(item, Model):
+        model = type(item)
+    elif isinstance(item, SearchResult):
+        model = item.model
+    else:
+        raise ValueError(f"Filter cobweb_look.model can't handle type: {type(item)}")
+    return model
 
 
 @register.filter

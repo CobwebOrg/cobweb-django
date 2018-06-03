@@ -1,0 +1,10 @@
+{% load cobweb_look %}
+
+<li class="media">
+    <div class="big-model-icon">{{ result | model | icon }}</div>
+    <div class="media-body w-100 m-2 p-1 align-self-center">
+        <strong>{{ result | model | model_name | upper }}</strong>
+        <br>
+        <a href="{{ result.object.get_absolute_url }}">{{ result.name }}</a>
+    </div>
+</li>

@@ -38,16 +38,7 @@
 			</div>
 		</div>
 
-		<div class="dropdown show">
-			<a class="dropdown-toggle nav-link text-uppercase text-ltprimary" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				Activities
-			</a>
-		
-			<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-				<a class="dropdown-item" href="{% url 'project_list' %}">Projects</a>
-				<a class="dropdown-item" href="{% url 'archives:collection_list' %}">Collections</a>
-			</div>
-		</div>
+		<a class="nav-link text-uppercase-text-ltprimary" href="{% url 'project_list' %}">Projects</a>
 		
 		{% comment %} <a class="nav-link text-uppercase text-ltprimary"
 		   href="{% url 'project_list' %}">

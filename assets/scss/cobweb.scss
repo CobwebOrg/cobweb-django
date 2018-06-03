@@ -226,6 +226,11 @@ textarea { resize: none; }
 
 .badge-mid { @extend .badge-left, .badge-right ; }
 
+.big-model-icon{
+  @extend .m-2, .p-3, .border, .rounded ;
+  font-size: 2em;
+}
+
 .pane { @extend .border, .h-100, .p-3 ; }
 
 .table {
