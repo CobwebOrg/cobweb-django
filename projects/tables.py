@@ -54,11 +54,6 @@ class ProjectTable(CobwebBaseTable):
                                value)
 
 
-def get_name(nom):
-    import pdb; pdb.set_trace()
-    return nom.name or nom.title or str(nom.resource)
-
-
 class NominationColumn(django_tables2.LinkColumn):
 
     def text(self, record):
