@@ -111,6 +111,19 @@ class NominationUpdateView(RevisionMixin, UpdateView):
         kwargs['editable'] = project.is_nominator(self.request.user)
         return kwargs
 
+    def get_object(self, queryset=None):
+        assert queryset is None, "NominationClaimsView doesn't take a queryset."
+        try:
+            # Get the single item from the filtered queryset
+            obj =  models.Nomination.objects.filter(
+                project__pk=self.kwargs['project_pk'],
+                resource__url=self.kwargs['url'],
+            ).get()
+        except queryset.model.DoesNotExist:
+            raise Http404(_("No %(verbose_name)s found matching the query") %
+                        {'verbose_name': queryset.model._meta.verbose_name})
+        return obj
+
 
 class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
     model = models.Nomination

@@ -32,7 +32,7 @@ urlpatterns = [
     path('dashboard', core.views.DashboardView.as_view(), name='dashboard'),
 
     # Auth: /login, /logout, /password_change, /password_reset, /reset
-    path('accounts/login/', core.views.LoginView.as_view(), name='login'),
+    path('login/', core.views.LoginView.as_view(), name='login'),
     path('', include('django.contrib.auth.urls')),
 
     # User
@@ -73,11 +73,14 @@ urlpatterns = [
 
     # Nomination
     path('proj/<int:project_pk>/nominate',
-        projects.views.NominationCreateView.as_view(),
-        name='project_nominate'),
-    path('edit/<int:project_pk>/<path:url>',
         projects.views.NominationUpdateView.as_view(),
         name='nomination_update'),
+    path('proj/<int:project_pk>/edit/<path:url>',
+        projects.views.NominationUpdateView.as_view(),
+        name='nomination_update'),
+    path('proj/<int:project_pk>/<path:url>',
+        projects.views.NominationClaimsView.as_view(),
+        name='nomination_claims'),
     path('proj/<int:project_pk>/<path:url>',
         projects.views.NominationClaimsView.as_view(),
         name='nomination_claims'),
