@@ -1,20 +1,15 @@
 {{ object.url }}
-
-{% if object.description %}{{object.description}}{% endif %}
-
-{{object.tags.all|join:', '}}
-
-{% for values in object.metadata.values %}{{values|join:', '}}
+{{ object.title }}
+{{ object.status }}
+{{ object.language }}
+{% for note in object.notes.all %}
+    {{note.author}}  {{note.when_created}}
+    {{note.text}}
 {% endfor %}
-
-{% for holding in object.holdings.all %}
-{% include 'search/indexes/archives/holding_text.txt' with object=holding %}
-{% endfor %}
-
-{% for claim in object.claims.all %}
-{% include 'search/indexes/archives/claim_text.txt' with object=claim %}
-{% endfor %}
-
 {% for nomination in object.nominations.all %}
-{% include 'search/indexes/projects/nomination_text.txt' with object=nomination %}
+    {{nomination.title}}
+    {{nomination.description}}
+    {{nomination.tags.all|join:'\n'}}
+    {{nomination.subject_headings.all|join:'\n'}}
+    {{nomination.language}}
 {% endfor %}

@@ -12,6 +12,8 @@ from phonenumber_field.modelfields import PhoneNumberField
 from surt import handyurl
 from surt.DefaultIAURLCanonicalizer import canonicalize
 
+from cobweb.models import CobwebModelMixin
+
 
 validate_url = URLValidator()
 
@@ -34,7 +36,8 @@ class NormalizedURLField(models.URLField):
 
 
 @reversion.register()
-class User(AbstractUser):
+class User(CobwebModelMixin, AbstractUser):
+    name_fields = ('username',)
 
     first_name = models.CharField(max_length=200, null=True, blank=False)
     last_name = models.CharField(max_length=200, null=True, blank=False)
@@ -61,8 +64,10 @@ class User(AbstractUser):
         # (this is just a placeholder)
         return self.projects_administered.count()
 
-    def __repr__(self) -> str:
-        return f'User(username="{self.username}")'
+    @property
+    def name(self):
+        full_name = self.get_full_name()
+        return self.username + (f'\n{full_name}' if full_name else '')
 
     def __str__(self) -> str:
         return self.get_full_name() or self.username or 'User {}'.format(self.pk)
@@ -83,9 +88,10 @@ class User(AbstractUser):
 
 
 @reversion.register()
-class Organization(models.Model):
+class Organization(CobwebModelMixin, models.Model):
 
-    full_name = models.CharField(max_length=2000, verbose_name="full legal name")
+    full_name = models.CharField(max_length=2000, unique=True,
+                                 verbose_name="full legal name")
     short_name = models.CharField(max_length=200, null=True, blank=True,
                                   verbose_name="short name, nickname, or acronym")
 
@@ -143,7 +149,7 @@ class Affiliation(models.Model):
     professional_title = models.CharField(max_length=200, null=True, blank=True)
 
 @reversion.register()
-class Note(models.Model):
+class Note(CobwebModelMixin, models.Model):
     """A note about an object tracked in Cobweb.
 
     Fields:
@@ -172,30 +178,36 @@ class Note(models.Model):
 
     text = models.TextField()
 
+    @property
+    def name(self) -> str:
+        if hasattr(self, '_name'):
+            return self._name
+        else:
+            return '\n'.join((
+                self.author,
+                self.when_created,
+                're: ' + self.ref,
+            ))
+
 
 @reversion.register()
-class Tag(models.Model):
+class Tag(CobwebModelMixin, models.Model):
     """A single tag."""
-
-    name = models.CharField(max_length=200, unique=True, db_index=True)
-
-    def __str__(self) -> str:
-        """Return tag as string."""
-        return self.name
+    name_fields = ('title',)
+    title = models.CharField(max_length=200, unique=True, db_index=True)
 
 
-class SubjectHeading(models.Model):
+class SubjectHeading(CobwebModelMixin, models.Model):
     """A FAST subject heading (cf. https://www.oclc.org/research/themes/data-science/fast.html)."""
-
-    name = models.CharField(max_length=200, unique=True)
+    name_fields = ('title',)
+    title = models.CharField(max_length=200, unique=True)
 
     # TODO: Validate based on official list? Pre-load list in migration?
 
-    def __str__(self) -> str:
-        return self.name
 
+class Resource(CobwebModelMixin, models.Model):
+    name_fields = ('url',)
 
-class Resource(models.Model):
     url = NormalizedURLField(max_length=1000, null=False, blank=False,
                              unique=True)
 
@@ -213,17 +225,10 @@ class Resource(models.Model):
 
     notes = GenericRelation(Note)
 
-    def __str__(self) -> str:
-        return self.get_url()
-
     def get_resource_records(self) -> typing.Iterable:
         return chain(
             self.nominations.all(),
-            self.tags.all(),
         )
-
-    def get_url(self) -> str:
-        return self.url or 'Resource {}'.format(self.pk)
 
     def get_absolute_url(self) -> str:
         return reverse('resource_detail', kwargs={'url': self.url})
@@ -231,12 +236,11 @@ class Resource(models.Model):
     def resource_record_count(self) -> int:
         return (
             self.nominations.count()
-            + self.tags.count()
         )
 
 
 @reversion.register
-class ResourceDescription(models.Model):
+class ResourceDescription(CobwebModelMixin, models.Model):
     """Desecriptive metadata about a Resource, asserted by a User."""
 
     resource = models.ForeignKey(Resource, on_delete=models.PROTECT)
@@ -260,7 +264,13 @@ class ResourceDescription(models.Model):
 
 
 @reversion.register
-class CrawlScope(models.Model):
+class CrawlScope(CobwebModelMixin, models.Model):
+    class Meta:
+        unique_together = ('title', 'organization')
+
+    title = models.CharField(max_length=200)
+    organization = models.ForeignKey(Organization, on_delete=models.PROTECT)
+
     max_time = models.PositiveIntegerField(null=True, blank=True)
     max_size = models.PositiveIntegerField(null=True, blank=True)
     max_resources = models.PositiveIntegerField(null=True, blank=True)

@@ -6,13 +6,16 @@ from django.db.models.query import QuerySet
 from django.urls import reverse
 
 from cobweb import settings
+from cobweb.models import CobwebModelMixin
 
 
 @reversion.register()
-class Project(models.Model):
+class Project(CobwebModelMixin, models.Model):
     """Django ORM model for a Cobweb project."""
+    
+    name_fields = ('title',)
 
-    title = models.CharField(max_length=500)
+    title = models.CharField(max_length=500, unique=True)
     description = models.TextField(null=True, blank=False)
 
     administrators = models.ManyToManyField(
@@ -61,20 +64,13 @@ class Project(models.Model):
     def impact_factor(self) -> int:
         # TODO: Fix this stub – not sure I understand the FRs...
         return self.nominations.exclude(claims=None).count()
+    
 
     tags = models.ManyToManyField('core.Tag', blank=True)
     subject_headings = models.ManyToManyField('core.SubjectHeading',
                                               blank=True)
 
     notes = GenericRelation('core.Note')
-
-    def __str__(self) -> str:
-        """
-        Return a string representation of project.
-
-        Should be self.title, but returns 'Project <ID>' if title is blank.
-        """
-        return self.title or 'Project {}'.format(self.pk)
 
     def get_absolute_url(self) -> str:
         return reverse('project_summary', kwargs={'pk': self.pk})
@@ -126,7 +122,10 @@ class Project(models.Model):
 
 
 @reversion.register()
-class Nomination(models.Model):
+class Nomination(CobwebModelMixin, models.Model):
+    class Meta:
+        unique_together = ('resource', 'project')
+        
     resource = models.ForeignKey(
         'core.Resource',
         on_delete=models.PROTECT,
@@ -174,8 +173,6 @@ class Nomination(models.Model):
     def name(self) -> str:
         return self.title or self.resource.title or self.resource.url
 
-    class Meta:
-        unique_together = ('resource', 'project')
 
     def get_absolute_url(self) -> str:
         return reverse('nomination_claims', kwargs={'project_pk': self.project.pk,
@@ -212,15 +209,12 @@ class Nomination(models.Model):
     def is_admin(self, user: AbstractBaseUser) -> bool:
         return self.project.is_nominator(user)
 
-    def __str__(self):
-        return f'{self.resource} – Project {self.project}'
-
-    def __repr__(self):
-        return f'Nomination {self.resource}, project={self.project}'
-
 
 @reversion.register()
-class Claim(models.Model):
+class Claim(CobwebModelMixin, models.Model):
+    class Meta:
+        unique_together = ('nomination', 'organization')
+
     nomination = models.ForeignKey(Nomination, related_name='claims',
                                    on_delete=models.CASCADE)
 
@@ -232,7 +226,7 @@ class Claim(models.Model):
     deleted = models.BooleanField(default=False)
     has_holding = models.BooleanField(default=False)
 
-    imported_record = models.ForeignKey('archives.Holding', null=True, blank=True,
+    imported_record = models.ForeignKey('webarchives.ImportedRecord', null=True, blank=True,
                                         on_delete=models.SET_NULL, related_name='claims')
 
     crawl_scope = models.ForeignKey('core.CrawlScope', null=True, blank=True,
@@ -247,9 +241,6 @@ class Claim(models.Model):
         else:
             return 1
 
-    class Meta:
-        unique_together = ('nomination', 'organization')
-
     def __str__(self) -> str:
         return f'{self.nomination} – Organization {self.organization}'
 
@@ -259,8 +250,15 @@ class Claim(models.Model):
     def get_edit_url(self) -> str:
         return reverse('claim_update', kwargs={'pk': self.pk})
 
+    def make_name(self, exclude=set(), sep='\n'):
+        return sep.join((
+            nomination.resource.url,
+            organization,
+            nomination.project,
+        ))
+
     def get_resource_set(self) -> QuerySet:
         return self.nomination.project
 
     def is_admin(self, user: AbstractBaseUser) -> bool:
-        return self.nomination.is_admin(user) or self.organization.is_admin(user)
+        return self.organization.is_admin(user)

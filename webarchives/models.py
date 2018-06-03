@@ -18,10 +18,12 @@ from core.models import Organization
 from core.models import normalize_url, Resource
 
 
-class ImportedRecord(models.Model):
+class ImportedRecord(CobwebModelMixin, models.Model):
 
     class Meta:
         unique_together = ('source_feed', 'identifier')
+
+    name_fields = ('source_feed', 'identifier')
 
     source_feed = models.ForeignKey('APIEndpoint', on_delete=models.CASCADE)
     identifier = models.CharField(max_length=200)
@@ -53,11 +55,14 @@ class ImportedRecord(models.Model):
 
                 
 @reversion.register()
-class APIEndpoint(PolymorphicModel):
+class APIEndpoint(CobwebModelMixin, PolymorphicModel):
 
     class Meta:
         verbose_name = "API Endpoint"
+    name_fields = ('url', 'organization')
 
+    organization = models.ForeignKey(Organization, null=True, blank=True,
+                                     on_delete=models.SET_NULL)
     url = models.URLField(max_length=200, unique=True)
     last_updated = models.DateTimeField(null=True, editable=False)
 
@@ -66,12 +71,6 @@ class APIEndpoint(PolymorphicModel):
 
     def harvest(self) -> None:
         raise NotImplementedError('APIEndpoint.harvest() needs to be implemented by a subclass.')
-
-    def __repr__(self) -> str:
-        return f'{self.__class__.__name__}(url="{self.url}")'
-
-    def __str__(self) -> str:
-        return self.url
 
 
 class OAIPMHEndpoint(APIEndpoint):
@@ -202,24 +201,25 @@ class AITPartnerEndpoint(BaseAITEndpoint):
             e.args += "len(url) = {}".format(len(normalize_url(root_url))),
             raise e
 
-        holding = Holding.objects.get_or_create(
-            resource=resource,
-            collection=collection,
-        )[0]
+        # TODO: remove Holding
+        # holding = Holding.objects.get_or_create(
+        #     resource=resource,
+        #     collection=collection,
+        # )[0]
 
-        try:
-            holding.title = ' / '.join(record.metadata.pop('title'))
-        except KeyError:
-            pass  # no 'title' in record.metadata; that's fine!
+        # try:
+        #     holding.title = ' / '.join(record.metadata.pop('title'))
+        # except KeyError:
+        #     pass  # no 'title' in record.metadata; that's fine!
 
-        try:
-            holding.description = '\n\n'.join(record.metadata.pop('description'))
-        except KeyError:
-            pass  # no 'description' in record.metadata; that's fine!
+        # try:
+        #     holding.description = '\n\n'.join(record.metadata.pop('description'))
+        # except KeyError:
+        #     pass  # no 'description' in record.metadata; that's fine!
 
 
 
-        self.attach_metadata(holding, record.metadata, 'oai_dc')
+        # self.attach_metadata(holding, record.metadata, 'oai_dc')
 
 
     def parse_wayback_url(self, wayback_url):
