@@ -1,4 +1,4 @@
-"""SearchIndex classes for Django-haystack."""
+# """SearchIndex classes for Django-haystack."""
 
 from haystack import indexes
 
@@ -8,6 +8,7 @@ from projects.models import Project, Nomination, Claim
 class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     """Django-haystack index of Project model."""
 
+    name = indexes.CharField(indexed=True, stored=True)
     text = indexes.CharField(document=True, use_template=True, stored=False)
 
     title = indexes.CharField(model_attr='title', indexed=True, stored=True)
@@ -34,9 +35,8 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
 
 
 class NominationIndex(indexes.SearchIndex, indexes.Indexable):
+    name = indexes.CharField(indexed=True, stored=True)
     text = indexes.CharField(document=True, use_template=False)
-
-    name = indexes.CharField(model_attr='name', indexed=True, stored=True)
 
     project_pk = indexes.IntegerField(model_attr='project__pk', indexed=True, stored=True)
     url = indexes.CharField(model_attr='resource__url')
@@ -61,6 +61,7 @@ class NominationIndex(indexes.SearchIndex, indexes.Indexable):
 
 
 class ClaimIndex(indexes.ModelSearchIndex, indexes.Indexable):
+    name = indexes.CharField(indexed=True, stored=True)
     text = indexes.CharField(document=True, use_template=False)
 
     class Meta:

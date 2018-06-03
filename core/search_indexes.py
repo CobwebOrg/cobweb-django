@@ -2,7 +2,6 @@
 
 from haystack import indexes
 
-from archives.models import Collection
 from core.models import User, Organization, Note, Tag, Resource
 from projects.models import Project
 
@@ -10,6 +9,7 @@ from projects.models import Project
 class UserIndex(indexes.ModelSearchIndex, indexes.Indexable):
     """Django-haystack index of User model."""
 
+    name = indexes.CharField(indexed=True, stored=True)
     text = indexes.CharField(document=True, use_template=True)
 
     class Meta:
@@ -19,6 +19,7 @@ class UserIndex(indexes.ModelSearchIndex, indexes.Indexable):
 class OrganizationIndex(indexes.ModelSearchIndex, indexes.Indexable):
     """Django-haystack index of Organization model."""
 
+    name = indexes.CharField(indexed=True, stored=True)
     text = indexes.CharField(document=True, use_template=True)
 
     class Meta:
@@ -26,24 +27,17 @@ class OrganizationIndex(indexes.ModelSearchIndex, indexes.Indexable):
 
 
 class NoteIndex(indexes.ModelSearchIndex, indexes.Indexable):
-    text = indexes.CharField(document=True, use_template=False)
-
     class Meta:
         model = Note
-
-
-class TagIndex(indexes.ModelSearchIndex, indexes.Indexable):
-    class Meta:
-        model = Tag
-
+        
+    name = indexes.CharField(indexed=True, stored=True)
     text = indexes.CharField(document=True, use_template=False)
-    tag_auto = indexes.NgramField()
-
 
 
 class ResourceIndex(indexes.ModelSearchIndex, indexes.Indexable):
     """Django-haystack index of Resource model."""
 
+    name = indexes.CharField(indexed=True, stored=True)
     text = indexes.CharField(document=True, use_template=True)
 
     class Meta:
