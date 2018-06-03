@@ -4,11 +4,6 @@
 # This is to allow "from everything import *" for easy access in the
 # interactive shell, but don't use it in production code!
 
-from archives.models import *
-from archives.views import *
-# from archives.forms import *
-from archives.tests import *
-
 from core.models import *
 from core.views import *
 from core.forms import *
@@ -20,6 +15,5 @@ from projects.views import *
 from projects.forms import *
 from projects.tests import *
 
-from datasources.models import *
-from datasources.views import *
-from datasources.tests import *
+from webarchives.models import *
+from webarchives.views import *
