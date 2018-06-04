@@ -83,7 +83,8 @@ class UserProfileForm(UserCreationForm):
                      Field('url'),
                      ),
 
-            Field('affiliations'),
+            Field('organization'),
+            Field('professional_title'),
 
             Fieldset('Preferences',
                      Field('get_notification_emails'),

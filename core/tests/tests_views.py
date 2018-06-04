@@ -3,8 +3,6 @@ from django.urls import reverse
 from faker import Faker
 import pytest
 
-from archives.tests.factories import HoldingFactory
-from projects.tests.factories import NominationFactory, ClaimFactory
 from core.tests.factories import ResourceFactory
 
 from core import models, views
@@ -28,8 +26,6 @@ class ResourceDetailViewTests(TestCase):
         self.saved_nomination.save()
         self.saved_claim = ClaimFactory(nomination=self.saved_nomination)
         self.saved_claim.save()
-        self.saved_holding = HoldingFactory(resource=self.saved_resource)
-        self.saved_holding.save()
         self.url = self.saved_resource.url
 
     @pytest.mark.xfail(strict=True)

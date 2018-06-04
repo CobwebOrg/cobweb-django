@@ -85,29 +85,43 @@
     
     <field name="name" type="text_en" indexed="true" stored="true" multiValued="false" />
     
-    <field name="password" type="text_en" indexed="true" stored="true" multiValued="false" />
+    <field name="full_name" type="text_en" indexed="true" stored="true" multiValued="false" />
     
-    <field name="last_login" type="date" indexed="true" stored="true" multiValued="false" />
+    <field name="short_name" type="text_en" indexed="true" stored="true" multiValued="false" />
     
-    <field name="is_superuser" type="boolean" indexed="true" stored="true" multiValued="false" />
+    <field name="address" type="text_en" indexed="true" stored="true" multiValued="false" />
     
-    <field name="username" type="text_en" indexed="true" stored="true" multiValued="false" />
-    
-    <field name="is_staff" type="boolean" indexed="true" stored="true" multiValued="false" />
-    
-    <field name="is_active" type="boolean" indexed="true" stored="true" multiValued="false" />
-    
-    <field name="date_joined" type="date" indexed="true" stored="true" multiValued="false" />
-    
-    <field name="first_name" type="text_en" indexed="true" stored="true" multiValued="false" />
-    
-    <field name="last_name" type="text_en" indexed="true" stored="true" multiValued="false" />
-    
-    <field name="email" type="text_en" indexed="true" stored="true" multiValued="false" />
+    <field name="telephone_number" type="text_en" indexed="true" stored="true" multiValued="false" />
     
     <field name="url" type="text_en" indexed="true" stored="true" multiValued="false" />
     
-    <field name="get_notification_emails" type="boolean" indexed="true" stored="true" multiValued="false" />
+    <field name="email_address" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="description" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="identifier" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="active" type="boolean" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="deleted" type="boolean" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="has_holding" type="boolean" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="project_pk" type="long" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="status" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="title" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="nomination_policy" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="impact_factor" type="long" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="unclaimed_nominations" type="long" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="claimed_nominations" type="long" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="held_nominations" type="long" indexed="true" stored="true" multiValued="false" />
     
     <uniqueKey>id</uniqueKey>
 

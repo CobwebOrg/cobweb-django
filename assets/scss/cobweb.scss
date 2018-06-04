@@ -187,6 +187,15 @@ footer {
   }
 }
 
+.md_item_label {
+  margin-right: 1em;
+  font-weight: 900;
+}
+
+.md_item_label::after {
+  content: ':';
+}
+
 // MISC
 
 .asteriskField, .invalid-feedback, .is_invalid { color: $danger; }

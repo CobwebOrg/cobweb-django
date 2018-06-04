@@ -6,7 +6,7 @@ from core.templatetags import cobweb_look
 from core.tests.factories import UserFactory
 
 @pytest.mark.django_db
-def test_model:
+def test_model():
     assert cobweb_look.model(User) is User
     assert cobweb_look.model(UserFactory()) is User
     assert cobweb_look.model(

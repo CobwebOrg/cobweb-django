@@ -8,7 +8,7 @@ class CobwebModelMixin:
 
     def make_name(self, exclude=set(), sep='\n'):
         return sep.join([
-            getattr(self, field_name) for field_name in self.name_fields
+            str(getattr(self, field_name)) for field_name in self.name_fields
             if hasattr(self, field_name) and field_name not in exclude
         ])
     

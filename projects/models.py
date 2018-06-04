@@ -251,11 +251,11 @@ class Claim(CobwebModelMixin, models.Model):
         return reverse('claim_update', kwargs={'pk': self.pk})
 
     def make_name(self, exclude=set(), sep='\n'):
-        return sep.join((
-            nomination.resource.url,
-            organization,
-            nomination.project,
-        ))
+        return sep.join(str(f) for f in (
+            self.nomination.resource.url,
+            self.organization,
+            self.nomination.project,
+        ) if f not in exclude)
 
     def get_resource_set(self) -> QuerySet:
         return self.nomination.project

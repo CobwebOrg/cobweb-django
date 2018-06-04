@@ -4,7 +4,6 @@ import pytest
 from django.contrib.auth.models import AnonymousUser
 from django.db.utils import IntegrityError
 
-from archives.tests.factories import CollectionFactory
 from core.tests.factories import UserFactory, OrganizationFactory
 from projects.models import Project, Nomination, Claim
 from projects.tests.factories import ProjectFactory, NominationFactory, ClaimFactory

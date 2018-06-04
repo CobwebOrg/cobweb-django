@@ -43,9 +43,10 @@ class User(CobwebModelMixin, AbstractUser):
     last_name = models.CharField(max_length=200, null=True, blank=False)
     email = models.EmailField(null=True, blank=False)
 
-    affiliations = models.ManyToManyField('Organization', blank=True, through='Affiliation',
-                                          related_name="affiliated_users")
-    # professional_title TODO
+    organization = models.ForeignKey('Organization', null=True, blank=True,
+                                     related_name="affiliated_users",
+                                     on_delete=models.SET_NULL)
+    professional_title = models.CharField(max_length=200, null=True, blank=True)
 
     url = NormalizedURLField(null=True, blank=True)
 
@@ -72,11 +73,11 @@ class User(CobwebModelMixin, AbstractUser):
     def __str__(self) -> str:
         return self.get_full_name() or self.username or 'User {}'.format(self.pk)
 
-    def can_claim(self, organization=None):
+    def can_claim(self, organization=None) -> bool:
         if organization:
-            return organization in user.affiliations
+            return user.organization == organization
         else:
-            return self.affiliations.count() > 0
+            return self.organization is not None
 
     def get_absolute_url(self) -> str:
         return reverse('user_detail', kwargs={'pk': self.pk})
@@ -105,7 +106,8 @@ class Organization(CobwebModelMixin, models.Model):
     url = NormalizedURLField(null=True, blank=True)
     email_address = models.EmailField(null=True, blank=True)
 
-    contact = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
+    contact = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                                blank=True, related_name="contact_for")
 
     parent_organization = models.ForeignKey('self', on_delete=models.SET_NULL,
                                             null=True, blank=True)
@@ -128,7 +130,7 @@ class Organization(CobwebModelMixin, models.Model):
     def impact_factor(self):
         # TODO: actuall implement functional requirement
         # (this is just a placeholder)
-        return self.claims.count() + self.holdings.count()
+        return self.claims.count() + self.claims.filter(has_holding=True).count()
 
     def __repr__(self) -> str:
         return f"<Organization '{self.name}'>"
@@ -137,16 +139,13 @@ class Organization(CobwebModelMixin, models.Model):
         return (
             self.name or self.identifier or 'Organization {}'.format(self.pk)
         )
+    
+    def get_absolute_url(self):
+        return reverse('organization_detail', kwargs={'pk': self.pk})
 
     def is_admin(self, user):
         return user in self.administrators.all()
 
-
-@reversion.register()
-class Affiliation(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
-    professional_title = models.CharField(max_length=200, null=True, blank=True)
 
 @reversion.register()
 class Note(CobwebModelMixin, models.Model):

@@ -1,0 +1,54 @@
+<div class="object_summary">
+    {% if obj.title and not obj.django_ct == 'project' %}
+        <div class="md_item">
+            <span class="md_item_label">Title</span>
+            {{obj.title}}
+        </div>
+    {% endif %}
+    {% if obj.short_name %}
+        <div class="md_item">
+            <span class="md_item_label">Short name</span>
+            {{obj.short_name}}
+        </div>
+    {% endif %}
+    {% if obj.description %}
+        <div class="md_item">
+            <span class="md_item_label">Description</span>
+            {{obj.description}}
+        </div>
+    {% endif %}
+    {% if obj.parent_organization %}
+        <div class="md_item">
+            <span class="md_item_label">Parent organization</span>
+            {{obj.parent_organization}}
+        </div>
+    {% endif %}
+    {% if obj.organization %}
+        <div class="md_item">
+            <span class="md_item_label">Organization</span>
+            {{obj.organization}}
+        </div>
+    {% endif %}
+    {% if obj.professional_title %}
+        <div class="md_item">
+            <span class="md_item_label">Professional title</span>
+            {{obj.professional_title}}
+        </div>
+    {% endif %}
+    {% if obj.tags %}
+        <div class="md_item">
+            <span class="md_item_label">Tags</span>
+            {% for tag in obj.tags %}
+                <span class="tag">{{tag}}</span>
+            {% endfor %}
+    </div>
+    {% endif %}
+    {% if obj.subject_headings %}
+        <div class="md_item">
+            <span class="md_item_label">Subject headings</span>
+            {% for sh in obj.subject_headings %}
+                <span class="sh">{{sh}}</span>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>

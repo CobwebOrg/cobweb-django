@@ -5,10 +5,10 @@
     <div class="col-3 p-3">
         <div class="border p-4">
             <h1 class="mb-2 text-user-dark">{{ request.user }}</h1>
-            {% for org in request.user.affiliations.all %}
-                <p class="mb-2"><a href="{{org.get_absolute_url}}"
-                      class="text-user-dark">{{org}}</a></p>
-            {% endfor %}
+            <p class="mb-2">
+                <a href="{{user.organization.get_absolute_url}}" class="text-user-dark">
+                    {{user.organization}}</a>
+            </p>
             <p class="mb-4 text-user-dark">Last login: {{user.last_login|date:"M d, Y"}}</p>
 
             <table>

@@ -3,7 +3,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin, auth
 from django.urls import path
-from django.views.generic import FormView
+from django.views.generic import FormView, DetailView
 from rest_framework.routers import DefaultRouter
 
 from api.views import (UserViewSet, OrganizationViewSet, ProjectViewSet,
@@ -11,6 +11,7 @@ from api.views import (UserViewSet, OrganizationViewSet, ProjectViewSet,
 import core.forms
 import core.views
 import projects.views
+from core.models import Organization
 
 
 router = DefaultRouter()
@@ -59,6 +60,9 @@ urlpatterns = [
     path('organizations/',
          core.views.OrganizationIndexView.as_view(),
          name='organization_list'),
+    path('org/<int:pk>',
+         core.views.OrganizationDetailView.as_view(),
+         name='organization_detail'),
 
     # Project
     path('proj/',

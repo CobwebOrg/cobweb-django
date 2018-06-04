@@ -118,6 +118,9 @@ class OrganizationIndexView(CobwebBaseIndexView):
     table_class = OrganizationTable
     django_ct = 'core.organization'
 
+class OrganizationDetailView(generic.DetailView):
+    model = models.Organization
+
 
 class ResourceListView(CobwebBaseIndexView):
     model = models.Resource

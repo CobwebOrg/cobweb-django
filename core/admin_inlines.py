@@ -1,13 +1,7 @@
 from django.contrib import admin
 from django.contrib.contenttypes.admin import GenericStackedInline
 
-from core.models import Organization, Affiliation, Note, ResourceDescription, CrawlScope
-
-
-class AffiliationInline(admin.TabularInline):
-    model = Affiliation
-    fields = ('professional_title', 'organization')
-    extra = 1
+from core.models import Organization, Note, ResourceDescription, CrawlScope
 
 
 class OrganizationInline(admin.TabularInline):

@@ -4,7 +4,7 @@ from reversion.admin import VersionAdmin
 from webarchives.admin import APIEndpointInline
 
 from core import models
-from core.admin_inlines import AffiliationInline, NoteInline, ResourceDescriptionInline
+from core.admin_inlines import NoteInline, ResourceDescriptionInline
 
 
 admin.site.unregister(auth.models.Group)
@@ -20,7 +20,7 @@ class UserAdmin(VersionAdmin, auth.admin.UserAdmin):
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
-    inlines = [AffiliationInline, NoteInline]
+    inlines = (NoteInline,)
 
 
 @admin.register(models.Organization)

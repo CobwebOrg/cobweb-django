@@ -5,7 +5,7 @@ from django import template
 from django.contrib import auth
 from django.db.models import Model
 from django.urls import reverse
-from django.utils.html import format_html  # , conditional_escape
+from django.utils.html import format_html, mark_safe  # , conditional_escape
 from django.utils.safestring import mark_safe
 from haystack.models import SearchResult
 
@@ -96,6 +96,11 @@ def metadata_card(item, **kwargs):
     return kwargs
 
 
+@register.inclusion_tag('summary.html')
+def summary(item):
+    return {'obj': item}
+
+
 @register.inclusion_tag('badge.html')
 def badge(item):
     return {
@@ -146,3 +151,4 @@ def model_name(item):
 @register.filter
 def model_name_plural(item):
     return item._meta.verbose_name_plural
+    

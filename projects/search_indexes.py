@@ -1,5 +1,6 @@
 # """SearchIndex classes for Django-haystack."""
 
+from django.utils.html import format_html, mark_safe
 from haystack import indexes
 
 from projects.models import Project, Nomination, Claim
@@ -8,7 +9,7 @@ from projects.models import Project, Nomination, Claim
 class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     """Django-haystack index of Project model."""
 
-    name = indexes.CharField(indexed=True, stored=True)
+    name = indexes.CharField(model_attr='name', indexed=True, stored=True)
     text = indexes.CharField(document=True, use_template=True, stored=False)
 
     title = indexes.CharField(model_attr='title', indexed=True, stored=True)
@@ -35,7 +36,7 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
 
 
 class NominationIndex(indexes.SearchIndex, indexes.Indexable):
-    name = indexes.CharField(indexed=True, stored=True)
+    name = indexes.CharField(model_attr='name', indexed=True, stored=True)
     text = indexes.CharField(document=True, use_template=False)
 
     project_pk = indexes.IntegerField(model_attr='project__pk', indexed=True, stored=True)
@@ -51,7 +52,6 @@ class NominationIndex(indexes.SearchIndex, indexes.Indexable):
     # notes = indexes.(model_attr='notes', indexed=True, stored=True)
 
     # impact_factor = indexes.IntegerField(model_attr='impact_factor', indexed=True, stored=True)
-    
 
     def get_model(self):
         return Nomination
@@ -61,8 +61,38 @@ class NominationIndex(indexes.SearchIndex, indexes.Indexable):
 
 
 class ClaimIndex(indexes.ModelSearchIndex, indexes.Indexable):
-    name = indexes.CharField(indexed=True, stored=True)
-    text = indexes.CharField(document=True, use_template=False)
-
     class Meta:
         model = Claim
+
+    name = indexes.CharField(model_attr='name', indexed=True, stored=True)
+    text = indexes.CharField(document=True, use_template=False)
+
+    def index_queryset(self, using=None):
+        return self.get_model().objects.filter(deleted__exact=False,
+                                               has_holding__exact=False)
+
+
+# class HoldingIndex(indexes.ModelSearchIndex, indexes.Indexable):
+#     class Meta:
+#         model = Claim
+
+#     name = indexes.CharField(model_attr='name', indexed=True, stored=True)
+#     text = indexes.CharField(document=True, use_template=False)
+
+#     name_html = indexes.CharField(indexed=False, stored=True)
+#     summary_html = indexes.CharField(indexed=False, stored=True)
+
+#     def prepare_name_html(self, obj):
+#         return f'<a href="{obj.get_absolute_url()}" class="object_name">{obj.nomination.resource.url}</span>'
+
+#     def prepare_summary_html(self, obj):
+#         tags = ' '.join([f'<span class="tag">{tag}</span>' for tag in obj.tags.all()])
+#         return f"""<dl class="object_summary">
+#                        <dt>Organization:</dt><dd>{obj.organization}</dd>
+#                        <dt>Status:</dt><dd>{'Active' if obj.active else 'Closed'}</dd>
+#                        <dt>Has holding:</dt><dd>{obj.has_holding}</dd>
+#                    </dl>"""
+
+#     def index_queryset(self, using=None):
+#         return self.get_model().objects.filter(deleted__exact=False,
+#                                                has_holding__exact=True)

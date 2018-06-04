@@ -59,7 +59,7 @@ class APIEndpoint(CobwebModelMixin, PolymorphicModel):
 
     class Meta:
         verbose_name = "API Endpoint"
-    name_fields = ('url', 'organization')
+    name_fields = ('url',)
 
     organization = models.ForeignKey(Organization, null=True, blank=True,
                                      on_delete=models.SET_NULL)

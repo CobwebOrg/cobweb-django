@@ -1,10 +1,13 @@
 {% load cobweb_look %}
 
-<li class="media">
-    <div class="big-model-icon">{{ result | model | icon }}</div>
-    <div class="media-body w-100 m-2 p-1 align-self-center">
-        <strong>{{ result | model | model_name | upper }}</strong>
-        <br>
-        <a href="{{ result.object.get_absolute_url }}">{{ result.name }}</a>
+<li class="media row">
+    <div class="media col-4">
+        <div class="big-model-icon">{{ result | model | icon }}</div>
+        <div class="media-body w-100 m-2 p-1 align-self-center">
+            <strong>{{ result | model | model_name | upper }}</strong>
+            <br>
+            <a href="{{ result.object.get_absolute_url }}">{{result.name_html|safe}}</a>
+        </div>
     </div>
+    <div class="media-body col-8 m-2 p-2 align-self-center">{% summary result %}</div>
 </li>

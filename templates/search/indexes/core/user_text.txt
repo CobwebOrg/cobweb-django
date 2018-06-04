@@ -1,9 +1,8 @@
-{{ object.username }}
-{{ object.get_full_name }}
-{{ object.email }}
+{{user.username}}
+{{user.get_full_name}}
+{{user.email}}
 
-{% for organization in object.affiliations.all %}{{organization}} {% endfor %}
+{{user.organization}}
+{{user.professional_title}}
 
-{{ object.description }}
-
-{# {% for tag in object.tags.all %}{{ tag }} {% endfor %}#}
+{{user.description}}
