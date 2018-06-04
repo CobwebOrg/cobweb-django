@@ -6,7 +6,7 @@
         <div class="media-body w-100 m-2 p-1 align-self-center">
             <strong>{{ result | model | model_name | upper }}</strong>
             <br>
-            <a href="{{ result.object.get_absolute_url }}">{{result.name_html|safe}}</a>
+            <a href="{{ result.object.get_absolute_url }}">{{result.name|safe}}</a>
         </div>
     </div>
     <div class="media-body col-8 m-2 p-2 align-self-center">{% summary result %}</div>

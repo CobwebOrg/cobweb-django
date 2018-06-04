@@ -94,9 +94,7 @@ INSTALLED_APPS = [
     'reversion',
     'webpack_loader',
 
-    'archives',
     'core',
-    'datasources',
     'projects',
     'webarchives',
 ]

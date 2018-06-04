@@ -1,4 +1,4 @@
-version: '3'
+version: '3.6'
 
 services:
   solr:
@@ -20,11 +20,11 @@ services:
     ports:
       - "5432:5432"
   web:
-    image: python:3.6
+    build:
+      context: .
+      target: dev
     volumes:
       - .:/code
-      - web_usr_local:/usr/local
-      - web_dot_local:/root/.local
     ports:
       - "8000:8000"
     depends_on:
@@ -32,10 +32,10 @@ services:
       - solr
     working_dir: /code
     environment:
-      DJANGO_SETTINGS_MODULE: 'cobweb.settings.debug'
-      DEBUG: 'true'
-      TEST: 'false'
-      SHELL: '/bin/bash'
+      DJANGO_SETTINGS_MODULE: "cobweb.settings.debug"
+      DEBUG: "true"
+      TEST: "false"
+      SHELL: "/bin/bash"
     command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
   
   node:
@@ -49,13 +49,15 @@ services:
     command: ["npx", "webpack", "--config", "webpack.config.js", "--watch"]
   
   production:
-    build: .
+    build:
+      context: .
+      target: production
     image: andrewwallace/cobweb:latest
     command: "echo 'Built production web image. Bye!'"
 
 
 volumes:
   postgres_data:
-  web_usr_local:
-  web_dot_local:
+  # web_usr_local:
+  # web_dot_local:
   node_modules:
