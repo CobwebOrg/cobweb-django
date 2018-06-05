@@ -62,7 +62,10 @@ body {
   padding-bottom: 2rem;
 }
 
-#cobweb-content { @extend .flex-grow-1 ; }
+#cobweb-content {
+  @extend .flex-grow-1 ;
+  padding-bottom: 3em;
+}
 
 // HEADER AND FOOTER
 

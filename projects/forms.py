@@ -12,8 +12,6 @@ from core.widgets import ResourceInput
 class ProjectForm(forms.ModelForm):
     """Project model form."""
 
-    resource = forms.URLField(widget=ResourceInput, initial='http://')
-
     class Meta:
         """Metaclass for options."""
 
@@ -103,7 +101,7 @@ class NominationForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
 
-        if self.instance.pk:
+        if hasattr(self.instance, 'pk'):
             nomination_title = HTML("""
                 <a href="{{object.get_absolute_url}}">NOMINATION:</a> {{object.name}}
             """)
@@ -111,16 +109,16 @@ class NominationForm(forms.ModelForm):
             nomination_title = HTML('NEW NOMINATION')
         
         self.helper.layout = Layout(
-            Div(
-                Div(H2(HTML("""<small>
-                    <a href="{% url 'project_nominations' pk=object.project.pk %}">
-                        PROJECT:
-                    </a> 
-                    {{object.project}}
-                </small>"""))),
-                Div(H3(nomination_title)),
-                css_class='px-3 pt-0 pb-2 w-100'
-            ),
+            # Div(
+            #     Div(H2(HTML("""<small>
+            #         <a href="{% url 'project_nominations' pk=object.project_pk %}">
+            #             PROJECT:
+            #         </a> 
+            #         {{object.project}}
+            #     </small>"""))),
+            #     Div(H3(nomination_title)),
+            #     css_class='px-3 pt-0 pb-2 w-100'
+            # ),
 
             Row(
                 Pane(

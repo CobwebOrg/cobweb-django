@@ -161,7 +161,7 @@ class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
 
     def get_project(self):
         if not (hasattr(self, '_project') and isinstance(self._project, models.Project)):
-          self._project = models.Project.objects.get(pk=self.kwargs['project_id'])
+          self._project = models.Project.objects.get(pk=self.kwargs['project_pk'])
         return self._project
 
     def test_func(self):

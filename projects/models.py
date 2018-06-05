@@ -70,7 +70,7 @@ class Project(CobwebModelMixin, models.Model):
     subject_headings = models.ManyToManyField('core.SubjectHeading',
                                               blank=True)
 
-    notes = GenericRelation('core.Note')
+    notes = GenericRelation('core.Note', blank=True)
 
     def get_absolute_url(self) -> str:
         return reverse('project_summary', kwargs={'pk': self.pk})

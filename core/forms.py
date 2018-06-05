@@ -32,29 +32,29 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email')
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, edit=True, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
             Row(Column(HTML('<h1>Sign up for a new user account</h1>'), css_class='col-12')),
             Row(
                 Column(
-                    Field('first_name'),
-                    Field('last_name'),
-                    Field('email'),
+                    Field('first_name', edit=edit),
+                    Field('last_name', edit=edit),
+                    Field('email', edit=edit),
                     HTML('[[TERMS OF USE]]'),
                     css_class='col-6',
                 ),
                 Column(
-                    Field('username'),
-                    Field('password1'),
-                    Field('password2'),
+                    Field('username', edit=edit),
+                    Field('password1', edit=edit),
+                    Field('password2', edit=edit),
 
-                    FormActions(
+                    (FormActions(
                         CancelButton,
                         Submit('submit', 'Submit'),
                         css_class='float-right',
-                    ),
+                    ) if edit else None),
                     css_class='col-6',
                 )
             )
@@ -67,34 +67,34 @@ class UserProfileForm(UserCreationForm):
         model = User
         exclude = ()
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, edit=True, **kwargs):
         super().__init__(*args, **kwargs)
         # import pdb; pdb.set_trace()
 
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
             HTML('<h3>User: {{object.username}}</h3>'),
-            Field('username'),
+            Field('username', edit=edit),
 
             Fieldset('Personal Information',
-                     Field('first_name'),
-                     Field('last_name'),
-                     Field('email'),
-                     Field('url'),
+                     Field('first_name', edit=edit),
+                     Field('last_name', edit=edit),
+                     Field('email', edit=edit),
+                     Field('url', edit=edit),
                      ),
 
-            Field('organization'),
-            Field('professional_title'),
+            Field('organization', edit=edit),
+            Field('professional_title', edit=edit),
 
             Fieldset('Preferences',
-                     Field('get_notification_emails'),
+                     Field('get_notification_emails', edit=edit),
                      ),
 
             FormActions(
                 CancelButton,
                 Submit('submit', 'Submit'),
                 css_class='float-right'
-            ),
+            ) if edit else None,
         )
 
 
