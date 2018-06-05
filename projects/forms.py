@@ -93,9 +93,12 @@ class NominationForm(forms.ModelForm):
         fields = ('__all__')
         widgets = {
             'tags': autocomplete.ModelSelect2Multiple(
-                url='tag_autocomplete'
+                url='tag_autocomplete',
+                attrs={'data-allow-clear': 'false'},
             ),
         }
+    
+    resource = forms.URLField(widget=ResourceInput, initial='http://')
 
     def __init__(self, *args, editable=False, **kwargs):
         super().__init__(*args, **kwargs)
@@ -162,7 +165,8 @@ class NominationDisplayForm(forms.ModelForm):
         fields = ('__all__')
         widgets = {
             'tags': autocomplete.ModelSelect2Multiple(
-                url='tag_autocomplete'
+                url='tag_autocomplete',
+                attrs={'data-allow-clear': 'false'},
             ),
         }
 
@@ -192,7 +196,8 @@ class ClaimForm(forms.ModelForm):
         fields = ('nomination', 'organization', 'active', 'has_holding')
         widgets = {
             'tags': autocomplete.ModelSelect2Multiple(
-                url='tag_autocomplete'
+                url='tag_autocomplete',
+                attrs={'data-allow-clear': 'false'},
             ),
         }
 

@@ -111,7 +111,7 @@ urlpatterns = [
     #      core.views.TagDetailView.as_view(),
     #      name='tag_detail'),
     path('tags/autocomplete/',
-         core.views.TagAutocomplete.as_view(create_field='name'),
+         core.views.TagAutocomplete.as_view(create_field='title'),
          name='tag_autocomplete'),
 
     # Resource
