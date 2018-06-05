@@ -76,7 +76,7 @@ class Project(CobwebModelMixin, models.Model):
         return reverse('project_summary', kwargs={'pk': self.pk})
 
     def get_add_nomination_url(self) -> str:
-        return reverse('project_nominate', kwargs={'project_pk': self.pk})
+        return reverse('nomination_create', kwargs={'project_pk': self.pk})
 
     def is_admin(self, user: AbstractBaseUser) -> bool:
         return user in self.administrators.all()
