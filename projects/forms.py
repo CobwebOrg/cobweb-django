@@ -2,6 +2,7 @@ from crispy_forms.helper import FormHelper
 from dal import autocomplete
 from django import forms
 from django.contrib.auth.models import AnonymousUser
+from django.utils.html import format_html
 
 from core.layout import *
 from projects.models import Project, Nomination, Claim
@@ -104,24 +105,22 @@ class NominationForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
 
-        if hasattr(self.instance, 'pk'):
-            nomination_title = HTML("""
-                <a href="{{object.get_absolute_url}}">NOMINATION:</a> {{object.name}}
-            """)
+        proj_header = HTML(format_html('<small><a href="{}"> Project: {}</a></small>',
+                                       self.initial['project'].get_absolute_url(),
+                                       str(self.initial['project'])))
+        if hasattr(self.instance, 'pk') and self.instance.pk is not None:
+            nom_header = HTML(format_html('<a href="{}">NOMINATION:</a> {}',
+                                          instance.get_absolute_url(),
+                                          instance.name))
         else:
-            nomination_title = HTML('NEW NOMINATION')
+            nom_header = HTML('NEW NOMINATION')
         
         self.helper.layout = Layout(
-            # Div(
-            #     Div(H2(HTML("""<small>
-            #         <a href="{% url 'project_nominations' pk=object.project_pk %}">
-            #             PROJECT:
-            #         </a> 
-            #         {{object.project}}
-            #     </small>"""))),
-            #     Div(H3(nomination_title)),
-            #     css_class='px-3 pt-0 pb-2 w-100'
-            # ),
+            Div(
+                Div(H2(proj_header)),
+                Div(H3(nom_header)),
+                css_class='px-3 pt-0 pb-2 w-100'
+            ),
 
             Row(
                 Pane(
