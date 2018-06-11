@@ -243,6 +243,14 @@ textarea { resize: none; }
   font-size: 2em;
 }
 
+.form-control {
+  // @extend .border ;
+
+  border-color: rgb(170, 170, 170);
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+
 .pane { @extend .border, .h-100, .p-3 ; }
 
 .table {

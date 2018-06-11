@@ -22,19 +22,23 @@ class ProjectForm(forms.ModelForm):
             'title': forms.TextInput,
             'administrators': autocomplete.ModelSelect2Multiple(
                 url='user_autocomplete',
-                attrs={'data-allow-clear': 'false'},
+                attrs={'data-allow-clear': 'false',
+                       'data-width': '100%'},
             ),
             'nominators': autocomplete.ModelSelect2Multiple(
                 url='user_autocomplete',
-                attrs={'data-allow-clear': 'false'},
+                attrs={'data-allow-clear': 'false',
+                       'data-width': '100%'},
             ),
             'nominator_blacklist': autocomplete.ModelSelect2Multiple(
                 url='user_autocomplete',
-                attrs={'data-allow-clear': 'false'},
+                attrs={'data-allow-clear': 'false',
+                       'data-width': '100%'},
             ),
             'tags': autocomplete.ModelSelect2Multiple(
                 url='tag_autocomplete',
-                attrs={'data-allow-clear': 'false'},
+                attrs={'data-allow-clear': 'false',
+                       'data-width': '100%'},
             ),
             'nomination_policy': forms.RadioSelect,
         }
