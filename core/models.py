@@ -1,5 +1,3 @@
-import typing
-
 import reversion
 from django.core.validators import URLValidator
 from django.db import models
@@ -12,19 +10,16 @@ from phonenumber_field.modelfields import PhoneNumberField
 from surt import handyurl
 from surt.DefaultIAURLCanonicalizer import canonicalize
 
+import cobweb.types as typ
 from cobweb.models import CobwebModelMixin
 
 
-validate_url = URLValidator()
-
-
-def normalize_url(url: str) -> str:
+def normalize_url(url: typ.URL) -> typ.NormalizedURL:
     normalized_url = (
         canonicalize(handyurl.parse(url)).geturl()
         .replace('https://', 'http://')
         .replace('sftp://', 'ftp://')
     )
-    validate_url(normalized_url)
     return normalized_url
 
 
@@ -75,7 +70,7 @@ class User(CobwebModelMixin, AbstractUser):
 
     def can_claim(self, organization=None) -> bool:
         if organization:
-            return user.organization == organization
+            return self.organization == organization
         else:
             return self.organization is not None
 
@@ -224,7 +219,7 @@ class Resource(CobwebModelMixin, models.Model):
 
     notes = GenericRelation(Note)
 
-    def get_resource_records(self) -> typing.Iterable:
+    def get_resource_records(self) -> typ.Iterable:
         return chain(
             self.nominations.all(),
         )

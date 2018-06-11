@@ -1,21 +1,29 @@
-import collections
-import inspect
 import re
-from sys import stderr, stdout
+from sys import stdout
 from typing import Optional
 
-from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import JSONField
-from django.core.exceptions import FieldError
 from django.db import models
 from django.utils import timezone
 from polymorphic.models import PolymorphicModel
 import reversion
+import sickle
 from sickle import Sickle
 
+import cobweb.types as T
 from cobweb.models import CobwebModelMixin
 from core.models import Organization
 from core.models import normalize_url, Resource
+
+
+wayback_url_parser = re.compile(
+    r'https?\:\/\/wayback\.archive\-it\.org\/\d+\/\*\/(\w+\:\/\/.*)')
+
+def parse_wayback_url(wayback_url):
+    try:
+        return normalize_url(wayback_url_parser.match(wayback_url).groups()[0])
+    except Exception as ex:
+        raise ex
 
 
 class ImportedRecord(CobwebModelMixin, models.Model):
@@ -23,12 +31,14 @@ class ImportedRecord(CobwebModelMixin, models.Model):
     class Meta:
         unique_together = ('source_feed', 'identifier')
 
-    name_fields = ('source_feed', 'identifier')
+    name_fields: T.Tuple[str, ...] = ('source_feed', 'identifier')
 
     source_feed = models.ForeignKey('APIEndpoint', on_delete=models.CASCADE)
-    identifier = models.CharField(max_length=200)
-    record_type = models.CharField(max_length=200)
-    metadata = JSONField()
+    identifier = models.CharField(max_length=2000, unique=True)
+    record_type = models.CharField(max_length=2000)
+    resource = models.ForeignKey('core.Resource', on_delete=models.PROTECT,
+                                 null=True, blank=True)
+    metadata = JSONField(default={})
 
     parents = models.ManyToManyField('self', related_name='children',
                                      blank=True, symmetrical=False)
@@ -40,14 +50,15 @@ class ImportedRecord(CobwebModelMixin, models.Model):
                 return ' / '.join(self.metadata[name_field])
             except KeyError:
                 pass   # try the next name_field!
-        return 'ImportedRecord {self.pk}'
+        return self.identifier
     
     def __str__(self) -> str:
         return self.name
     
     def __repr__(self) -> str:
         return f"""ImportedRecord(
-            identifiers=({self.identifiers}),
+            source_feed=({self.source_feed}),
+            identifier=({self.identifier}),
             record_type={self.record_type},
             metadata={self.metadata},
         )
@@ -81,6 +92,7 @@ class OAIPMHEndpoint(APIEndpoint):
     set_type: str = 'collection'
 
     def harvest(self) -> None:
+        timestamp = timezone.now()
         sickle = Sickle(self.url, encoding=self.encoding)
 
         print("Harvesting API Identification")
@@ -99,6 +111,8 @@ class OAIPMHEndpoint(APIEndpoint):
             stdout.flush()
             self.harvest_record(record)
         print()
+        self.last_updated = timestamp
+        self.save()
 
     def harvest_api_identification(self, sickle: Sickle) -> None:
         metadata = dict(sickle.Identify())
@@ -108,34 +122,36 @@ class OAIPMHEndpoint(APIEndpoint):
 
     def harvest_setspec(self, set_info) -> None:
         try:
-            set_id = self.get_set_id(set_info.setSpec)
-            if set_id:
-                target = ImportedRecord.objects.get_or_create(
-                    source_feed=self,
-                    identifier=set_id,
-                    defaults={'metadata': {'title': [set_info.setName]}}
-                )[0]
+            ImportedRecord.objects.get_or_create(
+                identifier=self.get_set_id(set_info.setSpec),
+                defaults={'source_feed': self,
+                            'metadata': {'title': [set_info.setName]}}
+            )
         except ValueError:
             # sometimes a dummy setspec can't be parsed - just ignore!
             pass
 
-    def harvest_record(self, record) -> None:
+    def harvest_record(self, record: sickle.models.Record) -> ImportedRecord:
         record_identifier = normalize_url(record.header.identifier)
 
         set_identifiers = [self.get_set_id(setspec) 
                            for setspec in record.header.setSpecs]
 
-        target = ImportedRecord.objects.get_or_create(
-            source_feed=self,
-            identifier=record_identifier,
-            record_type=self.record_type,
-            metadata=record.metadata,
-        )[0]
+        try:
+            target = ImportedRecord.objects.get(identifier=record_identifier)
+        except ImportedRecord.DoesNotExist:
+            target = ImportedRecord(identifier=record_identifier)
+        target.source_feed = self
+        target.record_type = self.record_type
+        target.metadata = record.metadata
+        target.save()
 
         for set_id in [self.get_set_id(setspec) for setspec in record.header.setSpecs]:
             target.parents.add(
                 ImportedRecord.objects.get_or_create(identifier=set_id)[0] 
             )
+        
+        return target
 
     def get_set_id(self, setspec) -> str:
         return setspec
@@ -168,7 +184,7 @@ class AITCollectionsEndpoint(BaseAITEndpoint):
             set_type, set_number = set_info.setSpec.split(':')
             AITPartnerEndpoint.objects.get_or_create(
                 url=f'https://archive-it.org/oai/{set_type}s/{set_number}',
-            )[0]
+            )
         except ValueError:
             # sometimes a dummy setspec can't be parsed - just ignore!
             pass
@@ -182,52 +198,12 @@ class AITPartnerEndpoint(BaseAITEndpoint):
     class Meta:
         verbose_name = "Archive-It Partner OAI-PMH Endpoint"
 
-    def harvest_record(self, record):
+    def harvest_record(self, record: sickle.models.Record) -> ImportedRecord:
         """Harvest a single record for an Archive-It collection."""
 
-        resource = Resource.objects.get_or_create(
-            url=self.parse_wayback_url(record.header.identifier)
-        )
-
-        super().harvest_record(record, res)
-
-        collection_ids = [self.get_set_id(s) for s in record.header.setSpecs]
-
-        try:
-            resource = Resource.objects.get_or_create(
-                url=normalize_url(root_url))[0]
-        except Exception as e:
-            e.args += ("url = {}".format(normalize_url(root_url)),)
-            e.args += "len(url) = {}".format(len(normalize_url(root_url))),
-            raise e
-
-        # TODO: remove Holding
-        # holding = Holding.objects.get_or_create(
-        #     resource=resource,
-        #     collection=collection,
-        # )[0]
-
-        # try:
-        #     holding.title = ' / '.join(record.metadata.pop('title'))
-        # except KeyError:
-        #     pass  # no 'title' in record.metadata; that's fine!
-
-        # try:
-        #     holding.description = '\n\n'.join(record.metadata.pop('description'))
-        # except KeyError:
-        #     pass  # no 'description' in record.metadata; that's fine!
-
-
-
-        # self.attach_metadata(holding, record.metadata, 'oai_dc')
-
-
-    def parse_wayback_url(self, wayback_url):
-        wayback_url_parser = re.compile(
-            'http\:\/\/wayback\.archive\-it\.org\/\d+\/\*/(https?\:\/\/.*)')
-
-        return normalize_url(
-            wayback_url_parser
-            .match(wayback_url)
-            .groups()[0]
-        )
+        imported_record = super().harvest_record(record)
+        imported_record.resource = Resource.objects.get_or_create(
+            url=parse_wayback_url(record.header.identifier)
+        )[0]
+        imported_record.save()
+        return imported_record
