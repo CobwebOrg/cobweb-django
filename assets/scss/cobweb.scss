@@ -48,7 +48,7 @@ $theme-colors: (
   "held": $lime,
 );
 
-@import "~bootstrap/scss/bootstrap";
+@import "node_modules/bootstrap/scss/bootstrap";
 
 // WINDOW LAYOUT
 

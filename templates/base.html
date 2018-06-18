@@ -12,8 +12,8 @@
 
     <meta content="text/html">
 
+    <link rel="stylesheet" type="text/css" href="{% static 'scss/cobweb.css' %}">
     <title>{% block window_title %}Cobweb{% endblock %}</title>
-    {% render_bundle 'main' %}
   </head>
 
   <body>
@@ -27,6 +27,7 @@
 
 
     <!-- Webpack bundle -->
+    {% render_bundle 'main' %}
     
     <script src="http://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="

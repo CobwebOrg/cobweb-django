@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Dashboard from "./components/Dashboard";
 import 'bootstrap';
-import '../scss/cobweb.scss';
+// import '../scss/cobweb.scss';
 import fontawesome from '@fortawesome/fontawesome';
 import solid from '@fortawesome/fontawesome-free-solid';
 
