@@ -13,10 +13,12 @@ Then, in a terminal:
 ```bash
 git clone https://github.com/CobwebOrg/cobweb-django
 cd cobweb-django
-docker-compose up -d
+docker-compose up
 ```
 
-The first time only, you'll want to fill up the database:
+This will print a bunch of debugging info into your terminal. You'll need to open a new terminal window to do anything else.
+
+The first time only, you'll want to fill up the database, so open a second terminal window and enter:
 ```bash
 docker-compose run web python3 manage.py loaddata toy_data.json
 ```
