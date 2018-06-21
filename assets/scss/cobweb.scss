@@ -1,6 +1,8 @@
 $font-size-base:    0.875rem;
 
-$h1-font-size:                $font-size-base * 2;
+$h1-font-size:      1.75rem;
+$h2-font-size:      1.5rem;
+$h3-font-size:      1.3rem;
 
 // Below are default header sizes
 // $h2-font-size:                $font-size-base * 2;
@@ -199,11 +201,34 @@ footer {
   content: ':';
 }
 
+// FORM STUFF
+
+#project-nomination-row {
+  border-top: 3px dotted #D9E7E3;
+  border-bottom: 3px dotted #D9E7E3;
+}
+
+#button-row {
+  border-top: 3px dotted #D9E7E3;
+  padding: 1rem 0;
+}
+
 // MISC
 
-.asteriskField, .invalid-feedback, .is_invalid { color: $danger; }
+.btn-primary {
+  font-weight: 600;
+}
 
 textarea { resize: none; }
+
+h2 {
+  font-weight: 600;
+  padding: 0.5rem 0;
+}
+
+.asteriskField { font-weight: 600 }
+
+.asteriskField, .invalid-feedback, .is_invalid { color: $danger; }
 
 .form-actions {
   @extend .w-100, .flex-row, .justify-content-end ;
@@ -251,7 +276,11 @@ textarea { resize: none; }
   background-color: #ffffff;
 }
 
-.pane { @extend .border, .h-100, .p-3 ; }
+.pane {
+  @extend .border, .h-100, .p-3 ;
+  border: 2px solid #DDDDDD ! important;
+  border-radius: 3px; 
+}
 
 .table {
   @extend .table-hover ;

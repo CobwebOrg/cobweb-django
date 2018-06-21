@@ -62,8 +62,9 @@ class ProjectForm(forms.ModelForm):
             Row(Column(HField('description', edit=editable))),
 
             Row(
-                Column(Field('status', edit=editable), css_class='col-md-5'),
-                Column(Field('administrators', edit=editable), css_class='col-md-7'),
+                Field('status', edit=editable, wrapper_class='col-md-5'),
+                Field('administrators', edit=editable, wrapper_class='col-md-7'),
+                css_id='project-admin-row',
             ),
 
             Row(
@@ -73,23 +74,13 @@ class ProjectForm(forms.ModelForm):
                     Field('nominator_blacklist', edit=editable, show=editable),
                     css_class='col-md-7'
                 ),
+                css_id='project-nomination-row',
             ),
 
             Row(Column(Field('tags', edit=editable))),
-        )
 
-        if editable:
-            self.helper.layout.append(
-                Row(
-                    Column(
-                        FormActions(
-                            CancelButton,
-                            Submit('submit', 'Submit'),
-                            css_class='w-100 flex-row justify-content-end'
-                        ),
-                    )
-                )
-            )
+            FORM_BUTTONS if editable else Div(),
+        )
 
 
 class NominationForm(forms.ModelForm):
@@ -146,10 +137,10 @@ class NominationForm(forms.ModelForm):
                     Row(Column(Field('rationale', edit=editable))),
                     Row(Column(Field('suggested_crawl_frequency', edit=editable), css_class='col-6'),
                         Column(Field('suggested_crawl_end_date', edit=editable), css_class='col-6')),
-                    FormButtons,
-                    css_class='col-5'
+                    FORM_BUTTONS if editable else Div(),
+                    css_class='col-5',
                 ),
-                css_class='flex-grow-1'
+                css_class='flex-grow-1',
             )
         )
         self.helper.form_class='h-100 d-flex flex-column pb-2'

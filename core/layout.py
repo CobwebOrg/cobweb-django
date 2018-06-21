@@ -98,12 +98,14 @@ class Column(Div):
     css_class = 'col'
 
 
-FormButtons = FormActions(
-    Reset('reset', 'Cancel'),
-    Submit('submit', 'Submit'),
-    css_class='mt-auto d-flex flex-row justify-content-end',
-    # field_class='d-flex flex-row justify-content-end',
+FORM_BUTTONS = Row(
+    Column(
+        CancelButton,
+        Submit('submit', 'Submit'),
+        css_class = 'col d-flex flex-row justify-content-end',
+    ),
 )
+        
 
 class FormSection(Div):
     def __init__(self, *args, **kwargs):

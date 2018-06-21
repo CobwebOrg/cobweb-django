@@ -316,10 +316,10 @@ h1, .h1 {
   font-size: 1.75rem; }
 
 h2, .h2 {
-  font-size: 1.75rem; }
+  font-size: 1.5rem; }
 
 h3, .h3 {
-  font-size: 1.53125rem; }
+  font-size: 1.3rem; }
 
 h4, .h4 {
   font-size: 1.3125rem; }
@@ -7762,11 +7762,29 @@ footer {
 .md_item_label::after {
   content: ':'; }
 
-.asteriskField, .invalid-feedback, .is_invalid {
-  color: #DB4D3E; }
+#project-nomination-row {
+  border-top: 3px dotted #D9E7E3;
+  border-bottom: 3px dotted #D9E7E3; }
+
+#button-row {
+  border-top: 3px dotted #D9E7E3;
+  padding: 1rem 0; }
+
+.btn-primary {
+  font-weight: 600; }
 
 textarea {
   resize: none; }
+
+h2 {
+  font-weight: 600;
+  padding: 0.5rem 0; }
+
+.asteriskField {
+  font-weight: 600; }
+
+.asteriskField, .invalid-feedback, .is_invalid {
+  color: #DB4D3E; }
 
 .badge-left, .badge-mid {
   border-top-right-radius: 0;
@@ -7785,6 +7803,10 @@ textarea {
   border-color: #aaaaaa;
   border-radius: 4px;
   background-color: #ffffff; }
+
+.pane {
+  border: 2px solid #DDDDDD !important;
+  border-radius: 3px; }
 
 .table {
   border-top: 0 none; }
