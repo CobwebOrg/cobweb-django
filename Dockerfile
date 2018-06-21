@@ -15,3 +15,6 @@ CMD ["python3", "scripts/start-production.py"]
 FROM base as dev
 RUN ["pipenv", "install", "--dev", "--system", "--ignore-pipfile"]
 CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+
+FROM ruby as sass
+RUN gem install sass

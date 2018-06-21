@@ -49,12 +49,14 @@ services:
     command: ["npx", "webpack", "--config", "webpack.config.js", "--watch"]
   
   sass:
-    image: ruby
+    build:
+      context: .
+      target: sass
     volumes:
       - ./assets/scss:/scss
       - node_modules:/scss/node_modules
     working_dir: /scss
-    command: gem install sass && sass --watch cobweb.scss:cobweb.css
+    command: sass --watch cobweb.scss:cobweb.css
   
   production:
     build:
