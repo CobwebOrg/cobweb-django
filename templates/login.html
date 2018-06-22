@@ -27,11 +27,11 @@
       <p><a href="https://www.cdlib.org/cobweb/">Learn more from CDL</a></p>
     </div>
 
-    <div class="col-6 p-5 d-flex flex-column-reverse justify-content-end">
+    <div class="col-6 p-5 d-flex flex-column-reverse justify-content-end align-items-center">
       {% comment %} <div class="d-flex flex-column-reverse"> {% endcomment %}
-      {% crispy form %}
+      <div class='w-100'>{% crispy form %}</div>
       <img src="{% static 'images/cobweb_logo_300.png' %}"
-           style="max-width: 100%; max-height: 100%" 
+           style="max-width: 70%; max-height: 70%" 
            class="flex-shrink-1">
 
       {% comment %} </div> {% endcomment %}
