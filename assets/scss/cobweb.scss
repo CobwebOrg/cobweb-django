@@ -177,10 +177,27 @@ footer {
 .nav-infotabs {
   @extend .nav, .text-uppercase, .justify-content-around ;
 
-  .nav-link { @extend .btn-link ; }
+  background: #D9E7E3;
+  border: 3px solid #F8F9FA;
+  border-radius: 7px;
+  padding: .3rem 0 .4rem 0;
+
+  .nav-link {
+    @extend .btn-link ;
+    font-weight: 600;
+  }
+  .nav-link:hover {
+    text-decoration: none;
+    border-bottom: 3px solid #3D8079;
+  }
+  .nav-link.disabled, .nav-link.active {
+    color: black;
+    font-weight: 600;
+  }
+
   .active {
     @extend .disabled ;
-    border-bottom: 3px solid $gray;
+    border-bottom: 3px solid black;
   }
 }
 

@@ -7752,8 +7752,21 @@ footer {
     margin-bottom: 0.2rem;
     margin-top: 0; }
 
-.nav-infotabs .active {
-  border-bottom: 3px solid #999999; }
+.nav-infotabs {
+  background: #D9E7E3;
+  border: 3px solid #F8F9FA;
+  border-radius: 7px;
+  padding: .3rem 0 .4rem 0; }
+  .nav-infotabs .nav-link {
+    font-weight: 600; }
+  .nav-infotabs .nav-link:hover {
+    text-decoration: none;
+    border-bottom: 3px solid #3D8079; }
+  .nav-infotabs .nav-link.disabled, .nav-infotabs .nav-link.active, .nav-infotabs .nav-link.active {
+    color: black;
+    font-weight: 600; }
+  .nav-infotabs .active {
+    border-bottom: 3px solid black; }
 
 .md_item_label {
   margin-right: 1em;
