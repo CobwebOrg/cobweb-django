@@ -90,12 +90,6 @@ def icon(item):
     )
 
 
-@register.inclusion_tag('core/metadata_card.html')
-def metadata_card(item, **kwargs):
-    kwargs['item'] = item
-    return kwargs
-
-
 @register.inclusion_tag('summary.html')
 def summary(item):
     return {'obj': item}
