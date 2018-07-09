@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load cobweb_look %}
+{% load i18n %}
 {% load render_table from django_tables2 %}
 
 {% block page_title %}{{ collection.title }}{% endblock %}
@@ -14,7 +15,7 @@
 	<div class="col-md-5">
 		<div id="div_id_status" class="form-group form-section">
 			<label for="id_status" class="form-control-label">
-				Identifier:
+				{% trans "Identifier:" %}
 			</label>
 			<div class="">
 				{{collection.identifier}}
@@ -24,7 +25,7 @@
 	<div class="col-md-7">
 		<div id="div_id_administrators" class="form-group form-section">
 			<label for="id_administrators" class="form-control-label">
-				Administrators:
+				{% trans "Administrators:" %}
 			</label>
 			<div class="">
 				{% for user in collection.administrators.all %}{% badge user %}{% endfor %}
@@ -36,7 +37,7 @@
 <div class="form-section">
 	<div id="div_id_organization" class="row form-group ">
 		<label for="id_organization" class="col-md-3 col-lg-2 form-control-label ">
-			Identifier:
+			{% trans "Identifier:" %}
     	</label>
     	<div class="col-md ">
 	    	<p id="id_organization">
@@ -46,7 +47,7 @@
 	</div>
 	<div id="div_id_organization" class="row form-group ">
 		<label for="id_organization" class="col-md-3 col-lg-2 form-control-label ">
-			Organization:
+			{% trans "Organization:" %}
     	</label>
     	<div class="col-md ">
 	    	<p id="id_organization">
@@ -56,7 +57,7 @@
 	</div>
 	<div id="div_id_description" class="row form-group ">
 		<label for="id_description" class="col-md-3 col-lg-2 form-control-label ">
-			Description:
+			{% trans "Description:" %}
     	</label>
     	<div class="col-md ">
 	    	<p id="id_description">
@@ -67,7 +68,7 @@
 	{% if collection.tags.count > 0 %}
 		<div id="div_id_tags" class="row form-group ">
 			<label for="id_tags" class="col-md-3 col-lg-2 form-control-label">
-				Tags:
+				{% trans "Tags:" %}
 		    </label>
 			<div class="col-md ">
 				{% for tag in collection.tags.all %}{% badge tag %}{% endfor %}
@@ -87,7 +88,7 @@
 </div>
 
 
-<h4>Holdings</h4>
+<h4>{% trans "Holdings" %}</h4>
 
 {% render_table table %}
 

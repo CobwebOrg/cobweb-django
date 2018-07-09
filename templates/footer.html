@@ -1,10 +1,12 @@
+{% load i18n %}
+
 <footer>
     <hr>
     <div class="d-flex justify-content-end">
         <span class="float-left mr-auto">©2018 Institution TBD</span>
-        <a href="#">About CobWeb</a> <span class="mx-2">•</span>
-        <a href="#">Terms of Use</a> <span class="mx-2">•</span>
-        <a href="#">Accessibility Policy</a> <span class="mx-2">•</span>
-        <a href="#">Contact Us</a>
+        <a href="#">{% trans "About CobWeb" %}</a> <span class="mx-2">•</span>
+        <a href="#">{% trans "Terms of Use" %}</a> <span class="mx-2">•</span>
+        <a href="#">{% trans "Accessibility Policy" %}</a> <span class="mx-2">•</span>
+        <a href="#">{% trans "Contact Us" %}</a>
     </div>
 </footer>

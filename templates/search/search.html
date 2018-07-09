@@ -1,17 +1,16 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
-    <h2>Search results</h2>
+    <h2>{% trans "Search results" %}</h2>
 
     <form method="get" action=".">
 
-        <!-- <h3>{{form.searchqueryset.count}} Results</h3> -->
-
         {% if page.has_previous or page.has_next %}
             <div>
-                {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
+                {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; {% trans "Previous" %}{% if page.has_previous %}</a>{% endif %}
                 |
-                {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
+                {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}{% trans "Next" %} &raquo;{% if page.has_next %}</a>{% endif %}
             </div>
         {% endif %}
 
@@ -19,7 +18,7 @@
             {% for result in page.object_list %}
                 {% include "search/searchresult.html" with result=result %}
             {% empty %}
-                <p>Really, that means nothing.</p>
+                <p>{% trans "No results found." %}</p>
             {% endfor %}
         </ul>
     </form>

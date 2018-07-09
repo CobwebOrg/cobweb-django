@@ -1,9 +1,12 @@
 {% extends "base.html" %}
 {% load static crispy_forms_tags %}
+{% load i18n %}
+
 {% block content %}
   <div class="row">
 
     <div class="col-6 p-5">
+      {% blocktrans %}
       <p>Cobweb is a partnership between the California Digital Library, UCLA, and
       Harvard University.</p>
 
@@ -25,6 +28,7 @@
       those useful to their research.</p>
 
       <p><a href="https://www.cdlib.org/cobweb/">Learn more from CDL</a></p>
+      {% endblocktrans %}
     </div>
 
     <div class="col-6 p-5 d-flex flex-column-reverse justify-content-end align-items-center">

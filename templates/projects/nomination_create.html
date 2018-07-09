@@ -1,20 +1,21 @@
 {% extends "base.html" %}
 {% load crispy from crispy_forms_tags %}
 {% load as_link from cobweb_look %}
+{% load i18n %}
 {% load render_table from django_tables2 %}
 
 {% block window_title %}Cobweb: {{nomination}}{% endblock %}
 
 {% block content %}
     <div class="row"><div class="col mt-1 mb-3">
-        <h2>PROJECT: {{project|as_link}}</h2>
-        <h3>NEW NOMINATION</h3>
+        <h2>{% trans "PROJECT:" %} {{project|as_link}}</h2>
+        <h3>{% trans "NEW NOMINATION" %}</h3>
     </div></div>
 
     <div class="row">
         <div class="col-6">
             <div class="pane">
-                <h4 class="mb-3">PROJECT INFO: </h4>
+                <h4 class="mb-3">{% trans "PROJECT INFO:" %} </h4>
                 {% crispy project_form %}
             </div>
         </div>

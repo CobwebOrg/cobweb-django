@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load crispy from crispy_forms_tags %}
+{% load i18n %}
 {% load model_name from cobweb_look %}
 {% load render_table from django_tables2 %}
 
@@ -17,24 +18,24 @@
             <div class="pane">
                 <div class="nav nav-infotabs">
                         <a class="nav-link {% if view.summary %}active disabled{% endif %}"
-                           href="{% url 'project_summary' pk=object.pk %}">Summary</a>
+                           href="{% url 'project_summary' pk=object.pk %}">{% trans "Summary" %}</a>
                         <a class="nav-link {% if view.nominations %}active disabled{% endif %}"
-                           href="{% url 'project_nominations' pk=object.pk %}">Nominations</a>
-                        <a class="nav-link {% if view.notes %}active disabled{% endif %}">Notes</a>
+                           href="{% url 'project_nominations' pk=object.pk %}">{% trans "Nominations" %}</a>
+                        <a class="nav-link {% if view.notes %}active disabled{% endif %}">{% trans "Notes" %}</a>
                 </div>
 
                 {% if view.summary %}
                     <div class="summary">
                         <div class="n-unclaimed">{{object.n_unclaimed}}</div>
-                        <br>unclaimed nominations
+                        <br>{% trans "unclaimed" %} {% trans "nominations" %}
                     </div>
                     <div class="summary">
                         <div class="n-claimed">{{object.n_claimed}}</div>
-                        <br>claimed nominations
+                        <br>{% trans "claimed" %} {% trans "nominations" %}
                     </div>
                     <div class="summary">
                         <div class="n-held">{{object.n_held}}</div>
-                        held nominations
+                        {% trans "held" %} {% trans "nominations" %}
                     </div>
                 {% elif view.nominations %}
                     <div class="pt-4">{% render_table table %}</div>

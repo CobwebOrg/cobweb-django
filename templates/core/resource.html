@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load cobweb_look %}
+{% load i18n %}
 
 {% block title %}Cobweb: {{ resource.url }}{% endblock %}
 
@@ -10,7 +11,7 @@
 <div class="row">
 	<div class="col">
 		{# <div class="card card_body" #}
-			<a href="{% url 'nominate_resource' url=resource.url %}">Nominate to another project.</a>
+			<a href="{% url 'nominate_resource' url=resource.url %}">{% trans "Nominate to another project." %}</a>
 		{# </div> #}
 	</div>
 </div>

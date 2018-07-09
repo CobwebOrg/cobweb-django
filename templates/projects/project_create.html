@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 {% load crispy from crispy_forms_tags %}
+{% load i18n %}
 {% load model_name from cobweb_look %}
 {% load render_table from django_tables2 %}
 
-{% block window_title %}Cobweb: New Project{% endblock %}
+{% block window_title %}Cobweb: {% trans "New Project" %}{% endblock %}
 
 {% block content %}
     <div class="row">
-        <h2 class="col mt-1 mb-3">New project</h2>
+        <h2 class="col mt-1 mb-3">{% trans "New project" %}</h2>
     </div>
 
     <div class="row h-100">
@@ -16,21 +17,21 @@
         <div class="col-6">
             <div class="pane">
                 <div class="nav nav-infotabs">
-                        <a class="nav-link">Nominations</a>
-                        <a class="nav-link active disabled">Notes</a>
+                        <a class="nav-link">{% trans "Nominations" %}</a>
+                        <a class="nav-link active disabled">{% trans "Notes" %}</a>
                 </div>
 
-                <h2>Project Notes</h2>
+                <h2>{% trans "Project" %} {% trans "Notes" %}</h2>
 
                 <form class="p-3 mb-3"><fieldset>
-                    <textarea class="w-100 p-2">Add a note...</textarea>
+                    <textarea class="w-100 p-2">{% trans "Add a" %} {% trans "note" %}...</textarea>
                     <br>
-                    Visibility:
+                    {% trans "Visibility:" %}
                     <br>
-                    <input type="radio" name="visibility"><label>Public</label>
-                    <input type="radio" name="visibility"><label>Organization</label>
-                    <input type="radio" name="visibility"><label>Project</label>
-                    <button class="ml-auto btn float-right">ADD</button>
+                    <input type="radio" name="visibility"><label>{% trans "Public" %}</label>
+                    <input type="radio" name="visibility"><label>{% trans "Organization" %}</label>
+                    <input type="radio" name="visibility"><label>{% trans "Project" %}</label>
+                    <button class="ml-auto btn float-right">{% trans "ADD" %}</button>
                 </fieldset></form>
                 <form class="p-3 mb-3"><fieldset disabled>
                     <h4>Cobweb Developer

@@ -1,6 +1,8 @@
 {% load cobweb_look %}
+{% load i18n %}
+
 {% if link_url %}
 	<a href="{{ link_url }}" class="btn btn-primary">
-		+ Add a nomination
+		+ {% trans "Add a nomination" %}
 	</a>
 {% endif %}

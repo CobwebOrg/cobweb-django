@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% load django_tables2 %}
+{% load i18n %}
+
 {% block content %}
   <div id="dashboard" class="row">
     <div class="col-3 p-3">
@@ -9,12 +11,12 @@
                 <a href="{{user.organization.get_absolute_url}}" class="text-user-dark">
                     {{user.organization}}</a>
             </p>
-            <p class="mb-4 text-user-dark">Last login: {{user.last_login|date:"M d, Y"}}</p>
+            <p class="mb-4 text-user-dark">{% trans "Last login:" %} {{user.last_login|date:"M d, Y"}}</p>
 
             <table>
-                <tr><td class="pr-2">Replies to notes:</td><td>0</td</tr>
-                <tr><td class="pr-2">New notes:</td><td>2</td></tr>
-                <tr><td class="pr-2">Activity alerts:</td><td>5</td></tr>
+                <tr><td class="pr-2">{% trans "Replies to notes:" %}</td><td>0</td</tr>
+                <tr><td class="pr-2">{% trans "New notes:" %}</td><td>2</td></tr>
+                <tr><td class="pr-2">{% trans "Activity alerts:" %}</td><td>5</td></tr>
             </table>
         </div>
     </div>

@@ -1,43 +1,45 @@
+{% load i18n %}
+
 <div class="object_summary">
     {% if obj.title and not obj.django_ct == 'project' %}
         <div class="md_item">
-            <span class="md_item_label">Title</span>
+            <span class="md_item_label">{% trans 'Title' %}</span>
             {{obj.title}}
         </div>
     {% endif %}
     {% if obj.short_name %}
         <div class="md_item">
-            <span class="md_item_label">Short name</span>
+            <span class="md_item_label">{% trans 'Short name' %}</span>
             {{obj.short_name}}
         </div>
     {% endif %}
     {% if obj.description %}
         <div class="md_item">
-            <span class="md_item_label">Description</span>
+            <span class="md_item_label">{% trans 'Description' %}</span>
             {{obj.description}}
         </div>
     {% endif %}
     {% if obj.parent_organization %}
         <div class="md_item">
-            <span class="md_item_label">Parent organization</span>
+            <span class="md_item_label">{% trans 'Parent organization' %}</span>
             {{obj.parent_organization}}
         </div>
     {% endif %}
     {% if obj.organization %}
         <div class="md_item">
-            <span class="md_item_label">Organization</span>
+            <span class="md_item_label">{% trans 'Organization' %}</span>
             {{obj.organization}}
         </div>
     {% endif %}
     {% if obj.professional_title %}
         <div class="md_item">
-            <span class="md_item_label">Professional title</span>
+            <span class="md_item_label">{% trans 'Professional title' %}</span>
             {{obj.professional_title}}
         </div>
     {% endif %}
     {% if obj.tags %}
         <div class="md_item">
-            <span class="md_item_label">Tags</span>
+            <span class="md_item_label">{% trans 'Tags' %}</span>
             {% for tag in obj.tags %}
                 <span class="tag">{{tag}}</span>
             {% endfor %}
@@ -45,7 +47,7 @@
     {% endif %}
     {% if obj.subject_headings %}
         <div class="md_item">
-            <span class="md_item_label">Subject headings</span>
+            <span class="md_item_label">{% trans 'Subject headings' %}</span>
             {% for sh in obj.subject_headings %}
                 <span class="sh">{{sh}}</span>
             {% endfor %}

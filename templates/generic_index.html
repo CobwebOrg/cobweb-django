@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
 {% load django_tables2 %}
 {% load model_name model_name_plural from cobweb_look %}
 
-{% block title %}Cobweb: {{view.model | model_name_plural | capfirst}} Index{% endblock %}
+{% block title %}Cobweb: {{view.model | model_name_plural | capfirst}} {% trans "Index" %}{% endblock %}
 
 {% block content %}
 <h1>{{view.get_queryset.count}} {{view.model | model_name_plural | capfirst}}</h1>

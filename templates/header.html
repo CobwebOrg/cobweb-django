@@ -1,58 +1,55 @@
+{% load i18n %}
 {% load static %}
 
 <header class="mb-2 position-relative">
 	<nav class="navbar-account">
 		{% if user.is_authenticated %}
-			<span class="nav-welcome">Welcome, {{user}}</span> •
+			<span class="nav-welcome">{% blocktrans %}Welcome, {{user}}{% endblocktrans %}</span> •
 			<a id="account_link" class="nav-link" 
-			   href="{% url 'user_update' pk=request.user.pk %}">Profile</a> •
+			   href="{% url 'user_update' pk=request.user.pk %}">{% trans "Profile" %}</a> •
 			<a id="logout_link" class="nav-link" 
-			   href="{% url 'logout' %}?next={{request.path}}">Logout</a> •
+			   href="{% url 'logout' %}?next={{request.path}}">{% trans "Logout" %}</a> •
 		{% else %}
-			<span class="nav-welcome">Welcome!</span> •
+			<span class="nav-welcome">{% trans "Welcome!" %}</span> •
 			<a id="signup_link" class="nav-link" 
-			   href="{% url 'user_create' %}?next={{request.path}}">Sign Up</a> •
+			   href="{% url 'user_create' %}?next={{request.path}}">{% trans "Sign Up" %}</a> •
 			<a id="login_link" class="nav-link" 
-			   href="{% url 'login' %}?next={{request.path}}">Login</a> •
+			   href="{% url 'login' %}?next={{request.path}}">{% trans "Login" %}</a> •
 		{% endif %}
 		<a class="nav-link disabled">
-			Help
+			{% trans "Help" %}
 		</a>
 	</nav>
 
    <nav class="navbar-pages">
 		<a class="logo-text mr-auto" href="/">
-			CobWeb
+			{% trans "CobWeb" %}
 		</a>
 
 		<div class="dropdown show">
 			<a class="dropdown-toggle nav-link text-uppercase text-ltprimary" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				URLs
+				{% trans "Resources" %}
 			</a>
 		
 			<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-				<a class="dropdown-item" href="{% url 'resource_list' %}">All Resources</a>
-				<a class="dropdown-item">Nominated URLs </a>
-				<a class="dropdown-item">Claims</a>
-				<a class="dropdown-item">Holdings</a>
+				<a class="dropdown-item" href="{% url 'resource_list' %}">{% trans "All Resources" %}</a>
+				<a class="dropdown-item">{% trans "Nominated URLs" %}</a>
+				<a class="dropdown-item">{% trans "Claims" %}</a>
+				<a class="dropdown-item">{% trans "Holdings" %}</a>
 			</div>
 		</div>
 
-		<a class="nav-link text-uppercase text-ltprimary" href="{% url 'project_list' %}">Projects</a>
+		<a class="nav-link text-uppercase text-ltprimary" href="{% url 'project_list' %}">{% trans "Projects" %}</a>
 		
-		{% comment %} <a class="nav-link text-uppercase text-ltprimary"
-		   href="{% url 'project_list' %}">
-			Projects
-		</a> {% endcomment %}
 		<a class="nav-link text-uppercase text-ltprimary"
 		   href="{% url 'organization_list' %}">
-			Organizations
+			{% trans "Organizations" %}
 		</a>
 		
 		<form id="searchform" action="{% url 'search' %}" method="get" accept-charset="utf-8">
 			<div class="input-group">
 				<input id="searchbox" class="form-control" name="q" type="text"
-						placeholder="Search..." aria-label="Search query">
+						placeholder="Search..." aria-label="{% blocktrans %}Search query{% endblocktrans %}">
 				<div class="input-group-append">
 					<button class="btn btn-primary" type="button">
 						<span class="fa fa-search"></span>
