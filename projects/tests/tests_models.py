@@ -107,9 +107,13 @@ class TestClaimModel:
         """Claim.is_admin(user) returns true for Claim's Project and Organization admins."""
 
         claim = ClaimFactory()
-        assert claim.is_admin(AnonymousUser()) is True
+        assert claim.is_admin(AnonymousUser()) is False
 
         user = UserFactory()
+        claim.nomination.project.nomination_policy = 'Cobweb Users'
+        assert claim.is_admin(user) is True
+        claim.nomination.project.nomination_policy = 'Restricted'
+        assert claim.is_admin(user) is False
 
         claim.nomination.project.administrators.add(user)
         assert claim.is_admin(user) is True

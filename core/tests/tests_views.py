@@ -1,11 +1,11 @@
+import pytest
 from django.test import TestCase
 from django.urls import reverse
 from faker import Faker
-import pytest
-
-from core.tests.factories import ResourceFactory
 
 from core import models, views
+from core.tests.factories import ResourceFactory
+from projects.tests.factories import ClaimFactory, NominationFactory
 
 
 class ResourceIndexViewTests(TestCase):

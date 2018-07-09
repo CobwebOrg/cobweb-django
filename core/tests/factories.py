@@ -38,14 +38,14 @@ class TagFactory(factory.DjangoModelFactory):
     class Meta:
         model = Tag
 
-    name = factory.Faker('word')
+    title = factory.Faker('word')
 
 
 class SubjectHeadingFactory(factory.DjangoModelFactory):
     class Meta:
         model = SubjectHeading
 
-    name = factory.Faker('word')
+    title = factory.Faker('word')
 
 
 class ResourceFactory(factory.DjangoModelFactory):

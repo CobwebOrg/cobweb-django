@@ -1,8 +1,7 @@
 import faker
-import hypothesis
-import hypothesis.strategies as st
+# import hypothesis
+# import hypothesis.strategies as st
 import pytest
-from django.urls import reverse
 
 from core.forms import SignUpForm
 

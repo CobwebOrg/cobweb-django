@@ -26,6 +26,7 @@ django-phonenumber-field = "*"
 phonenumbers = "*"
 django-polymorphic = "*"
 django-extra-views = "*"
+splinter = {version = "*", extras = ["django"]}
 
 [dev-packages]
 pytest = "*"

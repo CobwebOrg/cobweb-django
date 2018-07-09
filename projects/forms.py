@@ -100,13 +100,17 @@ class NominationForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
 
-        proj_header = HTML(format_html('<small><a href="{}"> Project: {}</a></small>',
-                                       self.initial['project'].get_absolute_url(),
-                                       str(self.initial['project'])))
+        if 'project' in self.initial:
+            proj_header = HTML(format_html('<small><a href="{}"> Project: {}</a></small>',
+                                           self.initial['project'].get_absolute_url(),
+                                           str(self.initial['project'])))
+        else:
+            proj_header = ''
+            
         if hasattr(self.instance, 'pk') and self.instance.pk is not None:
             nom_header = HTML(format_html('<a href="{}">NOMINATION:</a> {}',
-                                          instance.get_absolute_url(),
-                                          instance.name))
+                                          self.instance.get_absolute_url(),
+                                          self.instance.name))
         else:
             nom_header = HTML('NEW NOMINATION')
         

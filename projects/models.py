@@ -207,7 +207,7 @@ class Nomination(CobwebModelMixin, models.Model):
             return 'held'
 
     def is_admin(self, user: AbstractBaseUser) -> bool:
-        return self.project.is_nominator(user)
+        return user.is_authenticated and self.project.is_nominator(user)
 
 
 @reversion.register()
@@ -261,4 +261,4 @@ class Claim(CobwebModelMixin, models.Model):
         return self.nomination.project
 
     def is_admin(self, user: AbstractBaseUser) -> bool:
-        return self.organization.is_admin(user)
+        return self.organization.is_admin(user) or self.nomination.is_admin(user)
