@@ -186,10 +186,12 @@ footer {
     @extend .btn-link ;
     font-weight: 600;
   }
+
   .nav-link:hover {
     text-decoration: none;
     border-bottom: 3px solid #3D8079;
   }
+  
   .nav-link.disabled, .nav-link.active {
     color: black;
     font-weight: 600;
