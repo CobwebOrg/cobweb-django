@@ -240,7 +240,7 @@ footer {
 
 textarea { resize: none; }
 
-h2 {
+h1, h2 {
   font-weight: 600;
   padding: 0.5rem 0;
 }
@@ -265,6 +265,15 @@ h2 {
 @each $nomination_type in (unclaimed, claimed, held) {
   .badge-#{$nomination_type} {
     @extend .badge, .badge-pill, .badge-#{$nomination_type} ;
+
+    display: inline-block;
+    font-size: .65rem;
+    font-weight: 700;
+    line-height: 1;
+    padding: 0.4em 0.5em;
+    text-transform: uppercase;
+    vertical-align: baseline;
+    white-space: no-wrap;
   }
 }
 

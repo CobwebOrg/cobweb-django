@@ -13,7 +13,7 @@ from crispy_forms.layout import (
     MultiWidgetField,
     Reset,
     Row,
-    Submit,
+    # Submit,
     # TemplateNameMixin,
 )
 import crispy_forms.layout as crispy
@@ -73,6 +73,12 @@ CancelButton = HTML("""
         Cancel
     </a>
 """)
+
+
+class Submit(crispy.Submit):
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, css_class='btn-info')
 
     
 class Pane(Div):

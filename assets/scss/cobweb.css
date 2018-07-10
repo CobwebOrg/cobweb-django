@@ -7789,7 +7789,7 @@ footer {
 textarea {
   resize: none; }
 
-h2 {
+h1, h2 {
   font-weight: 600;
   padding: 0.5rem 0; }
 
@@ -7798,6 +7798,36 @@ h2 {
 
 .asteriskField, .invalid-feedback, .is_invalid {
   color: #DB4D3E; }
+
+.badge-unclaimed {
+  display: inline-block;
+  font-size: .65rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0.4em 0.5em;
+  text-transform: uppercase;
+  vertical-align: baseline;
+  white-space: no-wrap; }
+
+.badge-claimed {
+  display: inline-block;
+  font-size: .65rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0.4em 0.5em;
+  text-transform: uppercase;
+  vertical-align: baseline;
+  white-space: no-wrap; }
+
+.badge-held {
+  display: inline-block;
+  font-size: .65rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0.4em 0.5em;
+  text-transform: uppercase;
+  vertical-align: baseline;
+  white-space: no-wrap; }
 
 .badge-left, .badge-mid {
   border-top-right-radius: 0;
