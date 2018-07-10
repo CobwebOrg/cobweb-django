@@ -11,7 +11,6 @@ from surt import handyurl
 from surt.DefaultIAURLCanonicalizer import canonicalize
 
 import cobweb.types as typ
-from cobweb.models import CobwebModelMixin
 
 
 def normalize_url(url: typ.URL) -> typ.NormalizedURL:
@@ -31,9 +30,7 @@ class NormalizedURLField(models.URLField):
 
 
 @reversion.register()
-class User(CobwebModelMixin, AbstractUser):
-    name_fields = ('username',)
-
+class User(AbstractUser):
     first_name = models.CharField(max_length=200, null=True, blank=False)
     last_name = models.CharField(max_length=200, null=True, blank=False)
     email = models.EmailField(null=True, blank=False)
@@ -68,6 +65,9 @@ class User(CobwebModelMixin, AbstractUser):
     def __str__(self) -> str:
         return self.get_full_name() or self.username or 'User {}'.format(self.pk)
 
+    def __repr__(self) -> str:
+        return f'<User {self.username}>'
+
     def can_claim(self, organization=None) -> bool:
         if organization:
             return self.organization == organization
@@ -84,7 +84,7 @@ class User(CobwebModelMixin, AbstractUser):
 
 
 @reversion.register()
-class Organization(CobwebModelMixin, models.Model):
+class Organization(models.Model):
 
     full_name = models.CharField(max_length=2000, unique=True,
                                  verbose_name="full legal name")
@@ -134,7 +134,7 @@ class Organization(CobwebModelMixin, models.Model):
         return (
             self.name or self.identifier or 'Organization {}'.format(self.pk)
         )
-    
+
     def get_absolute_url(self):
         return reverse('organization_detail', kwargs={'pk': self.pk})
 
@@ -143,7 +143,7 @@ class Organization(CobwebModelMixin, models.Model):
 
 
 @reversion.register()
-class Note(CobwebModelMixin, models.Model):
+class Note(models.Model):
     """A note about an object tracked in Cobweb.
 
     Fields:
@@ -174,34 +174,48 @@ class Note(CobwebModelMixin, models.Model):
 
     @property
     def name(self) -> str:
-        if hasattr(self, '_name'):
-            return self._name
-        else:
-            return '\n'.join((
-                self.author,
-                self.when_created,
-                're: ' + self.ref,
-            ))
+        return '\n'.join((
+            self.author,
+            self.when_created,
+            're: ' + self.ref,
+        ))
 
 
 @reversion.register()
-class Tag(CobwebModelMixin, models.Model):
+class Tag(models.Model):
     """A single tag."""
-    name_fields = ('title',)
     title = models.CharField(max_length=200, unique=True, db_index=True)
 
+    @property
+    def name(self):
+        return self.title
 
-class SubjectHeading(CobwebModelMixin, models.Model):
+    def __str__(self):
+        return self.title
+    
+    def __repr__(self):
+        return f'<Tag self.title>'
+
+
+class SubjectHeading(models.Model):
     """A FAST subject heading (cf. https://www.oclc.org/research/themes/data-science/fast.html)."""
     name_fields = ('title',)
     title = models.CharField(max_length=200, unique=True)
 
     # TODO: Validate based on official list? Pre-load list in migration?
 
+    @property
+    def name(self):
+        return self.title
 
-class Resource(CobwebModelMixin, models.Model):
-    name_fields = ('url',)
+    def __str__(self):
+        return self.title
+    
+    def __repr__(self):
+        return f'<SubjectHeading self.title>'
 
+
+class Resource(models.Model):
     url = NormalizedURLField(max_length=1000, null=False, blank=False,
                              unique=True)
 
@@ -232,9 +246,19 @@ class Resource(CobwebModelMixin, models.Model):
             self.nominations.count()
         )
 
+    @property
+    def name(self):
+        return self.url
+
+    def __str__(self):
+        return self.url
+    
+    def __repr__(self):
+        return f'<Resource self.url>'
+
 
 @reversion.register
-class ResourceDescription(CobwebModelMixin, models.Model):
+class ResourceDescription(models.Model):
     """Desecriptive metadata about a Resource, asserted by a User."""
 
     resource = models.ForeignKey(Resource, on_delete=models.PROTECT)
@@ -253,12 +277,12 @@ class ResourceDescription(CobwebModelMixin, models.Model):
     class Meta:
         unique_together = ('resource', 'asserted_by')
 
-    def __str__(self) -> str:
-        return f'{self.resource} asserted_by={self.asserted_by}'
+    def __repr__(self) -> str:
+        return f'<ResourceDescription {self.resource} asserted_by={self.asserted_by}>'
 
 
 @reversion.register
-class CrawlScope(CobwebModelMixin, models.Model):
+class CrawlScope(models.Model):
     class Meta:
         unique_together = ('title', 'organization')
 
@@ -297,3 +321,13 @@ class CrawlScope(CobwebModelMixin, models.Model):
                                   'Unknown')],
         default='Unknown',
     )
+
+    @property
+    def name(self):
+        return self.title
+
+    def __str__(self):
+        return self.title
+    
+    def __repr__(self):
+        return f'<CrawlScope self.title>'

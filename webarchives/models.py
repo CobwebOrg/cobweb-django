@@ -11,7 +11,6 @@ import sickle
 from sickle import Sickle
 
 import cobweb.types as T
-from cobweb.models import CobwebModelMixin
 from core.models import Organization
 from core.models import normalize_url, Resource
 
@@ -26,12 +25,10 @@ def parse_wayback_url(wayback_url):
         raise ex
 
 
-class ImportedRecord(CobwebModelMixin, models.Model):
+class ImportedRecord(models.Model):
 
     class Meta:
         unique_together = ('source_feed', 'identifier')
-
-    name_fields: T.Tuple[str, ...] = ('source_feed', 'identifier')
 
     source_feed = models.ForeignKey('APIEndpoint', on_delete=models.CASCADE)
     identifier = models.CharField(max_length=2000, unique=True)
@@ -66,11 +63,10 @@ class ImportedRecord(CobwebModelMixin, models.Model):
 
                 
 @reversion.register()
-class APIEndpoint(CobwebModelMixin, PolymorphicModel):
+class APIEndpoint(PolymorphicModel):
 
     class Meta:
         verbose_name = "API Endpoint"
-    name_fields = ('url',)
 
     organization = models.ForeignKey(Organization, null=True, blank=True,
                                      on_delete=models.SET_NULL)
@@ -82,6 +78,16 @@ class APIEndpoint(CobwebModelMixin, PolymorphicModel):
 
     def harvest(self) -> None:
         raise NotImplementedError('APIEndpoint.harvest() needs to be implemented by a subclass.')
+
+    @property
+    def name(self):
+        return self.url
+
+    def __str__(self):
+        return self.url
+    
+    def __repr__(self):
+        return f'<APIEndpoint self.url>'
 
 
 class OAIPMHEndpoint(APIEndpoint):

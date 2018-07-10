@@ -6,15 +6,12 @@ from django.db.models.query import QuerySet
 from django.urls import reverse
 
 from cobweb import settings
-from cobweb.models import CobwebModelMixin
 
 
 @reversion.register()
-class Project(CobwebModelMixin, models.Model):
+class Project(models.Model):
     """Django ORM model for a Cobweb project."""
     
-    name_fields = ('title',)
-
     title = models.CharField(max_length=500, unique=True)
     description = models.TextField(null=True, blank=False)
 
@@ -119,10 +116,20 @@ class Project(CobwebModelMixin, models.Model):
     @property
     def n_held(self) -> int:
         return self.nominations_held.count()
+    
+    @property
+    def name(self):
+        return self.title
+
+    def __str__(self):
+        return self.title
+    
+    def __repr__(self):
+        return f'<Project self.title>'
 
 
 @reversion.register()
-class Nomination(CobwebModelMixin, models.Model):
+class Nomination(models.Model):
     class Meta:
         unique_together = ('resource', 'project')
         
@@ -171,12 +178,18 @@ class Nomination(CobwebModelMixin, models.Model):
 
     @property
     def name(self) -> str:
-        return self.title or self.resource.title or self.resource.url
+        return self.title or str(self.resource)
 
+    def __str__(self) -> str:
+        return self.name
+    
+    def __repr__(self) -> str:
+        return f'<Nomination {self.name} project={self.project}>'
 
     def get_absolute_url(self) -> str:
-        return reverse('nomination_claims', kwargs={'project_pk': self.project.pk,
-                                                    'url': self.resource.url})
+        return reverse('nomination_claims',
+                       kwargs={'project_pk': self.project.pk,
+                               'url': self.resource.url})
 
     def get_edit_url(self) -> str:
         return reverse('nomination_update', kwargs={
@@ -211,7 +224,7 @@ class Nomination(CobwebModelMixin, models.Model):
 
 
 @reversion.register()
-class Claim(CobwebModelMixin, models.Model):
+class Claim(models.Model):
     class Meta:
         unique_together = ('nomination', 'organization')
 
@@ -241,8 +254,15 @@ class Claim(CobwebModelMixin, models.Model):
         else:
             return 1
 
+    @property
+    def name(self) -> str:
+        return self.make_name(sep=' - ')
+
     def __str__(self) -> str:
-        return f'{self.nomination} – Organization {self.organization}'
+        return self.name
+
+    def __repr__(self) -> str:
+        return f'<Claim {self.pk}>'
 
     def get_absolute_url(self) -> str:
         return reverse('claim_detail', kwargs={'pk': self.pk})
