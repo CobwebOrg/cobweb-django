@@ -21,20 +21,20 @@
         </div>
     </div>
 
-    <div class="col-9 p-3 accordion" id="accordion">
+    <div class="col-9 p-3 " id="dash-tabs">
         <div class="nav nav-infotabs">
             {% for table in tables %}
                 <a class="btn btn-link{% if notforloop.first %} collapsed{% endif %} nav-link" data-toggle="collapse"
                    href="#{{table.table_title|slugify}}">{{ table.table_title }}</a>
             {% endfor %}
-            
-            {% for table in tables %}
-                <div class="collapse{% if forloop.first %} show{% endif %}"
-                     id="{{table.table_title|slugify}}" data-parent="#accordion">
-                    {% render_table table %}
-                </div>
-            {% endfor %}
         </div>
+            
+        {% for table in tables %}
+            <div class="collapse{% if forloop.first %} show{% endif %}"
+                    id="{{table.table_title|slugify}}" data-parent="#dash-tabs">
+                {% render_table table %}
+            </div>
+        {% endfor %}
     </div>
 
     {% block load_react_script %}
