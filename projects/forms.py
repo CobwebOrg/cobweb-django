@@ -79,7 +79,7 @@ class ProjectForm(forms.ModelForm):
 
             Row(Column(Field('tags', edit=editable))),
 
-            FORM_BUTTONS if editable else Div(),
+            FORM_BUTTONS if editable else HTML(''),
         )
 
 
@@ -141,7 +141,7 @@ class NominationForm(forms.ModelForm):
                     Row(Column(Field('rationale', edit=editable))),
                     Row(Column(Field('suggested_crawl_frequency', edit=editable), css_class='col-6'),
                         Column(Field('suggested_crawl_end_date', edit=editable), css_class='col-6')),
-                    FORM_BUTTONS if editable else Div(),
+                    FORM_BUTTONS if editable else HTML(''),
                     css_class='col-5',
                 ),
                 css_class='flex-grow-1',

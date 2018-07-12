@@ -13,7 +13,7 @@ from crispy_forms.layout import (
     MultiWidgetField,
     Reset,
     Row,
-    # Submit,
+    Submit,
     # TemplateNameMixin,
 )
 import crispy_forms.layout as crispy
@@ -68,19 +68,41 @@ title_plaintext_field = Layout(
 title_form_field = Field('title', wrapper_class="col-md-12")
 
 
-CancelButton = HTML("""
-    <a href="{{object.get_absolute_url}}" class="btn btn-light btn btn-outline-dark mr-1">
-        Cancel
-    </a>
+FORM_BUTTONS = HTML("""
+    <div class="row">
+        <div class="col d-flex flex-row justify-content-end">
+            <button type="reset" class="btn btn-light btn-outline-dark mr-1">
+                Reset
+            </button>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
+                Submit
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal for Confirmation Dialog -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Please Confirm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Click "Submit" to save.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light btn-outline-dark mr-1" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-info">Submit</button>
+            </div>
+            </div>
+        </div>
+    </div>
 """)
 
 
-class Submit(crispy.Submit):
-    
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, css_class='btn-info')
-
-    
 class Pane(Div):
     def __init__(self, *args, **kwargs):
         # try:
@@ -96,22 +118,13 @@ class Column(Div):
 
     For Cobweb, we override the default django_crispy_forms Column, which uses
     the bootstrap-incompatible class name "formColumn".
-    
+
     Example::
 
         Column('form_field_1', 'form_field_2')
     """
     css_class = 'col'
 
-
-FORM_BUTTONS = Row(
-    Column(
-        CancelButton,
-        Submit('submit', 'Submit'),
-        css_class = 'col d-flex flex-row justify-content-end',
-    ),
-)
-        
 
 class FormSection(Div):
     def __init__(self, *args, **kwargs):

@@ -2,8 +2,9 @@ import haystack.forms
 from crispy_forms.helper import FormHelper
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
-from core.layout import (Layout, Column, Row, CancelButton, Submit, Field, FormActions, Fieldset,
-                         UneditableField, HTML, Hidden, Reset, Div)
+from core.layout import (Layout, Column, Row, Submit, Field, FormActions,
+                         FORM_BUTTONS, Fieldset, UneditableField, HTML,
+                         Reset, Div)
 from core.models import User
 
 
@@ -17,11 +18,11 @@ class LoginForm(AuthenticationForm):
                 Field('username', edit=True),
                 Field('password', edit=True),
                 FormActions(
-                    Reset('reset', 'Reset'),
-                    Submit('submit', 'Submit'),
+                    Reset('reset', 'Reset', css_class='btn btn-light btn-outline-dark mr-1'),
+                    Submit('submit', 'Submit', css_class='btn btn-info'),
                     css_class='float-right',
                 ),
-                css_class='mt-5'
+                css_class='mt-5',
             ),
         )
 
@@ -50,11 +51,11 @@ class SignUpForm(UserCreationForm):
                     Field('password1', edit=edit),
                     Field('password2', edit=edit),
 
-                    (FormActions(
-                        CancelButton,
-                        Submit('submit', 'Submit'),
+                    FormActions(
+                        Reset('reset', 'Reset', css_class='btn btn-light btn-outline-dark mr-1'),
+                        Submit('submit', 'Submit', css_class='btn btn-info'),
                         css_class='float-right',
-                    ) if edit else None),
+                    ),
                     css_class='col-6',
                 )
             )
@@ -67,7 +68,7 @@ class UserProfileForm(UserCreationForm):
         model = User
         exclude = ()
 
-    def __init__(self, *args, edit=True, **kwargs):
+    def __init__(self, *args, editable=True, **kwargs):
         super().__init__(*args, **kwargs)
         # import pdb; pdb.set_trace()
 
@@ -90,11 +91,7 @@ class UserProfileForm(UserCreationForm):
                      Field('get_notification_emails', edit=edit),
                      ),
 
-            FormActions(
-                CancelButton,
-                Submit('submit', 'Submit'),
-                css_class='float-right'
-            ) if edit else None,
+            FORM_BUTTONS if editable else HTML(''),
         )
 
 
