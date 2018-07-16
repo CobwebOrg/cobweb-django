@@ -51,11 +51,7 @@ class SignUpForm(UserCreationForm):
                     Field('password1', edit=edit),
                     Field('password2', edit=edit),
 
-                    FormActions(
-                        Reset('reset', 'Reset', css_class='btn btn-light btn-outline-dark mr-1'),
-                        Submit('submit', 'Submit', css_class='btn btn-info'),
-                        css_class='float-right',
-                    ),
+                    FORM_BUTTONS,
                     css_class='col-6',
                 )
             )
