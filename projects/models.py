@@ -125,7 +125,7 @@ class Project(models.Model):
         return self.title
     
     def __repr__(self):
-        return f'<Project self.title>'
+        return f'Project(pk={self.pk}, title={self.title})'
 
 
 @reversion.register()
@@ -187,7 +187,7 @@ class Nomination(models.Model):
         return f'<Nomination {self.name} project={self.project}>'
 
     def get_absolute_url(self) -> str:
-        return reverse('nomination_claims',
+        return reverse('nomination_detail',
                        kwargs={'project_pk': self.project.pk,
                                'url': self.resource.url})
 

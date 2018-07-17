@@ -68,11 +68,11 @@ class NominationTable(CobwebBaseTable):
 
     class Meta(CobwebBaseTable.Meta):
         model = Nomination
-        fields = ('name', 'status', 'claim_link')
+        fields = ('name', 'status')  #, 'claim_link')
         empty_text = "No nominations."
 
     name = django_tables2.LinkColumn(
-        viewname='nomination_claims',
+        viewname='nomination_detail',
         kwargs={'project_pk': Accessor('project_pk'),
                 'url': Accessor('url')},
         verbose_name='Nomination',
@@ -83,13 +83,12 @@ class NominationTable(CobwebBaseTable):
         attrs={'cell': {'class': 'text-center'}},
     )
     
-    claim_link = django_tables2.LinkColumn(
-        viewname='nomination_claims',
-        kwargs={'project_pk': Accessor('project_pk'),
-                'url': Accessor('url')},
-        text='claim',
-        verbose_name='', orderable=False,
-    )
+    # claim_link = django_tables2.LinkColumn(
+    #     viewname='nomination_detail',
+    #     kwargs={'project_pk': Accessor('project_pk'),
+    #             'url': Accessor('url')},
+    #     text='[claim]', verbose_name='', orderable=False,
+    # )
 
 
 class ClaimTable(CobwebBaseTable):

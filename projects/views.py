@@ -99,30 +99,32 @@ class ProjectNominationsView(django_tables2.SingleTableMixin, ProjectSummaryView
         return kwargs
 
 
-class NominationUpdateView(RevisionMixin, UpdateView):
+class NominationUpdateView(UserPassesTestMixin, RevisionMixin, UpdateView):
     model = models.Nomination
-    template_name = 'generic_form.html'
     form_class = forms.NominationForm
-    
+    template_name = 'generic_form.html'
+    table_class = ClaimTable
+
     def get_form_kwargs(self):
         """Return the keyword arguments for instantiating the form."""
         kwargs = super().get_form_kwargs()
-        project = self.get_object().project
-        kwargs['editable'] = project.is_nominator(self.request.user)
+        kwargs['editable'] = True
         return kwargs
 
     def get_object(self, queryset=None):
-        assert queryset is None, "NominationClaimsView doesn't take a queryset."
         try:
             # Get the single item from the filtered queryset
-            obj =  models.Nomination.objects.filter(
+            obj =  models.Nomination.objects.get(
                 project__pk=self.kwargs['project_pk'],
                 resource__url=self.kwargs['url'],
-            ).get()
+            )
         except queryset.model.DoesNotExist:
             raise Http404(_("No %(verbose_name)s found matching the query") %
                         {'verbose_name': queryset.model._meta.verbose_name})
         return obj
+    
+    def test_func(self):
+        return self.get_object().is_admin(self.request.user)
 
 
 class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
@@ -142,15 +144,13 @@ class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
     def get_initial(self):
         return {
             'nominated_by': (self.request.user,),
-            'project': self.get_project(),
+            'project': self.get_project().pk,
         }
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        proj = self.get_project()
         context.update({
-            'project': proj,
-            # 'project_form': forms.ProjectForm(instance=proj),
+            'project': self.get_project(),
         })
         return context
     
@@ -199,14 +199,14 @@ class ResourceNominateView(RevisionMixin, CreateView):
         return True
         # return self.get_project().is_nominator(self.request.user)
 
-class NominationClaimsView(RevisionMixin, InlineFormSetView, UpdateView):
+
+class NominationDetailView(RevisionMixin, django_tables2.SingleTableMixin, UpdateView):
     model = models.Nomination
-    inline_model = models.Claim
-    form_class = forms.NominationDisplayForm
-    template_name = 'projects/nomination.html'
+    form_class = forms.NominationForm
+    template_name = 'generic_form.html'
+    table_class = ClaimTable
 
     def get_object(self, queryset=None):
-        assert queryset is None, "NominationClaimsView doesn't take a queryset."
         try:
             # Get the single item from the filtered queryset
             obj =  models.Nomination.objects.filter(
@@ -226,10 +226,16 @@ class NominationClaimsView(RevisionMixin, InlineFormSetView, UpdateView):
         kwargs['editable'] = False
         return kwargs
     
-    def get_factory_kwargs(self):
-        kwargs = super().get_factory_kwargs()
-        kwargs['extra'] = 1
-        kwargs['form'] = forms.ClaimForm
+    def get_table_data(self):
+        return (haystack.query.SearchQuerySet()
+                .filter(django_ct__exact='projects.claim')
+                .filter(nomination_pk__exact=self.object.pk))
+
+    def get_table_kwargs(self):
+        kwargs = super().get_table_kwargs()
+        if self.request.user.can_claim():
+            kwargs['new_item_link'] = self.get_object().get_claim_url()
+        kwargs.update({'exclude': ('nomination',)})
         return kwargs
 
 

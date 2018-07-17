@@ -2,6 +2,7 @@ from crispy_forms.helper import FormHelper
 from dal import autocomplete
 from django import forms
 from django.contrib.auth.models import AnonymousUser
+from django.urls import reverse
 from django.utils.html import format_html
 
 from core.layout import *
@@ -96,28 +97,30 @@ class NominationForm(forms.ModelForm):
     
     resource = forms.URLField(widget=ResourceInput, initial='http://')
 
-    def __init__(self, *args, editable=False, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, *args, editable=False, instance=None, **kwargs):
+        super().__init__(*args, instance=instance, **kwargs)
         self.helper = FormHelper(self)
 
         if 'project' in self.initial:
-            proj_header = HTML(format_html('<small><a href="{}"> Project: {}</a></small>',
-                                           self.initial['project'].get_absolute_url(),
-                                           str(self.initial['project'])))
+            project = Project.objects.get(pk=self.initial['project'])
+            proj_header = HTML(format_html(
+                '<h2 class="mb-0"><small><a href="{}"> Project: {}</a></small></h2>',
+                project.get_absolute_url(),
+                str(project),
+            ))
         else:
-            proj_header = ''
+            proj_header = HTML('')
             
         if hasattr(self.instance, 'pk') and self.instance.pk is not None:
-            nom_header = HTML(format_html('<a href="{}">NOMINATION:</a> {}',
-                                          self.instance.get_absolute_url(),
-                                          self.instance.name))
+            nom_header = HTML(format_html('<h3>NOMINATION: {}</h3>',
+                                          str(self.instance)))
         else:
-            nom_header = HTML('NEW NOMINATION')
+            nom_header = HTML('<h3>NEW NOMINATION</h3>')
         
         self.helper.layout = Layout(
             Div(
-                Div(H2(proj_header)),
-                Div(H3(nom_header)),
+                proj_header,
+                nom_header,
                 css_class='px-3 pt-0 pb-2 w-100'
             ),
 
@@ -142,6 +145,12 @@ class NominationForm(forms.ModelForm):
                     Row(Column(Field('suggested_crawl_frequency', edit=editable), css_class='col-6'),
                         Column(Field('suggested_crawl_end_date', edit=editable), css_class='col-6')),
                     FORM_BUTTONS if editable else HTML(''),
+
+                    HTML("""{% if table %}
+                                <h5>Claims</h5>
+                                {% load render_table from django_tables2 %}
+                                {% render_table table %}
+                            {% endif %}"""),
                     css_class='col-5',
                 ),
                 css_class='flex-grow-1',
@@ -155,36 +164,6 @@ class NominationForm(forms.ModelForm):
             raise forms.ValidationError("Please enter a URL.")
         else:
             return Resource.objects.get_or_create(url=url)[0]
-
-
-class NominationDisplayForm(forms.ModelForm):
-    class Meta:
-        model = Nomination
-        fields = ('__all__')
-        widgets = {
-            'tags': autocomplete.ModelSelect2Multiple(
-                url='tag_autocomplete',
-                attrs={'data-allow-clear': 'false'},
-            ),
-        }
-
-    def __init__(self, *args, editable=False, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper(self)
-        self.helper.layout = Layout(
-            Row(Column(HField('title'))),
-            Row(Column(HField('description'))),
-            Row(Column(Field('tags'))),
-            Row(Column(Field('language'))),
-
-            Row(Column(HTML('<h4>Nomination Info</h4>'))),
-
-            Field('project', type='hidden'),
-            Field('nominated_by', type='hidden'),
-            Row(Column(Field('rationale'))),
-            Row(Column(Field('suggested_crawl_frequency'), css_class='col-6'),
-                Column(Field('suggested_crawl_end_date'), css_class='col-6')),
-        )
 
 
 class ClaimForm(forms.ModelForm):
