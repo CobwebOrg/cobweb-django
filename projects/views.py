@@ -1,3 +1,5 @@
+from typing import Optional
+
 import django_tables2
 import haystack
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -41,7 +43,6 @@ class ProjectCreateView(LoginRequiredMixin, RevisionMixin, CreateView):
     def get_initial(self):
         initial = super().get_initial()
         initial['administrators'] = {self.request.user.pk}
-        print(initial)
         return initial
     
     def get_form_kwargs(self):
@@ -233,7 +234,7 @@ class NominationDetailView(RevisionMixin, django_tables2.SingleTableMixin, Updat
 
     def get_table_kwargs(self):
         kwargs = super().get_table_kwargs()
-        if self.request.user.can_claim():
+        if self.request.user.is_authenticated and self.request.user.can_claim():
             kwargs['new_item_link'] = self.get_object().get_claim_url()
         kwargs.update({'exclude': ('nomination',)})
         return kwargs
@@ -244,27 +245,53 @@ class ClaimDetailView(DetailView):
     template_name = 'projects/claim.html'
 
 
-class ClaimFormViewMixin(UserPassesTestMixin, RevisionMixin):
+class ClaimCreateView(UserPassesTestMixin, CreateView):
     model = models.Claim
-    template_name = 'generic_form.html'
+    template_name = 'projects/claim.html'
     form_class = forms.ClaimForm
+    _nomination: Optional[models.Nomination] = None
 
-    def get_form(self, *args, **kwargs):
-        form = super().get_form(*args, **kwargs)
-        form.fields['organization'].queryset = (
-            self.request.user.collections_administered
-        )
-        return form
+    def get_context_data(self, **kwargs):
+        """Insert forms w/ the parent nomination & project into the context dict."""
+
+        nomination = self.get_nomination()
+        context = {
+            'nomination_form': forms.NominationForm(instance=nomination),
+            'project_form': forms.ProjectForm(instance=nomination.project)
+        }
+        context.update(kwargs)
+        return super().get_context_data(**context)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({
+            'editable': True,
+            'instance': models.Claim(nomination=self.get_nomination(),
+                                     organization=self.request.user.organization),
+        })
+        return kwargs
+
+    def get_initial(self):
+        return {
+            'organization': self.request.user.organization.pk,
+            'nomination': self.kwargs['nomination_pk'],
+        }
+
+    def get_nomination(self):
+        """Get the nomination being claimed."""
+
+        if self._nomination is None:
+            self._nomination = models.Nomination.objects.get(pk=self.kwargs['nomination_pk'])
+        return self._nomination
 
     def test_func(self):
         return self.request.user.can_claim()
 
 
-class ClaimCreateView(ClaimFormViewMixin, CreateView):
+class ClaimUpdateView(UserPassesTestMixin, UpdateView):
+    model = models.Claim
+    template_name = 'generic_form.html'
+    form_class = forms.ClaimForm
 
-    def get_initial(self):
-        return {'nomination': self.kwargs['nomination_pk']}
-
-
-class ClaimUpdateView(ClaimFormViewMixin, UpdateView):
-    pass
+    def test_func(self):
+        return self.object.is_admin(self.request.user)

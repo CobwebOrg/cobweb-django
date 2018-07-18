@@ -1,42 +1,50 @@
 {% extends "base.html" %}
-{% load badge icon claim_button edit_link from cobweb_look %}
+{% load crispy from crispy_forms_tags %}
 {% load i18n %}
+{% load model_name from cobweb_look %}
 {% load render_table from django_tables2 %}
 
 {% block title %}Cobweb: {{ claim }}{% endblock %}
 
 {% block content %}
-
-
-<div class="row">
-  <div class="col-md-12">
-    <h4>{% edit_link claim user %}{{claim.nomination.project}}<br>{{claim.nomination.name}}</h4>
-  </div>
-</div>
-
-<div class="row">
-  <div class="formColumn col-md-12">
-    <div class="form-section">
-      <div id="div_id_status" class="form-group">
-        <label for="id_status" class="form-control-label  requiredField">
-          {% trans "Status" %}
-        </label>
-        <div class="">{{claim.status}}</div>
-      </div>
-      <div id="div_id_organization" class="form-group">
-        <label for="id_organization" class="form-control-label  requiredField">
-          {% trans "Organization" %}
-        </label>
-        <div class="">{{claim.organization}}</div>
-      </div>
-      <div id="div_id_collection" class="form-group">
-        <label for="id_collection" class="form-control-label  requiredField">
-          {% trans "Collection" %}
-        </label>
-        <div class="">{{claim.collection}}</div>
-      </div>
+    <div class="row">
+        <h2 class="col mt-1 mb-3">Claim Nominated URL</h2>
     </div>
-  </div>
-</div>
 
+    <div class="row h-100">
+        <div class="col-6">
+            <div class="pane">
+
+                <div class="nav nav-tabs nav-infotabs mb-4" id="myTab" role="tablist">
+
+                    <a class="nav-link active" id="project-tab" data-toggle="tab"
+                        href="#project" role="tab" aria-controls="project" 
+                        aria-selected="true">
+                        {% trans "Project Information" %}
+                    </a>
+
+                    <a class="nav-link" id="nomination-tab" data-toggle="tab"
+                        href="#nomination" role="tab" aria-controls="nomination"
+                        aria-selected="false">
+                        {% trans "Nomination Information" %}
+                    </a>
+
+                </div>
+
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="project"
+                        role="tabpanel" aria-labelledby="project-tab">
+                        {% crispy project_form %}
+                  </div>
+                  <div class="tab-pane fade" id="nomination" role="tabpanel"
+                        aria-labelledby="nomination-tab">
+                        {% crispy nomination_form %}
+                  </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-6"><div class="pane">{% crispy form %}</div></div>
+    </div>
 {% endblock %}

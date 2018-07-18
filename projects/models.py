@@ -163,11 +163,19 @@ class Nomination(models.Model):
 
     rationale = models.TextField(null=True, blank=True)
 
-    suggested_crawl_frequency = models.CharField(
+    # CRAWL SCOPE - SIMPLE FIELDS
+    # TODO: more complicated data w/ linked model
+    crawl_start_date = models.DateField(null=True, blank=True)
+    crawl_end_date = models.DateField(null=True, blank=True)
+    crawl_frequency = models.CharField(
         null=True, blank=True, max_length=50,
         choices=[(x, x) for x in ('Hourly', 'Daily', 'Weekly', 'Monthly')]
     )
-    suggested_crawl_end_date = models.DateTimeField(null=True, blank=True)
+    follow_links = models.IntegerField(null=True, blank=True)
+    page_scope = models.CharField(
+        null=True, blank=True, max_length=50,
+        choices=[(x, x) for x in ('Page', 'Site', 'Domain')]
+    )
 
     notes = GenericRelation('core.Note')
 
@@ -244,6 +252,21 @@ class Claim(models.Model):
 
     crawl_scope = models.ForeignKey('core.CrawlScope', null=True, blank=True,
                                     on_delete=models.CASCADE)
+
+    # CRAWL SCOPE - SIMPLE FIELDS
+    # TODO: more complicated data w/ linked model
+    crawl_frequency = models.CharField(
+        null=True, blank=True, max_length=50,
+        choices=[(x, x) for x in ('Hourly', 'Daily', 'Weekly', 'Monthly')]
+    )
+    crawl_start_date = models.DateField(null=True, blank=True)
+    crawl_end_date = models.DateField(null=True, blank=True)
+    follow_links = models.IntegerField(null=True, blank=True)
+    page_scope = models.CharField(
+        null=True, blank=True, max_length=50,
+        choices=[(x, x) for x in ('Page', 'Site', 'Domain')]
+    )
+
 
     notes = GenericRelation('core.Note')
 

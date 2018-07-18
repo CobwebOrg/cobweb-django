@@ -189,6 +189,9 @@ footer {
 
   .nav-link:hover {
     text-decoration: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
     border-bottom: 3px solid #3D8079;
   }
   
@@ -197,8 +200,10 @@ footer {
     font-weight: 600;
   }
 
-  .active {
+  .nav-link.active {
     @extend .disabled ;
+    text-decoration: none;
+    background-color: transparent;
     border-bottom: 3px solid black;
   }
 }

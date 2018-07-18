@@ -296,12 +296,10 @@ class CrawlScope(models.Model):
     override_robot_exclusion = models.NullBooleanField(null=True, blank=True, default=False)
 
     boundary_behavior = models.CharField(max_length=200, null=True, blank=True,
-                                         choices=(
-                                            ('Page', 'Page'),
-                                            ('Site', 'Site'),
-                                            ('Host', 'Host'),
-                                            ('Domain', 'Domain'),
-                                         ))
+                                         choices=(('Page', 'Page'),
+                                                  ('Site', 'Site'),
+                                                  ('Host', 'Host'),
+                                                  ('Domain', 'Domain')))
 
     max_embedded_links = models.PositiveIntegerField(null=True, blank=True)
     max_content_links = models.PositiveIntegerField(null=True, blank=True)

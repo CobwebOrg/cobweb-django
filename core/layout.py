@@ -46,12 +46,23 @@ class Field(crispy.Field):
         if not edit:
             self.attrs['disabled'] = True
 
-    def render(self, *args, **kwargs):
+    def render(self, form, form_style, context, template_pack='bootstrap4',
+               extra_context=None, **kwargs):
         if not self.show:
             return ''
         else:
-            return super().render(*args, **kwargs)
+            return super().render(form, form_style, context, template_pack='bootstrap4',
+                                  extra_context=None, **kwargs)
 
+def crawl_scope_fields(editable=False):
+    return Layout(
+        Row(
+            Column(Field('crawl_start_date',  edit=editable), css_class='col-4'),
+            Column(Field('crawl_end_date', edit=editable), css_class='col-4'),
+            Column(Field('crawl_frequency', edit=editable), css_class='col-4')
+        ),
+                    
+)
 
 title_plaintext_field = Layout(
     HTML("""
@@ -68,39 +79,44 @@ title_plaintext_field = Layout(
 title_form_field = Field('title', wrapper_class="col-md-12")
 
 
-FORM_BUTTONS = HTML("""
-    <div class="row">
-        <div class="col d-flex flex-row justify-content-end">
-            <button type="reset" class="btn btn-light btn-outline-dark mr-1">
-                Reset
-            </button>
-            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
-                Submit
-            </button>
-        </div>
-    </div>
-
-    <!-- Modal for Confirmation Dialog -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Please Confirm</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+def form_buttons(confirm_title='Please Confirm',
+                 confirm_text='Click "Submit" to save.') -> HTML:
+    return HTML(f"""
+        <div class="row">
+            <div class="col d-flex flex-row justify-content-end">
+                <button type="reset" class="btn btn-light btn-outline-dark mr-1">
+                    Reset
+                </button>
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
+                    Submit
                 </button>
             </div>
-            <div class="modal-body">
-                Click "Submit" to save.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light btn-outline-dark mr-1" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-info">Submit</button>
-            </div>
+        </div>
+
+        <!-- Modal for Confirmation Dialog -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{confirm_title}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {confirm_text}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light btn-outline-dark mr-1" data-dismiss="modal">Cancel</button>
+                    <input name="submit" value="Submit" class="btn btn-primary btn btn-info"
+                           id="submit-id-submit" type="submit">
+                </div>
+                </div>
             </div>
         </div>
-    </div>
-""")
+    """)
+
+FORM_BUTTONS = form_buttons()
 
 
 class Pane(Div):

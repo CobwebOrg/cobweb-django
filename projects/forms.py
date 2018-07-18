@@ -2,6 +2,7 @@ from crispy_forms.helper import FormHelper
 from dal import autocomplete
 from django import forms
 from django.contrib.auth.models import AnonymousUser
+from django.forms import DateField, DateInput
 from django.urls import reverse
 from django.utils.html import format_html
 
@@ -93,6 +94,8 @@ class NominationForm(forms.ModelForm):
                 url='tag_autocomplete',
                 attrs={'data-allow-clear': 'false'},
             ),
+            'crawl_start_date': DateInput,
+            'crawl_end_date': DateInput,
         }
     
     resource = forms.URLField(widget=ResourceInput, initial='http://')
@@ -142,8 +145,7 @@ class NominationForm(forms.ModelForm):
                     Field('project', type='hidden', edit=editable),
                     Field('nominated_by', type='hidden', edit=editable),
                     Row(Column(Field('rationale', edit=editable))),
-                    Row(Column(Field('suggested_crawl_frequency', edit=editable), css_class='col-6'),
-                        Column(Field('suggested_crawl_end_date', edit=editable), css_class='col-6')),
+                    crawl_scope_fields(editable=editable),
                     FORM_BUTTONS if editable else HTML(''),
 
                     HTML("""{% if table %}
@@ -170,21 +172,27 @@ class ClaimForm(forms.ModelForm):
     class Meta:
         model = Claim
         template_name = 'projects/claim_form.html'
-        fields = ('nomination', 'organization', 'active', 'has_holding')
+        # fields = ('nomination', 'organization', 'active', 'has_holding')
+        fields = ('nomination', 'organization')
         widgets = {
             'tags': autocomplete.ModelSelect2Multiple(
                 url='tag_autocomplete',
                 attrs={'data-allow-clear': 'false'},
             ),
+            'crawl_start_date': DateInput,
+            'crawl_end_date': DateInput,
         }
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, editable=False, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
-            Row(Column(HTML('<h4>Claim</h4>'))),
-            Row(Column(Field('nomination', css_class='d-none'))),
-            Row(Column(Field('organization'))),
-            Row(Column(Field('active'), css_class='col-6'),
-                Column(Field('has_holding'), css_class='col-6')),
+            Div(Field('nomination'), css_class='d-none'),
+            Row(Column(HTML("""{% load as_link from cobweb_look %}
+                               Resource URL: {{form.instance.nomination.resource|as_link}}"""))),
+            Row(Column(HTML('Project: {{form.instance.nomination.project}}'))),
+            Row(Column(HField('organization', edit=editable))),
+            # Row(Column(Field('active'), css_class='col-6'),
+            #     Column(Field('has_holding'), css_class='col-6')),
+            FORM_BUTTONS if editable else HTML(''),
         )
