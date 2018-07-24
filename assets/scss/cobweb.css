@@ -1641,7 +1641,7 @@ select.form-control-lg:not([size]):not([multiple]), .input-group-lg > select.for
 .input-group-lg > .input-group-append > select.btn:not([size]):not([multiple]) {
   height: calc(2.640625rem + 2px); }
 
-.form-group, .form-section {
+.form-group {
   margin-bottom: 1rem; }
 
 .form-text {
@@ -1846,7 +1846,7 @@ select.form-control-lg:not([size]):not([multiple]), .input-group-lg > select.for
       align-items: center;
       justify-content: center;
       margin-bottom: 0; }
-    .form-inline .form-group, .form-inline .form-section {
+    .form-inline .form-group {
       display: flex;
       flex: 0 0 auto;
       flex-flow: row wrap;
@@ -5128,14 +5128,12 @@ button.bg-ltprimary:hover,
 button.bg-ltprimary:focus {
   background-color: #86c8b4 !important; }
 
-.bg-metadata, .form-section {
+.bg-metadata {
   background-color: #A9D8CA !important; }
 
-a.bg-metadata:hover, a.form-section:hover, a.bg-metadata:focus, a.form-section:focus,
+a.bg-metadata:hover, a.bg-metadata:focus,
 button.bg-metadata:hover,
-button.form-section:hover,
-button.bg-metadata:focus,
-button.form-section:focus {
+button.bg-metadata:focus {
   background-color: #86c8b4 !important; }
 
 .bg-tag {
@@ -5192,7 +5190,7 @@ button.bg-held:focus {
 .bg-transparent {
   background-color: transparent !important; }
 
-.border, .form-section, .big-model-icon, .pane {
+.border, .big-model-icon, .pane {
   border: 1px solid #dee2e6 !important; }
 
 .border-top {
@@ -5246,7 +5244,7 @@ button.bg-held:focus {
 .border-dark {
   border-color: #343a40 !important; }
 
-.border-gray, .form-section {
+.border-gray {
   border-color: #dddddd !important; }
 
 .border-ltprimary {
@@ -5276,7 +5274,7 @@ button.bg-held:focus {
 .border-white {
   border-color: #f8f9fa !important; }
 
-.rounded, .form-section, .big-model-icon {
+.rounded, .big-model-icon {
   border-radius: 0.25rem !important; }
 
 .rounded-top {
@@ -6320,7 +6318,7 @@ header .navbar-pages #searchform .btn {
 .px-1 {
   padding-left: 0.25rem !important; }
 
-.p-2, .form-section {
+.p-2 {
   padding: 0.5rem !important; }
 
 .pt-2,
@@ -7780,12 +7778,11 @@ footer {
 .md_item_label::after {
   content: ':'; }
 
-#project-nomination-row {
+.form-section + .form-section {
   border-top: 3px dotted #D9E7E3;
-  border-bottom: 3px dotted #D9E7E3; }
+  padding-top: 0.5rem; }
 
-#button-row {
-  border-top: 3px dotted #D9E7E3;
+.form-button-row {
   padding: 1rem 0; }
 
 .btn-primary {

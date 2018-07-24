@@ -1,3 +1,5 @@
+from typing import List, NamedTuple, Optional
+
 from crispy_forms.layout import (
     BaseInput,
     Button,
@@ -27,7 +29,7 @@ from crispy_forms.bootstrap import (
     FieldWithButtons,
     FormActions,
     InlineCheckboxes,
-    InlineField,
+    # InlineField,
     InlineRadios,
     PrependedAppendedText,
     PrependedText,
@@ -36,6 +38,7 @@ from crispy_forms.bootstrap import (
     TabHolder,
     UneditableField,
 )
+import crispy_forms.bootstrap as bootstrap
 
 
 class Field(crispy.Field):
@@ -54,15 +57,46 @@ class Field(crispy.Field):
             return super().render(form, form_style, context, template_pack='bootstrap4',
                                   extra_context=None, **kwargs)
 
-def crawl_scope_fields(editable=False):
-    return Layout(
+
+class InlineField(bootstrap.InlineField):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if 'label' in kwargs:
+            self.label = kwargs['label']
+
+
+class FormSection(Div):
+    def __init__(self, *args, **kwargs):
+        try:
+            kwargs['css_class'] += ' form-section'
+        except KeyError:
+            kwargs['css_class'] = 'form-section'
+        super().__init__(*args, **kwargs)
+
+
+def crawl_scope_fields(editable: bool=False) -> FormSection:
+    return FormSection(
         Row(
             Column(Field('crawl_start_date',  edit=editable), css_class='col-4'),
             Column(Field('crawl_end_date', edit=editable), css_class='col-4'),
             Column(Field('crawl_frequency', edit=editable), css_class='col-4')
         ),
-                    
-)
+        HTML("""<div class="row my-2"><div class="col form-inline">
+            <div id="div_id_follow_links" class="form-group"> 
+                <label for="id_follow_links" class="col-form-label mr-2">Follow links</label>
+                <input name="follow_links" class="numberinput form-control" id="id_follow_links" type="number" value={{form.follow_links.value}}>
+            </div>
+            <div id="div_id_page_scope" class="form-group mb-4">
+                <label for="id_page_scope" class="col-form-label mx-2">steps from</label>
+                <select name="page_scope" label="steps from" class="select form-control" id="id_page_scope">
+                    <option value="">---------</option>
+                    <option value="Page">Page</option>
+                    <option value="Site" selected="">Site</option>
+                    <option value="Domain">Domain</option>
+                </select>
+            </div>
+        </div></div>"""),
+    )
 
 title_plaintext_field = Layout(
     HTML("""
@@ -82,14 +116,16 @@ title_form_field = Field('title', wrapper_class="col-md-12")
 def form_buttons(confirm_title='Please Confirm',
                  confirm_text='Click "Submit" to save.') -> HTML:
     return HTML(f"""
-        <div class="row">
-            <div class="col d-flex flex-row justify-content-end">
-                <button type="reset" class="btn btn-light btn-outline-dark mr-1">
-                    Reset
-                </button>
-                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
-                    Submit
-                </button>
+        <div class="form-section form-button-row">
+            <div class="row">
+                <div class="col d-flex flex-row justify-content-end">
+                    <button type="reset" class="btn btn-light btn-outline-dark mr-1">
+                        Reset
+                    </button>
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
+                        Submit
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -142,17 +178,46 @@ class Column(Div):
     css_class = 'col'
 
 
-class FormSection(Div):
-    def __init__(self, *args, **kwargs):
-        try:
-            kwargs['css_class'] += ' form-section'
-        except KeyError:
-            kwargs['css_class'] = 'form-section'
-        super().__init__(*args, **kwargs)
-
-
 class HField(Field):
     template = 'field_horizontal.html'
+
+
+class InfoTab(NamedTuple):
+    title: str
+    content: LayoutObject
+
+
+def tab_button(tab: InfoTab, tab_index: int) -> LayoutObject:
+    return HTML(f"""
+        <a class="nav-link{' active' if tab_index==0 else ''}"
+           id="tab{tab_index}-tab" data-toggle="tab" href="#tab{tab_index}"
+           role="tab" aria-controls="tab{tab_index}" aria-selected="true">
+            {tab.title}
+        </a>
+    """)
+
+def tab_panel(tab: InfoTab, tab_index: int) -> LayoutObject:
+    return Layout(
+        HTML(f"""<div class="tab-pane fade{' show active' if tab_index==0 else ''}"
+                 id="tab{tab_index}" role="tabpanel" aria-labelledby="project-tab">"""),
+        tab.content,
+        HTML('</div>'),
+    )
+
+
+def info_tabs(*tabs: InfoTab) -> LayoutObject:
+    return Layout(
+        Div(
+            *[tab_button(tab, i) for i, tab in enumerate(tabs)],
+            css_class="nav nav-tabs nav-infotabs mb-4",
+            css_id="myTab",
+            role="tablist",
+        ),
+        Div(
+            *[tab_panel(tab, i) for i, tab in enumerate(tabs)],
+            css_class="tab-content", css_id="myTabContent",
+        ),
+    )
 
 
 class BaseHeader(Layout):

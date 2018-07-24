@@ -1,7 +1,156 @@
 {% load i18n %}
 
 <h4>{% trans "Claim" %}</h4>
-<div class="'d-none row"><div class="col">{{ claim.nomination }}</div></div>
-<div class="row"><div class="col">{{ claim.organization }}</div></div>
-<div class="row"><div class="col-6">{{ claim.active }}</div>
-                 <div class="col-6">{{ claim.has_holding }}</div></div>
+<div class="'d-none row">
+    <div class="col">{{ claim.nomination }}</div>
+</div>
+<div class="row">
+    <div class="col">{{ claim.organization }}</div>
+</div>
+<div class="row">
+    <div class="col-6">{{ claim.active }}</div>
+    <div class="col-6">{{ claim.has_holding }}</div>
+</div>
+
+
+
+<form method="post">
+    <input name="csrfmiddlewaretoken" type="hidden" value="ocVwbGXtuLTE3nTQ4iiSRIV59Yn51HH07Ll4IL7H3UB5j5e8DlVepbdSXhqTm4Ma">
+    <div class="row">
+        <div id="div_id_nomination" class="col form-group">
+            <label for="id_nomination" class="col-form-label requiredField">
+                Nomination
+                <span class="asteriskField">*</span>
+            </label>
+            Resource URL: <a href="/resources/http://21stcenturywire.com/">http://21stcenturywire.com/</a>
+            <br>Project: Propaganda, disinformation, parody, dismissal: Making sense of "Fake News".
+            <div class="">
+                <input name="nomination" disabled hidden required id="id_nomination" value="6" />
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col">
+            <div id="div_id_organization" class="row form-group ">
+                <label for="id_organization" class="col-md-2 form-control-label  requiredField">
+                    Organization
+                    <span class="asteriskField">*</span>
+                </label>
+                <div class="col-md ">
+                    <select name="organization" class="select form-control" required="" id="id_organization">
+                        <option value="">---------</option>
+                        <option value="1">UC</option>
+                        <option value="2" selected="">UCLA</option>
+                        <option value="3">California Digital Library</option>
+                        <option value="4">Harvard</option>
+
+                    </select>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col col-4">
+            <div id="div_id_crawl_start_date" class="form-group">
+                <label for="id_crawl_start_date" class="col-form-label ">
+                    Crawl start date
+                </label>
+                <div class="">
+                    <input name="crawl_start_date" class="dateinput form-control" id="id_crawl_start_date" type="text"> </div>
+            </div>
+        </div>
+        <div class="col col-4">
+            <div id="div_id_crawl_end_date" class="form-group">
+                <label for="id_crawl_end_date" class="col-form-label ">
+                    Crawl end date
+                </label>
+                <div class="">
+                    <input name="crawl_end_date" class="dateinput form-control" id="id_crawl_end_date" type="text"> </div>
+            </div>
+        </div>
+        <div class="col col-4">
+            <div id="div_id_crawl_frequency" class="form-group">
+                <label for="id_crawl_frequency" class="col-form-label ">
+                    Crawl frequency
+                </label>
+                <div class="">
+                    <select name="crawl_frequency" class="select form-control" id="id_crawl_frequency">
+                        <option value="" selected="">---------</option>
+                        <option value="Hourly">Hourly</option>
+                        <option value="Daily">Daily</option>
+                        <option value="Weekly">Weekly</option>
+                        <option value="Monthly">Monthly</option>
+
+                    </select>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col">
+            <div id="div_id_follow_links" class="form-group">
+                <label for="id_follow_links" class="col-form-label ">
+                    Follow links
+                </label>
+                <div class="">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Follow links</span>
+                        </div>
+                        <input name="follow_links" edit="True" class="numberinput form-control" id="id_follow_links" type="number"> </div>
+                </div>
+            </div>
+            <div id="div_id_page_scope" class="form-group">
+                <label for="id_page_scope" class="col-form-label ">
+                    Page scope
+                </label>
+                <div class="">
+                    <span class="input-group">from</span>
+                    <select name="page_scope" edit="True" class="select form-control" id="id_page_scope">
+                        <option value="">---------</option>
+                        <option value="Page">Page</option>
+                        <option value="Site" selected="">Site</option>
+                        <option value="Domain">Domain</option>
+
+                    </select>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col d-flex flex-row justify-content-end">
+            <button type="reset" class="btn btn-light btn-outline-dark mr-1">
+                Reset
+            </button>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
+                Submit
+            </button>
+        </div>
+    </div>
+    <!-- Modal for Confirmation Dialog -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Please Confirm</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Click "Submit" to save.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light btn-outline-dark mr-1" data-dismiss="modal">Cancel</button>
+                    <input name="submit" value="Submit" class="btn btn-primary btn btn-info" id="submit-id-submit"
+                        type="submit"> </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -36,8 +36,8 @@ urlpatterns = [
     path('dashboard', core.views.DashboardView.as_view(), name='dashboard'),
 
     # Auth: /login, /logout, /password_change, /password_reset, /reset
-    path('login/', core.views.LoginView.as_view(), name='login'),
-    path('', include('django.contrib.auth.urls')),
+    path('accounts/login/', core.views.LoginView.as_view(), name='login'),
+    path('accounts/', include('django.contrib.auth.urls')),
 
     # User
     path('users/<pk>/edit/',
@@ -93,15 +93,18 @@ urlpatterns = [
         name='nominate_resource'),
 
     # Claim
-    path('claim/<int:pk>',
-         projects.views.ClaimDetailView.as_view(),
-         name='claim_detail'),
+    # path('claim/proj/<int:project_pk>/<path:url>',
+    #      projects.views.claim_view,
+    #      name='claim'),
     path('nomination/<int:nomination_pk>/claim',
          projects.views.ClaimCreateView.as_view(),
          name='claim_create'),
     path('claim/<int:pk>/edit',
          projects.views.ClaimUpdateView.as_view(),
          name='claim_update'),
+    path('claim/<int:pk>',
+         projects.views.ClaimDetailView.as_view(),
+         name='claim_detail'),
 
     # Tags
     # path('tags/<int:pk>/',

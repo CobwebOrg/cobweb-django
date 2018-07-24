@@ -263,7 +263,7 @@ class Claim(models.Model):
     crawl_end_date = models.DateField(null=True, blank=True)
     follow_links = models.IntegerField(null=True, blank=True)
     page_scope = models.CharField(
-        null=True, blank=True, max_length=50,
+        null=True, blank=True, default='Site', max_length=50,
         choices=[(x, x) for x in ('Page', 'Site', 'Domain')]
     )
 

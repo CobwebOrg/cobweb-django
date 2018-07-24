@@ -61,33 +61,62 @@ class ProjectForm(forms.ModelForm):
         self.helper.layout = Layout(
             title_row,
 
-            Row(Column(HField('description', edit=editable))),
+            FormSection(
+                Row(Column(HField('description', edit=editable))),
 
-            Row(
-                Field('status', edit=editable, wrapper_class='col-md-5'),
-                Field('administrators', edit=editable, wrapper_class='col-md-7'),
-                css_id='project-admin-row',
-            ),
-
-            Row(
-                Field('nomination_policy', edit=editable, wrapper_class='col-md-5'),
-                Column(
-                    Field('nominators', edit=editable),
-                    Field('nominator_blacklist', edit=editable, show=editable),
-                    css_class='col-md-7'
+                Row(
+                    Field('status', edit=editable, wrapper_class='col-md-5'),
+                    Field('administrators', edit=editable, wrapper_class='col-md-7'),
                 ),
-                css_id='project-nomination-row',
             ),
 
-            Row(Column(Field('tags', edit=editable))),
+            FormSection(
+                Row(
+                    Field('nomination_policy', edit=editable, wrapper_class='col-md-5'),
+                    Column(
+                        Field('nominators', edit=editable),
+                        Field('nominator_blacklist', edit=editable, show=editable),
+                        css_class='col-md-7'
+                    ),
+                ),
+            ),
+
+            FormSection(Row(Column(Field('tags', edit=editable)))),
 
             FORM_BUTTONS if editable else HTML(''),
         )
 
+def resource_info(editable=False):
+    return Layout(
+        Row(Column(HTML('<h4>About the Resource</h4>'))),
+
+        Row(Column(HField('resource', edit=editable))),
+        Row(Column(HField('title', edit=editable))),
+        Row(Column(HField('description', edit=editable))),
+        Row(Column(Field('tags', edit=editable))),
+        Row(Column(Field('language', edit=editable))),
+    )
+
+def nomination_info(editable=False):
+    return Layout(
+        Row(Column(HTML('<h4>Nomination Info</h4>'))),
+
+        Field('project', type='hidden', edit=editable),
+        Field('nominated_by', type='hidden', edit=editable),
+        Row(Column(Field('rationale', edit=editable))),
+        crawl_scope_fields(editable=editable),
+
+        HTML("""{% if table %}
+                    <h5>Claims</h5>
+                    {% load render_table from django_tables2 %}
+                    {% render_table table %}
+                {% endif %}"""),
+    )
 
 class NominationForm(forms.ModelForm):
     class Meta:
         model = Nomination
+        template_name = 'projects/claim_form.html'
         fields = ('__all__')
         widgets = {
             'tags': autocomplete.ModelSelect2Multiple(
@@ -100,7 +129,8 @@ class NominationForm(forms.ModelForm):
     
     resource = forms.URLField(widget=ResourceInput, initial='http://')
 
-    def __init__(self, *args, editable=False, instance=None, **kwargs):
+    def __init__(self, *args, editable=False, tabbed=False, instance=None,
+                 **kwargs):
         super().__init__(*args, instance=instance, **kwargs)
         self.helper = FormHelper(self)
 
@@ -120,44 +150,35 @@ class NominationForm(forms.ModelForm):
         else:
             nom_header = HTML('<h3>NEW NOMINATION</h3>')
         
-        self.helper.layout = Layout(
-            Div(
-                proj_header,
-                nom_header,
-                css_class='px-3 pt-0 pb-2 w-100'
-            ),
-
-            Row(
-                Pane(
-                    Row(Column(HTML('<h4>About the Resource</h4>'))),
-                    
-                    Row(Column(HField('resource', edit=editable))),
-                    Row(Column(HField('title', edit=editable))),
-                    Row(Column(HField('description', edit=editable))),
-                    Row(Column(Field('tags', edit=editable))),
-                    Row(Column(Field('language', edit=editable))),
-                    css_class='col-7'
-                ),
-
-                Pane(
-                    Row(Column(HTML('<h4>Nomination Info</h4>'))),
-
-                    Field('project', type='hidden', edit=editable),
-                    Field('nominated_by', type='hidden', edit=editable),
-                    Row(Column(Field('rationale', edit=editable))),
-                    crawl_scope_fields(editable=editable),
-                    FORM_BUTTONS if editable else HTML(''),
-
-                    HTML("""{% if table %}
-                                <h5>Claims</h5>
-                                {% load render_table from django_tables2 %}
-                                {% render_table table %}
-                            {% endif %}"""),
-                    css_class='col-5',
-                ),
-                css_class='flex-grow-1',
+        if tabbed:
+            self.helper.layout = info_tabs(
+                    InfoTab(title='About the Resource',
+                            content=resource_info(editable=editable)),
+                    InfoTab(title='About the Nomination',
+                            content=nomination_info(editable=editable)),
             )
-        )
+        else:
+            self.helper.layout = Layout(
+                Div(
+                    proj_header,
+                    nom_header,
+                    css_class='px-3 pt-0 pb-2 w-100',
+                ),
+
+                Row(
+                    Pane(
+                        resource_info(editable=editable),
+                        css_class='col-6'
+                    ),
+
+                    Pane(
+                        nomination_info(editable=editable),
+                        FORM_BUTTONS if editable else HTML(''),
+                        css_class='col-6',
+                    ),
+                    css_class='flex-grow-1',
+                )
+            )
         self.helper.form_class='h-100 d-flex flex-column pb-2'
 
     def clean_resource(self):
@@ -171,9 +192,9 @@ class NominationForm(forms.ModelForm):
 class ClaimForm(forms.ModelForm):
     class Meta:
         model = Claim
-        template_name = 'projects/claim_form.html'
+        # template_name = 'projects/claim_form.html'
         # fields = ('nomination', 'organization', 'active', 'has_holding')
-        fields = ('nomination', 'organization')
+        fields = ('__all__')
         widgets = {
             'tags': autocomplete.ModelSelect2Multiple(
                 url='tag_autocomplete',
@@ -187,12 +208,20 @@ class ClaimForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
-            Div(Field('nomination'), css_class='d-none'),
-            Row(Column(HTML("""{% load as_link from cobweb_look %}
-                               Resource URL: {{form.instance.nomination.resource|as_link}}"""))),
-            Row(Column(HTML('Project: {{form.instance.nomination.project}}'))),
-            Row(Column(HField('organization', edit=editable))),
-            # Row(Column(Field('active'), css_class='col-6'),
-            #     Column(Field('has_holding'), css_class='col-6')),
+            FormSection(Row(Column(HTML('<h4>Claim Information</h4>')))),
+            FormSection(Row(Column(
+                HTML("""{% load as_link from cobweb_look %}
+                    <h6>Nomination:</h6>
+                    Resource URL: {{form.instance.nomination.resource|as_link}}
+                    <br>Project: {{form.instance.nomination.project|as_link}}
+                """),
+                Hidden('nomination', value=self.initial['nomination']),
+            )), css_class='form-group'),
+            FormSection(
+                Row(Column(HField('organization', edit=editable))),
+                Row(Column(Field('active'), css_class='col-6'),
+                    Column(Field('has_holding'), css_class='col-6')),
+            ),
+            crawl_scope_fields(editable=editable),
             FORM_BUTTONS if editable else HTML(''),
         )

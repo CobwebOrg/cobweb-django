@@ -227,13 +227,12 @@ footer {
 
 // FORM STUFF
 
-#project-nomination-row {
+.form-section + .form-section {
   border-top: 3px dotted #D9E7E3;
-  border-bottom: 3px dotted #D9E7E3;
+  padding-top: 0.5rem;
 }
 
-#button-row {
-  border-top: 3px dotted #D9E7E3;
+.form-button-row {
   padding: 1rem 0;
 }
 
@@ -256,14 +255,6 @@ h1, h2 {
 
 .form-actions {
   @extend .w-100, .flex-row, .justify-content-end ;
-}
-
-.form-section {
-  @extend .border, .border-gray ;
-  @extend .form-group ;
-  @extend .bg-metadata ;
-  @extend .p-2 ;
-  @extend .rounded ;
 }
 
 
