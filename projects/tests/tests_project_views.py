@@ -137,55 +137,9 @@ class ProjectDetailViewTests(TestCase):
         """A 'nominate' link should be shown if logged-in user is authorized,
         otherwise hidden."""
 
-        # ANONYMOUS NOMINATION POLICY
-
-        self.test_instance.nomination_policy = 'Anonymous'
-        self.test_instance.save()
-
-        # Anonymous User
-        self.client.logout()
-        response = self.client.get(self.test_instance.get_absolute_url())
-        self.assertContains(response, 'Add a nomination')
-        self.assertContains(
-            response,
-            reverse('nominate', kwargs={'project_id': self.test_instance.pk})
-        )
-
-        self.client.force_login(self.outside_user)
-        response = self.client.get(self.test_instance.get_absolute_url())
-        self.assertContains(response, 'Add a nomination')
-        self.assertContains(
-            response,
-            reverse('nominate', kwargs={'project_id': self.test_instance.pk})
-        )
-
-        self.client.force_login(self.admin_user)
-        response = self.client.get(self.test_instance.get_absolute_url())
-        self.assertContains(response, 'Add a nomination')
-        self.assertContains(
-            response,
-            reverse('nominate', kwargs={'project_id': self.test_instance.pk})
-        )
-
-        self.client.force_login(self.nominator)
-        response = self.client.get(self.test_instance.get_absolute_url())
-        self.assertContains(response, 'Add a nomination')
-        self.assertContains(
-            response,
-            reverse('nominate', kwargs={'project_id': self.test_instance.pk})
-        )
-
-        self.client.force_login(self.blacklisted_user)
-        response = self.client.get(self.test_instance.get_absolute_url())
-        self.assertNotContains(response, 'Add a nomination')
-        self.assertNotContains(
-            response,
-            reverse('nominate', kwargs={'project_id': self.test_instance.pk})
-        )
-
         # OPEN NOMINATION POLICY
 
-        self.test_instance.nomination_policy = 'Open'
+        self.test_instance.any_user_can_nominate = True
         self.test_instance.save()
 
         # Anonymous User
@@ -231,7 +185,7 @@ class ProjectDetailViewTests(TestCase):
 
         # RESTRICTED NOMINATION POLICY
 
-        self.test_instance.nomination_policy = 'Restricted'
+        self.test_instance.any_user_can_nominate = False
         self.test_instance.save()
 
         # Anonymous User
@@ -288,7 +242,7 @@ class TestProjectCreateView:
         project_data = {
             'title': 'Test Project for test_anonymous_cant_create_project',
             'status': 'Active',
-            'nomination_policy': 'Open',
+            'any_user_can_nominate': True,
         }
 
         response2 = client.post(reverse('project_create'), project_data)
@@ -326,7 +280,7 @@ class ProjectUpdateViewTests(TestCase):
 
     @pytest.mark.xfail(strict=True)
     def test_included_fields(self):
-        for field_name in ['title', 'administrators', 'nomination_policy',
+        for field_name in ['title', 'administrators', 'any_user_can_nominate',
                            'nominators', 'status', 'description', 'tags']:
             try:
                 self.assertContains(
@@ -351,7 +305,7 @@ class ProjectUpdateViewTests(TestCase):
         project_data = {
             'title': 'Test Project for test_anonymous_cant_create_project',
             'status': 'Active',
-            'nomination_policy': 'Open',
+            'any_user_can_nominate': True,
         }
         self.assertRedirects(self.client.post(self.url, project_data),
                              f'/accounts/login/?next={self.url}')
@@ -363,7 +317,7 @@ class ProjectUpdateViewTests(TestCase):
         project_data = {
             'title': 'Test Project for test_anonymous_cant_create_project',
             'status': 'Active',
-            'nomination_policy': 'Open',
+            'any_user_can_nominate': True,
         }
         self.assertRedirects(self.client.post(self.url, project_data),
                              f'/accounts/login/?next={self.url}')

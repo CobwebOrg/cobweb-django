@@ -43,27 +43,21 @@ class TestProjectModel:
         admin_user = UserFactory()
         project.administrators.add(admin_user)
 
-        for policy, user, result in (
-            ('Public', blacklisted_user, False),
-            ('Public', anon_user, True),
-            ('Public', random_user, True),
-            ('Public', nominator_user, True),
-            ('Public', admin_user, True),
+        for any_user_can_nominate, user, result in (
+            (True, anon_user, True),
+            (True, blacklisted_user, False),
+            (True, random_user, True),
+            (True, nominator_user, True),
+            (True, admin_user, True),
 
-            ('Cobweb Users', anon_user, False),
-            ('Cobweb Users', blacklisted_user, False),
-            ('Cobweb Users', random_user, True),
-            ('Cobweb Users', nominator_user, True),
-            ('Cobweb Users', admin_user, True),
-
-            ('Restricted', anon_user, False),
-            ('Restricted', blacklisted_user, False),
-            ('Restricted', random_user, False),
-            ('Restricted', nominator_user, True),
-            ('Restricted', admin_user, True),
+            (False, anon_user, False),
+            (False, blacklisted_user, False),
+            (False, random_user, False),
+            (False, nominator_user, True),
+            (False, admin_user, True),
         ):
-            project.nomination_policy = policy
-            assert project.is_nominator(user) == result, f'policy={policy}'
+            project.any_user_can_nominate = any_user_can_nominate
+            assert project.is_nominator(user) == result, f'any_user_can_nominate={any_user_can_nominate}'
 
 
 @pytest.mark.django_db
@@ -110,9 +104,9 @@ class TestClaimModel:
         assert claim.is_admin(AnonymousUser()) is False
 
         user = UserFactory()
-        claim.nomination.project.nomination_policy = 'Cobweb Users'
+        claim.nomination.project.any_user_can_nominate = True
         assert claim.is_admin(user) is True
-        claim.nomination.project.nomination_policy = 'Restricted'
+        claim.nomination.project.any_user_can_nominate = False
         assert claim.is_admin(user) is False
 
         claim.nomination.project.administrators.add(user)

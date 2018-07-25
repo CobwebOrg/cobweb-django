@@ -84,7 +84,7 @@ class Project(models.Model):
         return (self.is_admin(user)
                 or user in self.nominators.all()
                 or (self.any_user_can_nominate
-                    and user not in self.nominator_blacklist))
+                    and user not in self.nominator_blacklist.all()))
     
     @property
     def nominations_unclaimed(self) -> QuerySet:
