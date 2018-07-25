@@ -15,9 +15,13 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     title = indexes.CharField(model_attr='title', indexed=True, stored=True)
     description = indexes.CharField(model_attr='description', indexed=True, stored=True)
     # administrators
-    nomination_policy = indexes.CharField(model_attr='nomination_policy', indexed=True, stored=True)
+    # nomination_policy = indexes.CharField(model_attr='nomination_policy', indexed=True, stored=True)
+    any_user_can_nominate = indexes.BooleanField(
+        model_attr='any_user_can_nominate',
+        indexed=False, stored=True,
+    )
     # nominator_orgs
-    # nominatorsdo
+    # nominators
     # nominator_blacklist
     status = indexes.CharField(model_attr='status', indexed=True, stored=True)
     impact_factor = indexes.IntegerField(model_attr='impact_factor', indexed=True, stored=True)
