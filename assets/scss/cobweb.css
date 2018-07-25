@@ -7778,6 +7778,9 @@ footer {
 .md_item_label::after {
   content: ':'; }
 
+.col-form-label, form-control-label {
+  font-weight: 600; }
+
 .form-section + .form-section {
   border-top: 3px dotted #D9E7E3;
   padding-top: 0.5rem; }
