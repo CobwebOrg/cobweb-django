@@ -72,7 +72,7 @@ class ProjectForm(forms.ModelForm):
 
             FormSection(
                 Row(
-                    Field('nomination_policy', edit=editable, wrapper_class='col-md-5'),
+                    Field(Column('any_user_can_nominate', edit=editable), css_class='col-md-5'),
                     Column(
                         Field('nominators', edit=editable),
                         Field('nominator_blacklist', edit=editable, show=editable),
