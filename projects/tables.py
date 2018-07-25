@@ -72,7 +72,7 @@ class NominationTable(CobwebBaseTable):
         empty_text = "No nominations."
 
     name = django_tables2.LinkColumn(
-        viewname='nomination_detail',
+        viewname='nomination_update',
         kwargs={'project_pk': Accessor('project_pk'),
                 'url': Accessor('url')},
         verbose_name='Nomination',
@@ -84,7 +84,7 @@ class NominationTable(CobwebBaseTable):
     )
     
     # claim_link = django_tables2.LinkColumn(
-    #     viewname='nomination_detail',
+    #     viewname='nomination_update',
     #     kwargs={'project_pk': Accessor('project_pk'),
     #             'url': Accessor('url')},
     #     text='[claim]', verbose_name='', orderable=False,

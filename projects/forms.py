@@ -42,7 +42,6 @@ class ProjectForm(forms.ModelForm):
                 attrs={'data-allow-clear': 'false',
                        'data-width': '100%'},
             ),
-            'nomination_policy': forms.RadioSelect,
         }
 
     def __init__(self, *args, editable=False,  **kwargs):
@@ -101,16 +100,13 @@ def nomination_info(editable=False):
     return Layout(
         Row(Column(HTML('<h4>Nomination Info</h4>'))),
 
-        Field('project', type='hidden', edit=editable),
-        Field('nominated_by', type='hidden', edit=editable),
-        Row(Column(Field('rationale', edit=editable))),
-        crawl_scope_fields(editable=editable),
-
-        HTML("""{% if table %}
-                    <h5>Claims</h5>
-                    {% load render_table from django_tables2 %}
-                    {% render_table table %}
-                {% endif %}"""),
+        FormSection(
+            Field('project', type='hidden'),
+            Field('nominated_by', type='hidden'),
+            Row(Column(Field('rationale', edit=editable))),
+        ),
+        FormSection(crawl_scope_fields(editable=editable)),
+        FORM_BUTTONS if editable else HTML(''),
     )
 
 class NominationForm(forms.ModelForm):
@@ -152,10 +148,10 @@ class NominationForm(forms.ModelForm):
         
         if tabbed:
             self.helper.layout = info_tabs(
-                    InfoTab(title='About the Resource',
-                            content=resource_info(editable=editable)),
-                    InfoTab(title='About the Nomination',
-                            content=nomination_info(editable=editable)),
+                InfoTab(title='About the Nomination',
+                        content=nomination_info(editable=editable)),
+                InfoTab(title='About the Resource',
+                        content=resource_info(editable=editable)),
             )
         else:
             self.helper.layout = Layout(
@@ -173,7 +169,6 @@ class NominationForm(forms.ModelForm):
 
                     Pane(
                         nomination_info(editable=editable),
-                        FORM_BUTTONS if editable else HTML(''),
                         css_class='col-6',
                     ),
                     css_class='flex-grow-1',
@@ -211,16 +206,16 @@ class ClaimForm(forms.ModelForm):
             FormSection(Row(Column(HTML('<h4>Claim Information</h4>')))),
             FormSection(Row(Column(
                 HTML("""{% load as_link from cobweb_look %}
-                    <h6>Nomination:</h6>
-                    Resource URL: {{form.instance.nomination.resource|as_link}}
+                    <a class="col-form-label form-control-label" href="{{form.instance.nomination.get_absolute_url}}">Nomination:</a>
+                    <br>Resource URL: {{form.instance.nomination.resource|as_link}}
                     <br>Project: {{form.instance.nomination.project|as_link}}
                 """),
                 Hidden('nomination', value=self.initial['nomination']),
             )), css_class='form-group'),
             FormSection(
                 Row(Column(HField('organization', edit=editable))),
-                Row(Column(Field('active'), css_class='col-6'),
-                    Column(Field('has_holding'), css_class='col-6')),
+                Row(Column(Field('active', edit=editable), css_class='col-6'),
+                    Column(Field('has_holding', edit=editable), css_class='col-6')),
             ),
             crawl_scope_fields(editable=editable),
             FORM_BUTTONS if editable else HTML(''),

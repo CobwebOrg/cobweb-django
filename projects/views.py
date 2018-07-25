@@ -100,16 +100,20 @@ class ProjectNominationsView(django_tables2.SingleTableMixin, ProjectSummaryView
         return kwargs
 
 
-class NominationUpdateView(UserPassesTestMixin, RevisionMixin, UpdateView):
+class NominationUpdateView(RevisionMixin, django_tables2.SingleTableMixin,
+                           UpdateView):
     model = models.Nomination
     form_class = forms.NominationForm
-    template_name = 'generic_form.html'
+    template_name = 'projects/nomination.html'
     table_class = ClaimTable
 
     def get_form_kwargs(self):
         """Return the keyword arguments for instantiating the form."""
         kwargs = super().get_form_kwargs()
-        kwargs['editable'] = True
+        kwargs.update({
+            'editable': self.get_object().is_admin(self.request.user),
+            'tabbed': True,
+        })
         return kwargs
 
     def get_object(self, queryset=None):
@@ -124,9 +128,18 @@ class NominationUpdateView(UserPassesTestMixin, RevisionMixin, UpdateView):
                         {'verbose_name': queryset.model._meta.verbose_name})
         return obj
     
-    def test_func(self):
-        return self.get_object().is_admin(self.request.user)
+    def get_table_data(self):
+        return (haystack.query.SearchQuerySet()
+                .filter(django_ct__exact='projects.claim')
+                .filter(nomination_pk__exact=self.object.pk))
 
+    def get_table_kwargs(self):
+        kwargs = super().get_table_kwargs()
+        if self.request.user.is_authenticated and self.request.user.can_claim():
+            kwargs['new_item_link'] = self.get_object().get_claim_url()
+        kwargs.update({'exclude': ('nomination',)})
+        return kwargs
+    
 
 class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
     model = models.Nomination
@@ -277,10 +290,18 @@ class ClaimCreateView(UserPassesTestMixin, RevisionMixin, ClaimFormMixin, Create
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
+        nomination = self.get_nomination()
         kwargs.update({
             'editable': True,
-            'instance': models.Claim(nomination=self.get_nomination(),
-                                     organization=self.request.user.organization),
+            'instance': models.Claim(
+                nomination=nomination,
+                organization=self.request.user.organization,
+                crawl_start_date = nomination.crawl_start_date,
+                crawl_end_date = nomination.crawl_end_date,
+                crawl_frequency = nomination.crawl_frequency,
+                follow_links = nomination.follow_links,
+                page_scope = nomination.page_scope,
+            ),
         })
         return kwargs
 

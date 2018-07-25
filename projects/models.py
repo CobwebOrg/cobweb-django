@@ -192,9 +192,10 @@ class Nomination(models.Model):
         return f'<Nomination {self.name} project={self.project}>'
 
     def get_absolute_url(self) -> str:
-        return reverse('nomination_detail',
-                       kwargs={'project_pk': self.project.pk,
-                               'url': self.resource.url})
+        return reverse(
+            'nomination_update',
+            kwargs={'project_pk': self.project.pk, 'url': self.resource.url},
+        )
 
     def get_edit_url(self) -> str:
         return reverse('nomination_update', kwargs={
