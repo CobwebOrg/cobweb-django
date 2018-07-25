@@ -81,21 +81,19 @@ def crawl_scope_fields(editable: bool=False) -> FormSection:
             Column(Field('crawl_end_date', edit=editable), css_class='col-4'),
             Column(Field('crawl_frequency', edit=editable), css_class='col-4')
         ),
-        HTML("""<div class="row my-2"><div class="col form-inline">
-            <div id="div_id_follow_links" class="form-group"> 
-                <label for="id_follow_links" class="col-form-label mr-2">Follow links</label>
-                <input name="follow_links" class="numberinput form-control" id="id_follow_links" type="number" value={{form.follow_links.value}}>
-            </div>
-            <div id="div_id_page_scope" class="form-group mb-4">
-                <label for="id_page_scope" class="col-form-label mx-2">steps from</label>
-                <select name="page_scope" label="steps from" class="select form-control" id="id_page_scope">
-                    <option value="">---------</option>
-                    <option value="Page">Page</option>
-                    <option value="Site" selected="">Site</option>
-                    <option value="Domain">Domain</option>
-                </select>
-            </div>
-        </div></div>"""),
+        Row(
+            Column(
+                Field('follow_links', edit=editable, css_class='mx-2 w-50',
+                      template='field_inline.html'),
+                css_class='col-6',
+            ),
+            Column(
+                Field('page_scope', edit=editable, css_class='mx-2',
+                      template='field_inline.html'),
+                css_class='col-6',
+            ),
+            css_class='form-group form-inline',
+        ),
     )
 
 title_plaintext_field = Layout(
