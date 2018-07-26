@@ -77,8 +77,10 @@ class FormSection(Div):
 def crawl_scope_fields(editable: bool=False) -> FormSection:
     return FormSection(
         Row(
-            Column(Field('crawl_start_date',  edit=editable), css_class='col-4'),
-            Column(Field('crawl_end_date', edit=editable), css_class='col-4'),
+            Column(Field('crawl_start_date', placeholder='YYYY-MM-DD',  edit=editable),
+                   css_class='col-4'),
+            Column(Field('crawl_end_date', placeholder='YYYY-MM-DD', edit=editable),
+                   css_class='col-4'),
             Column(Field('crawl_frequency', edit=editable), css_class='col-4')
         ),
         Row(
