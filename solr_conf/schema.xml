@@ -101,6 +101,8 @@
     
     <field name="identifier" type="text_en" indexed="true" stored="true" multiValued="false" />
     
+    <field name="nomination_pk" type="long" indexed="true" stored="true" multiValued="false" />
+    
     <field name="active" type="boolean" indexed="true" stored="true" multiValued="false" />
     
     <field name="deleted" type="boolean" indexed="true" stored="true" multiValued="false" />

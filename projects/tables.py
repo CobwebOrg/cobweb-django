@@ -96,26 +96,18 @@ class ClaimTable(CobwebBaseTable):
 
     class Meta(CobwebBaseTable.Meta):
         model = Claim
-        fields = ('nomination', 'collection')
+        fields = ('claim_type', 'nomination', 'organization')
         empty_text = "No Claims."
 
     nomination = django_tables2.LinkColumn(viewname='nomination',
                                     kwargs={'pk': Accessor('pk')})
     organization = django_tables2.LinkColumn(viewname='organization_detail',
                                     kwargs={'pk': Accessor('pk')})
-    # tags = django_tables2.TemplateColumn(
-    #     """{% load badge from cobweb_look %}
-    #     <small>
-    #         {% for tag in record.tags.all %}
-    #             {% badge tag %}
-    #         {% endfor %}
-    #     </small>
-    #     """, default='', orderable=False
-    # )
-    # claims = django_tables2.TemplateColumn(
-    #     """{% load nomination_count_badge from cobweb_look %} –
-    #     {% nomination_count_badge record %}
-    #     <a href="{% url 'claim_create' nomination_pk=record.pk %}">[claim]</a>
-    #     """,
-    # )
 
+    claim_type = django_tables2.TemplateColumn("""
+        {% if record.has_holding %}
+            <span class="badge-held">Held</span>
+        {% else %}
+            <span class="badge-claimed">Claimed</span>
+        {% endif %}
+    """)

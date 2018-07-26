@@ -70,10 +70,11 @@ class ClaimIndex(indexes.ModelSearchIndex, indexes.Indexable):
 
     name = indexes.CharField(model_attr='name', indexed=True, stored=True)
     text = indexes.CharField(document=True, use_template=False)
+    nomination_pk = indexes.IntegerField(model_attr='nomination_id',
+                                         indexed=True, stored=True)
 
     def index_queryset(self, using=None):
-        return self.get_model().objects.filter(deleted__exact=False,
-                                               has_holding__exact=False)
+        return self.get_model().objects.filter(deleted__exact=False)
 
 
 # class HoldingIndex(indexes.ModelSearchIndex, indexes.Indexable):
