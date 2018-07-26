@@ -13,6 +13,17 @@
         <br>Resource: {{nomination.resource|as_link}}</h4>
     </div></div>
 
+    {{ form.non_field_errors }}
+    {% for field in form %}
+        {% if field.errors %}
+            <dl>
+            {% for error in field.errors %}
+                <dt>{{field.label}}</dt><dd><strong>{{ error|escape }}</strong></dd>
+            {% endfor %}
+            </dl>
+        {% endif %}
+    {% endfor %}
+
     <div class="row h-100">
         <div class="col-6">
             <div class="pane">

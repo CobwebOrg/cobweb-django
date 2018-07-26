@@ -114,6 +114,13 @@ class NominationUpdateView(RevisionMixin, django_tables2.SingleTableMixin,
             'editable': self.get_object().is_admin(self.request.user),
             'tabbed': True,
         })
+        if 'data' in kwargs:
+            assert kwargs['data']['resource'] == self.kwargs['url']
+            kwargs['data'] = kwargs['data'].copy()
+            kwargs['data'].update({
+                'project': self.kwargs['project_pk'],
+                'nominated_by': self.request.user.id,  # works bc MultiValueDict magic...
+            })
         return kwargs
 
     def get_object(self, queryset=None):
@@ -169,9 +176,19 @@ class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
         return context
     
     def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['editable'] = True
-        return kwargs
+        form_kwargs = super().get_form_kwargs()
+        form_kwargs.update({
+            'editable': True,
+            'tabbed': False,
+        })
+        if 'data' in form_kwargs:
+            form_kwargs['data'] = form_kwargs['data'].copy()
+            form_kwargs['data'].update({
+                'project': self.kwargs['project_pk'],
+                'nominated_by': self.request.user.id,  # works bc MultiValueDict magic...
+            })
+        return form_kwargs
+
 
     def get_project(self):
         if not (hasattr(self, '_project') and isinstance(self._project, models.Project)):
