@@ -85,12 +85,6 @@ urlpatterns = [
     path('proj/<int:project_pk>/<path:url>',
         projects.views.NominationUpdateView.as_view(),
         name='nomination_update'),
-    # path('proj/<int:project_pk>/<path:url>',
-    #     projects.views.NominationDetailView.as_view(),
-    #     name='nomination_detail'),
-    path('nominate/<path:url>',
-        projects.views.ResourceNominateView.as_view(),
-        name='nominate_resource'),
 
     # Claim
     # path('claim/proj/<int:project_pk>/<path:url>',
