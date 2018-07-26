@@ -131,7 +131,7 @@ class NominationUpdateView(RevisionMixin, django_tables2.SingleTableMixin,
     def get_table_data(self):
         return (haystack.query.SearchQuerySet()
                 .filter(django_ct__exact='projects.claim')
-                .filter(nomination_pk__exact=self.object.pk))
+                .filter(nomination_pk__exact=self.get_object().pk))
 
     def get_table_kwargs(self):
         kwargs = super().get_table_kwargs()
