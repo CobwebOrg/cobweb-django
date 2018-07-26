@@ -199,11 +199,6 @@ class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
         return self.get_project().is_nominator(self.request.user)
 
 
-class ClaimDetailView(DetailView):
-    model = models.Claim
-    template_name = 'projects/claim.html'
-
-
 class ClaimFormMixin:
     model = models.Claim
     template_name = 'projects/claim.html'
@@ -220,13 +215,6 @@ class ClaimFormMixin:
         }
         context.update(kwargs)
         return super().get_context_data(**context)  # type: ignore
-
-    def get_nomination(self):
-        """Get the nomination being claimed."""
-
-        if self._nomination is None:
-            self._nomination = models.Nomination.objects.get(pk=self.kwargs['nomination_pk'])
-        return self._nomination
 
 
 class ClaimCreateView(UserPassesTestMixin, RevisionMixin, ClaimFormMixin, CreateView):
@@ -251,13 +239,38 @@ class ClaimCreateView(UserPassesTestMixin, RevisionMixin, ClaimFormMixin, Create
         })
         return kwargs
 
+    def get_nomination(self):
+        """Get the nomination being claimed."""
+
+        if self._nomination is None:
+            self._nomination = models.Nomination.objects.get(pk=self.kwargs['nomination_pk'])
+        return self._nomination
+
 
 class ClaimUpdateView(RevisionMixin, ClaimFormMixin, UpdateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['editable'] = self.object.is_admin(self.request.user)
+
+        nomination = self.get_nomination()
+        kwargs.update({
+            'editable': self.object.is_admin(self.request.user),
+            'instance': models.Claim(
+                nomination=nomination,
+                organization=self.request.user.organization,
+                crawl_start_date = nomination.crawl_start_date,
+                crawl_end_date = nomination.crawl_end_date,
+                crawl_frequency = nomination.crawl_frequency,
+                follow_links = nomination.follow_links,
+                page_scope = nomination.page_scope,
+            ),
+        })
         return kwargs
+
+    def get_nomination(self):
+        """Get the nomination being claimed."""
+
+        return self.get_object().nomination
 
 
 def claim_view(request, **kwargs):

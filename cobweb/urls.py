@@ -87,18 +87,12 @@ urlpatterns = [
         name='nomination_update'),
 
     # Claim
-    # path('claim/proj/<int:project_pk>/<path:url>',
-    #      projects.views.claim_view,
-    #      name='claim'),
     path('nomination/<int:nomination_pk>/claim',
          projects.views.ClaimCreateView.as_view(),
          name='claim_create'),
-    path('claim/<int:pk>/edit',
-         projects.views.ClaimUpdateView.as_view(),
-         name='claim_update'),
     path('claim/<int:pk>',
-         projects.views.ClaimDetailView.as_view(),
-         name='claim_detail'),
+         projects.views.ClaimUpdateView.as_view(),
+         name='claim'),
 
     # Tags
     # path('tags/<int:pk>/',
