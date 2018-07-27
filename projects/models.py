@@ -286,7 +286,7 @@ class Claim(models.Model):
         return f'<Claim {self.pk}>'
 
     def get_absolute_url(self) -> str:
-        return reverse('claim_detail', kwargs={'pk': self.pk})
+        return reverse('claim', kwargs={'pk': self.pk})
 
     def get_edit_url(self) -> str:
         return reverse('claim_update', kwargs={'pk': self.pk})
