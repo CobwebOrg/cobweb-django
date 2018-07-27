@@ -112,7 +112,6 @@ def nomination_info(editable=False):
 class NominationForm(forms.ModelForm):
     class Meta:
         model = Nomination
-        template_name = 'projects/claim_form.html'
         fields = ('__all__')
         widgets = {
             'tags': autocomplete.ModelSelect2Multiple(
@@ -187,7 +186,6 @@ class NominationForm(forms.ModelForm):
 class ClaimForm(forms.ModelForm):
     class Meta:
         model = Claim
-        # template_name = 'projects/claim_form.html'
         # fields = ('nomination', 'organization', 'active', 'has_holding')
         fields = ('__all__')
         widgets = {

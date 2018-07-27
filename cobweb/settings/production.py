@@ -95,6 +95,7 @@ INSTALLED_APPS = [
     'webpack_loader',
 
     'core',
+    'jargon',
     'projects',
     'webarchives',
 ]

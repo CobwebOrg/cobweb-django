@@ -1,8 +1,9 @@
 {% load cobweb_look %}
+{% load jargon %}
 {% load i18n %}
 
 {% if link_url %}
 	<a href="{{ link_url }}" class="btn btn-primary">
-		+ {% trans "Add a nomination" %}
+		+ Add a {% term "nomination" %}
 	</a>
 {% endif %}

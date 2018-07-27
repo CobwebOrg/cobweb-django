@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load crispy from crispy_forms_tags %}
 {% load as_link from cobweb_look %}
+{% load jargon %}
 {% load i18n %}
 {% load render_table from django_tables2 %}
 
@@ -8,14 +9,14 @@
 
 {% block content %}
     <div class="row"><div class="col mt-1 mb-3">
-        <h2>{% trans "PROJECT:" %} {{project|as_link}}</h2>
-        <h3>{% trans "NEW NOMINATION" %}</h3>
+        <h2>New{% term "NOMINATION" "upper" %}</h3>
+        <h3>{% term "project" "upper" %}: {{project|as_link}}</h2>
     </div></div>
 
     <div class="row">
         <div class="col-6">
             <div class="pane">
-                <h4 class="mb-3">{% trans "PROJECT INFO:" %} </h4>
+                <h4 class="mb-3">{% term 'project' 'upper' %} INFO: </h4>
                 {% crispy project_form %}
             </div>
         </div>

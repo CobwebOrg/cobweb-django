@@ -1,4 +1,5 @@
 {% load cobweb_look %}
+{% load jargon %}
 
 {% if item.get_absolute_url %}
 	<a href='{{ item.get_absolute_url }}' class='badge badge-{{icon_name | lower}} border border-primary'>{% icon icon_name %}{{item}}</a>

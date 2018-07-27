@@ -1,0 +1,45 @@
+resource:
+  term: resource URL
+  term-plural: resource URLs
+  definition: A resource is a piece of online web-accessible content of any format, e.g., HTML page, PDF document, JPEG image, Flash video, etc.  
+  context: |
+    A resource is represented in Cobweb in terms of its URL (uniform resource locator) and description.  For example, the Cobweb homepage would be represented by its URL <http://cobwebarchive.org/>, title “Cobweb”, and summary description “Homepage for the Cobweb collaborative web archiving collection development platform”.  Making use of Cobweb functions, resources may be nominated, claimed, and held, as described below.  In short, a nomination is a suggestion that a resource should be collected, a claim is a statement of intention by an archival organization to collect a nominated resource, and a holding is a statement that a claimed resource was actually captured and is managed as part of an archival collection external to Cobweb.
+
+project:
+  term: project
+  term-plural: projects
+  definition: A project is something you create where you add nominated resources, claim resources to, and scope claimed resources within. You can have multiple projects housed in a a collection.
+  context: |
+    A project is the umbrella for a set of collaborative activities enabled by the Cobweb system to document collaborative collecting of web content related to a particular thematic or topical subject.  The primary activities encompassed by a project are nominating, claiming, and holding resources, as described below.  In short, a nomination is a suggestion that a resource should be collected, a claim is a statement of intention by an archival organization to collect a nominated resource, and a holding is a statement by an archival organization that a claimed resource was actually captured and is managed as part of an archival collection external to Cobweb.  A project is represented in Cobweb in terms of its descriptive and administrative attributes, including title, summary description of collecting theme, administrator(s), and nomination policy: open to anyone or restricted to a known set of nominators authorized by the project’s administrator(s).
+
+nomination:
+  term: nomination
+  term-plural: nominations
+  definition: A nomination is a suggestion that a resource be collected as part of a project.
+  context: |
+    A nomination is the suggestion of a resource that should be collected in the context of a project by virtue of the resource’s relevance to the project’s thematic or topical subject.  A nomination is represented in Cobweb in terms of its underlying resource, nominator, rationale for suggesting the nomination, and proposed schedule of collection; for example, a fairly dynamic resource with a finite ending date might need to be collected every month for the next two years.  A Cobweb user does not have to be affiliated with a web archiving organization in order to nominate resources to a project.  Depending upon the policy defined by a project’s administrator(s), resources may be open for nomination to projects by anyone or only those explicitly authorized to do so by the projects’ administrator(s).
+    While an individual resource may be independently nominated for collection in the context of multiple projects, it can be nominated only once relative to any particular project.  However, that nomination can  be endorsed multiple times as a way to indicate agreement with the importance and rationale for the nomination.  The count of endorsing votes is maintained as part of a nominationnomination’s description.
+    Nominations may be claimed by archival organizations as a public statement of intention to collect the underlying resources.  While it is desirable that all nominated resources are eventually claimed and held, that is not a requirement.  It is possible that some set of nominated resources will never be claimed or held.
+
+claim:
+  term: claim
+  term-plural: claims
+  definition: A claim is a public statement of intention by an archival organization to collect a nominated resource.  
+  context: |
+    A claim is represented in Cobweb in terms of its underlying nomination, claiming organization, and proposed collecting schedule; for example, a fairly dynamic resource with a finite ending date might want to be collected every month for the next two years.  A given nomination may be claimed by multiple archival organizations, potentially with different collecting schedules and reflecting the diverse imperatives of local collection development policies.  Duplicative claiming (and holding) is not necessarily inefficient or non-productive; it is only needless duplication that should be avoided.  The visibility into distributed web archiving activities provided by Cobweb is designed to minimize such needless duplication of effort.
+    Claimed resources may be marked as held by archival organizations as a public statement that the resources have actually been physically captured and are being managed as part of archival collections external to Cobweb.  While it is desirable that all claimed resources are eventually held, that is not a requirement.  It is possible that some set of claimed nominations will never be held.
+
+holding:
+  term: holding
+  term-plural: holdings
+  definition: A holding is a public statement by an archival organization that a claimed resource was actually physically captured and is managed as part of an archival collection external to Cobweb.  
+  context: >
+    A holding is represented in Cobweb by its underlying claim, holding organization, and actual collecting schedule; for example, a fairly dynamic resource with a defined starting date might have been collected every month for the past two years.  While a given nomination may be independently claimed by multiple archival organizations, any given claim can be held only by the claiming organization.
+    It is important to emphasize that while Cobweb documents nominations, claims, and holdings, it does not actually perform the physical capture of resources, nor does it manage archival collections of web content; both of those activities are the responsibilities of external archival organizations.
+
+collection:
+  term: collection
+  term-plural: collections
+  context: >
+    A collection is an aggregation of actual collected web resources managed by an archival institution external to Cobweb.  A collection is represented in Cobweb in terms of its managing archival organization, title, description, public web address, and terms of use.  A collection is an important component of the description for a held resource, as it indicates where a user can go external to Cobweb to get access to the archived resource.
+    To reiterate, a collection is an aggregation of  web resources that actually were physically collected and are managed by an archival organization external to Cobweb; a project, on the other hand, refers to a set of activities -- nominating, claiming, holding -- that occurs using the Cobweb online platform.

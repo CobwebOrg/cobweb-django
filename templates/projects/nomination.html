@@ -1,28 +1,18 @@
 {% extends "base.html" %}
+{% load jargon %}
 {% load crispy from crispy_forms_tags %}
 {% load i18n %}
 {% load model_name as_link from cobweb_look %}
 {% load render_table from django_tables2 %}
 
-{% block title %}Cobweb: {{ claim }}{% endblock %}
+{% block title %}Cobweb: Nomination{% endblock %}
 
 {% block content %}
     <div class="row"><div class="col">
-        <h2>NOMINATION</h2>
-        <h3>Project: {{nomination.project|as_link}}
-        <br>Resource: {{nomination.resource|as_link}}</h3>
+        <h2>{% term 'nomination' 'upper' %}</h2>
+        <h3>{% term 'project' 'capitalize' %}: {{nomination.project|as_link}}
+        <br>{% term 'resource' 'capitalize' %}: {{nomination.resource|as_link}}</h3>
     </div></div>
-
-    {{ form.non_field_errors }}
-    {% for field in form %}
-        {% if field.errors %}
-            <dl>
-            {% for error in field.errors %}
-                <dt>{{field.label}}</dt><dd><strong>{{ error|escape }}</strong></dd>
-            {% endfor %}
-            </dl>
-        {% endif %}
-    {% endfor %}
 
     <div class="row h-100">
         <div class="col-6">
@@ -32,7 +22,7 @@
         </div>
         <div class="col-6">
             <div class="pane">
-                <h5>Claims</h5>
+                <h5>{% term_plural 'claim' 'upper' %}</h5>
                 {% render_table table %}
             </div>
         </div>

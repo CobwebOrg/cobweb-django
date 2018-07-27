@@ -18,6 +18,12 @@ $('textarea').each(function () {
   this.style.height = (this.scrollHeight) + 'px';
 });
 
+// Enable tooltips
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+
 window.$$ = $; // Expose *this* jquery to browser console - $ gets overloaded
 window.Dashboard = Dashboard;
 window.ReactDOM = ReactDOM;

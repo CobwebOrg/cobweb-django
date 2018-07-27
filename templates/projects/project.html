@@ -2,6 +2,7 @@
 {% load crispy from crispy_forms_tags %}
 {% load i18n %}
 {% load model_name from cobweb_look %}
+{% load jargon %}
 {% load render_table from django_tables2 %}
 
 {% block window_title %}Cobweb: {{object.title}}{% endblock %}
@@ -20,22 +21,22 @@
                         <a class="nav-link {% if view.summary %}active disabled{% endif %}"
                            href="{% url 'project_summary' pk=object.pk %}">{% trans "Summary" %}</a>
                         <a class="nav-link {% if view.nominations %}active disabled{% endif %}"
-                           href="{% url 'project_nominations' pk=object.pk %}">{% trans "Nominations" %}</a>
+                           href="{% url 'project_nominations' pk=object.pk %}">{% term_plural 'nomination' 'capitalize' %}</a>
                         <a class="nav-link {% if view.notes %}active disabled{% endif %}">{% trans "Notes" %}</a>
                 </div>
 
                 {% if view.summary %}
                     <div class="summary">
                         <div class="n-unclaimed">{{object.n_unclaimed}}</div>
-                        <br>{% trans "unclaimed" %} {% trans "nominations" %}
+                        <br>{% trans "unclaimed" %} {% term_plural 'nomination' %}
                     </div>
                     <div class="summary">
                         <div class="n-claimed">{{object.n_claimed}}</div>
-                        <br>{% trans "claimed" %} {% trans "nominations" %}
+                        <br>{% trans "claimed" %} {% term_plural 'nomination' %}
                     </div>
                     <div class="summary">
                         <div class="n-held">{{object.n_held}}</div>
-                        {% trans "held" %} {% trans "nominations" %}
+                        {% trans "held" %} {% term_plural 'nomination' %}
                     </div>
                 {% elif view.nominations %}
                     <div class="pt-4">{% render_table table %}</div>

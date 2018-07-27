@@ -2,13 +2,14 @@
 {% load crispy from crispy_forms_tags %}
 {% load i18n %}
 {% load model_name from cobweb_look %}
+{% load jargon %}
 {% load render_table from django_tables2 %}
 
 {% block window_title %}Cobweb: {% trans "New Project" %}{% endblock %}
 
 {% block content %}
     <div class="row">
-        <h2 class="col mt-1 mb-3">{% trans "New project" %}</h2>
+        <h2 class="col mt-1 mb-3">NEW {% term "project" %}</h2>
     </div>
 
     <div class="row h-100">
@@ -17,11 +18,11 @@
         <div class="col-6">
             <div class="pane">
                 <div class="nav nav-infotabs">
-                        <a class="nav-link">{% trans "Nominations" %}</a>
+                        <a class="nav-link">{% term_plural "nomination" "capitalize" %}</a>
                         <a class="nav-link active disabled">{% trans "Notes" %}</a>
                 </div>
 
-                <h2>{% trans "Project" %} {% trans "Notes" %}</h2>
+                <h2>{% term "project" "capitalize" %} {% trans "Notes" %}</h2>
 
                 <form class="p-3 mb-3"><fieldset>
                     <textarea class="w-100 p-2">{% trans "Add a" %} {% trans "note" %}...</textarea>
