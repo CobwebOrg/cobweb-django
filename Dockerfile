@@ -1,4 +1,4 @@
-FROM python:3.6 as base
+FROM python:3.7 as base
 ENV PYTHONUNBUFFERED 1
 RUN pip install pipenv
 RUN mkdir /code
