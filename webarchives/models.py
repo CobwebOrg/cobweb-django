@@ -9,6 +9,7 @@ from polymorphic.models import PolymorphicModel
 import reversion
 import sickle
 from sickle import Sickle
+from sickle.oaiexceptions import NoRecordsMatch, NoSetHierarchy
 
 import cobweb.types as T
 from core.models import Organization
@@ -106,16 +107,22 @@ class OAIPMHEndpoint(APIEndpoint):
         self.harvest_api_identification(sickle)
 
         print("Harvesting OAI-PMH Sets as {}".format(self.set_type))
-        for set_info in sickle.ListSets():
-            print(set_info.setName[:80], end='\r')
-            stdout.flush()
-            self.harvest_setspec(set_info)
+        try:
+            for set_info in sickle.ListSets():
+                print(set_info.setName[:80], end='\r')
+                stdout.flush()
+                self.harvest_setspec(set_info)
+        except NoSetHierarchy:
+            pass
 
         print("Harvesting OAI-PMH Records as {}".format(self.record_type))
-        for record in sickle.ListRecords(metadataPrefix='oai_dc'):
-            print(record.header.identifier[:80], end='\r')
-            stdout.flush()
-            self.harvest_record(record)
+        try:
+            for record in sickle.ListRecords(metadataPrefix='oai_dc'):
+                print(record.header.identifier[:80], end='\r')
+                stdout.flush()
+                self.harvest_record(record)
+        except NoRecordsMatch:
+            pass
         print()
         self.last_updated = timestamp
         self.save()
