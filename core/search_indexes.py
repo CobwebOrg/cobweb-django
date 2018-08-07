@@ -29,6 +29,26 @@ class OrganizationIndex(indexes.ModelSearchIndex, indexes.Indexable):
     class Meta:
         model = Organization
 
+# class ResourceIndex(indexes.SearchIndex, indexes.Indexable):
+#     class Meta:
+#         model = Resource
+
+#     name
+#     url = indexes.CharField(model_attr='url')
+#     text = 
+#     data = {field: {value: [agents_asserting]}}
+
+#     url
+#     status
+#     title
+#     language
+#     description
+#     tags
+#     subject_headings
+
+#     def prepare_data(self, resource):
+
+
 
 # class NoteIndex(indexes.ModelSearchIndex, indexes.Indexable):
 #     class Meta:

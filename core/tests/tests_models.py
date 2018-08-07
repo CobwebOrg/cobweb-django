@@ -3,10 +3,10 @@ from django.db.utils import IntegrityError
 
 from core.models import User, Organization
 from core.models import Note, Tag, SubjectHeading
-from core.models import Resource, ResourceDescription
+from core.models import Resource, ResourceDescription, ResourceScan
 from core.tests.factories import UserFactory, OrganizationFactory
 from core.tests.factories import NoteFactory, TagFactory, SubjectHeadingFactory
-from core.tests.factories import ResourceFactory, ResourceDescriptionFactory
+from core.tests.factories import ResourceFactory, ResourceScanFactory, ResourceDescriptionFactory
 
 
 @pytest.mark.django_db
@@ -51,6 +51,15 @@ def test_resource_model():
     assert isinstance(str(resource), str)
     with pytest.raises(IntegrityError):
         str(ResourceFactory(url=None))
+
+
+class TestResourceScanModel:
+
+    @pytest.mark.django_db
+    def test_creation(self):
+        resource_scan = ResourceScanFactory()
+        assert isinstance(resource_scan, ResourceScan)
+        assert isinstance(str(resource_scan), str)
 
 
 @pytest.mark.django_db

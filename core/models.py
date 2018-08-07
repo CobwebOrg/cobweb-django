@@ -1,11 +1,15 @@
+from itertools import chain
+from collections import Counter, defaultdict
+from typing import Dict, List, Union
+
 import reversion
 from django.core.validators import URLValidator
 from django.db import models
+from django.forms.models import model_to_dict
 from django.urls import reverse
 from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
-from itertools import chain
 from phonenumber_field.modelfields import PhoneNumberField
 from surt import handyurl
 from surt.DefaultIAURLCanonicalizer import canonicalize
@@ -216,22 +220,36 @@ class SubjectHeading(models.Model):
 
 
 class Resource(models.Model):
+    # surt = 
     url = NormalizedURLField(max_length=1000, null=False, blank=False,
                              unique=True)
 
-    when_checked = models.DateTimeField(null=True, blank=True)
-    status = models.CharField(max_length=50, default='Unknown', choices=(
-        ('Active', 'Active'),
-        ('Redirected', 'Redirected'),
-        ('Inactive', 'Inactive'),
-        ('Unknown', 'Unknown'),
-    ))
-
-    title = models.CharField(max_length=200, null=True, blank=True)
-    language = models.ForeignKey('languages_plus.Language', null=True, blank=True,
-                                 on_delete=models.PROTECT)
-
     notes = GenericRelation(Note)
+
+    def __repr__(self):
+        return f'<Resource self.url>'
+
+    def __str__(self):
+        return self.url
+
+    @property
+    def data(self) -> Dict[str, List[str]]:
+        data: Dict[str, Counter] = defaultdict(Counter)
+        
+        data['url'][self.url] = 1
+        for source in chain(self.scans.all(), self.resource_descriptions.all()):  # pylint: disable=E1101
+            for field, values in source.data.items():
+                for value in values:
+                    data[field][value] += 1
+
+        for unwanted_field in ('id', 'asserted_by'):
+            del data[unwanted_field]
+        ans = {}
+
+        for field, values_counter in data.items():
+            ans[field] = [value for value, n in values_counter.most_common()]
+
+        return ans
 
     def get_resource_records(self) -> typ.Iterable:
         return chain(
@@ -241,31 +259,65 @@ class Resource(models.Model):
     def get_absolute_url(self) -> str:
         return reverse('resource_detail', kwargs={'url': self.url})
 
+    @property
+    def name(self):
+        for source in chain(self.scans.all(), self.resource_descriptions.all()):
+            if source.title:
+                return source.title
+        return self.url
+
     def resource_record_count(self) -> int:
         return (
             self.nominations.count()
         )
 
+
+@reversion.register
+class ResourceScan(models.Model):
+    """Resource Metadata automatically retrieved by crawling the URL."""
+
+    resource = models.ForeignKey(Resource, on_delete=models.CASCADE, unique=True,
+                                 related_name='scans')
+    on_date = models.DateTimeField(null=True, blank=True)
+
+    # Status: Replaced the enum from the spec w/ the following
+    is_active = models.NullBooleanField(null=True, blank=True)
+    redirect_url = models.URLField(null=True, blank=True)
+    # STATUS        is_active       redirect_url
+    # Unknown:      Null            Null
+    # Active:       True            Null
+    # Inactive:     False           Null
+    # Redirected:   False           [URL]  # TODO: what should is_active be? does it matter?
+
+    title = models.CharField(max_length=200, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    tags = models.ManyToManyField(Tag, blank=True)  # crosswalk to <meta name="keywords">
+    author = models.CharField(max_length=200, null=True, blank=True)
+    language = models.ForeignKey('languages_plus.Language', null=True, blank=True,
+                                 on_delete=models.PROTECT)
+
     @property
-    def name(self):
-        return self.url
+    def data(self) -> Dict[str, List[str]]:
+        return {k: (v if isinstance(v, list) else [v])
+                for k, v in model_to_dict(self).items()}
 
-    def __str__(self):
-        return self.url
-    
-    def __repr__(self):
-        return f'<Resource self.url>'
-
+    def __repr__(self) -> str:
+        return f'<ResourceScan {self.resource} on_date={self.on_date}>'
 
 @reversion.register
 class ResourceDescription(models.Model):
     """Desecriptive metadata about a Resource, asserted by a User."""
 
-    resource = models.ForeignKey(Resource, on_delete=models.PROTECT)
+    class Meta:
+        unique_together = ('resource', 'asserted_by')
+
+    resource = models.ForeignKey(Resource, on_delete=models.PROTECT,
+                                 related_name='resource_descriptions')
     asserted_by = models.ForeignKey(User, on_delete=models.PROTECT)
 
     title = models.CharField(max_length=200, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
+    author = models.CharField(max_length=200, null=True, blank=True)
 
     # TODO: setup required - see https://github.com/cordery/django-languages-plus
     language = models.ForeignKey('languages_plus.Language', null=True, blank=True,
@@ -274,8 +326,10 @@ class ResourceDescription(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
     subject_headings = models.ManyToManyField(SubjectHeading, blank=True)
 
-    class Meta:
-        unique_together = ('resource', 'asserted_by')
+    @property
+    def data(self) -> Dict[str, List[str]]:
+        return {k: (v if isinstance(v, list) else [v])
+                for k, v in model_to_dict(self).items()}
 
     def __repr__(self) -> str:
         return f'<ResourceDescription {self.resource} asserted_by={self.asserted_by}>'

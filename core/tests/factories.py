@@ -1,8 +1,11 @@
+import random
+
 import factory
+from languages_plus.models import Language
 
 from core.models import User, Organization
 from core.models import Note, Tag, SubjectHeading
-from core.models import Resource, ResourceDescription
+from core.models import Resource, ResourceScan, ResourceDescription
 
 
 class UserFactory(factory.DjangoModelFactory):
@@ -41,6 +44,26 @@ class TagFactory(factory.DjangoModelFactory):
     title = factory.Faker('word')
 
 
+def add_tags(obj, create, extracted, **kwargs):
+    """Add tags.
+
+    cf.
+    http://factoryboy.readthedocs.io/en/latest/recipes.html#simple-many-to-many-relationship
+    """
+
+    if not create:
+        # Simple build, do nothing.
+        return
+    elif extracted:
+        for tag in extracted:
+            if isinstance(tag, str):
+                tag = TagFactory(name=tag)
+            obj.tags.add(tag)
+    else:
+        while random.random() > 0.8:
+            obj.tags.add(TagFactory())
+
+
 class SubjectHeadingFactory(factory.DjangoModelFactory):
     class Meta:
         model = SubjectHeading
@@ -56,6 +79,30 @@ class ResourceFactory(factory.DjangoModelFactory):
     url = factory.Faker('url')
 
 
+class ResourceScanFactory(factory.DjangoModelFactory):
+    class Meta:
+        model = ResourceScan
+
+    resource = factory.SubFactory(ResourceFactory)
+
+    @factory.lazy_attribute
+    def is_active(self):
+        return random.choice((True, False, None))
+
+    @factory.lazy_attribute
+    def redirect_url(self):
+        if (self.is_active is False) and random.choice([True, False]):
+            return factory.Faker('url').generate({})
+        else:
+            return False
+
+    title = factory.Faker('sentence')
+    tags = factory.PostGeneration(add_tags)
+    description = factory.Faker('paragraph')
+    author = factory.Faker('name')
+    # language = factory.Iterator(Language.objects.all())
+
+
 class ResourceDescriptionFactory(factory.DjangoModelFactory):
     class Meta:
         model = ResourceDescription
@@ -63,22 +110,6 @@ class ResourceDescriptionFactory(factory.DjangoModelFactory):
     resource = factory.SubFactory(ResourceFactory)
     asserted_by = factory.SubFactory(UserFactory)
 
-    # title = factory.Faker('')
+    title = factory.Faker('sentence')
     description = factory.Faker('paragraph')
-
-    @factory.post_generation
-    def tags(self, create, extracted, **kwargs):
-        """Add tags.
-
-        cf.
-        http://factoryboy.readthedocs.io/en/latest/recipes.html#simple-many-to-many-relationship
-        """
-        if not create:
-            # Simple build, do nothing.
-            return
-
-        if extracted:
-            for tag in extracted:
-                if isinstance(tag, str):
-                    tag = TagFactory(name=tag)
-                self.tags.add(tag)
+    tags = factory.PostGeneration(add_tags)
