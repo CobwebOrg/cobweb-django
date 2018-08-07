@@ -47,6 +47,7 @@ pylint-django = "*"
 pytest-django-haystack = "*"
 rope = "*"
 django-haystack-panel = "*"
+django-extensions = "*"
 
 [requires]
 python_version = "3.7"

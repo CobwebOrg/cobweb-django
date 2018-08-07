@@ -19,9 +19,16 @@ CRISPY_FAIL_SILENTLY = False
 
 # Django Debug Toolbar
 
-INSTALLED_APPS += ['debug_toolbar']
-MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+INSTALLED_APPS += [
+    'debug_toolbar', 
+    'django_extensions',
+]
 
+SHELL_PLUS_PRE_IMPORTS = [
+    ('everything', '*'),
+]
+
+MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.versions.VersionsPanel',
     'debug_toolbar.panels.timer.TimerPanel',
