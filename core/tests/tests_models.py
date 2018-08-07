@@ -1,3 +1,5 @@
+import itertools
+
 import pytest
 from django.db.utils import IntegrityError
 
@@ -47,10 +49,29 @@ def test_subjectheading_model():
 @pytest.mark.django_db
 def test_resource_model():
     resource = ResourceFactory()
+    resource.resource_scans.add(ResourceScanFactory())
+    resource.resource_descriptions.add(ResourceDescriptionFactory())
+    resource.resource_descriptions.add(ResourceDescriptionFactory())
+
+    # Test model creation
     assert isinstance(resource, Resource)
     assert isinstance(str(resource), str)
     with pytest.raises(IntegrityError):
         str(ResourceFactory(url=None))
+    
+    # Test that resource.data collates metadata from different sources
+    data = resource.data
+    for source in itertools.chain(resource.resource_scans.all(),
+                                  resource.resource_descriptions.all()):
+        for field, value in source.data.items():
+            if field in ('id', 'asserted_by'):
+                pass  # ignored fields
+            elif len(value) == 0:
+                pass
+            elif isinstance(value, list):
+                assert set(value).issubset(data[field])
+            else:
+                assert value in data[field]
 
 
 class TestResourceScanModel:

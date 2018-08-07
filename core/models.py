@@ -237,7 +237,7 @@ class Resource(models.Model):
         data: Dict[str, Counter] = defaultdict(Counter)
         
         data['url'][self.url] = 1
-        for source in chain(self.scans.all(), self.resource_descriptions.all()):  # pylint: disable=E1101
+        for source in chain(self.resource_scans.all(), self.resource_descriptions.all()):  # pylint: disable=E1101
             for field, values in source.data.items():
                 for value in values:
                     data[field][value] += 1
@@ -261,7 +261,7 @@ class Resource(models.Model):
 
     @property
     def name(self):
-        for source in chain(self.scans.all(), self.resource_descriptions.all()):
+        for source in chain(self.resource_scans.all(), self.resource_descriptions.all()):
             if source.title:
                 return source.title
         return self.url
@@ -277,7 +277,7 @@ class ResourceScan(models.Model):
     """Resource Metadata automatically retrieved by crawling the URL."""
 
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE, unique=True,
-                                 related_name='scans')
+                                 related_name='resource_scans')
     on_date = models.DateTimeField(null=True, blank=True)
 
     # Status: Replaced the enum from the spec w/ the following
