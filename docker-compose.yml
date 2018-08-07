@@ -13,12 +13,14 @@ services:
       - solr-precreate
       - cobweb
       - /opt/solr/server/solr/configsets/cobweb
+
   db:
     image: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+      
   web:
     build:
       context: .
