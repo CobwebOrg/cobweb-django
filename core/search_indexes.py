@@ -1,7 +1,9 @@
 """SearchIndex classes for Django-haystack."""
+from typing import List
 
 from django.utils.html import format_html
 from haystack import indexes
+from haystack.exceptions import SearchFieldError
 
 from core.models import User, Organization, Note, Tag, Resource
 from projects.models import Project
@@ -29,24 +31,69 @@ class OrganizationIndex(indexes.ModelSearchIndex, indexes.Indexable):
     class Meta:
         model = Organization
 
-# class ResourceIndex(indexes.SearchIndex, indexes.Indexable):
-#     class Meta:
-#         model = Resource
+class ResourceIndex(indexes.SearchIndex, indexes.Indexable):
+    class Meta:
+        model = Resource
 
-#     name
-#     url = indexes.CharField(model_attr='url')
-#     text = 
-#     data = {field: {value: [agents_asserting]}}
+    name = indexes.CharField(model_attr='name', stored=True, indexed=False)
+    text = indexes.CharField(model_attr='data', document=True, use_template=False) 
 
-#     url
-#     status
-#     title
-#     language
-#     description
-#     tags
-#     subject_headings
+    url = indexes.CharField(model_attr='url', stored=True, indexed=True)
+    title = indexes.MultiValueField(stored=True, indexed=True)
 
-#     def prepare_data(self, resource):
+    status = indexes.MultiValueField(stored=True, indexed=True)
+    description = indexes.MultiValueField(stored=True, indexed=True)
+    language = indexes.MultiValueField(stored=True, indexed=True) 
+    tags = indexes.MultiValueField(stored=True, indexed=True)
+    subject_headings = indexes.MultiValueField(stored=True, indexed=True)
+
+    # data = {field: {value: [agents_asserting]}}
+
+    def get_model(self):
+        return Resource
+
+    def index_queryset(self, using=None):
+        return (
+            self.get_model().objects.all()
+            .prefetch_related('resource_scans', 'resource_descriptions')
+        )
+
+    def prepare_title(self, obj: Resource) -> List[str]:
+        try:
+            return obj.data['title']
+        except KeyError:
+            return []
+
+    def prepare_status(self, obj: Resource) -> List[str]:
+        try:
+            return obj.data['status']
+        except KeyError:
+            return []
+
+    def prepare_description(self, obj: Resource) -> List[str]:
+        try:
+            return obj.data['description']
+        except KeyError:
+            return []
+
+    def prepare_language(self, obj: Resource) -> List[str]:
+        try:
+            return obj.data['language']
+        except KeyError:
+            return []
+
+    def prepare_tags(self, obj: Resource) -> List[str]:
+        try:
+            return obj.data['tags']
+        except KeyError:
+            return []
+
+    def prepare_subject_headings(self, obj: Resource) -> List[str]:
+        try:
+            return obj.data['subject_headings']
+        except KeyError:
+            return []
+
 
 
 

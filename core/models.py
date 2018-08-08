@@ -227,7 +227,7 @@ class Resource(models.Model):
     notes = GenericRelation(Note)
 
     def __repr__(self):
-        return f'<Resource self.url>'
+        return f'<Resource {self.url}>'
 
     def __str__(self):
         return self.url
@@ -243,7 +243,10 @@ class Resource(models.Model):
                     data[field][value] += 1
 
         for unwanted_field in ('id', 'asserted_by'):
-            del data[unwanted_field]
+            try:
+                del data[unwanted_field]
+            except KeyError:
+                pass
         ans = {}
 
         for field, values_counter in data.items():

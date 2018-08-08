@@ -97,9 +97,19 @@
     
     <field name="email_address" type="text_en" indexed="true" stored="true" multiValued="false" />
     
-    <field name="description" type="text_en" indexed="true" stored="true" multiValued="false" />
+    <field name="description" type="text_en" indexed="true" stored="true" multiValued="true" />
     
     <field name="identifier" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="title" type="text_en" indexed="true" stored="true" multiValued="true" />
+    
+    <field name="status" type="text_en" indexed="true" stored="true" multiValued="true" />
+    
+    <field name="language" type="text_en" indexed="true" stored="true" multiValued="true" />
+    
+    <field name="tags" type="text_en" indexed="true" stored="true" multiValued="true" />
+    
+    <field name="subject_headings" type="text_en" indexed="true" stored="true" multiValued="true" />
     
     <field name="nomination_pk" type="long" indexed="true" stored="true" multiValued="false" />
     
@@ -120,10 +130,6 @@
     <field name="page_scope" type="text_en" indexed="true" stored="true" multiValued="false" />
     
     <field name="project_pk" type="long" indexed="true" stored="true" multiValued="false" />
-    
-    <field name="status" type="text_en" indexed="true" stored="true" multiValued="false" />
-    
-    <field name="title" type="text_en" indexed="true" stored="true" multiValued="false" />
     
     <field name="any_user_can_nominate" type="boolean" indexed="false" stored="true" multiValued="false" />
     
