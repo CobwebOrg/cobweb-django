@@ -16,7 +16,7 @@ class ResourceIndexViewTests(TestCase):
         assert response.status_code == 200
 
 
-class ResourceDetailViewTests(TestCase):
+class ResourceViewTests(TestCase):
 
     @pytest.mark.xfail(strict=True)
     def setUp(self):
@@ -31,7 +31,7 @@ class ResourceDetailViewTests(TestCase):
     @pytest.mark.xfail(strict=True)
     def test_get(self):
         """
-        Tests that ResourceDetailView.get(...) performs URL normalization as
+        Tests that ResourceView.get(...) performs URL normalization as
         follows:
 
         1. If url parameter is valid, or if called w/ id/pk instead of url,
@@ -66,7 +66,7 @@ class ResourceDetailViewTests(TestCase):
         If such an object doesn't exist in the db yet, it will be created but
         not saved.
 
-        This allows the ResourceDetailView to provide information such as
+        This allows the ResourceView to provide information such as
         parent/child resources, along with forms for nominating/claiming it
         (in which case the Resource should be saved along w/ Nomination or
         Claim object).
@@ -75,10 +75,10 @@ class ResourceDetailViewTests(TestCase):
         url = models.normalize_url(Faker().url())
         self.assertEqual(
             models.Resource.objects.filter(url__exact=url).count(), 0)
-        new_resource = views.ResourceDetailView(
+        new_resource = views.ResourceView(
             kwargs={'url': url}).get_object()
         self.assertIsNone(new_resource.id)
 
-        saved_resource = views.ResourceDetailView(
+        saved_resource = views.ResourceView(
             kwargs={'url': self.url}).get_object()
         self.assertIsNotNone(saved_resource.id)

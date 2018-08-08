@@ -103,8 +103,8 @@ urlpatterns = [
          name='tag_autocomplete'),
 
     # Resource
-    path('resources/', core.views.ResourceListView.as_view(), name='resource_list'),
-    path('resources/<path:url>', core.views.ResourceDetailView.as_view(), name='resource_detail'),
+    path('url/', core.views.ResourceListView.as_view(), name='resource_list'),
+    path('url/<path:url>', core.views.ResourceView.as_view(), name='resource_detail'),
 
     path('admin', admin.site.urls),
 ]

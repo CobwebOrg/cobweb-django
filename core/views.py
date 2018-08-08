@@ -162,7 +162,7 @@ class ResourceListView(CobwebBaseIndexView):
         return context
 
 
-class ResourceDetailView(generic.DetailView):
+class ResourceView(generic.DetailView):
     model = models.Resource
     template_name = "core/resource.html"
     section = 'resource'
@@ -207,7 +207,7 @@ class ResourceDetailView(generic.DetailView):
         super().get_object(...), which tries with `pk` or `slug`.
 
         If a url is provided but no matching resource is in the database,
-        returns a new, unsaved object. This allows the ResourceDetailView to
+        returns a new, unsaved object. This allows the ResourceView to
         provide information such as parent/child resources, along with forms
         for nominating/claiming it (in which case the Resource should be saved
         along w/ Nomination or Claim object).
