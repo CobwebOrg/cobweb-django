@@ -29,7 +29,7 @@ django-extra-views = "*"
 pyyaml = "*"
 
 [dev-packages]
-pytest = "*"
+pytest = "<3.7"
 coverage = "*"
 django-debug-toolbar = "*"
 factory_boy = "*"
