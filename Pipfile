@@ -27,6 +27,7 @@ phonenumbers = "*"
 django-polymorphic = "*"
 django-extra-views = "*"
 pyyaml = "*"
+django-react-templatetags = "*"
 
 [dev-packages]
 pytest = "<3.7"
