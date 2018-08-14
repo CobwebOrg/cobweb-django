@@ -38,7 +38,7 @@ class OrganizationTable(CobwebBaseTable):
 
 
 class ResourceTable(CobwebBaseTable):
-    url = django_tables2.LinkColumn(viewname='resource_detail', kwargs={'url': Accessor('url')})
+    url = django_tables2.LinkColumn(viewname='resource', kwargs={'url': Accessor('url')})
 
     class Meta(CobwebBaseTable.Meta):
         model = Resource

@@ -191,7 +191,7 @@ class ResourceView(generic.DetailView):
                 if normalized_url != kwargs['url']:
                     return redirect(
                         reverse(
-                            'webresources:detail',
+                            'resource',
                             kwargs={'url': normalized_url}
                         )
                     )
@@ -229,8 +229,6 @@ class ResourceView(generic.DetailView):
             obj = super().get_object(queryset)
 
         return obj
-        return obj
-
 
 
 class TagAutocomplete(autocomplete.Select2QuerySetView):

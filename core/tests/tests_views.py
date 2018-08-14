@@ -52,12 +52,12 @@ class ResourceViewTests(TestCase):
         not_url = 'not a url'
 
         # # non-cannonical url should redirect
-        bad_path = reverse('resource_detail', kwargs={'url': bad_url})
-        good_path = reverse('resource_detail', kwargs={'url': good_url})
+        bad_path = reverse('resource', kwargs={'url': bad_url})
+        good_path = reverse('resource', kwargs={'url': good_url})
         self.assertRedirects(self.client.get(bad_path), good_path)
 
         # invalid url raises 404
-        invalid_path = reverse('resource_detail', kwargs={'url': not_url})
+        invalid_path = reverse('resource', kwargs={'url': not_url})
         self.assertEqual(self.client.get(invalid_path).status_code, 404)
 
     def test_get_object(self):

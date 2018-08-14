@@ -104,7 +104,7 @@ urlpatterns = [
 
     # Resource
     path('url/', core.views.ResourceListView.as_view(), name='resource_list'),
-    path('url/<path:url>', core.views.ResourceView.as_view(), name='resource_detail'),
+    path('url/<path:url>', core.views.ResourceView.as_view(), name='resource'),
 
     path('admin', admin.site.urls),
 ]
