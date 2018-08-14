@@ -71,20 +71,20 @@ class UserProfileForm(UserCreationForm):
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
             HTML('<h3>User: {{object.username}}</h3>'),
-            Field('username', edit=edit),
+            Field('username', edit=editable),
 
             Fieldset('Personal Information',
-                     Field('first_name', edit=edit),
-                     Field('last_name', edit=edit),
-                     Field('email', edit=edit),
-                     Field('url', edit=edit),
+                     Field('first_name', edit=editable),
+                     Field('last_name', edit=editable),
+                     Field('email', edit=editable),
+                     Field('url', edit=editable),
                      ),
 
-            Field('organization', edit=edit),
-            Field('professional_title', edit=edit),
+            Field('organization', edit=editable),
+            Field('professional_title', edit=editable),
 
             Fieldset('Preferences',
-                     Field('get_notification_emails', edit=edit),
+                     Field('get_notification_emails', edit=editable),
                      ),
 
             FORM_BUTTONS if editable else HTML(''),
