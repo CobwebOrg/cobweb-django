@@ -1,9 +1,10 @@
+"""Miscelaneous Cobweb models. Could be a few apps, but why bother..."""
+
 from itertools import chain
-from collections import Counter, defaultdict
-from typing import Dict, List, Union
+from collections.abc import Iterable
+from typing import Dict, List, NewType
 
 import reversion
-from django.core.validators import URLValidator
 from django.db import models
 from django.forms.models import model_to_dict
 from django.urls import reverse
@@ -215,9 +216,13 @@ class SubjectHeading(models.Model):
 
     def __str__(self):
         return self.title
-    
+
     def __repr__(self):
-        return f'<SubjectHeading self.title>'
+        return f'<SubjectHeading {self.title}>'
+
+
+MDDict = NewType('MDDict', Dict[str, List[str]])
+MultiMDDict = NewType('MultiMDDict', Dict[str, MDDict])
 
 
 class Resource(models.Model):
@@ -234,26 +239,15 @@ class Resource(models.Model):
         return self.url
 
     @property
-    def data(self) -> Dict[str, List[str]]:
-        data: Dict[str, Counter] = defaultdict(Counter)
-        
-        data['url'][self.url] = 1
-        for source in chain(self.resource_scans.all(), self.resource_descriptions.all()):  # pylint: disable=E1101
-            for field, values in source.data.items():
-                for value in values:
-                    data[field][value] += 1
+    def data(self) -> MultiMDDict:
+        """Return object data in a json-compatible format."""
 
-        for unwanted_field in ('id', 'asserted_by'):
-            try:
-                del data[unwanted_field]
-            except KeyError:
-                pass
-        ans = {}
-
-        for field, values_counter in data.items():
-            ans[field] = [value for value, n in values_counter.most_common()]
-
-        return ans
+        return MultiMDDict({
+            r.source_name: r.data for r in chain(
+                self.resource_scans.all(),
+                self.resource_descriptions.all()
+            )
+        })
 
     def get_resource_records(self) -> typ.Iterable:
         return chain(
@@ -261,7 +255,7 @@ class Resource(models.Model):
         )
 
     def get_absolute_url(self) -> str:
-        return reverse('resource_detail', kwargs={'url': self.url})
+        return reverse('resource', kwargs={'url': self.url})
 
     @property
     def name(self):
@@ -301,9 +295,26 @@ class ResourceScan(models.Model):
                                  on_delete=models.PROTECT)
 
     @property
-    def data(self) -> Dict[str, List[str]]:
-        return {k: (v if isinstance(v, list) else [v])
-                for k, v in model_to_dict(self).items()}
+    def source_name(self) -> str:
+        """Return the source identifier '/', representing Cobweb."""
+
+        return '/'
+
+    @property
+    def data(self) -> MDDict:
+        """Return item data as a MDDict:
+           - Keys are strings representing field names
+           - Values are sets of strings."""
+
+        data: dict = {}
+        for key, values in model_to_dict(self).items():
+            if isinstance(values, str) or not isinstance(values, Iterable):
+                # single-value field
+                data[key] = [str(values)]
+            else:
+                # multi-value field
+                data[key] = [str(v) for v in values]
+        return MDDict(data)
 
     def __repr__(self) -> str:
         return f'<ResourceScan {self.resource} on_date={self.on_date}>'
@@ -331,9 +342,26 @@ class ResourceDescription(models.Model):
     subject_headings = models.ManyToManyField(SubjectHeading, blank=True)
 
     @property
-    def data(self) -> Dict[str, List[str]]:
-        return {k: (v if isinstance(v, list) else [v])
-                for k, v in model_to_dict(self).items()}
+    def source_name(self) -> str:
+        """Return the source identifier '/', representing Cobweb."""
+
+        return self.asserted_by.username
+
+    @property
+    def data(self) -> MDDict:
+        """Return item data as a MDDict:
+           - Keys are strings representing field names
+           - Values are sets of strings."""
+
+        data: dict = {}
+        for key, values in model_to_dict(self).items():
+            if isinstance(values, str) or not isinstance(values, Iterable):
+                # single-value field
+                data[key] = [str(values)]
+            else:
+                # multi-value field
+                data[key] = [str(v) for v in values]
+        return MDDict(data)
 
     def __repr__(self) -> str:
         return f'<ResourceDescription {self.resource} asserted_by={self.asserted_by}>'
