@@ -35,6 +35,7 @@ services:
     working_dir: /code
     environment:
       DJANGO_SETTINGS_MODULE: "cobweb.settings.debug"
+      DJANGO_STATIC_ROOT: "/staticfiles"
       DEBUG: "true"
       TEST: "false"
       SHELL: "/bin/bash"

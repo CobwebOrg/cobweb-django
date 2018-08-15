@@ -1,7 +1,7 @@
 FROM python:3.7 as base
 ENV PYTHONUNBUFFERED 1
 RUN pip install pipenv
-RUN mkdir /code
+RUN mkdir /code /staticfiles
 WORKDIR /code
 COPY Pipfile /code/
 COPY Pipfile.lock /code/
