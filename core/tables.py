@@ -24,23 +24,26 @@ class UserTable(CobwebBaseTable):
 
     class Meta(CobwebBaseTable.Meta):
         model = User
-        fields = ('impact_factor', 'username', 'first_name', 'last_name')
+        fields = ('username', 'first_name', 'last_name')
         empty_text = "No users."
 
 
 class OrganizationTable(CobwebBaseTable):
-    full_name = django_tables2.LinkColumn(viewname='organization_detail', kwargs={'pk': Accessor('pk')})
+    full_name = django_tables2.LinkColumn(viewname='organization_detail',
+                                          verbose_name='Full name',
+                                          kwargs={'pk': Accessor('pk')})
 
     class Meta(CobwebBaseTable.Meta):
         model = Organization
-        fields = ('impact_factor', 'full_name', )
+        fields = ('full_name', )
         empty_text = "No organizations."
 
 
 class ResourceTable(CobwebBaseTable):
+    title = django_tables2.LinkColumn(viewname='resource', kwargs={'url': Accessor('url')})
     url = django_tables2.LinkColumn(viewname='resource', kwargs={'url': Accessor('url')})
 
     class Meta(CobwebBaseTable.Meta):
         model = Resource
-        fields = ('impact_factor', 'title', 'url')
+        fields = ('title', 'url')
         empty_text = "No records."

@@ -87,8 +87,6 @@ class ProjectForm(forms.ModelForm):
 
 def resource_info(editable=False):
     return Layout(
-        Row(Column(HTML('<h4>About the Resource</h4>'))),
-
         Row(Column(HField('resource', edit=editable))),
         Row(Column(HField('title', edit=editable))),
         Row(Column(HField('description', edit=editable))),
@@ -98,8 +96,6 @@ def resource_info(editable=False):
 
 def nomination_info(editable=False):
     return Layout(
-        Row(Column(HTML('<h4>Nomination Info</h4>'))),
-
         FormSection(
             Field('project', type='hidden'),
             Field('nominated_by', type='hidden'),
@@ -128,45 +124,46 @@ class NominationForm(forms.ModelForm):
                  **kwargs):
         super().__init__(*args, instance=instance, **kwargs)
         self.helper = FormHelper(self)
+            
+        if hasattr(self.instance, 'pk') and self.instance.pk is not None:
+            form_title = HTML(format_html('<h2 class="mb-0">{% load jargon %}{% term "nomination" "upper" %}: {}</h2>',
+                                          str(self.instance)))
+        else:
+            form_title = HTML('<h2 class="mb-0">New {% load jargon %}{% term "nomination" "lower" %}</h2>')
 
         if 'project' in self.initial:
             project = Project.objects.get(pk=self.initial['project'])
-            proj_header = HTML(format_html(
-                '<h2 class="mb-0"><small><a href="{}"> Project: {}</a></small></h2>',
-                project.get_absolute_url(),
-                str(project),
-            ))
+            proj_header = HTML(
+                '{% load jargon cobweb_look %}<h3>{% term "project" "capitalize" %}: {{project|as_link}}</h3>',
+
+            )
         else:
             proj_header = HTML('')
-            
-        if hasattr(self.instance, 'pk') and self.instance.pk is not None:
-            nom_header = HTML(format_html('<h3>NOMINATION: {}</h3>',
-                                          str(self.instance)))
-        else:
-            nom_header = HTML('<h3>NEW NOMINATION</h3>')
         
         if tabbed:
             self.helper.layout = info_tabs(
-                InfoTab(title='About the Nomination',
+                InfoTab(title='About the nomination',
                         content=nomination_info(editable=editable)),
-                InfoTab(title='About the Resource',
+                InfoTab(title='About the resource',
                         content=resource_info(editable=editable)),
             )
         else:
             self.helper.layout = Layout(
                 Div(
+                    form_title,
                     proj_header,
-                    nom_header,
                     css_class='px-3 pt-0 pb-2 w-100',
                 ),
 
                 Row(
                     Pane(
+                        Row(Column(HTML('<h4>About the resource</h4>'))),
                         resource_info(editable=editable),
                         css_class='col-6'
                     ),
 
                     Pane(
+                        Row(Column(HTML('<h4>About the nomination</h4>'))),
                         nomination_info(editable=editable),
                         css_class='col-6',
                     ),

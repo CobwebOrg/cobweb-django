@@ -9,7 +9,7 @@
 
 {% block content %}
     <div class="row">
-        <h2 class="col mt-1 mb-3">NEW {% term "project" %}</h2>
+        <h2 class="col mt-1 mb-3">New {% term "project" "lower" %}</h2>
     </div>
 
     <div class="row h-100">
@@ -19,10 +19,10 @@
             <div class="pane">
                 <div class="nav nav-infotabs">
                         <a class="nav-link">{% term_plural "nomination" "capitalize" %}</a>
-                        <a class="nav-link active disabled">{% trans "Notes" %}</a>
+                        <a class="nav-link active disabled">{% trans "notes" %}</a>
                 </div>
 
-                <h2>{% term "project" "capitalize" %} {% trans "Notes" %}</h2>
+                <h2>{% term "project" "capitalize" %} {% trans "notes" %}</h2>
 
                 <form class="p-3 mb-3"><fieldset>
                     <textarea class="w-100 p-2">{% trans "Add a" %} {% trans "note" %}...</textarea>
