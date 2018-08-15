@@ -50,6 +50,17 @@ class ProjectForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
 
+        if hasattr(self.instance, 'pk') and self.instance.pk is not None:
+            form_buttons_kwargs = {
+                'confirm_title': 'Save changes',
+                'confirm_text': 'Click the submit button to save changes to this project or click on cancel to return to Cobweb without adding the new project.',
+            }
+        else:
+            form_buttons_kwargs = {
+                'confirm_title': 'Add new project',
+                'confirm_text': 'Click the submit button to add this project to Cobweb or click on cancel to return to Cobweb without adding the new project.',
+            }
+
         if self.instance.title and len(self.instance.title) > 0:
             title_field = title_plaintext_field
             title_row = Row(Column(HField('title')), css_class='d-none')
@@ -82,7 +93,7 @@ class ProjectForm(forms.ModelForm):
 
             FormSection(Row(Column(Field('tags', edit=editable)))),
 
-            FORM_BUTTONS if editable else HTML(''),
+            form_buttons(**form_buttons_kwargs) if editable else HTML(''),
         )
 
 def resource_info(editable=False):
@@ -94,7 +105,7 @@ def resource_info(editable=False):
         Row(Column(Field('language', edit=editable))),
     )
 
-def nomination_info(editable=False):
+def nomination_info(editable=False, form_buttons_kwargs={}):
     return Layout(
         FormSection(
             Field('project', type='hidden'),
@@ -102,7 +113,7 @@ def nomination_info(editable=False):
             Row(Column(Field('rationale', edit=editable))),
         ),
         FormSection(crawl_scope_fields(editable=editable)),
-        FORM_BUTTONS if editable else HTML(''),
+        form_buttons(**form_buttons_kwargs) if editable else HTML(''),
     )
 
 class NominationForm(forms.ModelForm):
@@ -128,8 +139,16 @@ class NominationForm(forms.ModelForm):
         if hasattr(self.instance, 'pk') and self.instance.pk is not None:
             form_title = HTML(format_html('<h2 class="mb-0">{% load jargon %}{% term "nomination" "upper" %}: {}</h2>',
                                           str(self.instance)))
+            form_buttons_kwargs = {
+                'confirm_title': 'Save changes',
+                'confirm_text': 'Click the submit button to save changes to this nomination or click on cancel to return to Cobweb without adding the new project.',
+            }
         else:
             form_title = HTML('<h2 class="mb-0">New {% load jargon %}{% term "nomination" "lower" %}</h2>')
+            form_buttons_kwargs = {
+                'confirm_title': 'Add new nomination',
+                'confirm_text': 'Click the submit button to nominate this resource or click on cancel to return to Cobweb without adding the new project.',
+            }
 
         if 'project' in self.initial:
             project = Project.objects.get(pk=self.initial['project'])
@@ -164,7 +183,10 @@ class NominationForm(forms.ModelForm):
 
                     Pane(
                         Row(Column(HTML('<h4>About the nomination</h4>'))),
-                        nomination_info(editable=editable),
+                        nomination_info(
+                            editable=editable,
+                            form_buttons_kwargs=form_buttons_kwargs,
+                        ),
                         css_class='col-6',
                     ),
                     css_class='flex-grow-1',
