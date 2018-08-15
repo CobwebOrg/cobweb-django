@@ -308,12 +308,13 @@ class ResourceScan(models.Model):
 
         data: dict = {}
         for key, values in model_to_dict(self).items():
-            if isinstance(values, str) or not isinstance(values, Iterable):
-                # single-value field
-                data[key] = [str(values)]
-            else:
-                # multi-value field
-                data[key] = [str(v) for v in values]
+            if key not in {'id', 'resource', 'asserted_by'}:
+                if isinstance(values, str) or not isinstance(values, Iterable):
+                    # single-value field
+                    data[key] = [str(values)]
+                else:
+                    # multi-value field
+                    data[key] = [str(v) for v in values]
         return MDDict(data)
 
     def __repr__(self) -> str:
@@ -355,12 +356,13 @@ class ResourceDescription(models.Model):
 
         data: dict = {}
         for key, values in model_to_dict(self).items():
-            if isinstance(values, str) or not isinstance(values, Iterable):
-                # single-value field
-                data[key] = [str(values)]
-            else:
-                # multi-value field
-                data[key] = [str(v) for v in values]
+            if key not in {'id', 'resource', 'asserted_by'}:
+                if isinstance(values, str) or not isinstance(values, Iterable):
+                    # single-value field
+                    data[key] = [str(values)]
+                else:
+                    # multi-value field
+                    data[key] = [str(v) for v in values]
         return MDDict(data)
 
     def __repr__(self) -> str:
