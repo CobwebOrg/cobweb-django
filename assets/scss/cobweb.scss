@@ -185,14 +185,12 @@ footer {
   .nav-link {
     @extend .btn-link ;
     font-weight: 600;
+    border-radius: 0;
   }
 
   .nav-link:hover {
     text-decoration: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: 3px solid #3D8079;
+    border: none;
   }
   
   .nav-link.disabled, .nav-link.active {
