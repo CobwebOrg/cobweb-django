@@ -35,19 +35,17 @@ class ResourceIndex(indexes.SearchIndex, indexes.Indexable):
     class Meta:
         model = Resource
 
-    name = indexes.CharField(model_attr='name', stored=True, indexed=False)
+    # name = indexes.CharField(model_attr='name', stored=True, indexed=False)
     text = indexes.CharField(model_attr='data', document=True, use_template=False) 
 
     url = indexes.CharField(model_attr='url', stored=True, indexed=True)
-    title = indexes.MultiValueField(stored=True, indexed=True)
+    title = indexes.CharField(stored=True, indexed=True)
 
-    status = indexes.MultiValueField(stored=True, indexed=True)
-    description = indexes.MultiValueField(stored=True, indexed=True)
-    language = indexes.MultiValueField(stored=True, indexed=True) 
-    tags = indexes.MultiValueField(stored=True, indexed=True)
-    subject_headings = indexes.MultiValueField(stored=True, indexed=True)
-
-    # data = {field: {value: [agents_asserting]}}
+    # status = indexes.CharField(stored=True, indexed=True)
+    # description = indexes.CharField(stored=True, indexed=True)
+    # language = indexes.CharField(stored=True, indexed=True) 
+    # tags = indexes.MultiValueField(stored=True, indexed=True)
+    # subject_headings = indexes.MultiValueField(stored=True, indexed=True)
 
     def get_model(self):
         return Resource
@@ -58,41 +56,41 @@ class ResourceIndex(indexes.SearchIndex, indexes.Indexable):
             .prefetch_related('resource_scans', 'resource_descriptions')
         )
 
-    def prepare_title(self, obj: Resource) -> List[str]:
-        try:
-            return obj.data['title']
-        except KeyError:
-            return []
+    # def prepare_title(self, obj: Resource) -> List[str]:
+    #     try:
+    #         return obj.data['title'].join(' / ')
+    #     except KeyError:
+    #         return []
 
-    def prepare_status(self, obj: Resource) -> List[str]:
-        try:
-            return obj.data['status']
-        except KeyError:
-            return []
+    # def prepare_status(self, obj: Resource) -> List[str]:
+    #     try:
+    #         return obj.data['status'].join(' / ')
+    #     except KeyError:
+    #         return []
 
-    def prepare_description(self, obj: Resource) -> List[str]:
-        try:
-            return obj.data['description']
-        except KeyError:
-            return []
+    # def prepare_description(self, obj: Resource) -> List[str]:
+    #     try:
+    #         return obj.data['description'].join('\n')
+    #     except KeyError:
+    #         return []
 
-    def prepare_language(self, obj: Resource) -> List[str]:
-        try:
-            return obj.data['language']
-        except KeyError:
-            return []
+    # def prepare_language(self, obj: Resource) -> List[str]:
+    #     try:
+    #         return obj.data['language'].join(' / ')
+    #     except KeyError:
+    #         return []
 
-    def prepare_tags(self, obj: Resource) -> List[str]:
-        try:
-            return obj.data['tags']
-        except KeyError:
-            return []
+    # def prepare_tags(self, obj: Resource) -> List[str]:
+    #     try:
+    #         return obj.data['tags']
+    #     except KeyError:
+    #         return []
 
-    def prepare_subject_headings(self, obj: Resource) -> List[str]:
-        try:
-            return obj.data['subject_headings']
-        except KeyError:
-            return []
+    # def prepare_subject_headings(self, obj: Resource) -> List[str]:
+    #     try:
+    #         return obj.data['subject_headings']
+    #     except KeyError:
+    #         return []
 
 
 
