@@ -1,15 +1,7 @@
 {{ object.url }}
-{{ object.title }}
-{{ object.status }}
-{{ object.language }}
-{% for note in object.notes.all %}
-    {{note.author}}  {{note.when_created}}
-    {{note.text}}
-{% endfor %}
-{% for nomination in object.nominations.all %}
-    {{nomination.title}}
-    {{nomination.description}}
-    {{nomination.tags.all|join:'\n'}}
-    {{nomination.subject_headings.all|join:'\n'}}
-    {{nomination.language}}
+
+{% for data in object.data.values %}
+    {% for datum in data %
+        datum
+    {% endfor %}
 {% endfor %}
