@@ -6,7 +6,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
   context: __dirname,
 
-  entry: './assets/js/cobweb', // entry point of our app. assets/js/index.js should require other js modules and dependencies it needs
+  // entry point of our app. assets/js/index.jsx should require other js modules and dependencies it needs
+  entry: './assets/js/cobweb', 
 
   output: {
       path: path.resolve('./assets/bundles/'),
@@ -21,7 +22,7 @@ module.exports = {
   module: {
       rules: [      
         {
-          test: /\.(js|jsx)$/,
+          test: /\.jsx?$/,
           exclude: /node_modules/,
           use: {
             loader: "babel-loader"
@@ -48,5 +49,9 @@ module.exports = {
           }]
         }
       ]
+  },
+
+  resolve: {
+    extensions: ['.js', '.jsx']
   }
 }
