@@ -1,1 +1,1 @@
-{"status":"done","chunks":{"main":[{"name":"main-b078f962a8cb0a1f04d7.js","path":"/code/assets/bundles/main-b078f962a8cb0a1f04d7.js"}]}}
+{"status":"error","error":"ModuleBuildError","message":"Module build failed: SyntaxError: 'import' and 'export' may only appear at the top level (63:0)\n\n  61 | }\n  62 | \n> 63 | export default ResourceForm;\n     | ^\n"}
