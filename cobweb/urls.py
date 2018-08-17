@@ -40,6 +40,9 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
 
     # User
+    path('user/<slug:username>',
+         core.views.UserUpdateView.as_view(),
+         name='user'),
     path('users/<pk>/edit/',
          core.views.UserUpdateView.as_view(),
          name='user_update'),

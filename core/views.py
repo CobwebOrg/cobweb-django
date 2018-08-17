@@ -93,6 +93,8 @@ class UserUpdateView(RevisionMixin, generic.UpdateView):
     template_name = "generic_form.html"
     form_class = UserProfileForm
     section = 'user'
+    slug_field = 'username'
+    slug_url_kwarg = 'username'
 
 
 class UserAutocomplete(autocomplete.Select2QuerySetView):
