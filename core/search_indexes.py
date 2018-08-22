@@ -15,11 +15,31 @@ class UserIndex(indexes.SearchIndex, indexes.Indexable):
     name = indexes.CharField(model_attr='name', indexed=True, stored=True)
     text = indexes.CharField(document=True, use_template=True)
 
+    username = indexes.CharField(model_attr='username', 
+                                 indexed=True, stored=True)
+    first_name = indexes.CharField(model_attr='first_name', null=True,
+                                   indexed=True, stored=True)
+    last_name = indexes.CharField(model_attr='last_name', null=True,
+                                  indexed=True, stored=True)
+
+    email = indexes.CharField(model_attr='email', null=True,
+                              indexed=True, stored=True)
+    # organization = indexes.CharField(model_attr='organization', null=True,
+    #                                  indexed=True, stored=True)
+    professional_title = indexes.CharField(model_attr='professional_title',
+                                           null=True, indexed=True, stored=True)
+
+    url = indexes.CharField(model_attr='url', null=True,
+                            indexed=True, stored=True)
+
     def get_model(self):
         return User
 
     def index_queryset(self, using=None):
-        return self.get_model().objects.all()
+        return (
+            self.get_model().objects.all()
+            # .prefetch_related('organization')
+        )
 
 
 class OrganizationIndex(indexes.ModelSearchIndex, indexes.Indexable):

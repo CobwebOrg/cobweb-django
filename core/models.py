@@ -81,12 +81,10 @@ class User(AbstractUser):
         #     return self.organization is not None
 
     def get_absolute_url(self) -> str:
-        return reverse('user_detail', kwargs={'pk': self.pk})
+        return reverse('user', kwargs={'username': self.username})
 
     def get_edit_url(self) -> str:
-        # TODO:
-        return reverse('admin:core_user_change', args=[self.pk])
-        # return reverse('', kwargs={'object_id': self.pk})
+        return self.get_absolute_url()
 
 
 @reversion.register()

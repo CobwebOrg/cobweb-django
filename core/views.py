@@ -68,33 +68,37 @@ def get_landing_page_view(request):
         return LoginView.as_view()(request)
 
 
-
 class UserIndexView(CobwebBaseIndexView):
     model = models.User
     table_class = UserTable
-    django_ct = 'core.user'    
+    django_ct = 'core.user'
 
-
-class UserDetailView(generic.DetailView):
-    model = models.User
-    template_name = "user_detail.html"
-    section = 'user'
 
 
 class UserCreateView(RevisionMixin, generic.CreateView):
     model = models.User
     template_name = "generic_form.html"
     form_class = SignUpForm
-    section = 'user'
 
 
 class UserUpdateView(RevisionMixin, generic.UpdateView):
     model = models.User
     template_name = "generic_form.html"
     form_class = UserProfileForm
-    section = 'user'
     slug_field = 'username'
     slug_url_kwarg = 'username'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.request.user
+        return context
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({
+            'editable': self.get_object() == self.request.user
+        })
+        return kwargs
 
 
 class UserAutocomplete(autocomplete.Select2QuerySetView):

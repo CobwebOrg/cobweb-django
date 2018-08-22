@@ -2,9 +2,7 @@ import haystack.forms
 from crispy_forms.helper import FormHelper
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
-from core.layout import (Layout, Column, Row, Submit, Field, FormActions,
-                         FORM_BUTTONS, Fieldset, UneditableField, HTML,
-                         Reset, Div)
+from core.layout import *
 from core.models import User
 
 
@@ -66,29 +64,28 @@ class UserProfileForm(UserCreationForm):
 
     def __init__(self, *args, editable=True, **kwargs):
         super().__init__(*args, **kwargs)
-        # import pdb; pdb.set_trace()
-
         self.helper = FormHelper(self)
+
         self.helper.layout = Layout(
-            HTML('<h3>User: {{object.username}}</h3>'),
-            Field('username', edit=editable),
-
-            Fieldset('Personal Information',
-                     Field('first_name', edit=editable),
-                     Field('last_name', edit=editable),
-                     Field('email', edit=editable),
-                     Field('url', edit=editable),
-                     ),
-
-            Field('organization', edit=editable),
-            Field('professional_title', edit=editable),
-
-            Fieldset('Preferences',
-                     Field('get_notification_emails', edit=editable),
-                     ),
-
-            FORM_BUTTONS if editable else HTML(''),
+            HTML('<h2>User: {{object.username}}</h2>'),
+            Row(
+                Pane(
+                    Field('first_name', edit=editable),
+                    Field('last_name', edit=editable),
+                    Field('email', edit=editable),
+                    Field('url', edit=editable),
+                    css_class='col-6',
+                ),
+                Pane(
+                    Field('organization', edit=editable),
+                    Field('professional_title', edit=editable),
+                    FORM_BUTTONS if editable else HTML(''),
+                    css_class='col-6',
+                ),
+                css_class='flex-grow-1',
+            ),
         )
+        self.helper.form_class='h-100 d-flex flex-column pb-2'
 
 
 class SearchForm(haystack.forms.SearchForm):

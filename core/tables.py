@@ -20,12 +20,16 @@ class CobwebBaseTable(django_tables2.Table):
 
 
 class UserTable(CobwebBaseTable):
-    username = django_tables2.LinkColumn(viewname='user_detail', kwargs={'pk': Accessor('pk')})
 
     class Meta(CobwebBaseTable.Meta):
         model = User
         fields = ('username', 'first_name', 'last_name')
         empty_text = "No users."
+
+    username = django_tables2.LinkColumn(
+        viewname='user',
+        kwargs={'username': Accessor('username')}
+    )
 
 
 class OrganizationTable(CobwebBaseTable):

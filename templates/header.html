@@ -6,7 +6,7 @@
 		{% if user.is_authenticated %}
 			<span class="nav-welcome">{% blocktrans %}Welcome, {{user}}{% endblocktrans %}</span> •
 			<a id="account_link" class="nav-link" 
-			   href="{% url 'user_update' pk=request.user.pk %}">{% trans "Profile" %}</a> •
+			   href="{% url 'user' username=request.user.username %}">{% trans "Profile" %}</a> •
 			<a id="logout_link" class="nav-link" 
 			   href="{% url 'logout' %}?next={{request.path}}">{% trans "Logout" %}</a> •
 		{% else %}

@@ -177,7 +177,7 @@ class NominationForm(forms.ModelForm):
                     Pane(
                         Row(Column(HTML('<h4>About the resource</h4>'))),
                         resource_info(editable=editable),
-                        css_class='col-6'
+                        css_class='col-6',
                     ),
 
                     Pane(

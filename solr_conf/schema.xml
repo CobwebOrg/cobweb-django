@@ -103,6 +103,16 @@
     
     <field name="title" type="text_en" indexed="true" stored="true" multiValued="false" />
     
+    <field name="username" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="first_name" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="last_name" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="email" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="professional_title" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
     <field name="nomination_pk" type="long" indexed="true" stored="true" multiValued="false" />
     
     <field name="active" type="boolean" indexed="true" stored="true" multiValued="false" />
