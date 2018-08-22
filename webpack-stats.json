@@ -1,1 +1,1 @@
-{"status":"error","error":"ModuleBuildError","message":"Module build failed: SyntaxError: 'import' and 'export' may only appear at the top level (63:0)\n\n  61 | }\n  62 | \n> 63 | export default ResourceForm;\n     | ^\n"}
+{"status":"done","chunks":{"main":[{"name":"main-31a140d25f4ebd19a29e.js","path":"/code/assets/bundles/main-31a140d25f4ebd19a29e.js"}]}}

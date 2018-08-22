@@ -1,6 +1,6 @@
 import React from "react";
 import CobwebLink from "./CobwebLink";
-// import { withFormik } from 'formik';
+import { withFormik } from 'formik';
 
   
 function FormField(props) {
@@ -17,42 +17,51 @@ function FormField(props) {
   );
 }
 
-function SourceForm(props) {
-  const form_fields = Object.keys(props.formData).map((fieldName) =>
-    <FormField label={fieldName} key={fieldName}
-               value={props.formData[fieldName]} />
-  );
-  return (
-    <div className="form-section">
-      <h3>Submitted by <CobwebLink url={"/user/"+props.source} name={props.source}/></h3>
-    {form_fields}
-  </div>)
-}
+// function SourceForm(props) {
+//   const form_fields = Object.keys(props.formData).map((fieldName) =>
+//     <FormField label={fieldName} key={fieldName}
+//                value={props.formData[fieldName]} />
+//   );
+//   return (
+//     <div className="form-section">
+//       <h3>Submitted by <CobwebLink url={"/user/"+props.source} name={props.source}/></h3>
+//     {form_fields}
+//   </div>)
+// }
 
 // Our inner form component which receives our form's state and updater methods as props
-function InnerForm(props) {
-  fields = Object.keys(props.values).map(
-    key => <FormField value={props.values[key]} key={key}
-                      label={key}/>
-  )
+const InnerResourceForm = ({
+  values,
+  errors,
+  touched,
+  handleChange,
+  handleBlur,
+  handleSubmit,
+  isSubmitting,
+}) => {
+  const form_fields = Object.keys(values).map((fieldName) =>
+    <FormField label={fieldName} key={fieldName}
+               value={values[fieldName]} />
+  );
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        type="email"
-        name="email"
+      {form_fields}
+      {/* <input
+        type="title"
+        name="title"
         onChange={handleChange}
         onBlur={handleBlur}
-        value={values.email}
+        value={values.title}
       />
-      {touched.email && errors.email && <div>{errors.email}</div>}
+      {touched.title && errors.title && <div>{errors.title}</div>}
       <input
-        type="password"
-        name="password"
+        type="description"
+        name="description"
         onChange={handleChange}
         onBlur={handleBlur}
-        value={values.password}
+        value={values.description}
       />
-      {touched.password && errors.password && <div>{errors.password}</div>}
+      {touched.description && errors.description && <div>{errors.description}</div>} */}
       <button type="submit" disabled={isSubmitting}>
         Submit
       </button>
@@ -61,9 +70,30 @@ function InnerForm(props) {
 }
 
 
+const SourceForm = withFormik({
+  mapPropsToValues: props => {
+    const defaults = {
+      title: '',
+      description: ''
+    };
+    console.log(defaults, props)
+    return Object.assign(defaults, props.formData);
+  },
+
+  validate: (values, props) => {
+    const errors = {};
+    // if (!values.email) {
+    //   errors.email = 'Required';
+    // }
+    return errors;
+  },
+
+  handleSubmit: (values, rand_obj) => console.log(values, rand_obj)
+})(InnerResourceForm);
+
+
 class ResourceForm extends React.Component {
   constructor(props) {
-    console.log(props);
     super(props);
     this.state = {
       initial: props,
@@ -87,11 +117,7 @@ class ResourceForm extends React.Component {
     const source_forms = Object.keys(this.state.initial).map((key) => 
       <SourceForm source={key} key={key} formData={this.state.initial[key]} />
     );
-    return (
-      <form onSubmit={this.handleSubmit}>
-        {source_forms}
-      </form>
-    );
+    return source_forms;
   }
 }
 
