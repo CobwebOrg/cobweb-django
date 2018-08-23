@@ -135,7 +135,7 @@
     
     <field name="status" type="text_en" indexed="true" stored="true" multiValued="false" />
     
-    <field name="any_user_can_nominate" type="boolean" indexed="false" stored="true" multiValued="false" />
+    <field name="nomination_policy" type="text_en" indexed="true" stored="true" multiValued="false" />
     
     <field name="impact_factor" type="long" indexed="true" stored="true" multiValued="false" />
     

@@ -139,7 +139,7 @@ class ProjectDetailViewTests(TestCase):
 
         # OPEN NOMINATION POLICY
 
-        self.test_instance.any_user_can_nominate = True
+        self.test_instance.nomination_policy = 'Cobweb Users'
         self.test_instance.save()
 
         # Anonymous User
@@ -185,7 +185,7 @@ class ProjectDetailViewTests(TestCase):
 
         # RESTRICTED NOMINATION POLICY
 
-        self.test_instance.any_user_can_nominate = False
+        self.test_instance.nomination_policy = 'Restricted'
         self.test_instance.save()
 
         # Anonymous User
@@ -242,7 +242,7 @@ class TestProjectCreateView:
         project_data = {
             'title': 'Test Project for test_anonymous_cant_create_project',
             'status': 'Active',
-            'any_user_can_nominate': True,
+            'nomination_policy': 'Cobweb Users',
         }
 
         response2 = client.post(reverse('project_create'), project_data)
@@ -280,7 +280,7 @@ class ProjectUpdateViewTests(TestCase):
 
     @pytest.mark.xfail(strict=True)
     def test_included_fields(self):
-        for field_name in ['title', 'administrators', 'any_user_can_nominate',
+        for field_name in ['title', 'administrators', 'nomination_policy',
                            'nominators', 'status', 'description', 'tags']:
             try:
                 self.assertContains(
@@ -305,7 +305,7 @@ class ProjectUpdateViewTests(TestCase):
         project_data = {
             'title': 'Test Project for test_anonymous_cant_create_project',
             'status': 'Active',
-            'any_user_can_nominate': True,
+            'nomination_policy': 'Cobweb Users',
         }
         self.assertRedirects(self.client.post(self.url, project_data),
                              f'/accounts/login/?next={self.url}')
@@ -317,7 +317,7 @@ class ProjectUpdateViewTests(TestCase):
         project_data = {
             'title': 'Test Project for test_anonymous_cant_create_project',
             'status': 'Active',
-            'any_user_can_nominate': True,
+            'nomination_policy': 'Cobweb Users',
         }
         self.assertRedirects(self.client.post(self.url, project_data),
                              f'/accounts/login/?next={self.url}')

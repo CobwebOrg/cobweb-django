@@ -29,8 +29,6 @@ class Project(models.Model):
         )
     )
 
-    any_user_can_nominate = models.BooleanField(default=True)
-
     nominator_orgs = models.ManyToManyField(
         'core.Organization', blank=True,
         related_name='projects_nominating',
@@ -81,10 +79,14 @@ class Project(models.Model):
         return user in self.administrators.all()
 
     def is_nominator(self, user: AbstractBaseUser) -> bool:
-        return (self.is_admin(user)
-                or user in self.nominators.all()
-                or (self.any_user_can_nominate
-                    and user not in self.nominator_blacklist.all()))
+        if self.is_admin(user):
+            return True
+        elif user in self.nominator_blacklist.all():
+            return False
+        else:
+            return (user in self.nominators.all()
+                    or self.nomination_policy == 'Open'
+                    or (self.nomination_policy == 'Cobweb Users' and user.is_authenticated))
     
     @property
     def nominations_unclaimed(self) -> QuerySet:

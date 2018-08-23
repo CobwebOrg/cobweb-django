@@ -61,15 +61,8 @@ class ProjectForm(forms.ModelForm):
                 'confirm_text': 'Click the submit button to add this project to Cobweb or click on cancel to return to Cobweb without adding the new project.',
             }
 
-        if self.instance.title and len(self.instance.title) > 0:
-            title_field = title_plaintext_field
-            title_row = Row(Column(HField('title')), css_class='d-none')
-        else:
-            title_field = title_form_field
-            title_row = Row(Column(HField('title', edit=editable)))
-
         self.helper.layout = Layout(
-            title_row,
+            HField('title', edit=editable),
 
             FormSection(
                 Row(Column(HField('description', edit=editable))),
@@ -82,7 +75,7 @@ class ProjectForm(forms.ModelForm):
 
             FormSection(
                 Row(
-                    Field(Column('any_user_can_nominate', edit=editable), css_class='col-md-5'),
+                    Field(Column('nomination_policy', edit=editable), css_class='col-md-5'),
                     Column(
                         Field('nominators', edit=editable),
                         Field('nominator_blacklist', edit=editable, show=editable),

@@ -28,7 +28,7 @@ class TestNominationDetailView:
 
 @pytest.mark.django_db
 def test_nomination_create_view_get(client):
-    project = ProjectFactory()
+    project = ProjectFactory(nomination_policy='Open')
     response = client.get(project.get_add_nomination_url())
     assert response.status_code == 200
 
