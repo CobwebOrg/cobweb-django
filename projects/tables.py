@@ -103,7 +103,7 @@ class ClaimTable(CobwebBaseTable):
                                     kwargs={'pk': Accessor('pk')})
     organization = django_tables2.LinkColumn(viewname='organization_detail',
                                     kwargs={'pk': Accessor('pk')})
-    link = django_tables2.LinkColumn(text='[details]')
+    link = django_tables2.LinkColumn(text='[details]', verbose_name='')
 
     claim_type = django_tables2.TemplateColumn("""
         {% if record.has_holding %}
