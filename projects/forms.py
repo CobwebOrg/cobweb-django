@@ -212,7 +212,7 @@ class ClaimForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
-            FormSection(Row(Column(HTML('<h4>Claim Information</h4>')))),
+            FormSection(Row(Column(HTML('<h4>About the {% load jargon %}{% term "claim" %}</h4>')))),
             FormSection(Row(Column(
                 HTML("""{% load as_link from cobweb_look %}
                     <a class="col-form-label form-control-label" href="{{form.instance.nomination.get_absolute_url}}">Nomination:</a>

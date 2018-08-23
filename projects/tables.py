@@ -96,13 +96,14 @@ class ClaimTable(CobwebBaseTable):
 
     class Meta(CobwebBaseTable.Meta):
         model = Claim
-        fields = ('claim_type', 'nomination', 'organization')
+        fields = ('claim_type', 'nomination', 'organization', 'link')
         empty_text = "No Claims."
 
     nomination = django_tables2.LinkColumn(viewname='nomination',
                                     kwargs={'pk': Accessor('pk')})
     organization = django_tables2.LinkColumn(viewname='organization_detail',
                                     kwargs={'pk': Accessor('pk')})
+    link = django_tables2.LinkColumn(text='[details]')
 
     claim_type = django_tables2.TemplateColumn("""
         {% if record.has_holding %}
