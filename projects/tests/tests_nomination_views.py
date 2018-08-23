@@ -12,7 +12,6 @@ class TestNominationDetailView:
         response = client.get(NominationFactory().get_absolute_url())
         assert response.status_code == 200
 
-    @pytest.mark.xfail(strict=True)
     def test_all_claims_listed(self, client):
         nomination = NominationFactory()
         for _ in range(5):
