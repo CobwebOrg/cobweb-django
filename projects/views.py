@@ -3,16 +3,18 @@ from typing import Optional
 import django_tables2
 import haystack
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse
-from django.views.generic import DetailView, CreateView, UpdateView
+from django.utils.html import format_html
+from django.views.generic import CreateView, DetailView, UpdateView
 from extra_views import InlineFormSetView
 from reversion.views import RevisionMixin
 
 from core.models import Resource
 from core.views import CobwebBaseIndexView
-
-from projects import models, forms
-from projects.tables import ProjectTable, NominationTable, ClaimTable
+from projects import forms, models
+from projects.tables import ClaimTable, NominationTable, ProjectTable
 
 
 class ProjectIndexView(CobwebBaseIndexView):
@@ -35,10 +37,12 @@ class ProjectIndexView(CobwebBaseIndexView):
         return kwargs
 
 
-class ProjectCreateView(LoginRequiredMixin, RevisionMixin, CreateView):
+class ProjectCreateView(SuccessMessageMixin, LoginRequiredMixin, RevisionMixin,
+                        CreateView):
     model = models.Project
     template_name = 'projects/project_create.html'
     form_class = forms.ProjectForm
+    success_message = "%(title)s was created successfully"
 
     def get_initial(self):
         initial = super().get_initial()
@@ -51,10 +55,11 @@ class ProjectCreateView(LoginRequiredMixin, RevisionMixin, CreateView):
         return kwargs
 
 
-class ProjectSummaryView(RevisionMixin, UpdateView):
+class ProjectSummaryView(SuccessMessageMixin, RevisionMixin, UpdateView):
     model = models.Project
     template_name = 'projects/project.html'
     form_class = forms.ProjectForm
+    success_message = "%(title)s successfully updated."
     
     @property
     def summary(self):
@@ -67,6 +72,17 @@ class ProjectSummaryView(RevisionMixin, UpdateView):
     @property
     def notes(self):
         return False  # type(self) is ProjectNotesView
+
+    def form_invalid(self, form):
+        """If the form is invalid, render the invalid form."""
+        msg = format_html("Your submission could not be processed.<ul>")
+        for error in form.non_field_errors():
+            msg += format_html('<li>{}</li>', error)
+        for field, error in form.errors.items():
+            msg += format_html('<li>{}: {}</li>', field, error)
+        msg += format_html("</ul>")
+        messages.add_message(self.request, messages.ERROR, msg)
+        return super().form_invalid(form)
 
     def get_form_kwargs(self):
         """Return the keyword arguments for instantiating the form."""

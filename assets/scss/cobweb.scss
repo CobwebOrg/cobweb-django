@@ -45,6 +45,8 @@ $theme-colors: (
   "user": lighten($purple, 50%),
   "user-dark": $purple,
 
+  "error": $danger,
+
   "unclaimed": $red,
   "claimed": $yellow,
   "held": $lime,
@@ -239,6 +241,21 @@ footer {
 }
 
 // MISC
+
+
+.messages {
+  ul {
+    @extend .alert ;
+    list-style: none;
+  }
+
+  @each $message_type in (success, error) {
+    .#{$message_type} {
+      @extend .alert, .alert-#{$message_type} ;
+      list-style: none;
+    }
+  }
+}
 
 .btn-primary {
   font-weight: 600;
