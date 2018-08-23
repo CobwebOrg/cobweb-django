@@ -22,9 +22,9 @@ class Project(models.Model):
     )
 
     nomination_policy = models.CharField(
-        max_length=10, default='Public', choices=(
+        max_length=12, default='Public', choices=(
             ('Public', "Public: anyone can nominate, even if they're not logged in."),
-            ('Cobweb Users', 'Cobweb Users: anyone with a Cobweb account can nominate.'),
+            ('Cobweb users', 'Cobweb users: anyone with a Cobweb account can nominate.'),
             ('Restricted', 'Restricted: only selected users and organizations can nominate.'),
         )
     )
