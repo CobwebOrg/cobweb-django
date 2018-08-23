@@ -227,5 +227,8 @@ class ClaimForm(forms.ModelForm):
                     Column(Field('has_holding', edit=editable), css_class='col-6')),
             ),
             crawl_scope_fields(editable=editable),
-            FORM_BUTTONS if editable else HTML(''),
+            form_buttons(
+                confirm_title='Claim nominated URL',
+                confirm_text='Click the claim button to claim the nominated URL to the project or cancel to return to Cobweb',
+            ) if editable else HTML(''),
         )
