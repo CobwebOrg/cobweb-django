@@ -25,7 +25,7 @@ $cyan:        #62ACA5;
 $cyan-dark:   #3D8079;
 $orange:      #C8923D;
 $yellow:      #E4CD53;
-$red:         #DB4D3E;
+$red:         #D34233;
 
 $primary:   $cyan;
 $secondary: $gray;
@@ -45,7 +45,7 @@ $theme-colors: (
   "user": lighten($purple, 50%),
   "user-dark": $purple,
 
-  "error": $danger,
+  "error": $red,
 
   "unclaimed": $red,
   "claimed": $yellow,
