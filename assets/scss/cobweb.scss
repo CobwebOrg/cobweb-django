@@ -29,7 +29,7 @@ $red:         #DB4D3E;
 
 $primary:   $cyan;
 $secondary: $gray;
-// $success:   $green;
+$success:   $lime;
 $info:      $lime;
 $warning:   $yellow;
 $danger:    $red;
@@ -243,8 +243,12 @@ footer {
 // MISC
 
 
+a, .nav-link {
+  color: #2c7d73;
+}
+
 .messages {
-  ul {
+  li {
     @extend .alert ;
     list-style: none;
   }
@@ -254,6 +258,12 @@ footer {
       @extend .alert, .alert-#{$message_type} ;
       list-style: none;
     }
+  }
+
+  .success {
+    color: $gray-dark;
+    background-color: $lime-light;
+    border-color: $lime;
   }
 }
 
