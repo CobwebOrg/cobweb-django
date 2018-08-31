@@ -49,6 +49,7 @@ pytest-django-haystack = "*"
 rope = "*"
 django-haystack-panel = "*"
 django-extensions = "*"
+"autopep8" = "*"
 
 [requires]
 python_version = "3.7"
