@@ -98,6 +98,7 @@ def crawl_scope_fields(editable: bool=False) -> FormSection:
         ),
     )
 
+
 title_plaintext_field = Layout(
     HTML("""
         {% load cobweb_look %}
@@ -120,7 +121,7 @@ def form_buttons(confirm_title='Please Confirm',
             <div class="row">
                 <div class="col d-flex flex-row justify-content-end">
                     <button type="reset" class="btn btn-light btn-outline-dark mr-1">
-                        Reset
+                        Cancel
                     </button>
                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
                         Submit
@@ -151,6 +152,7 @@ def form_buttons(confirm_title='Please Confirm',
             </div>
         </div>
     """)
+
 
 FORM_BUTTONS = form_buttons()
 
@@ -196,6 +198,7 @@ def tab_button(tab: InfoTab, tab_index: int) -> LayoutObject:
         </a>
     """)
 
+
 def tab_panel(tab: InfoTab, tab_index: int) -> LayoutObject:
     return Layout(
         HTML(f"""<div class="tab-pane fade{' show active' if tab_index==0 else ''}"
@@ -222,28 +225,29 @@ def info_tabs(*tabs: InfoTab) -> LayoutObject:
 
 class BaseHeader(Layout):
     def __init__(self, *args, **kwargs):
-        super().__init__(HTML(f'<h{self.n}>'), *args, HTML(f'</h{self.n}>'), **kwargs)
+        super().__init__(HTML(f'<h{self.n}>'), *
+                         args, HTML(f'</h{self.n}>'), **kwargs)
 
 
 class H1(BaseHeader):
-    n=1
+    n = 1
 
 
 class H2(BaseHeader):
-    n=2
+    n = 2
 
 
 class H3(BaseHeader):
-    n=3
+    n = 3
 
 
 class H4(BaseHeader):
-    n=4
+    n = 4
 
 
 class H5(BaseHeader):
-    n=5
+    n = 5
 
 
 class H6(BaseHeader):
-    n=6
+    n = 6

@@ -20,7 +20,7 @@ class LoginForm(AuthenticationForm):
                         <a href="{% url 'password_reset' %}">(Lost password?)</a>
                     """),
                     FormActions(
-                        Reset('reset', 'Reset',
+                        Reset('reset', 'Cancel',
                               css_class='btn btn-light btn-outline-dark mr-1'),
                         Submit('submit', 'Submit', css_class='btn btn-info'),
                         css_class='ml-auto',
