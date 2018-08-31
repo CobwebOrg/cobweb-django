@@ -15,10 +15,17 @@ class LoginForm(AuthenticationForm):
             Div(
                 Field('username', edit=True),
                 Field('password', edit=True),
-                FormActions(
-                    Reset('reset', 'Reset', css_class='btn btn-light btn-outline-dark mr-1'),
-                    Submit('submit', 'Submit', css_class='btn btn-info'),
-                    css_class='float-right',
+                Div(
+                    HTML("""
+                        <a href="{% url 'password_reset' %}">(Lost password?)</a>
+                    """),
+                    FormActions(
+                        Reset('reset', 'Reset',
+                              css_class='btn btn-light btn-outline-dark mr-1'),
+                        Submit('submit', 'Submit', css_class='btn btn-info'),
+                        css_class='ml-auto',
+                    ),
+                    css_class='d-flex flex-row align-items-end'
                 ),
                 css_class='mt-5',
             ),
@@ -85,7 +92,7 @@ class UserProfileForm(UserCreationForm):
                 css_class='flex-grow-1',
             ),
         )
-        self.helper.form_class='h-100 d-flex flex-column pb-2'
+        self.helper.form_class = 'h-100 d-flex flex-column pb-2'
 
 
 class SearchForm(haystack.forms.SearchForm):

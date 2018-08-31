@@ -5,7 +5,8 @@ docker-compose push
 
 git push &
 scp docker-compose.production.yml cobwebdev:~/docker-compose.production.yml &
+scp docker-compose.production.secrets.yml cobwebdev:~/docker-compose.production.secrets.yml &
 
 ssh cobwebdev docker pull andrewwallace/cobweb_solr:latest
 ssh cobwebdev docker pull andrewwallace/cobweb:latest
-ssh cobwebdev docker stack deploy -c docker-compose.production.yml cobweb
+ssh cobwebdev docker stack deploy -c docker-compose.production.yml -c docker-compose.production.secrets.yml cobweb

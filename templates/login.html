@@ -33,7 +33,9 @@
 
     <div class="col-6 p-5 d-flex flex-column-reverse justify-content-end align-items-center">
       {% comment %} <div class="d-flex flex-column-reverse"> {% endcomment %}
-      <div class='w-100'>{% crispy form %}</div>
+      {% block loginform %}
+        <div class='w-100'>{% crispy form %}</div>
+      {% endblock %}
       <img src="{% static 'images/cobweb_logo_300.png' %}"
            style="max-width: 70%; max-height: 70%" 
            class="flex-shrink-1">

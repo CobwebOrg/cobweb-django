@@ -1,3 +1,5 @@
+docker-compose.production.secrets.yml
+
 # Django SECRET_KEY
 secret.txt
 staticfiles
