@@ -123,7 +123,7 @@ def form_buttons(confirm_title='Please Confirm',
                     <button type="reset" class="btn btn-light btn-outline-dark mr-1">
                         Cancel
                     </button>
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                         Submit
                     </button>
                 </div>
@@ -145,7 +145,7 @@ def form_buttons(confirm_title='Please Confirm',
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light btn-outline-dark mr-1" data-dismiss="modal">Cancel</button>
-                    <input name="submit" value="Submit" class="btn btn-primary btn btn-info"
+                    <input name="submit" value="Submit" class="btn btn-primary"
                            id="submit-id-submit" type="submit">
                 </div>
                 </div>
