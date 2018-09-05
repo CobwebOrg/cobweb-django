@@ -19,7 +19,7 @@ class ProjectForm(forms.ModelForm):
         """Metaclass for options."""
 
         model = Project
-        fields = ('__all__')
+        exclude = ('__none__',)
         widgets = {
             'title': forms.TextInput,
             'administrators': autocomplete.ModelSelect2Multiple(
@@ -53,7 +53,7 @@ class ProjectForm(forms.ModelForm):
         if hasattr(self.instance, 'pk') and self.instance.pk is not None:
             form_buttons_kwargs = {
                 'confirm_title': 'Save changes',
-                'confirm_text': 'Click the submit button to save changes to this project or click on cancel to return to Cobweb without adding the new project.',
+                'confirm_text': 'Click the submit button to save changes to this project or click on cancel to return to Cobweb without saving.',
             }
         else:
             form_buttons_kwargs = {
@@ -112,7 +112,7 @@ def nomination_info(editable=False, form_buttons_kwargs={}):
 class NominationForm(forms.ModelForm):
     class Meta:
         model = Nomination
-        fields = ('__all__')
+        exclude = ('__none__',)
         widgets = {
             'tags': autocomplete.ModelSelect2Multiple(
                 url='tag_autocomplete',
@@ -198,7 +198,7 @@ class ClaimForm(forms.ModelForm):
     class Meta:
         model = Claim
         # fields = ('nomination', 'organization', 'active', 'has_holding')
-        fields = ('__all__')
+        exclude = ('__none__',)
         widgets = {
             'tags': autocomplete.ModelSelect2Multiple(
                 url='tag_autocomplete',
