@@ -36,8 +36,8 @@ class ProjectIndexView(CobwebBaseIndexView):
         return kwargs
 
 
-class ProjectCreateView(FormMessageMixin, RevisionMixin, django_tables2.SingleTableMixin,
-                        CreateView):
+class ProjectCreateView(LoginRequiredMixin, FormMessageMixin, RevisionMixin,
+                        django_tables2.SingleTableMixin, CreateView):
     model = models.Project
     template_name = 'projects/project.html'
     form_class = forms.ProjectForm
