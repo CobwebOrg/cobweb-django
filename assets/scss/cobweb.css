@@ -146,12 +146,12 @@ sup {
   top: -.5em; }
 
 a {
-  color: #AAC066;
+  color: #35968D;
   text-decoration: none;
   background-color: transparent;
   -webkit-text-decoration-skip: objects; }
   a:hover {
-    color: #849a3f;
+    color: #215d58;
     text-decoration: underline; }
 
 a:not([href]):not([tabindex]) {
@@ -2656,10 +2656,10 @@ fieldset:disabled a.btn {
 
 .btn-link, .nav-infotabs .nav-link {
   font-weight: 400;
-  color: #AAC066;
+  color: #35968D;
   background-color: transparent; }
   .btn-link:hover, .nav-infotabs .nav-link:hover {
-    color: #849a3f;
+    color: #215d58;
     text-decoration: underline;
     background-color: transparent;
     border-color: transparent; }
@@ -3903,12 +3903,12 @@ header .navbar-pages .navbar-nav .nav-link.active {
   padding: 0.5rem 0.75rem;
   margin-left: -1px;
   line-height: 1.25;
-  color: #AAC066;
+  color: #35968D;
   background-color: #f8f9fa;
   border: 1px solid #dee2e6; }
   .page-link:hover {
     z-index: 2;
-    color: #849a3f;
+    color: #215d58;
     text-decoration: none;
     background-color: #e9ecef;
     border-color: #dee2e6; }
@@ -7916,9 +7916,6 @@ footer {
 
 .form-button-row {
   padding: 1rem 0; }
-
-a, .nav-link {
-  color: #2c7d73; }
 
 .messages li {
   list-style: none; }
