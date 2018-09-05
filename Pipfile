@@ -28,7 +28,6 @@ django-polymorphic = "*"
 django-extra-views = "*"
 pyyaml = "*"
 django-react-templatetags = "*"
-"django-select2" = "*"
 
 [dev-packages]
 pytest = "*"
