@@ -4,7 +4,6 @@ import django_tables2
 import haystack
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
-from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse
 from django.utils.html import format_html
 from django.views.generic import CreateView, DetailView, UpdateView
@@ -12,7 +11,7 @@ from extra_views import InlineFormSetView
 from reversion.views import RevisionMixin
 
 from core.models import Resource
-from core.views import CobwebBaseIndexView
+from core.views import CobwebBaseIndexView, FormMessageMixin
 from projects import forms, models
 from projects.tables import ClaimTable, NominationTable, ProjectTable
 
@@ -37,11 +36,12 @@ class ProjectIndexView(CobwebBaseIndexView):
         return kwargs
 
 
-class ProjectCreateView(SuccessMessageMixin, LoginRequiredMixin, RevisionMixin,
+class ProjectCreateView(FormMessageMixin, RevisionMixin, django_tables2.SingleTableMixin,
                         CreateView):
     model = models.Project
-    template_name = 'projects/project_create.html'
+    template_name = 'projects/project.html'
     form_class = forms.ProjectForm
+    table_class = NominationTable
     success_message = "%(title)s was created successfully"
 
     def get_initial(self):
@@ -54,49 +54,31 @@ class ProjectCreateView(SuccessMessageMixin, LoginRequiredMixin, RevisionMixin,
         kwargs['editable'] = True
         return kwargs
 
+    def get_table_data(self):
+        return haystack.query.SearchQuerySet().none()
 
-class ProjectSummaryView(SuccessMessageMixin, RevisionMixin, UpdateView):
+    def get_table_kwargs(self):
+        kwargs = super().get_table_kwargs()
+        kwargs['exclude'] = ('claim_link',)
+        return kwargs
+
+
+class ProjectView(FormMessageMixin, RevisionMixin, django_tables2.SingleTableMixin,
+                  UpdateView):
     model = models.Project
     template_name = 'projects/project.html'
     form_class = forms.ProjectForm
-    success_message = "%(title)s successfully updated."
+    table_class = NominationTable
+    success_message = "%(title)s was successfully updated."
     
-    @property
-    def summary(self):
-        return type(self) is ProjectSummaryView
-
-    @property
-    def nominations(self):
-        return type(self) is ProjectNominationsView
-
-    @property
-    def notes(self):
-        return False  # type(self) is ProjectNotesView
-
-    def form_invalid(self, form):
-        """If the form is invalid, render the invalid form."""
-        msg = format_html("Your submission could not be processed.<ul>")
-        for error in form.non_field_errors():
-            msg += format_html('<li>{}</li>', error)
-        for field, error in form.errors.items():
-            msg += format_html('<li>{}: {}</li>', field, error)
-        msg += format_html("</ul>")
-        messages.add_message(self.request, messages.ERROR, msg)
-        return super().form_invalid(form)
-
     def get_form_kwargs(self):
         """Return the keyword arguments for instantiating the form."""
         kwargs = super().get_form_kwargs()
-        if self.summary and hasattr(self, 'object'):
+        if hasattr(self, 'object'):
             kwargs.update({
                 'editable': self.get_object().is_admin(self.request.user)
             })
         return kwargs
-
-
-class ProjectNominationsView(django_tables2.SingleTableMixin, ProjectSummaryView):
-    table_class = NominationTable
-    right_panel = 'nominations'
 
     def get_table_data(self):
         return (haystack.query.SearchQuerySet()

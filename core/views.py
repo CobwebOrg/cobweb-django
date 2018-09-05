@@ -3,6 +3,7 @@ import haystack
 from dal import autocomplete
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView as django_LoginView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.http import Http404
@@ -29,6 +30,22 @@ class CobwebBaseIndexView(haystack.generic_views.SearchMixin,
             self.queryset = (SearchQuerySet()
                              .filter(django_ct__exact=self.django_ct))
         return self.queryset
+
+
+class FormMessageMixin(SuccessMessageMixin):
+
+    success_message = "%(title)s saved successfully"
+
+    def form_invalid(self, form):
+        """If the form is invalid, render the invalid form."""
+        msg = format_html("Your submission could not be processed.<ul>")
+        for error in form.non_field_errors():
+            msg += format_html('<li>{}</li>', error)
+        for field, error in form.errors.items():
+            msg += format_html('<li>{}: {}</li>', field, error)
+        msg += format_html("</ul>")
+        messages.add_message(self.request, messages.ERROR, msg)
+        return super().form_invalid(form)
 
 
 class DashboardView(LoginRequiredMixin,

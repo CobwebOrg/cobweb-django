@@ -16,7 +16,7 @@ class ProjectTable(CobwebBaseTable):
         empty_text = "No projects."
 
     title = django_tables2.LinkColumn(
-        viewname='project_summary',
+        viewname='project',
         kwargs={'pk': Accessor('pk')},
     )
     unclaimed_nominations = django_tables2.Column(

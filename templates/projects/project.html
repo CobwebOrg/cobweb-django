@@ -9,7 +9,13 @@
 
 {% block content %}
     <div class="row">
-        <h2 class="col mt-1 mb-3">{% term "project" "capitalize" %}: {{object.title}}</h2>
+        <h2 class="col mt-1 mb-3">
+            {% if object.title %}
+                {% term "project" "capitalize" %}: {{object.title}}
+            {% else %}
+                New {% term "project" %}
+            {% endif %}
+        </h2>
     </div>
 
     <div class="row h-100">
@@ -17,30 +23,42 @@
         
         <div class="col-6">
             <div class="pane">
-                <div class="nav nav-infotabs">
-                        <a class="nav-link {% if view.summary %}active disabled{% endif %}"
-                           href="{% url 'project_summary' pk=object.pk %}">{% trans "Summary" %}</a>
-                        <a class="nav-link {% if view.nominations %}active disabled{% endif %}"
-                           href="{% url 'project_nominations' pk=object.pk %}">{% term_plural 'nomination' 'capitalize' %}</a>
-                        <a class="nav-link {% if view.notes %}active disabled{% endif %}">{% trans "Notes" %}</a>
+                <div class="nav nav-tabs nav-infotabs mb-4" id="myTabs" role="tablist">
+                    <a class="nav-link active" id="summary-tab" data-toggle="tab"
+                       role="tab" aria-controls="summary" aria-selected="true"
+                        href="#summary">{% trans "Summary" %}</a>
+                    <a class="nav-link" id="nominations-tab" data-toggle="tab"
+                       role="tab" aria-controls="nominations" aria-selected="false"
+                       href="#nominations">{% term_plural 'nomination' 'capitalize' %}</a>
                 </div>
 
-                {% if view.summary %}
-                    <div class="summary">
-                        <div class="n-unclaimed">{{object.n_unclaimed}}</div>
-                        <br>{% trans "unclaimed" %} {% term_plural 'nomination' %}
+                <div class="tab-content", id="myTabContent">
+                    <div class="tab-pane fade show active" id="summary"
+                        role="tabpanel" aria-labelledby="summary-tab">
+                        <div class="summary">
+                            <div class="n-unclaimed">
+                                {% if object %}{{object.n_unclaimed}}{% else %}0{% endif %}
+                            </div>
+                            <br>{% trans "unclaimed" %} {% term_plural 'nomination' %}
+                        </div>
+                        <div class="summary">
+                            <div class="n-claimed">
+                                {% if object %}{{object.n_claimed}}{% else %}0{% endif %}
+                            </div>
+                            <br>{% trans "claimed" %} {% term_plural 'nomination' %}
+                        </div>
+                        <div class="summary">
+                            <div class="n-held">
+                                {% if object %}{{object.n_held}}{% else %}0{% endif %}
+                            </div>
+                            {% trans "held" %} {% term_plural 'nomination' %}
+                        </div>
                     </div>
-                    <div class="summary">
-                        <div class="n-claimed">{{object.n_claimed}}</div>
-                        <br>{% trans "claimed" %} {% term_plural 'nomination' %}
+                    <div class="tab-pane fade" id="nominations"
+                        role="tabpanel" aria-labelledby="nominations-tab">
+                        {% render_table table %}
                     </div>
-                    <div class="summary">
-                        <div class="n-held">{{object.n_held}}</div>
-                        {% trans "held" %} {% term_plural 'nomination' %}
-                    </div>
-                {% elif view.nominations %}
-                    <div class="pt-4">{% render_table table %}</div>
-                {% endif %}
+                </div>
             </div>
         </div>
     </div>

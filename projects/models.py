@@ -70,7 +70,7 @@ class Project(models.Model):
     notes = GenericRelation('core.Note', blank=True)
 
     def get_absolute_url(self) -> str:
-        return reverse('project_summary', kwargs={'pk': self.pk})
+        return reverse('project', kwargs={'pk': self.pk})
 
     def get_add_nomination_url(self) -> str:
         return reverse('nomination_create', kwargs={'project_pk': self.pk})
