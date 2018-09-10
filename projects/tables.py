@@ -101,9 +101,12 @@ class ClaimTable(CobwebBaseTable):
 
     nomination = django_tables2.LinkColumn(viewname='nomination',
                                     kwargs={'pk': Accessor('pk')})
-    organization = django_tables2.LinkColumn(viewname='organization_detail',
-                                    kwargs={'pk': Accessor('pk')})
-    link = django_tables2.LinkColumn(text='[details]', verbose_name='')
+    organization = django_tables2.LinkColumn(viewname='organization',
+                                    kwargs={'slug': Accessor('organization.slug')})
+    link = django_tables2.TemplateColumn(
+        '<a href={{record.get_absolute_url}} class="linklet">[details]</a>',
+        verbose_name='',
+    )
 
     claim_type = django_tables2.TemplateColumn("""
         {% if record.has_holding %}

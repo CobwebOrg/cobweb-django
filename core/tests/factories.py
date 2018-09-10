@@ -1,6 +1,7 @@
 import random
 
 import factory
+from django.utils.text import slugify
 from languages_plus.models import Language
 
 from core.models import User, Organization
@@ -23,6 +24,7 @@ class OrganizationFactory(factory.DjangoModelFactory):
     class Meta:
         model = Organization
 
+    slug = factory.LazyAttribute(lambda org: slugify(org.full_name))
     full_name = factory.Faker('company')
     address = factory.Faker('address')
     description = factory.Faker('paragraph')

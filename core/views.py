@@ -1,6 +1,7 @@
 import django_tables2
 import haystack
 from dal import autocomplete
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView as django_LoginView
 from django.contrib.messages.views import SuccessMessageMixin
@@ -8,14 +9,15 @@ from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import redirect, reverse
+from django.utils.html import format_html
 from django.views import generic
 from haystack.generic_views import SearchView as HaystackGenericSearchView
-from haystack.views import SearchView as HaystackWeirdSearchView
 from haystack.query import SearchQuerySet
+from haystack.views import SearchView as HaystackWeirdSearchView
 from reversion.views import RevisionMixin
 
 from core import models
-from core.forms import LoginForm, SignUpForm, UserProfileForm
+from core.forms import LoginForm, OrganizationForm, SignUpForm, UserProfileForm
 from core.tables import OrganizationTable, ResourceTable, UserTable
 from projects.tables import ClaimTable, NominationTable, ProjectTable
 
@@ -140,9 +142,36 @@ class OrganizationIndexView(CobwebBaseIndexView):
     model = models.Organization
     table_class = OrganizationTable
     django_ct = 'core.organization'
+    
+    def get_table_kwargs(self):
+        kwargs = super().get_table_kwargs()
+        if self.request.user.is_authenticated:
+            kwargs.update({'new_item_link': reverse('organization_create')})
+        return kwargs
 
-class OrganizationDetailView(generic.DetailView):
+class OrganizationCreateView(LoginRequiredMixin, FormMessageMixin, RevisionMixin,
+                             generic.CreateView):
     model = models.Organization
+    template_name = 'generic_form.html'
+    form_class = OrganizationForm
+    success_message = "%(full_name)s saved successfully"
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['editable'] = True
+        return kwargs
+
+class OrganizationView(FormMessageMixin, RevisionMixin, generic.UpdateView):
+    model = models.Organization
+    template_name = 'generic_form.html'
+    form_class = OrganizationForm
+    slug_field = 'slug'
+    success_message = "%(full_name)s saved successfully"
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['editable'] = self.get_object().is_admin(self.request.user)
+        return kwargs
 
 
 class ResourceListView(CobwebBaseIndexView):

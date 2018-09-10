@@ -33,9 +33,9 @@ class UserTable(CobwebBaseTable):
 
 
 class OrganizationTable(CobwebBaseTable):
-    full_name = django_tables2.LinkColumn(viewname='organization_detail',
-                                          verbose_name='Full name',
-                                          kwargs={'pk': Accessor('pk')})
+    full_name = django_tables2.LinkColumn(verbose_name='Full name',
+                                          viewname='organization',
+                                          kwargs={'slug': Accessor('object.slug')})
 
     class Meta(CobwebBaseTable.Meta):
         model = Organization

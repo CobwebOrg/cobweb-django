@@ -6,7 +6,7 @@
     "configurations": [
         {
             "name": "Django",
-            "type": "pythonExperimental",
+            "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/manage.py",
             "args": [

@@ -1,5 +1,6 @@
 {% load i18n %}
 {% load static %}
+{% load jargon %}
 
 <header class="mb-2 position-relative">
 	<nav class="navbar-account">
@@ -26,7 +27,7 @@
 			{% trans "CobWeb" %}
 		</a>
 
-		<div class="dropdown show">
+		{% comment %} <div class="dropdown show">
 			<a class="dropdown-toggle nav-link text-uppercase text-ltprimary" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				{% trans "Resources" %}
 			</a>
@@ -37,9 +38,12 @@
 				<a class="dropdown-item">{% trans "Claims" %}</a>
 				<a class="dropdown-item">{% trans "Holdings" %}</a>
 			</div>
-		</div>
+		</div> {% endcomment %}
 
-		<a class="nav-link text-uppercase text-ltprimary" href="{% url 'project_list' %}">{% trans "Projects" %}</a>
+
+		<a class="nav-link text-uppercase text-ltprimary" href="{% url 'resource_list' %}">{% term_plural 'resource' %}</a>
+		
+		<a class="nav-link text-uppercase text-ltprimary" href="{% url 'project_list' %}">{% term_plural 'project' %}</a>
 		
 		<a class="nav-link text-uppercase text-ltprimary"
 		   href="{% url 'organization_list' %}">

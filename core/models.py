@@ -90,6 +90,8 @@ class User(AbstractUser):
 @reversion.register()
 class Organization(models.Model):
 
+    slug = models.SlugField(max_length=50, null=False, unique=True)
+
     full_name = models.CharField(max_length=2000, unique=True,
                                  verbose_name="full legal name")
     short_name = models.CharField(max_length=200, null=True, blank=True,
@@ -140,7 +142,7 @@ class Organization(models.Model):
         )
 
     def get_absolute_url(self):
-        return reverse('organization_detail', kwargs={'pk': self.pk})
+        return reverse('organization', args=(self.slug,))
 
     def is_admin(self, user):
         return user in self.administrators.all()

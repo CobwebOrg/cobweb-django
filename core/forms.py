@@ -1,9 +1,11 @@
 import haystack.forms
 from crispy_forms.helper import FormHelper
+from dal import autocomplete
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.forms import formset_factory, ModelForm
 
 from core.layout import *
-from core.models import User
+from core.models import User, Organization, ResourceDescription, ResourceScan
 
 
 class LoginForm(AuthenticationForm):
@@ -22,7 +24,7 @@ class LoginForm(AuthenticationForm):
                     FormActions(
                         Reset('reset', 'Cancel',
                               css_class='btn btn-light btn-outline-dark mr-1'),
-                        Submit('submit', 'Submit', css_class='btn btn-info'),
+                        Submit('submit', 'Submit', css_class='btn btn-primary'),
                         css_class='ml-auto',
                     ),
                     css_class='d-flex flex-row align-items-end'
@@ -67,14 +69,14 @@ class UserProfileForm(UserCreationForm):
 
     class Meta:
         model = User
-        exclude = ()
+        exclude = ('__none__',)
 
     def __init__(self, *args, editable=True, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
 
         self.helper.layout = Layout(
-            HTML('<h2>User: {{object.username}}</h2>'),
+            HTML('<h2>User profile: {{object.username}}</h2>'),
             Row(
                 Pane(
                     Field('first_name', edit=editable),
@@ -86,13 +88,133 @@ class UserProfileForm(UserCreationForm):
                 Pane(
                     Field('organization', edit=editable),
                     Field('professional_title', edit=editable),
-                    FORM_BUTTONS if editable else HTML(''),
+                    form_buttons(
+                        confirm_text='Click the submit button to save changes to you user profile or click on cancel to return to Cobweb without saving.',
+                    ) if editable else HTML(''),
                     css_class='col-6',
                 ),
                 css_class='flex-grow-1',
             ),
         )
         self.helper.form_class = 'h-100 d-flex flex-column pb-2'
+
+
+class OrganizationForm(ModelForm):
+    class Meta:
+        model = Organization
+        exclude = ('__none__',)
+        widgets = {
+            'administrators': autocomplete.ModelSelect2Multiple(
+                url='user_autocomplete',
+                attrs={'data-allow-clear': 'false'},
+            ),
+            'contact': autocomplete.ModelSelect2(
+                url='user_autocomplete',
+                attrs={'data-allow-clear': 'false'},
+            ),
+        }
+
+    def __init__(self, *args, editable=False, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+
+        if hasattr(self.instance, 'pk') and self.instance.pk is not None:
+            new = False
+            slug_field = HTML("""
+                <div id="div_slug" class="row form-group">
+                    <label for="id_url" class="col-md-2 col-form-label form-control-label">
+                        URL
+                    </label>
+                    <input type="text" name="slug" maxlength="50" id="id_slug"
+                        class="textinput textInput form-control" hidden
+                        value="{{organization.slug}}">
+                    <div class="col-md w-100">
+                        <div class="input-group">
+                            <input type="text" name="slug" maxlength="50" id="id_url"
+                                class="textinput textInput form-control" disabled
+                                value="http://cobwebarchive.org{{organization.get_absolute_url}}">
+                        </div>
+                    </div>
+                </div>
+            """)
+            form_title = HTML('<h2>Organization: {{organization}}</h2>')
+            form_buttons_kwargs = {
+                'confirm_title': 'Save changes',
+                'confirm_text': 'Click the submit button to save changes to this organization or click on cancel to return to Cobweb without saving.',
+            }
+        else:
+            new = True
+            self.fields['slug'].label = "Choose a URL"
+            slug_field = PrependedAppendedText(
+                'slug',
+                prepended_text='http://cobwebarchive.org/org/',
+            )
+            form_title = HTML('<h2>New organization</h2>')
+            form_buttons_kwargs = {
+                'confirm_title': 'Save new organization',
+                'confirm_text': 'Click the submit button to create this organization or click on cancel to return to Cobweb without saving.',
+            }
+
+        print(form_buttons_kwargs, form_title)
+        self.helper.layout = Layout(
+            Div(
+                form_title,
+                css_class='px-3 pt-0 pb-2 w-100',
+            ),
+            Row(
+                Pane(
+                    slug_field,
+                    HField('full_name', edit=editable),
+                    HField('short_name', edit=editable),
+                    HField('administrators', edit=editable),
+                    HField('parent_organization', edit=editable),
+                    HField('description', edit=editable),
+                    css_class='col-6'
+                ),
+                Pane(
+                    HField('address', edit=editable),
+                    HField('telephone_number', edit=editable),
+                    HField('url', edit=editable),
+                    HField('email_address', edit=editable),
+                    HField('contact', edit=editable),
+                    # HField('identifier', edit=editable),
+                    form_buttons(**form_buttons_kwargs) if editable else HTML(''),
+                    css_class='col-6'
+                ),
+            ),
+        )
+
+
+class ResourceDescriptionForm(ModelForm):
+    class Meta:
+        model = ResourceDescription
+        exclude = ('__none__',)
+        widgets = {
+            'tags': autocomplete.ModelSelect2Multiple(
+                url='tag_autocomplete',
+                attrs={'data-allow-clear': 'false',
+                       'data-width': '100%'},
+            ),
+        }
+
+    def __init__(self, *args, editable=True, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+
+        self.helper.layout = FormSection(
+            HField('resource', edit=False),
+            HField('asserted_by', edit=False),
+            HField('title', edit=editable),
+            Field('description', edit=editable),
+            Field('tags', edit=editable),
+            HField('author', edit=editable),
+            HField('language', edit=editable),
+            FORM_BUTTONS if editable else HTML(''),
+        )
+        self.helper.form_class = 'h-100 d-flex flex-column pb-2'
+
+
+ResourceDescriptionFormSet = formset_factory(ResourceDescriptionForm)
 
 
 class SearchForm(haystack.forms.SearchForm):

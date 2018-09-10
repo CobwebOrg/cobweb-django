@@ -25,7 +25,8 @@ class UserAdmin(VersionAdmin, auth.admin.UserAdmin):
 
 @admin.register(models.Organization)
 class OrganizationAdmin(VersionAdmin):
-    inlines = [APIEndpointInline, NoteInline]
+    pass
+    # inlines = [APIEndpointInline, NoteInline]
 
 
 @admin.register(models.Note)

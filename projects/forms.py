@@ -58,7 +58,7 @@ class ProjectForm(forms.ModelForm):
         else:
             form_buttons_kwargs = {
                 'confirm_title': 'Add new project',
-                'confirm_text': 'Click the submit button to add this project to Cobweb or click on cancel to return to Cobweb without adding the new project.',
+                'confirm_text': 'Click the submit button to add this project to Cobweb or click on cancel to return to Cobweb without saving.',
             }
 
         self.helper.layout = Layout(
@@ -130,16 +130,16 @@ class NominationForm(forms.ModelForm):
         self.helper = FormHelper(self)
             
         if hasattr(self.instance, 'pk') and self.instance.pk is not None:
-            form_title = HTML('<h2 class="mb-0">{% load jargon %}{% term "nomination" "upper" %}: {{project}}</h2>'),
+            form_title = HTML('<h2 class="mb-0">{% load jargon %}{% term "nomination" "upper" %}: {{project}}</h2>')
             form_buttons_kwargs = {
                 'confirm_title': 'Save changes',
-                'confirm_text': 'Click the submit button to save changes to this nomination or click on cancel to return to Cobweb without adding the new project.',
+                'confirm_text': 'Click the submit button to save changes to this nomination or click on cancel to return to Cobweb without saving.',
             }
         else:
             form_title = HTML('<h2 class="mb-0">New {% load jargon %}{% term "nomination" "lower" %}</h2>')
             form_buttons_kwargs = {
                 'confirm_title': 'Add new nomination',
-                'confirm_text': 'Click the submit button to nominate this resource or click on cancel to return to Cobweb without adding the new project.',
+                'confirm_text': 'Click the submit button to nominate this resource or click on cancel to return to Cobweb without saving.',
             }
 
         if 'project' in self.initial:

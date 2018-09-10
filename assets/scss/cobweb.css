@@ -7992,6 +7992,10 @@ h1, h2 {
   border-radius: 4px;
   background-color: #ffffff; }
 
+.linklet {
+  font-style: italic;
+  font-size: .8rem; }
+
 .pane {
   border: 2px solid #DDDDDD !important;
   border-radius: 3px; }

@@ -325,6 +325,11 @@ h1, h2 {
   background-color: #ffffff;
 }
 
+.linklet {
+  font-style: italic;
+  font-size: .8rem;
+}
+
 .pane {
   @extend .border, .h-100, .p-3 ;
   border: 2px solid #DDDDDD ! important;

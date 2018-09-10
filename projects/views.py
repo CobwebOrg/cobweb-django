@@ -3,9 +3,7 @@ from typing import Optional
 import django_tables2
 import haystack
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib import messages
 from django.urls import reverse
-from django.utils.html import format_html
 from django.views.generic import CreateView, DetailView, UpdateView
 from extra_views import InlineFormSetView
 from reversion.views import RevisionMixin
@@ -42,7 +40,6 @@ class ProjectCreateView(LoginRequiredMixin, FormMessageMixin, RevisionMixin,
     template_name = 'projects/project.html'
     form_class = forms.ProjectForm
     table_class = NominationTable
-    success_message = "%(title)s was created successfully"
 
     def get_initial(self):
         initial = super().get_initial()
@@ -69,7 +66,6 @@ class ProjectView(FormMessageMixin, RevisionMixin, django_tables2.SingleTableMix
     template_name = 'projects/project.html'
     form_class = forms.ProjectForm
     table_class = NominationTable
-    success_message = "%(title)s was successfully updated."
     
     def get_form_kwargs(self):
         """Return the keyword arguments for instantiating the form."""

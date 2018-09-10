@@ -114,8 +114,10 @@ title_plaintext_field = Layout(
 title_form_field = Field('title', wrapper_class="col-md-12")
 
 
-def form_buttons(confirm_title='Please Confirm',
-                 confirm_text='Click "Submit" to save.') -> HTML:
+DEFAULT_TITLE = 'Save changes'
+DEFAULT_TEXT = "Click the submit button to save changes, or click cancel to return to Cobweb without Saving."
+
+def form_buttons(confirm_title=DEFAULT_TITLE, confirm_text=DEFAULT_TEXT) -> HTML:
     return HTML(f"""
         <div class="form-section form-button-row">
             <div class="row">

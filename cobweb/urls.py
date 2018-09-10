@@ -54,12 +54,15 @@ urlpatterns = [
         name='user_autocomplete'),
     
     # Organization
-    path('organizations/',
+    path('org/',
          core.views.OrganizationIndexView.as_view(),
          name='organization_list'),
-    path('org/<int:pk>',
-         core.views.OrganizationDetailView.as_view(),
-         name='organization_detail'),
+    path('org/<slug:slug>',
+         core.views.OrganizationView.as_view(),
+         name='organization'),
+    path('org_create',
+         core.views.OrganizationCreateView.as_view(),
+         name='organization_create'),
 
     # Project
     path('proj/',

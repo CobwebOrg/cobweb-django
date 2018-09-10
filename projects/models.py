@@ -135,7 +135,8 @@ class Nomination(models.Model):
     resource = models.ForeignKey(
         'core.Resource',
         on_delete=models.PROTECT,
-        related_name='nominations'
+        related_name='nominations',
+        verbose_name='URL',
     )
     project = models.ForeignKey(Project, related_name='nominations',
                                 on_delete=models.CASCADE)
