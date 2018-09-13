@@ -68,7 +68,8 @@ class NominationTable(CobwebBaseTable):
 
     class Meta(CobwebBaseTable.Meta):
         model = Nomination
-        fields = ('name', 'status')  #, 'claim_link')
+        fields = ('name', 'project', 'status')  #, 'claim_link')
+        # exclude = ('project',)
         empty_text = "No nominations."
 
     name = django_tables2.LinkColumn(
@@ -76,6 +77,13 @@ class NominationTable(CobwebBaseTable):
         kwargs={'project_pk': Accessor('project_pk'),
                 'url': Accessor('url')},
         verbose_name='Nomination',
+    )
+
+    project = django_tables2.LinkColumn(
+        viewname='nomination_update',
+        kwargs={'project_pk': Accessor('project_id'),
+                'url': Accessor('resource.url')},
+        verbose_name='In project',
     )
 
     status = django_tables2.TemplateColumn(

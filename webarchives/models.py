@@ -36,7 +36,7 @@ class ImportedRecord(models.Model):
     record_type = models.CharField(max_length=2000)
     resource = models.ForeignKey('core.Resource', on_delete=models.PROTECT,
                                  null=True, blank=True)
-    metadata = JSONField(default={})
+    metadata = JSONField(default=dict)
 
     parents = models.ManyToManyField('self', related_name='children',
                                      blank=True, symmetrical=False)

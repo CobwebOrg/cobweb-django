@@ -1,11 +1,12 @@
 import haystack.forms
 from crispy_forms.helper import FormHelper
 from dal import autocomplete
+from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.forms import formset_factory, ModelForm
+from django.forms import ModelForm, CharField, inlineformset_factory, Form, HiddenInput
 
 from core.layout import *
-from core.models import User, Organization, ResourceDescription, ResourceScan
+from core.models import User, Organization, Resource, ResourceDescription, ResourceScan
 
 
 class LoginForm(AuthenticationForm):
@@ -188,21 +189,27 @@ class OrganizationForm(ModelForm):
 class ResourceDescriptionForm(ModelForm):
     class Meta:
         model = ResourceDescription
-        exclude = ('__none__',)
+        exclude = []
+
         widgets = {
+            'resource': HiddenInput,
             'tags': autocomplete.ModelSelect2Multiple(
                 url='tag_autocomplete',
                 attrs={'data-allow-clear': 'false',
                        'data-width': '100%'},
             ),
+            'asserted_by': autocomplete.ModelSelect2(
+                url='user_autocomplete',
+                attrs={'data-allow-clear': 'false',
+                       'data-width': '100%'},
+            ),
         }
-
+    
     def __init__(self, *args, editable=True, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
 
         self.helper.layout = FormSection(
-            HField('resource', edit=False),
             HField('asserted_by', edit=False),
             HField('title', edit=editable),
             Field('description', edit=editable),
@@ -214,7 +221,50 @@ class ResourceDescriptionForm(ModelForm):
         self.helper.form_class = 'h-100 d-flex flex-column pb-2'
 
 
-ResourceDescriptionFormSet = formset_factory(ResourceDescriptionForm)
+RDFormset = inlineformset_factory(
+    Resource, ResourceDescription, fk_name='resource',
+    form=ResourceDescriptionForm,
+    extra=1, max_num=1,
+    exclude=[],
+    can_delete=False,
+)
+
+ShowRDFormset = inlineformset_factory(
+    Resource, ResourceDescription,
+    formset=RDFormset,
+    exclude = [],
+    extra=0, max_num=None,
+)
+
+class ResourceForm(ModelForm):
+    class Meta:
+        model = Resource
+        exclude = []
+
+
+    def __init__(self, *args, user=AnonymousUser, **kwargs):
+        super().__init__(*args, **kwargs)
+        # self.helper = FormHelper(self)
+
+        if isinstance(user, User):
+            self.editable_formset = RDFormset(
+                initial=[{'asserted_by': user, 'resource': self.instance}],
+                queryset=self.instance.resource_descriptions.filter(asserted_by=user),
+            )
+        else:
+            self.editable_formset = None
+        
+        self.resource_descriptions = ShowRDFormset(form_kwargs={'editable': False})
+        
+        [
+            ResourceDescriptionForm(instance=rd, editable=False)
+            for rd in self.instance.resource_descriptions.exclude(asserted_by=user)
+        ]
+
+        import pdb; pdb.set_trace()
+
+        # self.helper.layout = HTML("""{% import crispy %}{% crispy formset %}""")
+        # self.helper.form_class = 'h-100 d-flex flex-column pb-2'
 
 
 class SearchForm(haystack.forms.SearchForm):

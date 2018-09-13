@@ -85,6 +85,8 @@
     
     <field name="name" type="text_en" indexed="true" stored="true" multiValued="false" />
     
+    <field name="slug" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
     <field name="full_name" type="text_en" indexed="true" stored="true" multiValued="false" />
     
     <field name="short_name" type="text_en" indexed="true" stored="true" multiValued="false" />
