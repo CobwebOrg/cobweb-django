@@ -9,7 +9,7 @@
 			<a id="account_link" class="nav-link" 
 			   href="{% url 'user' username=request.user.username %}">{% trans "Profile" %}</a> •
 			<a id="logout_link" class="nav-link" 
-			   href="{% url 'logout' %}?next={{request.path}}">{% trans "Logout" %}</a> •
+			   href="{% url 'logout' %}?next=/">{% trans "Logout" %}</a> •
 		{% else %}
 			<span class="nav-welcome">{% trans "Welcome!" %}</span> •
 			<a id="signup_link" class="nav-link" 
