@@ -3,7 +3,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin, auth
 from django.urls import path
-from django.views.generic import FormView, DetailView
+from django.views.generic import FormView, DetailView, TemplateView
 from rest_framework.routers import DefaultRouter
 
 from api.views import (UserViewSet, OrganizationViewSet, ProjectViewSet,
@@ -12,6 +12,7 @@ import core.forms
 import core.views
 import projects.views
 from core.models import Organization
+from jargon.terms import TERMS
 
 
 router = DefaultRouter()
@@ -71,7 +72,7 @@ urlpatterns = [
     path('proj/<int:pk>',
         projects.views.ProjectView.as_view(),
         name='project'),
-    path('proj/new',
+    path('proj_create',
         projects.views.ProjectCreateView.as_view(),
         name='project_create'),
 
@@ -102,6 +103,13 @@ urlpatterns = [
     # Resource
     path('url/', core.views.ResourceListView.as_view(), name='resource_list'),
     path('url/<path:url>', core.views.ResourceView.as_view(), name='resource'),
+
+    path('glossary',
+         TemplateView.as_view(
+             template_name='glossary.html',
+             extra_context={'terms': TERMS}
+         ),
+         name='glossary'),
 
     path('admin', admin.site.urls),
 ]

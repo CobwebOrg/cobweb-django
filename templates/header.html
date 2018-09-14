@@ -17,7 +17,7 @@
 			<a id="login_link" class="nav-link" 
 			   href="{% url 'login' %}?next={{request.path}}">{% trans "Login" %}</a> •
 		{% endif %}
-		<a class="nav-link disabled">
+		<a id="glossary_link" class="nav-link" href="{% url 'glossary' %}">
 			{% trans "Help" %}
 		</a>
 	</nav>

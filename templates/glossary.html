@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Cobweb Terms and Concepts</h2>
+
+<dl class="glossary">
+  {% for key, term in terms.items %}
+    <dt class="h3" id="{{key}}">{{term.term|capfirst}}</dt>
+    <dd>
+      <p>{{term.definition}}</p>
+      <p>{{term.context}}</p>
+    </dd>
+  {% endfor %}
+</dl>
+{% endblock %}

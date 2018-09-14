@@ -8,7 +8,7 @@ resource:
 project:
   term: project
   term-plural: projects
-  definition: A project is something you create where you add nominated resources, claim resources to, and scope claimed resources within. You can have multiple projects housed in a a collection.
+  definition: A Cobweb project is a collaborative effort to archive internet resources related to a given event or topic.
   context: |
     A project is the umbrella for a set of collaborative activities enabled by the Cobweb system to document collaborative collecting of web content related to a particular thematic or topical subject.  The primary activities encompassed by a project are nominating, claiming, and holding resources, as described below.  In short, a nomination is a suggestion that a resource should be collected, a claim is a statement of intention by an archival organization to collect a nominated resource, and a holding is a statement by an archival organization that a claimed resource was actually captured and is managed as part of an archival collection external to Cobweb.  A project is represented in Cobweb in terms of its descriptive and administrative attributes, including title, summary description of collecting theme, administrator(s), and nomination policy: open to anyone or restricted to a known set of nominators authorized by the project’s administrator(s).
 

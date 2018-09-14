@@ -8011,4 +8011,7 @@ h2 + h3 {
   .table th {
     border-top: 0px none; }
 
+.tooltip-inner {
+  text-align: left; }
+
 /*# sourceMappingURL=cobweb.css.map */
