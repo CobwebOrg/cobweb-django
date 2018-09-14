@@ -1,5 +1,6 @@
 from collections import defaultdict
 from inspect import isclass
+from urllib.parse import urlsplit
 
 from django import template
 from django.contrib import auth
@@ -26,13 +27,15 @@ def add_nomination_link(item, user):
 
 
 @register.filter
-def as_link(item):
-    assert isinstance(item, Model), f"{repr(item)} is {type(item)}, not {Model}"
-    return format_html(
-        '<a href="{url}">{item_name}</a>',
-        item_name=item,
-        url=item.get_absolute_url()
-    )
+def as_link(item: Model) -> dict:
+    url = item.get_absolute_url()
+    if bool(urlsplit(url).netloc):
+        # True for absolute URLs
+        link_icon = ' ' + icon('external-link')
+    else:
+        link_icon = ''
+
+    return mark_safe(f'<a href="{url}">{item}{link_icon}</a>')
 
 
 @register.inclusion_tag('count_badge.html')
@@ -76,6 +79,7 @@ def icon(item):
         'Holding': ('Holding', 'fa-inbox'),
         'Resource': ('Resource', 'fa-desktop'),
 
+        'external-link': ('external link', 'fa-external-link-alt'),
         'profile': ('profile', 'fa-id-card'),
 
         'close': ('close', 'fa-remove'),
@@ -83,7 +87,7 @@ def icon(item):
         'sign_up': ('sign_up', 'fa-user-plus'),
         'reply': ('reply', 'fa-reply'),
         'search': ('search', 'fa-search'),
-    }[item]
+    }.get(item, (item.replace('-', ' '), f'fa-{item}'))
 
     return mark_safe(
         format_html('<span title="{}" class="fas {}"></span>', *format_args)
