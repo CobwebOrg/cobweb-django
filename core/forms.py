@@ -209,7 +209,7 @@ class ResourceDescriptionForm(ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
 
-        self.helper.layout = FormSection(
+        self.helper.layout = Layout(
             HField('asserted_by', edit=False),
             HField('title', edit=editable),
             Field('description', edit=editable),
@@ -218,53 +218,7 @@ class ResourceDescriptionForm(ModelForm):
             HField('language', edit=editable),
             FORM_BUTTONS if editable else HTML(''),
         )
-        self.helper.form_class = 'h-100 d-flex flex-column pb-2'
-
-
-RDFormset = inlineformset_factory(
-    Resource, ResourceDescription, fk_name='resource',
-    form=ResourceDescriptionForm,
-    extra=1, max_num=1,
-    exclude=[],
-    can_delete=False,
-)
-
-ShowRDFormset = inlineformset_factory(
-    Resource, ResourceDescription,
-    formset=RDFormset,
-    exclude = [],
-    extra=0, max_num=None,
-)
-
-class ResourceForm(ModelForm):
-    class Meta:
-        model = Resource
-        exclude = []
-
-
-    def __init__(self, *args, user=AnonymousUser, **kwargs):
-        super().__init__(*args, **kwargs)
-        # self.helper = FormHelper(self)
-
-        if isinstance(user, User):
-            self.editable_formset = RDFormset(
-                initial=[{'asserted_by': user, 'resource': self.instance}],
-                queryset=self.instance.resource_descriptions.filter(asserted_by=user),
-            )
-        else:
-            self.editable_formset = None
-        
-        self.resource_descriptions = ShowRDFormset(form_kwargs={'editable': False})
-        
-        [
-            ResourceDescriptionForm(instance=rd, editable=False)
-            for rd in self.instance.resource_descriptions.exclude(asserted_by=user)
-        ]
-
-        import pdb; pdb.set_trace()
-
-        # self.helper.layout = HTML("""{% import crispy %}{% crispy formset %}""")
-        # self.helper.form_class = 'h-100 d-flex flex-column pb-2'
+        self.helper.form_class = 'pb-3 form-section'
 
 
 class SearchForm(haystack.forms.SearchForm):

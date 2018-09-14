@@ -18,7 +18,7 @@ from reversion.views import RevisionMixin
 
 from core import models
 from core.forms import (LoginForm, SignUpForm, UserProfileForm,
-                        ResourceForm, OrganizationForm)
+                        ResourceDescriptionForm, OrganizationForm)
 from core.tables import OrganizationTable, ResourceTable, UserTable
 from projects.tables import ClaimTable, NominationTable, ProjectTable
 
@@ -217,9 +217,9 @@ class ResourceListView(CobwebBaseIndexView):
 
 class ResourceView(FormMessageMixin, RevisionMixin, django_tables2.SingleTableMixin,
                    generic.UpdateView):
-    model = models.Resource
+    model = models.ResourceDescription
     template_name = "core/resource.html"
-    form_class = ResourceForm
+    form_class = ResourceDescriptionForm
     table_class = NominationTable
     success_message = "Your metadata for %(url)s was saved successfully."
 
@@ -253,19 +253,23 @@ class ResourceView(FormMessageMixin, RevisionMixin, django_tables2.SingleTableMi
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context['md_sources'] = 
+        context['md_sources'] = [
+            ResourceDescriptionForm(instance=rd, editable=False)
+            for rd in self.object.resource.resource_descriptions
+                          .exclude(asserted_by=self.request.user)
+        ]
         return context
-    
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user
+        kwargs['editable'] = True
         return kwargs
 
     def get_table_data(self):
         # return (haystack.query.SearchQuerySet()
         #         .filter(django_ct__exact='projects.nomination')
         #         .filter(url__exact=self.get_object().resource.url))
-        return self.object.nominations.all()
+        return self.object.resource.nominations.all()
 
     def get_table_kwargs(self):
         kwargs = super().get_table_kwargs()
@@ -287,9 +291,16 @@ class ResourceView(FormMessageMixin, RevisionMixin, django_tables2.SingleTableMi
             queryset = self.get_queryset()
 
         try:
-            obj = self.model.objects.get(url=self.kwargs['url'])
-        except queryset.model.DoesNotExist:
-            obj = self.model(url=self.kwargs['url'])
+            resource = models.Resource.objects.get(url=self.kwargs['url'])
+        except models.Resource.model.DoesNotExist:
+            resource = models.Resource(url=self.kwargs['url'])
+        
+        try:
+            obj = models.ResourceDescription.objects.get(resource=resource,
+                                                         asserted_by=self.request.user)
+        except models.ResourceDescription.DoesNotExist:
+            obj = models.ResourceDescription(resource=resource,
+                                             asserted_by=self.request.user)
 
         return obj
 

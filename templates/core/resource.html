@@ -3,30 +3,48 @@
 {% load i18n %}
 {% load render_table from django_tables2 %}
 {% load jargon %}
+{% load as_link from cobweb_look %}
 
 {% block title %}Cobweb: {{ object.resource }}{% endblock %}
 
 {% block content %}
-    <div class="row">
-        <h2 class="col mt-1 mb-3">{% term 'resource' 'capitalize' %}: {{object.url}}</h2>
-    </div>
+<div class="row">
+  <h2 class="col mt-1 mb-3">{% term 'resource' 'capitalize' %}: {{object.resource}}</h2>
+</div>
 
-    <div class="row h-100">
-        <div class="col-6">
-            <div class="pane">
-                {% crispy form.editable_formset.0 %}
-
-                {% for rd_form in form.resource_descriptions %}
-                    {% crispy rd_form %}
-                {% endfor %}
-            </div>
-        </div>
-        
-        <div class="col-6">
-            <div class="pane">
-                <h5>{% term_plural 'nomination' 'upper' %}</h5>
-                {% render_table table %}
-            </div>
-        </div>
+<div class="row h-100">
+  <div class="col-6">
+    <div class="pane">
+      {% crispy form %}
+      
+      {% for rd_form in md_sources %}
+      {% crispy rd_form %}
+      {% endfor %}
     </div>
+  </div>
+  
+  <div class="col-6">
+    <div class="pane">
+      <h4>{% term_plural 'nomination' 'upper' %}</h4>
+      {% render_table table %}
+      
+      <h4>Imported Records</h4>
+      {% for record in object.resource.imported_records.all %}
+        <h5 class="mt-4">From {{record.parents.all.0 | as_link}}</h5>
+        {% for field, value in record.format_metadata.items %}
+          <div class="row">
+              <label class="col-md-2 col-form-label form-control-label">
+                  {{field}}
+              </label>
+          
+              <div class="col-md">
+                  {{value}}
+              </div>
+          
+          </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
 {% endblock %}

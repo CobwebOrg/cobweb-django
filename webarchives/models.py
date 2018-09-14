@@ -1,6 +1,7 @@
 import re
+from copy import deepcopy
 from sys import stdout
-from typing import Optional
+from typing import Optional, Dict
 
 from django.contrib.postgres.fields import JSONField
 from django.db import models
@@ -35,7 +36,8 @@ class ImportedRecord(models.Model):
     identifier = models.CharField(max_length=2000, unique=True)
     record_type = models.CharField(max_length=2000)
     resource = models.ForeignKey('core.Resource', on_delete=models.PROTECT,
-                                 null=True, blank=True)
+                                 null=True, blank=True,
+                                 related_name='imported_records')
     metadata = JSONField(default=dict)
 
     parents = models.ManyToManyField('self', related_name='children',
@@ -49,10 +51,10 @@ class ImportedRecord(models.Model):
             except KeyError:
                 pass   # try the next name_field!
         return self.identifier
-    
+
     def __str__(self) -> str:
         return self.name
-    
+
     def __repr__(self) -> str:
         return f"""ImportedRecord(
             source_feed=({self.source_feed}),
@@ -61,7 +63,42 @@ class ImportedRecord(models.Model):
             metadata={self.metadata},
         )
         """
+    
+    def format_metadata(self, max_line_characters=30) -> Dict[str, str]:
+        ugly_md = deepcopy(self.metadata)
+        pretty_md = dict()
 
+        fields = [f for f in ('title', 'identifier', 'type', 'description', 'subject')
+                  if f in ugly_md.keys()]
+        fields.extend(f for f in sorted(ugly_md.keys())
+                      if f not in fields)
+
+        chars_used = {c for values in ugly_md.values()
+                        for value in values
+                        for c in value}
+        
+        temp_sep = 0
+        while chr(temp_sep) in chars_used:
+            temp_sep += 1
+
+        for field in fields:
+            values_str = chr(temp_sep).join(ugly_md.pop(field))
+            if len(values_str) > max_line_characters:
+                sep = '\n'
+            elif ',' in values_str and ';' in values_str:
+                sep = '\n'
+            elif ',' in values_str:
+                sep = ';'
+            else:
+                sep = ','
+            pretty_md[field] = values_str.replace(chr(temp_sep), sep)
+        
+        return pretty_md
+    
+    
+    def get_absolute_url(self):
+        return self.identifier
+    
                 
 @reversion.register()
 class APIEndpoint(PolymorphicModel):
