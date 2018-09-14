@@ -73,7 +73,7 @@ class ResourceIndex(indexes.SearchIndex, indexes.Indexable):
     def index_queryset(self, using=None):
         return (
             self.get_model().objects.all()
-            .prefetch_related('resource_scans', 'resource_descriptions')
+            .prefetch_related('resource_scans', 'resource_descriptions', 'imported_records')
         )
 
     # def prepare_title(self, obj: Resource) -> List[str]:

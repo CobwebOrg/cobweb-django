@@ -1,11 +1,12 @@
 import haystack.forms
 from crispy_forms.helper import FormHelper
 from dal import autocomplete
+from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.forms import formset_factory, ModelForm
+from django.forms import ModelForm, CharField, inlineformset_factory, Form, HiddenInput
 
 from core.layout import *
-from core.models import User, Organization, ResourceDescription, ResourceScan
+from core.models import User, Organization, Resource, ResourceDescription, ResourceScan
 
 
 class LoginForm(AuthenticationForm):
@@ -188,21 +189,27 @@ class OrganizationForm(ModelForm):
 class ResourceDescriptionForm(ModelForm):
     class Meta:
         model = ResourceDescription
-        exclude = ('__none__',)
+        exclude = []
+
         widgets = {
+            'resource': HiddenInput,
             'tags': autocomplete.ModelSelect2Multiple(
                 url='tag_autocomplete',
                 attrs={'data-allow-clear': 'false',
                        'data-width': '100%'},
             ),
+            'asserted_by': autocomplete.ModelSelect2(
+                url='user_autocomplete',
+                attrs={'data-allow-clear': 'false',
+                       'data-width': '100%'},
+            ),
         }
-
+    
     def __init__(self, *args, editable=True, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
 
-        self.helper.layout = FormSection(
-            HField('resource', edit=False),
+        self.helper.layout = Layout(
             HField('asserted_by', edit=False),
             HField('title', edit=editable),
             Field('description', edit=editable),
@@ -211,10 +218,7 @@ class ResourceDescriptionForm(ModelForm):
             HField('language', edit=editable),
             FORM_BUTTONS if editable else HTML(''),
         )
-        self.helper.form_class = 'h-100 d-flex flex-column pb-2'
-
-
-ResourceDescriptionFormSet = formset_factory(ResourceDescriptionForm)
+        self.helper.form_class = 'pb-3 form-section'
 
 
 class SearchForm(haystack.forms.SearchForm):

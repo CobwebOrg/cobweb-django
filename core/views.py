@@ -17,7 +17,8 @@ from haystack.views import SearchView as HaystackWeirdSearchView
 from reversion.views import RevisionMixin
 
 from core import models
-from core.forms import LoginForm, OrganizationForm, SignUpForm, UserProfileForm
+from core.forms import (LoginForm, SignUpForm, UserProfileForm,
+                        ResourceDescriptionForm, OrganizationForm)
 from core.tables import OrganizationTable, ResourceTable, UserTable
 from projects.tables import ClaimTable, NominationTable, ProjectTable
 
@@ -214,23 +215,25 @@ class ResourceListView(CobwebBaseIndexView):
         return context
 
 
-class ResourceView(generic.DetailView):
-    model = models.Resource
+class ResourceView(FormMessageMixin, RevisionMixin, django_tables2.SingleTableMixin,
+                   generic.UpdateView):
+    model = models.ResourceDescription
     template_name = "core/resource.html"
-    section = 'resource'
+    form_class = ResourceDescriptionForm
+    table_class = NominationTable
+    success_message = "Your metadata for %(url)s was saved successfully."
 
     def get(self, request, *args, **kwargs):
         """
         Overrides parent .get() method to perform URL normalization as
         follows:
 
-        1. If url parameter is valid, or if called w/ id/pk instead of url,
-        invoke super().get(...)
+        1. If url parameter is valid, invoke super().get(...)
 
         2. If url is valid but non-cannonical (i.e. url ~= normalize_url(url) )
         then return a redirect using the cannonical url.
 
-        3. If url is not valid, return a 404 or something [not implemented yet]
+        3. If url is not valid, return a 404
 
         Note that case #1 includes urls that are not yet in the database –
         custom logic for these cases in defined in .get_object(), which is
@@ -242,43 +245,62 @@ class ResourceView(generic.DetailView):
                 normalized_url = models.normalize_url(kwargs['url'])
                 if normalized_url != kwargs['url']:
                     return redirect(
-                        reverse(
-                            'resource',
-                            kwargs={'url': normalized_url}
-                        )
+                        reverse('resource', kwargs={'url': normalized_url})
                     )
             except ValidationError:
                 raise Http404("{} is not a valid URL".format(kwargs['url']))
         return super().get(request, *args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['md_sources'] = [
+            ResourceDescriptionForm(instance=rd, editable=False)
+            for rd in self.object.resource.resource_descriptions
+                          .exclude(asserted_by=self.request.user)
+        ]
+        return context
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['editable'] = True
+        return kwargs
+
+    def get_table_data(self):
+        # return (haystack.query.SearchQuerySet()
+        #         .filter(django_ct__exact='projects.nomination')
+        #         .filter(url__exact=self.get_object().resource.url))
+        return self.object.resource.nominations.all()
+
+    def get_table_kwargs(self):
+        kwargs = super().get_table_kwargs()
+
+        kwargs['exclude'] = ['name']
+        if not (self.request.user.is_authenticated and self.request.user.can_claim()):
+            kwargs['exclude'].append('claim_link')
+        
+        return kwargs
+
     def get_object(self, queryset=None):
         """
-        Returns the object the view is displaying.
-        Overrides DetailView.get_object using a `url` argument from the URLconf
-        to find a Resource object. If no `url` argument is found, calls
-        super().get_object(...), which tries with `pk` or `slug`.
+        Returns the Resource object for a url.
 
-        If a url is provided but no matching resource is in the database,
-        returns a new, unsaved object. This allows the ResourceView to
-        provide information such as parent/child resources, along with forms
-        for nominating/claiming it (in which case the Resource should be saved
-        along w/ Nomination or Claim object).
+        If one doesn't exist, returns a new, unsaved Resource.
         """
 
-        # Use a custom queryset if provided; this is required for subclasses
-        # like DateDetailView
         if queryset is None:
             queryset = self.get_queryset()
-        url = self.kwargs.get('url')
-        if url is not None:
-            try:
-                obj = models.Resource.objects.get(url=url)
-            except queryset.model.DoesNotExist:
-                obj = models.Resource(url=url)
-            except Exception as ex:
-                raise ex
-        else:
-            obj = super().get_object(queryset)
+
+        try:
+            resource = models.Resource.objects.get(url=self.kwargs['url'])
+        except models.Resource.model.DoesNotExist:
+            resource = models.Resource(url=self.kwargs['url'])
+        
+        try:
+            obj = models.ResourceDescription.objects.get(resource=resource,
+                                                         asserted_by=self.request.user)
+        except models.ResourceDescription.DoesNotExist:
+            obj = models.ResourceDescription(resource=resource,
+                                             asserted_by=self.request.user)
 
         return obj
 
