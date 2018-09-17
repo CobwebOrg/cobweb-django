@@ -230,52 +230,8 @@ class Resource(models.Model):
     url = NormalizedURLField(max_length=1000, null=False, blank=False,
                              unique=True)
 
-    notes = GenericRelation(Note)
+    # METADATA RETRIEVED DIRECTLY FROM SITE
 
-    def __repr__(self):
-        return f'<Resource {self.url}>'
-
-    def __str__(self):
-        return self.url
-
-    @property
-    def data(self) -> MultiMDDict:
-        """Return object data in a json-compatible format."""
-
-        return MultiMDDict({
-            r.source_name: r.data for r in chain(
-                self.resource_scans.all(),
-                self.resource_descriptions.all()
-            )
-        })
-
-    def get_resource_records(self) -> typ.Iterable:
-        return chain(
-            self.nominations.all(),
-        )
-
-    def get_absolute_url(self) -> str:
-        return reverse('resource', kwargs={'url': self.url})
-
-    @property
-    def name(self):
-        for source in chain(self.resource_scans.all(), self.resource_descriptions.all()):
-            if source.title:
-                return source.title
-        return self.url
-
-    def resource_record_count(self) -> int:
-        return (
-            self.nominations.count()
-        )
-
-
-@reversion.register
-class ResourceScan(models.Model):
-    """Resource Metadata automatically retrieved by crawling the URL."""
-
-    resource = models.ForeignKey(Resource, on_delete=models.CASCADE, unique=True,
-                                 related_name='resource_scans')
     on_date = models.DateTimeField(null=True, blank=True)
 
     # Status: Replaced the enum from the spec w/ the following
@@ -294,79 +250,31 @@ class ResourceScan(models.Model):
     language = models.ForeignKey('languages_plus.Language', null=True, blank=True,
                                  on_delete=models.PROTECT)
 
-    @property
-    def source_name(self) -> str:
-        """Return the source identifier '/', representing Cobweb."""
+    notes = GenericRelation(Note)
 
-        return '/'
+    def __repr__(self):
+        return f'<Resource {self.url}>'
 
-    @property
-    def data(self) -> MDDict:
-        """Return item data as a MDDict:
-           - Keys are strings representing field names
-           - Values are sets of strings."""
+    def __str__(self):
+        return self.url
 
-        data: dict = {}
-        for key, values in model_to_dict(self).items():
-            if key not in {'id', 'resource', 'asserted_by'}:
-                if isinstance(values, str) or not isinstance(values, Iterable):
-                    # single-value field
-                    data[key] = [str(values)]
-                else:
-                    # multi-value field
-                    data[key] = [str(v) for v in values]
-        return MDDict(data)
+    def get_resource_records(self) -> typ.Iterable:
+        return chain(
+            self.nominations.all(),
+            self.imported_records.all(),
+        )
 
-    def __repr__(self) -> str:
-        return f'<ResourceScan {self.resource} on_date={self.on_date}>'
-
-@reversion.register
-class ResourceDescription(models.Model):
-    """Desecriptive metadata about a Resource, asserted by a User."""
-
-    class Meta:
-        unique_together = ('resource', 'asserted_by')
-
-    resource = models.ForeignKey(Resource, on_delete=models.PROTECT,
-                                 related_name='resource_descriptions')
-    asserted_by = models.ForeignKey(User, on_delete=models.PROTECT)
-
-    title = models.CharField(max_length=200, null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
-    author = models.CharField(max_length=200, null=True, blank=True)
-
-    # TODO: setup required - see https://github.com/cordery/django-languages-plus
-    language = models.ForeignKey('languages_plus.Language', null=True, blank=True,
-                                 on_delete=models.PROTECT)
-
-    tags = models.ManyToManyField(Tag, blank=True)
-    subject_headings = models.ManyToManyField(SubjectHeading, blank=True)
+    def get_absolute_url(self) -> str:
+        return reverse('resource', kwargs={'url': self.url})
 
     @property
-    def source_name(self) -> str:
-        """Return the source identifier '/', representing Cobweb."""
+    def name(self):
+        return str(self)
 
-        return self.asserted_by.username
-
-    @property
-    def data(self) -> MDDict:
-        """Return item data as a MDDict:
-           - Keys are strings representing field names
-           - Values are sets of strings."""
-
-        data: dict = {}
-        for key, values in model_to_dict(self).items():
-            if key not in {'id', 'resource', 'asserted_by'}:
-                if isinstance(values, str) or not isinstance(values, Iterable):
-                    # single-value field
-                    data[key] = [str(values)]
-                else:
-                    # multi-value field
-                    data[key] = [str(v) for v in values]
-        return MDDict(data)
-
-    def __repr__(self) -> str:
-        return f'<ResourceDescription {self.resource} asserted_by={self.asserted_by}>'
+    def resource_record_count(self) -> int:
+        return (
+            self.nominations.count()
+        )
 
 
 @reversion.register

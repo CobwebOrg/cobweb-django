@@ -6,7 +6,7 @@ from languages_plus.models import Language
 
 from core.models import User, Organization
 from core.models import Note, Tag, SubjectHeading
-from core.models import Resource, ResourceScan, ResourceDescription
+from core.models import Resource
 
 
 class UserFactory(factory.DjangoModelFactory):
@@ -79,39 +79,3 @@ class ResourceFactory(factory.DjangoModelFactory):
         django_get_or_create = ['url']
 
     url = factory.Faker('url')
-
-
-class ResourceScanFactory(factory.DjangoModelFactory):
-    class Meta:
-        model = ResourceScan
-
-    resource = factory.SubFactory(ResourceFactory)
-
-    @factory.lazy_attribute
-    def is_active(self):
-        return random.choice((True, False, None))
-
-    @factory.lazy_attribute
-    def redirect_url(self):
-        if (self.is_active is False) and random.choice([True, False]):
-            return factory.Faker('url').generate({})
-        else:
-            return False
-
-    title = factory.Faker('sentence')
-    tags = factory.PostGeneration(add_tags)
-    description = factory.Faker('paragraph')
-    author = factory.Faker('name')
-    # language = factory.Iterator(Language.objects.all())
-
-
-class ResourceDescriptionFactory(factory.DjangoModelFactory):
-    class Meta:
-        model = ResourceDescription
-
-    resource = factory.SubFactory(ResourceFactory)
-    asserted_by = factory.SubFactory(UserFactory)
-
-    title = factory.Faker('sentence')
-    description = factory.Faker('paragraph')
-    tags = factory.PostGeneration(add_tags)

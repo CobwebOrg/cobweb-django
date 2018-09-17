@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from core.models import User, Organization
-from core.models import Resource, ResourceDescription, Tag
+from core.models import Resource, Tag
 from projects.models import Project, Nomination, Claim
 
 
@@ -21,18 +21,10 @@ class OrganizationSerializer(serializers.HyperlinkedModelSerializer):
         exclude = []
 
 
-class ResourceDescriptionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ResourceDescription
-        exclude = []
-
-
 class ResourceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Resource
         exclude = []
-
-    resource_descriptions = ResourceDescriptionSerializer(required=False, many=True)
 
 
 class ProjectSerializer(serializers.HyperlinkedModelSerializer):

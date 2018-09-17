@@ -6,8 +6,7 @@ from django.urls import path
 from django.views.generic import FormView, DetailView, TemplateView
 from rest_framework.routers import DefaultRouter
 
-from api.views import (UserViewSet, OrganizationViewSet, 
-                       ResourceViewSet, ResourceDescriptionViewSet,
+from api.views import (UserViewSet, OrganizationViewSet, ResourceViewSet,
                        ProjectViewSet, NominationViewSet, ClaimViewSet)
 import core.forms
 import core.views
@@ -22,7 +21,6 @@ router.register(r'users', UserViewSet)
 router.register(r'organizations', OrganizationViewSet)
 
 router.register(r'resources', ResourceViewSet)
-router.register(r'resource_descriptions', ResourceDescriptionViewSet)
 
 router.register(r'projects', ProjectViewSet)
 router.register(r'nominations', NominationViewSet)

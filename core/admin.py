@@ -4,8 +4,8 @@ from reversion.admin import VersionAdmin
 from webarchives.admin import APIEndpointInline
 
 from core import models
-from core.admin_inlines import NoteInline, ResourceDescriptionInline
-
+from core.admin_inlines import NoteInline
+from projects.admin_inlines import NominationInline
 
 admin.site.unregister(auth.models.Group)
 
@@ -43,4 +43,4 @@ class TagAdmin(VersionAdmin):
 @admin.register(models.Resource)
 class ResourceAdmin(VersionAdmin):
     model = models.Resource
-    inlines = (ResourceDescriptionInline, NoteInline)
+    inlines = (NominationInline, NoteInline)

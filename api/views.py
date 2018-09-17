@@ -2,7 +2,7 @@ from rest_framework import viewsets
 
 import api.serializers as serializers
 from core.models import User, Organization
-from core.models import Resource, ResourceDescription, Tag
+from core.models import Resource, Tag
 from projects.models import Project, Nomination, Claim
 
 
@@ -21,11 +21,6 @@ class OrganizationViewSet(viewsets.ModelViewSet):
 class ResourceViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Resource.objects.all()
     serializer_class = serializers.ResourceSerializer
-
-
-class ResourceDescriptionViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = ResourceDescription.objects.all()
-    serializer_class = serializers.ResourceDescriptionSerializer
 
 
 class TagViewSet(viewsets.ModelViewSet):

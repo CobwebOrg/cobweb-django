@@ -141,16 +141,20 @@ class Nomination(models.Model):
     project = models.ForeignKey(Project, related_name='nominations',
                                 on_delete=models.CASCADE)
 
-    # TODO: move to ResourceDescription
+    # ABOUT THE RESOURCE
 
     title = models.CharField(max_length=200, null=True, blank=True)
+    author = models.CharField(max_length=200, null=True, blank=True)
+    language = models.ForeignKey('languages_plus.Language', null=True, blank=True,
+                                 on_delete=models.PROTECT)
     description = models.TextField(null=True, blank=True)
     tags = models.ManyToManyField('core.Tag', blank=True)
     subject_headings = models.ManyToManyField('core.SubjectHeading', blank=True)
-    language = models.ForeignKey('languages_plus.Language', null=True, blank=True,
-                                 on_delete=models.PROTECT)
+    
     # TODO: setup required - see https://github.com/cordery/django-languages-plus
     
+    # ABOUT THE NOMINATION
+
     # STATUS
     # needs_claim = models.BooleanField(default=True)
     @property

@@ -56,7 +56,7 @@ class ResourceIndex(indexes.SearchIndex, indexes.Indexable):
         model = Resource
 
     # name = indexes.CharField(model_attr='name', stored=True, indexed=False)
-    text = indexes.CharField(model_attr='data', document=True, use_template=False) 
+    text = indexes.CharField(document=True, use_template=False) 
 
     url = indexes.CharField(model_attr='url', stored=True, indexed=True)
     title = indexes.CharField(stored=True, indexed=True)
@@ -73,7 +73,7 @@ class ResourceIndex(indexes.SearchIndex, indexes.Indexable):
     def index_queryset(self, using=None):
         return (
             self.get_model().objects.all()
-            .prefetch_related('resource_scans', 'resource_descriptions', 'imported_records')
+            .prefetch_related('nominations', 'imported_records')
         )
 
     # def prepare_title(self, obj: Resource) -> List[str]:

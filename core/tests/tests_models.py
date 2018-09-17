@@ -5,10 +5,11 @@ from django.db.utils import IntegrityError
 
 from core.models import User, Organization
 from core.models import Note, Tag, SubjectHeading
-from core.models import Resource, ResourceDescription, ResourceScan
+from core.models import Resource
 from core.tests.factories import UserFactory, OrganizationFactory
 from core.tests.factories import NoteFactory, TagFactory, SubjectHeadingFactory
-from core.tests.factories import ResourceFactory, ResourceScanFactory, ResourceDescriptionFactory
+from core.tests.factories import ResourceFactory
+from projects.tests.factories import NominationFactory
 
 
 @pytest.mark.django_db
@@ -49,42 +50,11 @@ def test_subjectheading_model():
 @pytest.mark.django_db
 def test_resource_model():
     resource = ResourceFactory()
-    resource.resource_scans.add(ResourceScanFactory())
-    resource.resource_descriptions.add(ResourceDescriptionFactory())
-    resource.resource_descriptions.add(ResourceDescriptionFactory())
+    for i in range(3):
+        resource.nominations.add(NominationFactory())
 
     # Test model creation
     assert isinstance(resource, Resource)
     assert isinstance(str(resource), str)
     with pytest.raises(IntegrityError):
         str(ResourceFactory(url=None))
-    
-    # # Test that resource.data collates metadata from different sources
-    # data = resource.data
-    # for source in itertools.chain(resource.resource_scans.all(),
-    #                               resource.resource_descriptions.all()):
-    #     for field, value in source.data.items():
-    #         if field in ('id', 'asserted_by'):
-    #             pass  # ignored fields
-    #         elif len(value) == 0:
-    #             pass
-    #         elif isinstance(value, list):
-    #             assert set(value).issubset(data[field])
-    #         else:
-    #             assert value in data[field]
-
-
-class TestResourceScanModel:
-
-    @pytest.mark.django_db
-    def test_creation(self):
-        resource_scan = ResourceScanFactory()
-        assert isinstance(resource_scan, ResourceScan)
-        assert isinstance(str(resource_scan), str)
-
-
-@pytest.mark.django_db
-def test_resource_description_model():
-    resource_description = ResourceDescriptionFactory()
-    assert isinstance(resource_description, ResourceDescription)
-    assert isinstance(str(resource_description), str)
