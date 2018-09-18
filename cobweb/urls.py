@@ -4,14 +4,17 @@ from django.conf.urls import include, url
 from django.contrib import admin, auth
 from django.urls import path
 from django.views.generic import FormView, DetailView, TemplateView
+from rest_framework import viewsets
 from rest_framework.routers import DefaultRouter
 
+from api import serializers
 from api.views import (UserViewSet, OrganizationViewSet, ResourceViewSet,
                        ProjectViewSet, NominationViewSet, ClaimViewSet)
 import core.forms
 import core.views
 import projects.views
-from core.models import Organization
+import projects.models
+import webarchives.models
 from jargon.terms import TERMS
 
 
@@ -25,6 +28,11 @@ router.register(r'resources', ResourceViewSet)
 router.register(r'projects', ProjectViewSet)
 router.register(r'nominations', NominationViewSet)
 router.register(r'claims', ClaimViewSet)
+
+class TestViewset(viewsets.ReadOnlyModelViewSet):
+    serializer_class = serializers.ArchiveResourceSerializer
+    queryset = webarchives.models.ImportedRecord.objects.filter(record_type='resource')
+router.register(r'test', TestViewset)
 
 urlpatterns = [
     path('api/', include(router.urls)),

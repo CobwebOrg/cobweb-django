@@ -1,12 +1,26 @@
+from languages_plus.models import Language
 from rest_framework import serializers
 
 from core.models import User, Organization
 from core.models import Resource, Tag
 from projects.models import Project, Nomination, Claim
+from webarchives.models import ImportedRecord
 
 
 # from drf_haystack.serializers import HaystackSerializer
 # from drf_haystack.viewsets import HaystackViewSet
+
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ['name']
+
+
+class LanguageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Language
+        fields = ['iso', 'name']
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -21,10 +35,67 @@ class OrganizationSerializer(serializers.HyperlinkedModelSerializer):
         exclude = []
 
 
+class NominationProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ['url', 'name']
+    
+    url = serializers.URLField(source='get_absolute_url')
+
+
+class NominationMDSerialier(serializers.ModelSerializer):
+    """
+    Serializes only a Nomination's general fields related to a resource.
+    
+    This excludes fields that are specific to its nomination in a given project.
+    """
+    class Meta:
+        model = Nomination
+        fields = ['title', 'author', 'language', 'description', 'tags', 'subject_headings']
+
+    language = LanguageSerializer(required=False)
+    tags = TagSerializer(required=False, many=True)
+    subject_headings = TagSerializer(required=False, many=True)
+
+
+class ResourceNominationSerializer(serializers.ModelSerializer):
+    """
+    Serializes only a Nomination's general fields related to a resource.
+
+    This excludes fields that are specific to its nomination in a given project.
+    """
+    class Meta:
+        model = Nomination
+        fields = ['source', 'metadata']
+
+    source = NominationProjectSerializer(source='project')
+    metadata = NominationMDSerialier(source='*')
+
+
+class ArchiveOrgSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ImportedRecord
+        fields = ['url', 'name']
+    
+    url = serializers.URLField(source='identifier')
+
+
+class ArchiveResourceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ImportedRecord
+        fields = ['source', 'metadata']
+    
+    source = ArchiveOrgSerializer(source='organization', required=True, many=False)
+
+
 class ResourceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Resource
-        exclude = []
+        fields = ['url', 'nominations', 'imported_records']
+    
+    nominations = ResourceNominationSerializer(required=False, many=True)
+    imported_records = ArchiveResourceSerializer(required=False, many=True)
+
 
 
 class ProjectSerializer(serializers.HyperlinkedModelSerializer):
@@ -43,8 +114,3 @@ class ClaimSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Claim
         exclude = []
-
-
-class TagSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Tag

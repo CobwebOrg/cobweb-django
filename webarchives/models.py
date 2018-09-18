@@ -34,14 +34,29 @@ class ImportedRecord(models.Model):
 
     source_feed = models.ForeignKey('APIEndpoint', on_delete=models.CASCADE)
     identifier = models.CharField(max_length=2000, unique=True)
+    metadata = JSONField(default=dict)
+    
+    
     record_type = models.CharField(max_length=2000)
     resource = models.ForeignKey('core.Resource', on_delete=models.PROTECT,
                                  null=True, blank=True,
                                  related_name='imported_records')
-    metadata = JSONField(default=dict)
 
     parents = models.ManyToManyField('self', related_name='children',
                                      blank=True, symmetrical=False)
+
+    @property
+    def organization(self):
+        if self.record_type == 'organization':
+            return self
+        else:
+            parents_orgs = {p.organization for p in self.parents.all()}
+            if len(parents_orgs) == 1:
+                return parents_orgs.pop()
+            else:
+                raise ValueError(
+                    f'{self} has {len(parents_orgs)} organizations, not 1.'
+                )
 
     @property
     def name(self) -> str:
@@ -51,6 +66,7 @@ class ImportedRecord(models.Model):
             except KeyError:
                 pass   # try the next name_field!
         return self.identifier
+
 
     def __str__(self) -> str:
         return self.name
@@ -98,8 +114,8 @@ class ImportedRecord(models.Model):
     
     def get_absolute_url(self):
         return self.identifier
-    
-                
+
+
 @reversion.register()
 class APIEndpoint(PolymorphicModel):
 
@@ -174,8 +190,11 @@ class OAIPMHEndpoint(APIEndpoint):
         try:
             ImportedRecord.objects.get_or_create(
                 identifier=self.get_set_id(set_info.setSpec),
-                defaults={'source_feed': self,
-                            'metadata': {'title': [set_info.setName]}}
+                defaults={
+                    'source_feed': self,
+                    'metadata': {'title': [set_info.setName]},
+                    'record_type': self.set_type,
+                },
             )
         except ValueError:
             # sometimes a dummy setspec can't be parsed - just ignore!
