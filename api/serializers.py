@@ -57,6 +57,15 @@ class NominationMDSerialier(serializers.ModelSerializer):
     tags = TagSerializer(required=False, many=True)
     subject_headings = TagSerializer(required=False, many=True)
 
+    def to_representation(self, instance):
+        """Wraps each value of self.data.metadata in a set."""
+
+        data = super().to_representation(instance)
+        for field in data:
+            if field not in {'tags', 'subject_headings'}:
+                data[field] = [data[field]]
+        return data
+
 
 class ResourceNominationSerializer(serializers.ModelSerializer):
     """
@@ -95,7 +104,6 @@ class ResourceSerializer(serializers.ModelSerializer):
     
     nominations = ResourceNominationSerializer(required=False, many=True)
     imported_records = ArchiveResourceSerializer(required=False, many=True)
-
 
 
 class ProjectSerializer(serializers.HyperlinkedModelSerializer):

@@ -4,49 +4,14 @@
 {% load render_table from django_tables2 %}
 {% load jargon %}
 {% load as_link icon from cobweb_look %}
+{% load react %}
 
 {% block title %}Cobweb: {{ object.resource }}{% endblock %}
 
 {% block content %}
-<div class="row">
-  <h2 class="col mt-1 mb-3">{% term 'resource' 'capitalize' %}: {{object.resource}}</h2>
-</div>
+{% react_render component="components.Resource" props=react_data %}
+{% endblock %}
 
-<div class="row h-100">
-  <div class="col-6">
-    <div class="pane">
-      {% crispy form %}
-      
-      {% for rd_form in md_sources %}
-      {% crispy rd_form %}
-      {% endfor %}
-    </div>
-  </div>
-  
-  <div class="col-6">
-    <div class="pane">
-      <h4>{% term_plural 'nomination' 'upper' %}</h4>
-      {% render_table table %}
-      
-      <h4>Imported Records</h4>
-      {% for record in object.resource.imported_records.all %}
-        <h5 class="mt-4">From {{record.parents.all.0 | as_link}}</span></h5>
-        {% for field, value in record.format_metadata.items %}
-          <div class="row">
-              <label class="col-md-2 col-form-label form-control-label my-1 py-0">
-                  {{field|capfirst}}
-              </label>
-          
-              <div class="col-md my-1 py-0">
-                  {{value}}
-              </div>
-          
-          </div>
-        {% empty %}
-          No records.
-        {% endfor %}
-      {% endfor %}
-    </div>
-  </div>
-</div>
+{% block load_react_script %}
+{% react_print %}
 {% endblock %}

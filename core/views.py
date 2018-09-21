@@ -16,6 +16,7 @@ from haystack.query import SearchQuerySet
 from haystack.views import SearchView as HaystackWeirdSearchView
 from reversion.views import RevisionMixin
 
+from api.serializers import ResourceSerializer
 from core import models
 from core.forms import (LoginForm, SignUpForm, UserProfileForm,
                         OrganizationForm)
@@ -77,8 +78,8 @@ class DashboardView(LoginRequiredMixin,
 
 
 class LoginView(django_LoginView):
-    template_name='login.html'
-    form_class=LoginForm
+    template_name = 'login.html'
+    form_class = LoginForm
 
 
 def get_landing_page_view(request):
@@ -92,7 +93,6 @@ class UserIndexView(CobwebBaseIndexView):
     model = models.User
     table_class = UserTable
     django_ct = 'core.user'
-
 
 
 class UserCreateView(RevisionMixin, generic.CreateView):
@@ -130,7 +130,7 @@ class UserAutocomplete(autocomplete.Select2QuerySetView):
 
         if self.q:
             qs = qs.filter(
-                  Q(username__icontains=self.q)
+                Q(username__icontains=self.q)
                 | Q(first_name__icontains=self.q)
                 | Q(last_name__icontains=self.q)
                 | Q(email__icontains=self.q)
@@ -143,12 +143,13 @@ class OrganizationIndexView(CobwebBaseIndexView):
     model = models.Organization
     table_class = OrganizationTable
     django_ct = 'core.organization'
-    
+
     def get_table_kwargs(self):
         kwargs = super().get_table_kwargs()
         if self.request.user.is_authenticated:
             kwargs.update({'new_item_link': reverse('organization_create')})
         return kwargs
+
 
 class OrganizationCreateView(LoginRequiredMixin, FormMessageMixin, RevisionMixin,
                              generic.CreateView):
@@ -156,11 +157,12 @@ class OrganizationCreateView(LoginRequiredMixin, FormMessageMixin, RevisionMixin
     template_name = 'generic_form.html'
     form_class = OrganizationForm
     success_message = "%(full_name)s saved successfully"
-    
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['editable'] = True
         return kwargs
+
 
 class OrganizationView(FormMessageMixin, RevisionMixin, generic.UpdateView):
     model = models.Organization
@@ -168,7 +170,7 @@ class OrganizationView(FormMessageMixin, RevisionMixin, generic.UpdateView):
     form_class = OrganizationForm
     slug_field = 'slug'
     success_message = "%(full_name)s saved successfully"
-    
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['editable'] = self.get_object().is_admin(self.request.user)
@@ -215,11 +217,9 @@ class ResourceListView(CobwebBaseIndexView):
         return context
 
 
-class ResourceView(django_tables2.SingleTableMixin,
-                   generic.DetailView):
+class ResourceView(generic.DetailView):
     model = models.Resource
     template_name = "core/resource.html"
-    table_class = NominationTable
 
     def get(self, request, *args, **kwargs):
         """
@@ -249,24 +249,13 @@ class ResourceView(django_tables2.SingleTableMixin,
                 raise Http404("{} is not a valid URL".format(kwargs['url']))
         return super().get(request, *args, **kwargs)
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     return context
-
-    def get_table_data(self):
-        # return (haystack.query.SearchQuerySet()
-        #         .filter(django_ct__exact='projects.nomination')
-        #         .filter(url__exact=self.get_object().resource.url))
-        return self.object.resource.nominations.all()
-
-    def get_table_kwargs(self):
-        kwargs = super().get_table_kwargs()
-
-        kwargs['exclude'] = ['name']
-        if not (self.request.user.is_authenticated and self.request.user.can_claim()):
-            kwargs['exclude'].append('claim_link')
-        
-        return kwargs
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['react_data'] = {
+            'user': self.request.user.username,
+            'resource': ResourceSerializer(self.object).data,
+        }
+        return context
 
     def get_object(self, queryset=None):
         """
@@ -287,7 +276,7 @@ class ResourceView(django_tables2.SingleTableMixin,
 
 
 class TagAutocomplete(autocomplete.Select2QuerySetView):
-    
+
     create_field = 'title'
 
     def get_queryset(self):
@@ -299,7 +288,7 @@ class TagAutocomplete(autocomplete.Select2QuerySetView):
             qs = qs.filter(title__istartswith=self.q)
 
         return qs
-    
+
     def has_add_permission(self, request):
         """Return True if the user has the permission to add a model."""
         return request.user.is_authenticated

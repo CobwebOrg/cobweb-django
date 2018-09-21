@@ -2,7 +2,7 @@ var $ = require("jquery");
 import React from "react";
 import ReactDOM from "react-dom";
 import Dashboard from "./components/Dashboard";
-import ResourceForm from "./components/ResourceForm";
+import Resource from "./components/Resource";
 import 'bootstrap';
 // import '../scss/cobweb.scss';
 import fontawesome from '@fortawesome/fontawesome';
@@ -30,5 +30,5 @@ window.Dashboard = Dashboard;
 window.ReactDOM = ReactDOM;
 window.React = React;
 window.components = {
-  ResourceForm: ResourceForm
+  Resource: Resource
 };

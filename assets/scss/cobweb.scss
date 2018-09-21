@@ -319,6 +319,22 @@ h2 + h3 {
 
 .badge-mid { @extend .badge-left, .badge-right ; }
 
+.datum {
+  @extend .mr-1, .mb-1, .badge, .border ;
+}
+
+.datum-tags, .datum-subject, .datum-language {
+  @extend .badge, .badge-pill, .badge-info ;
+
+  display: inline-block;
+  font-size: .65rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0.4em 0.5em;
+  vertical-align: baseline;
+  white-space: no-wrap;
+}
+
 .big-model-icon{
   @extend .m-2, .p-3, .border, .rounded ;
   font-size: 2em;
@@ -352,4 +368,12 @@ h2 + h3 {
 
 .tooltip-inner {
   text-align: left;
+}
+
+.source-toggler {
+  margin-right: 0.5rem;
+}
+
+.selected {
+  border-bottom: 3px solid black;
 }
