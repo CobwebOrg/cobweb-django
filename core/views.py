@@ -21,7 +21,8 @@ from core import models
 from core.forms import (LoginForm, SignUpForm, UserProfileForm,
                         OrganizationForm)
 from core.tables import OrganizationTable, ResourceTable, UserTable
-from projects.tables import ClaimTable, NominationTable, ProjectTable
+from projects.models import Project
+from projects.tables import ClaimTable, NominationTable, ProjectTable, UserProjectsTable
 
 
 class CobwebBaseIndexView(haystack.generic_views.SearchMixin,
@@ -53,28 +54,22 @@ class FormMessageMixin(SuccessMessageMixin):
 
 
 class DashboardView(LoginRequiredMixin,
-                    django_tables2.MultiTableMixin,
+                    django_tables2.SingleTableMixin,
                     generic.TemplateView):
 
+    table_class = UserProjectsTable
     template_name = 'dashboard.html'
 
-    def get_tables(self):
-        # TODO: filter by user
-        user = self.request.user
-        return (
-            ProjectTable(
-                data=SearchQuerySet().filter(django_ct__exact='projects.project'),
-                table_title='my projects',
-            ),
-            NominationTable(
-                data=SearchQuerySet().filter(django_ct__exact='projects.nomination'),
-                table_title='my nominations',
-            ),
-            ClaimTable(
-                data=SearchQuerySet().filter(django_ct__exact='projects.claim'),
-                table_title='my claims and holdings',
-            ),
+    def get_table_data(self):
+        return Project.objects.filter(
+            Q(administrators=self.request.user)
         )
+    
+    def get_table_kwargs(self):
+        kwargs = super().get_table_kwargs()
+        if self.request.user.is_authenticated:
+            kwargs.update({'new_item_link': reverse('project_create')})
+        return kwargs
 
 
 class LoginView(django_LoginView):

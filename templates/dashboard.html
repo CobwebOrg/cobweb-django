@@ -9,9 +9,9 @@
         <div class="border p-4">
             <h1 class="mb-2 text-user-dark">{{ request.user }}</h1>
             <p class="mb-2">
-                {% comment %} {% if request.user.organization %} {% endcomment %}
-                    {{request.user | as_link}}
-                {% comment %} {% endif %} {% endcomment %}
+                {% if request.user.organization %}
+                    {{request.user.organization | as_link}}
+                {% endif %}
             </p>
             <p class="mb-4 text-user-dark">{% trans "Last login:" %} {{user.last_login|date:"M d, Y"}}</p>
 
@@ -24,28 +24,9 @@
     </div>
 
     <div class="col-9 p-3 " id="dash-tabs">
-        <div class="nav nav-infotabs">
-            {% for table in tables %}
-                <a class="btn btn-link{% if notforloop.first %} collapsed{% endif %} nav-link" data-toggle="collapse"
-                   href="#{{table.table_title|slugify}}">{{ table.table_title }}</a>
-            {% endfor %}
-        </div>
+        <h2>My Projects</h2>
             
-        {% for table in tables %}
-            <div class="collapse{% if forloop.first %} show{% endif %}"
-                    id="{{table.table_title|slugify}}" data-parent="#dash-tabs">
-                {% render_table table %}
-            </div>
-        {% endfor %}
+        {% render_table table %}
     </div>
-
-    {% block load_react_script %}
-        {% comment %} <script>
-            window.ReactDOM.render(
-            window.React.createElement(window.Dashboard, {}, null),
-            document.getElementById('cobweb-content')
-            );
-        </script> {% endcomment %}
-    {% endblock %}
   </div>
 {% endblock %}

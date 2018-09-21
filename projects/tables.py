@@ -54,6 +54,50 @@ class ProjectTable(CobwebBaseTable):
                                value)
 
 
+class UserProjectsTable(ProjectTable):
+    """django_tables2.Table object for lists of projects."""
+
+    class Meta(ProjectTable.Meta):
+        fields = ('title', 'n_unclaimed',
+                  'n_claimed', 'n_held')
+        exclude = ['unclaimed_nominations', 'claimed_nominations',
+                   'held_nominations']
+
+    n_unclaimed = django_tables2.Column(
+        verbose_name='Unclaimed',
+        attrs={'cell': {'class': 'text-center'}},
+    )
+    n_claimed = django_tables2.Column(
+        verbose_name='Claimed',
+        attrs={'cell': {'class': 'text-center'}},
+    )
+    n_held = django_tables2.Column(
+        verbose_name='Held',
+        attrs={'cell': {'class': 'text-center'}},
+    )
+
+    def render_n_unclaimed(self, value):
+        if value == 0:
+            return ''
+        else:
+            return format_html('<span class="badge-unclaimed">{}</span>',
+                               value)
+
+    def render_n_claimed(self, value):
+        if value == 0:
+            return ''
+        else:
+            return format_html('<span class="badge-claimed">{}</span>',
+                               value)
+
+    def render_n_held(self, value):
+        if value == 0:
+            return ''
+        else:
+            return format_html('<span class="badge-held">{}</span>',
+                               value)
+
+
 class NominationColumn(django_tables2.LinkColumn):
 
     def text(self, record):
