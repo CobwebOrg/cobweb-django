@@ -94,11 +94,11 @@ class ProjectView(FormMessageMixin, RevisionMixin, django_tables2.SingleTableMix
         return kwargs
 
 
-class NominationUpdateView(RevisionMixin, django_tables2.SingleTableMixin,
-                           UpdateView):
+class NominationUpdateView(FormMessageMixin, RevisionMixin,
+                           django_tables2.SingleTableMixin, UpdateView):
     model = models.Nomination
     form_class = forms.NominationForm
-    template_name = 'projects/nomination.html'
+    template_name = 'generic_form.html'
     table_class = ClaimTable
 
     def get_form_kwargs(self):
@@ -106,7 +106,7 @@ class NominationUpdateView(RevisionMixin, django_tables2.SingleTableMixin,
         kwargs = super().get_form_kwargs()
         kwargs.update({
             'editable': self.get_object().is_admin(self.request.user),
-            'tabbed': True,
+            'tabbed': False,
         })
         if 'data' in kwargs:
             assert kwargs['data']['resource'] == self.kwargs['url']
@@ -115,6 +115,7 @@ class NominationUpdateView(RevisionMixin, django_tables2.SingleTableMixin,
                 'project': self.kwargs['project_pk'],
                 'nominated_by': self.request.user.id,  # works bc MultiValueDict magic...
             })
+        kwargs['table'] = self.get_table()
         return kwargs
 
     def get_object(self, queryset=None):

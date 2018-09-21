@@ -124,7 +124,7 @@ class NominationForm(forms.ModelForm):
     
     resource = forms.URLField(widget=ResourceInput, initial='http://')
 
-    def __init__(self, *args, editable=False, tabbed=False, instance=None,
+    def __init__(self, *args, table=None, editable=False, tabbed=False, instance=None,
                  **kwargs):
         super().__init__(*args, instance=instance, **kwargs)
         self.helper = FormHelper(self)
@@ -145,7 +145,7 @@ class NominationForm(forms.ModelForm):
         if 'project' in self.initial:
             project = Project.objects.get(pk=self.initial['project'])
             proj_header = HTML(
-                '{% load jargon cobweb_look %}<h3>{% term "project" "capitalize" %}: {{project|as_link}}</h3>',
+                '{% load jargon cobweb_look %}<h3>{% term "project" "capitalize" %}: {{instance}}</h3>',
 
             )
         else:
@@ -179,6 +179,11 @@ class NominationForm(forms.ModelForm):
                             editable=editable,
                             form_buttons_kwargs=form_buttons_kwargs,
                         ),
+                        HTML("""
+                            {% load render_table from django_tables2 %}
+                            <h4>Claims</h4>
+                            {% render_table table %}
+                        """ if hasattr(self.instance, 'pk') else ''),
                         css_class='col-6',
                     ),
                     css_class='flex-grow-1',
