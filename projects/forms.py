@@ -130,7 +130,7 @@ class NominationForm(forms.ModelForm):
         self.helper = FormHelper(self)
             
         if hasattr(self.instance, 'pk') and self.instance.pk is not None:
-            form_title = HTML('<h2 class="mb-0">{% load jargon %}{% term "nomination" "upper" %}: {{project}}</h2>')
+            form_title = HTML('<h2 class="mb-0">{% load jargon %}{% term "nomination" "upper" %}: {{object.resource}}</h2>')
             form_buttons_kwargs = {
                 'confirm_title': 'Save changes',
                 'confirm_text': 'Click the submit button to save changes to this nomination or click on cancel to return to Cobweb without saving.',
@@ -143,11 +143,12 @@ class NominationForm(forms.ModelForm):
             }
 
         if 'project' in self.initial:
-            project = Project.objects.get(pk=self.initial['project'])
-            proj_header = HTML(
-                '{% load jargon cobweb_look %}<h3>{% term "project" "capitalize" %}: {{instance}}</h3>',
-
-            )
+            # if not (hasattr(self, 'project') and isinstance(self.project, Project)):
+            #     self.project = Project.objects.get(pk=self.initial['project'])
+            proj_header = HTML("""
+                {% load jargon cobweb_look %}
+                <h3>{% term "project" "capitalize" %}: {{view.get_project|as_link}}</h3>
+            """)
         else:
             proj_header = HTML('')
         
@@ -181,9 +182,9 @@ class NominationForm(forms.ModelForm):
                         ),
                         HTML("""
                             {% load render_table from django_tables2 %}
-                            <h4>Claims</h4>
+                            <h4 class="mt-3">Claims</h4>
                             {% render_table table %}
-                        """ if hasattr(self.instance, 'pk') else ''),
+                        """ if hasattr(self, 'table') else ''),
                         css_class='col-6',
                     ),
                     css_class='flex-grow-1',

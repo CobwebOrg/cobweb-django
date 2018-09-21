@@ -142,6 +142,11 @@ class NominationUpdateView(FormMessageMixin, RevisionMixin,
             kwargs['new_item_link'] = self.get_object().get_claim_url()
         kwargs.update({'exclude': ('nomination',)})
         return kwargs
+
+    def get_project(self):
+        if not (hasattr(self, '_project') and isinstance(self._project, models.Project)):
+          self._project = models.Project.objects.get(pk=self.kwargs['project_pk'])
+        return self._project
     
 
 class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
@@ -185,7 +190,6 @@ class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
             })
         return form_kwargs
 
-
     def get_project(self):
         if not (hasattr(self, '_project') and isinstance(self._project, models.Project)):
           self._project = models.Project.objects.get(pk=self.kwargs['project_pk'])
@@ -195,11 +199,12 @@ class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
         return self.get_project().is_nominator(self.request.user)
 
 
-class ClaimFormMixin:
+class ClaimFormMixin(FormMessageMixin, RevisionMixin):
     model = models.Claim
     template_name = 'projects/claim.html'
     form_class = forms.ClaimForm
     _nomination: Optional[models.Nomination] = None
+    success_message = "Claim saved successfully"
 
     def get_context_data(self, **kwargs) -> dict:
         """Insert forms w/ the parent nomination & project into the context dict."""
@@ -212,8 +217,12 @@ class ClaimFormMixin:
         context.update(kwargs)
         return super().get_context_data(**context)  # type: ignore
 
+    def get_success_url(self) -> str:
+        return self.object.nomination.get_absolute_url()
 
-class ClaimCreateView(UserPassesTestMixin, RevisionMixin, ClaimFormMixin, CreateView):
+
+class ClaimCreateView(UserPassesTestMixin, ClaimFormMixin, CreateView):
+    success_message = "Nomination successfully claimed"
 
     def test_func(self):
         return self.request.user.is_authenticated and self.request.user.can_claim()
@@ -226,11 +235,11 @@ class ClaimCreateView(UserPassesTestMixin, RevisionMixin, ClaimFormMixin, Create
             'instance': models.Claim(
                 nomination=nomination,
                 organization=self.request.user.organization,
-                crawl_start_date = nomination.crawl_start_date,
-                crawl_end_date = nomination.crawl_end_date,
-                crawl_frequency = nomination.crawl_frequency,
-                follow_links = nomination.follow_links,
-                page_scope = nomination.page_scope,
+                crawl_start_date=nomination.crawl_start_date,
+                crawl_end_date=nomination.crawl_end_date,
+                crawl_frequency=nomination.crawl_frequency,
+                follow_links=nomination.follow_links,
+                page_scope=nomination.page_scope,
             ),
         })
         return kwargs
@@ -243,7 +252,7 @@ class ClaimCreateView(UserPassesTestMixin, RevisionMixin, ClaimFormMixin, Create
         return self._nomination
 
 
-class ClaimUpdateView(RevisionMixin, ClaimFormMixin, UpdateView):
+class ClaimUpdateView(ClaimFormMixin, UpdateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
