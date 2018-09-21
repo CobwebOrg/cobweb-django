@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load cobweb_look %}
 {% load django_tables2 %}
 {% load i18n %}
 
@@ -8,16 +9,17 @@
         <div class="border p-4">
             <h1 class="mb-2 text-user-dark">{{ request.user }}</h1>
             <p class="mb-2">
-                <a href="{{user.organization.get_absolute_url}}" class="text-user-dark">
-                    {{user.organization}}</a>
+                {% comment %} {% if request.user.organization %} {% endcomment %}
+                    {{request.user | as_link}}
+                {% comment %} {% endif %} {% endcomment %}
             </p>
             <p class="mb-4 text-user-dark">{% trans "Last login:" %} {{user.last_login|date:"M d, Y"}}</p>
 
-            <table>
+            {% comment %} <table>
                 <tr><td class="pr-2">{% trans "Replies to notes:" %}</td><td>0</td</tr>
                 <tr><td class="pr-2">{% trans "New notes:" %}</td><td>2</td></tr>
                 <tr><td class="pr-2">{% trans "Activity alerts:" %}</td><td>5</td></tr>
-            </table>
+            </table> {% endcomment %}
         </div>
     </div>
 

@@ -1,9 +1,12 @@
+from copy import deepcopy
+
 import haystack.forms
 from crispy_forms.helper import FormHelper
 from dal import autocomplete
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.forms import ModelForm, CharField, inlineformset_factory, Form, HiddenInput
+from django.forms.models import model_to_dict
 
 from core.layout import *
 from core.models import User, Organization, Resource
@@ -66,11 +69,18 @@ class SignUpForm(UserCreationForm):
         )
 
 
-class UserProfileForm(UserCreationForm):
+class UserProfileForm(ModelForm):
 
     class Meta:
         model = User
-        exclude = ('__none__',)
+        fields = [
+            'first_name',
+            'last_name',
+            'email',
+            'url',
+            'organization',
+            'professional_title',
+        ]
 
     def __init__(self, *args, editable=True, **kwargs):
         super().__init__(*args, **kwargs)

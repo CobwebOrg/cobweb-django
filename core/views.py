@@ -42,12 +42,12 @@ class FormMessageMixin(SuccessMessageMixin):
 
     def form_invalid(self, form):
         """If the form is invalid, render the invalid form."""
-        msg = format_html("Your submission could not be processed.<ul>")
+        msg = format_html("Your submission could not be processed.")
         for error in form.non_field_errors():
-            msg += format_html('<li>{}</li>', error)
-        for field, error in form.errors.items():
-            msg += format_html('<li>{}: {}</li>', field, error)
-        msg += format_html("</ul>")
+            msg += format_html('<br>{}', error)
+        for field, errors in form.errors.items():
+            msg += format_html('<br>{}: {}', field, ' '.join(errors))
+        # msg += format_html("</ul>")
         messages.add_message(self.request, messages.ERROR, msg)
         return super().form_invalid(form)
 
@@ -95,18 +95,20 @@ class UserIndexView(CobwebBaseIndexView):
     django_ct = 'core.user'
 
 
-class UserCreateView(RevisionMixin, generic.CreateView):
+class UserCreateView(FormMessageMixin, RevisionMixin, generic.CreateView):
     model = models.User
     template_name = "generic_form.html"
     form_class = SignUpForm
+    success_message = "Account %(username)s created successfully"
 
 
-class UserUpdateView(RevisionMixin, generic.UpdateView):
+class UserUpdateView(FormMessageMixin, RevisionMixin, generic.UpdateView):
     model = models.User
     template_name = "generic_form.html"
     form_class = UserProfileForm
     slug_field = 'username'
     slug_url_kwarg = 'username'
+    success_message = "Profile saved successfully"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -115,9 +117,7 @@ class UserUpdateView(RevisionMixin, generic.UpdateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs.update({
-            'editable': self.get_object() == self.request.user
-        })
+        kwargs['editable'] = (self.get_object() == self.request.user)
         return kwargs
 
 
