@@ -146,6 +146,9 @@ class NominationUpdateView(FormMessageMixin, RevisionMixin,
             raise Http404(_("No %(verbose_name)s found matching the query") %
                         {'verbose_name': queryset.model._meta.verbose_name})
         return obj
+
+    def get_success_message(self, cleaned_data):
+        return f'Successfully saved changes to nomination of {self.object.resource}'
     
     def get_table_data(self):
         return self.get_object().claims.all()
@@ -166,19 +169,13 @@ class NominationUpdateView(FormMessageMixin, RevisionMixin,
         return self._project
     
 
-class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
+class NominationCreateView(FormMessageMixin, UserPassesTestMixin,
+                           RevisionMixin, CreateView):
     model = models.Nomination
     # template_name = 'projects/nomination_create.html'
     template_name = 'generic_form.html'
     form_class = forms.NominationForm
     _project = None
-
-    # def form_valid(self, form):
-    #     candidate = form.save(commit=False)
-    #     candidate.project = self.get_project()
-    #     self.success_url = candidate.project.get_absolute_url()
-    #     candidate.save()
-    #     return super().form_valid(form)
 
     def get_initial(self):
         return {
@@ -209,8 +206,11 @@ class NominationCreateView(UserPassesTestMixin, RevisionMixin, CreateView):
 
     def get_project(self):
         if not (hasattr(self, '_project') and isinstance(self._project, models.Project)):
-          self._project = models.Project.objects.get(pk=self.kwargs['project_pk'])
+            self._project = models.Project.objects.get(pk=self.kwargs['project_pk'])
         return self._project
+
+    def get_success_message(self, cleaned_data):
+        return f'Successfully nominated {self.object.resource}'
 
     def test_func(self):
         return self.get_project().is_nominator(self.request.user)
@@ -221,7 +221,6 @@ class ClaimFormMixin(FormMessageMixin, RevisionMixin):
     template_name = 'projects/claim.html'
     form_class = forms.ClaimForm
     _nomination: Optional[models.Nomination] = None
-    success_message = "Claim saved successfully"
 
     def get_context_data(self, **kwargs) -> dict:
         """Insert forms w/ the parent nomination & project into the context dict."""
@@ -268,6 +267,9 @@ class ClaimCreateView(UserPassesTestMixin, ClaimFormMixin, CreateView):
             self._nomination = models.Nomination.objects.get(pk=self.kwargs['nomination_pk'])
         return self._nomination
 
+    def get_success_message(self, cleaned_data):
+        return f'Successfully claimed {self.object.nomination.resource}'
+
 
 class ClaimUpdateView(ClaimFormMixin, UpdateView):
 
@@ -294,6 +296,5 @@ class ClaimUpdateView(ClaimFormMixin, UpdateView):
 
         return self.get_object().nomination
 
-
-def claim_view(request, **kwargs):
-    pass
+    def get_success_message(self, cleaned_data):
+        return f'Successfully updated claim of {self.object.nomination.resource}'

@@ -39,8 +39,6 @@ class CobwebBaseIndexView(haystack.generic_views.SearchMixin,
 
 class FormMessageMixin(SuccessMessageMixin):
 
-    success_message = "%(title)s saved successfully"
-
     def form_invalid(self, form):
         """If the form is invalid, render the invalid form."""
         msg = format_html("Your submission could not be processed.")
@@ -49,8 +47,14 @@ class FormMessageMixin(SuccessMessageMixin):
         for field, errors in form.errors.items():
             msg += format_html('<br>{}: {}', field, ' '.join(errors))
         # msg += format_html("</ul>")
-        messages.add_message(self.request, messages.ERROR, msg)
+        messages.error(self.request, msg)
         return super().form_invalid(form)
+
+    def get_success_message(self, cleaned_data):
+        verb = (     'created' if isinstance(self, generic.CreateView)
+                else 'changed' if isinstance(self, generic.UpdateView)
+                else 'saved')
+        return f'Successfully {verb} {self.object._meta.verbose_name} {self.object}'
 
 
 class DashboardView(LoginRequiredMixin,
@@ -94,7 +98,6 @@ class UserCreateView(FormMessageMixin, RevisionMixin, generic.CreateView):
     model = models.User
     template_name = "generic_form.html"
     form_class = SignUpForm
-    success_message = "Account %(username)s created successfully"
 
 
 class UserUpdateView(FormMessageMixin, RevisionMixin, generic.UpdateView):
@@ -103,7 +106,6 @@ class UserUpdateView(FormMessageMixin, RevisionMixin, generic.UpdateView):
     form_class = UserProfileForm
     slug_field = 'username'
     slug_url_kwarg = 'username'
-    success_message = "Profile saved successfully"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -151,7 +153,6 @@ class OrganizationCreateView(LoginRequiredMixin, FormMessageMixin, RevisionMixin
     model = models.Organization
     template_name = 'generic_form.html'
     form_class = OrganizationForm
-    success_message = "%(full_name)s saved successfully"
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -164,7 +165,6 @@ class OrganizationView(FormMessageMixin, RevisionMixin, generic.UpdateView):
     template_name = 'generic_form.html'
     form_class = OrganizationForm
     slug_field = 'slug'
-    success_message = "%(full_name)s saved successfully"
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -291,9 +291,3 @@ class TagAutocomplete(autocomplete.Select2QuerySetView):
 
 class SearchView(HaystackWeirdSearchView):
     pass
-
-    # def get_queryset(self, *args, **kwargs):
-    #     q = self.request.GET.get('q')
-    #     qs = SearchQuerySet().filter(content__fuzzy=q)
-    #     qs.order_by('impact_factor')
-    #     return qs
