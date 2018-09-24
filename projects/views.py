@@ -67,6 +67,11 @@ class ProjectView(FormMessageMixin, RevisionMixin, django_tables2.SingleTableMix
     form_class = forms.ProjectForm
     table_class = NominationTable
     
+    def get_context_data(self, **kwargs):
+        if 'select_tab' not in kwargs:
+            kwargs['show_noms'] = True if len(self.request.GET) > 0 else False
+        return super().get_context_data(**kwargs)
+    
     def get_form_kwargs(self):
         """Return the keyword arguments for instantiating the form."""
         kwargs = super().get_form_kwargs()
@@ -90,6 +95,8 @@ class ProjectView(FormMessageMixin, RevisionMixin, django_tables2.SingleTableMix
 
         if not (self.request.user.is_authenticated and self.request.user.can_claim()):
             kwargs.update({'exclude': ('claim_link',)})
+        
+        kwargs.update({'exclude': ['project']})
         
         return kwargs
 

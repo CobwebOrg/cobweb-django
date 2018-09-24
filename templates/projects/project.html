@@ -24,17 +24,21 @@
         <div class="col-6">
             <div class="pane">
                 <div class="nav nav-tabs nav-infotabs mb-4" id="myTabs" role="tablist">
-                    <a class="nav-link active" id="summary-tab" data-toggle="tab"
-                       role="tab" aria-controls="summary" aria-selected="true"
-                        href="#summary">{% trans "Summary" %}</a>
-                    <a class="nav-link" id="nominations-tab" data-toggle="tab"
-                       role="tab" aria-controls="nominations" aria-selected="false"
-                       href="#nominations">{% term_plural 'nomination' 'capitalize' %}</a>
+                    <a class="nav-link {% if not show_noms %}active{%endif%}"
+                       id="summary-tab" data-toggle="tab" role="tab" aria-controls="summary"
+                       aria-selected="true" href="#summary">
+                       {% trans "Summary" %}
+                    </a>
+                    <a class="nav-link {% if show_noms %}active{%endif%}"
+                       id="nominations-tab" data-toggle="tab" role="tab"
+                       aria-controls="nominations" aria-selected="false" href="#nominations">
+                        {% term_plural 'nomination' 'capitalize' %}
+                    </a>
                 </div>
 
                 <div class="tab-content", id="myTabContent">
-                    <div class="tab-pane fade show active" id="summary"
-                        role="tabpanel" aria-labelledby="summary-tab">
+                    <div class="tab-pane fade show {% if not show_noms %}show active{%endif%}"
+                         id="summary" role="tabpanel" aria-labelledby="summary-tab">
                         <div class="summary">
                             <div class="n-unclaimed">
                                 {% if object %}{{object.n_unclaimed}}{% else %}0{% endif %}
@@ -54,8 +58,8 @@
                             {% trans "held" %} {% term_plural 'nomination' %}
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="nominations"
-                        role="tabpanel" aria-labelledby="nominations-tab">
+                    <div class="tab-pane fade {% if show_noms %} show active{%endif%}"
+                         id="nominations" role="tabpanel" aria-labelledby="nominations-tab">
                         {% render_table table %}
                     </div>
                 </div>
