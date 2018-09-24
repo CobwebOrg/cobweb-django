@@ -19,7 +19,9 @@ class ProjectForm(forms.ModelForm):
         """Metaclass for options."""
 
         model = Project
-        exclude = ('__none__',)
+        fields = ['title', 'description', 'status', 'administrators',
+                  'nomination_policy', 'nominators', 'nominator_blacklist',
+                  'tags']
         widgets = {
             'title': forms.TextInput,
             'administrators': autocomplete.ModelSelect2Multiple(
@@ -89,6 +91,14 @@ class ProjectForm(forms.ModelForm):
             form_buttons(**form_buttons_kwargs) if editable else HTML(''),
         )
 
+CRAWL_SCOPE_FIELD_NAMES = [
+    'crawl_start_date',
+    'crawl_end_date',
+    'crawl_frequency',
+    'follow_links',
+    'page_scope',
+]
+
 def nomination_info(editable=False):
     return Layout(
         FormSection(
@@ -128,7 +138,9 @@ def resource_info(editable=False, instance: Optional[Resource]=None):
 class NominationForm(forms.ModelForm):
     class Meta:
         model = Nomination
-        exclude = ('__none__',)
+        fields = (['resource', 'title', 'description', 'tags', 'language',
+                   'project', 'nominated_by', 'rationale']
+                  + CRAWL_SCOPE_FIELD_NAMES)
         widgets = {
             'tags': autocomplete.ModelSelect2Multiple(
                 url='tag_autocomplete',
@@ -137,14 +149,14 @@ class NominationForm(forms.ModelForm):
             'crawl_start_date': DateInput,
             'crawl_end_date': DateInput,
         }
-    
+
     resource = forms.URLField(widget=ResourceInput, initial='http://')
 
     def __init__(self, *args, table=None, editable=False, tabbed=False, instance=None,
                  **kwargs):
         super().__init__(*args, instance=instance, **kwargs)
         self.helper = FormHelper(self)
-            
+
         if hasattr(self.instance, 'pk') and self.instance.pk is not None:
             form_title = HTML('<h2 class="mb-0">{% load jargon %}{% term "nomination" "upper" %}: {{object.resource}}</h2>')
             form_buttons_kwargs = {
@@ -167,7 +179,7 @@ class NominationForm(forms.ModelForm):
             """)
         else:
             proj_header = HTML('')
-        
+
         if tabbed:
             self.helper.layout = info_tabs(
                 InfoTab(title='About the nomination',
@@ -203,7 +215,7 @@ class NominationForm(forms.ModelForm):
                     css_class='flex-grow-1',
                 )
             )
-        self.helper.form_class='h-100 d-flex flex-column pb-2'
+        self.helper.form_class = 'h-100 d-flex flex-column pb-2'
 
     def clean_resource(self):
         url = self.cleaned_data.get("resource")
@@ -216,8 +228,8 @@ class NominationForm(forms.ModelForm):
 class ClaimForm(forms.ModelForm):
     class Meta:
         model = Claim
-        # fields = ('nomination', 'organization', 'active', 'has_holding')
-        exclude = ('__none__',)
+        fields = (['nomination', 'organization', 'active', 'has_holding']
+                  + CRAWL_SCOPE_FIELD_NAMES)
         widgets = {
             'tags': autocomplete.ModelSelect2Multiple(
                 url='tag_autocomplete',

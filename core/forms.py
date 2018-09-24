@@ -42,7 +42,7 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email')
+        fields = ['username', 'first_name', 'last_name', 'email']
 
     def __init__(self, *args, edit=True, **kwargs):
         super().__init__(*args, **kwargs)
@@ -54,7 +54,7 @@ class SignUpForm(UserCreationForm):
                     Field('first_name', edit=edit),
                     Field('last_name', edit=edit),
                     Field('email', edit=edit),
-                    HTML('[[TERMS OF USE]]'),
+                    # HTML('[[TERMS OF USE]]'),
                     css_class='col-6',
                 ),
                 Column(
@@ -73,14 +73,8 @@ class UserProfileForm(ModelForm):
 
     class Meta:
         model = User
-        fields = [
-            'first_name',
-            'last_name',
-            'email',
-            'url',
-            'organization',
-            'professional_title',
-        ]
+        fields = ['first_name', 'last_name', 'email', 'url',
+                  'organization', 'professional_title']
 
     def __init__(self, *args, editable=True, **kwargs):
         super().__init__(*args, **kwargs)
@@ -113,7 +107,9 @@ class UserProfileForm(ModelForm):
 class OrganizationForm(ModelForm):
     class Meta:
         model = Organization
-        exclude = ('__none__',)
+        fields = ['slug', 'full_name', 'short_name', 'administrators',
+                  'parent_organization', 'description', 'address',
+                  'telephone_number', 'url', 'email_address', 'contact']
         widgets = {
             'administrators': autocomplete.ModelSelect2Multiple(
                 url='user_autocomplete',
