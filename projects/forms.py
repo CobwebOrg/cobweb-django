@@ -89,16 +89,7 @@ class ProjectForm(forms.ModelForm):
             form_buttons(**form_buttons_kwargs) if editable else HTML(''),
         )
 
-def resource_info(editable=False):
-    return Layout(
-        Row(Column(HField('resource', edit=editable))),
-        Row(Column(HField('title', edit=editable))),
-        Row(Column(HField('description', edit=editable))),
-        Row(Column(Field('tags', edit=editable))),
-        Row(Column(Field('language', edit=editable))),
-    )
-
-def nomination_info(editable=False, form_buttons_kwargs={}):
+def nomination_info(editable=False):
     return Layout(
         FormSection(
             Field('project', type='hidden'),
@@ -106,8 +97,33 @@ def nomination_info(editable=False, form_buttons_kwargs={}):
             Row(Column(Field('rationale', edit=editable))),
         ),
         FormSection(crawl_scope_fields(editable=editable)),
-        form_buttons(**form_buttons_kwargs) if editable else HTML(''),
     )
+
+def resource_info(editable=False, instance: Optional[Resource]=None):
+    edit_form = Layout(
+        HField('resource', edit=editable),
+        HField('title', edit=editable),
+        HField('description', edit=editable),
+        Field('tags', edit=editable),
+        Field('language', edit=editable),
+    )
+
+    if (instance and hasattr(instance, 'resource') and instance.resource.has_metadata):
+        return info_tabs(
+            InfoTab(title='All metadata',
+                    content=HTML("""
+                        {% load react %}
+                        {% react_render component="components.Resource" props=react_data %}
+
+                        {% block load_react_script %}
+                        {% react_print %}
+                        {% endblock %}
+                    """)),
+            InfoTab(title="This project's submission",
+                    content=edit_form),
+        )
+    else:
+        return edit_form
 
 class NominationForm(forms.ModelForm):
     class Meta:
@@ -157,7 +173,7 @@ class NominationForm(forms.ModelForm):
                 InfoTab(title='About the nomination',
                         content=nomination_info(editable=editable)),
                 InfoTab(title='About the resource',
-                        content=resource_info(editable=editable)),
+                        content=resource_info(editable=editable, instance=self.instance)),
             )
         else:
             self.helper.layout = Layout(
@@ -169,22 +185,19 @@ class NominationForm(forms.ModelForm):
 
                 Row(
                     Pane(
-                        Row(Column(HTML('<h4>About the resource</h4>'))),
-                        resource_info(editable=editable),
-                        css_class='col-6',
-                    ),
-
-                    Pane(
                         Row(Column(HTML('<h4>About the nomination</h4>'))),
-                        nomination_info(
-                            editable=editable,
-                            form_buttons_kwargs=form_buttons_kwargs,
-                        ),
+                        nomination_info(editable=editable),
                         HTML("""
                             {% load render_table from django_tables2 %}
                             <h4 class="mt-3">Claims</h4>
                             {% render_table table %}
-                        """ if hasattr(self, 'table') else ''),
+                        """ if table else ''),
+                        css_class='col-6',
+                    ),
+                    Pane(
+                        Row(Column(HTML('<h4>About the resource</h4>'))),
+                        resource_info(editable=editable, instance=self.instance),
+                        form_buttons(**form_buttons_kwargs),
                         css_class='col-6',
                     ),
                     css_class='flex-grow-1',

@@ -35543,7 +35543,7 @@ var SourceButton = function (_React$Component) {
   _createClass(SourceButton, [{
     key: "handleClick",
     value: function handleClick() {
-      this.props.togglerCallback(this.props.source.url);
+      this.props.togglerCallback(this.props.url);
     }
   }, {
     key: "render",
@@ -35551,11 +35551,11 @@ var SourceButton = function (_React$Component) {
       return [_react2.default.createElement(
         "span",
         { className: this.props.selected ? 'source-toggler selected' : 'source-toggler',
-          onClick: this.handleClick },
+          onClick: this.handleClick, key: "main" },
         this.props.source.name
       ), _react2.default.createElement(
         "a",
-        { href: this.props.source.url },
+        { href: this.props.url, key: "view" },
         "[view]"
       )];
     }
@@ -35623,12 +35623,10 @@ var Resource = function (_React$Component2) {
     var _this2 = _possibleConstructorReturn(this, (Resource.__proto__ || Object.getPrototypeOf(Resource)).call(this, props));
 
     _this2.state = {
-      is_selected: new Map([].concat(_toConsumableArray(props.resource.nominations), _toConsumableArray(props.resource.imported_records)).map(function (x) {
-        return [x.source.url, true];
-      }))
+      selectedSource: null
     };
 
-    _this2.toggleSource = _this2.toggleSource.bind(_this2);
+    _this2.setSource = _this2.setSource.bind(_this2);
     _this2.mergedMD = _this2.mergedMD.bind(_this2);
     _this2.get_all_records = _this2.get_all_records.bind(_this2);
     _this2.get_selected_records = _this2.get_selected_records.bind(_this2);
@@ -35645,9 +35643,10 @@ var Resource = function (_React$Component2) {
     value: function get_selected_records() {
       var _this3 = this;
 
-      return _.chain(this.get_all_records()).map(function (r) {
-        return _this3.state.is_selected.get(r.source.url) ? r : null;
-      }).compact().value();
+      var all_records = this.get_all_records();
+      return this.state.selectedSource == null ? all_records : _.filter(all_records, function (r) {
+        return r.url == _this3.state.selectedSource;
+      }, this);
     }
   }, {
     key: "mergedMD",
@@ -35677,10 +35676,11 @@ var Resource = function (_React$Component2) {
       return merged;
     }
   }, {
-    key: "toggleSource",
-    value: function toggleSource(sourceURL) {
-      var newState = this.state;
-      newState.is_selected.set(sourceURL, !this.state.is_selected.get(sourceURL));
+    key: "setSource",
+    value: function setSource(sourceURL) {
+      var newState = {
+        selectedSource: sourceURL == this.state.selectedSource ? none : sourceURL
+      };
       this.setState(function (state, props) {
         return newState;
       });
@@ -35698,13 +35698,14 @@ var Resource = function (_React$Component2) {
           "Nominations"
         ), _react2.default.createElement(
           "ul",
-          null,
+          { key: "nominations-list" },
           this.props.resource.nominations.map(function (n) {
             return _react2.default.createElement(
               "li",
-              { key: n.source.url, href: n.source.url },
-              _react2.default.createElement(SourceButton, { togglerCallback: _this4.toggleSource, source: n.source,
-                selected: _this4.state.is_selected.get(n.source.url) })
+              { key: n.url.hashCode() },
+              _react2.default.createElement(SourceButton, { togglerCallback: _this4.setSource, source: n.source,
+                selected: n.url == _this4.state.selectedSource,
+                url: n.url })
             );
           })
         )]);
@@ -35716,13 +35717,14 @@ var Resource = function (_React$Component2) {
           "External Holdings"
         ), _react2.default.createElement(
           "ul",
-          null,
+          { key: "imported_records-list" },
           this.props.resource.imported_records.map(function (n) {
             return _react2.default.createElement(
               "li",
-              { key: n.source.url, href: n.source.url },
-              _react2.default.createElement(SourceButton, { togglerCallback: _this4.toggleSource, source: n.source,
-                selected: _this4.state.is_selected.get(n.source.url) })
+              { key: n.url.hashCode() },
+              _react2.default.createElement(SourceButton, { togglerCallback: _this4.setSource, source: n.source,
+                selected: n.url == _this4.state.selectedSource,
+                url: n.url })
             );
           })
         )]);
@@ -35730,12 +35732,12 @@ var Resource = function (_React$Component2) {
 
       return [_react2.default.createElement(
         "h2",
-        { className: "mt-1 mb-3" },
+        { className: "mt-1 mb-3", key: "header" },
         "Resource URL: ",
         this.props.resource.url
       ), _react2.default.createElement(
         "div",
-        { className: "row" },
+        { className: "row", key: "body" },
         _react2.default.createElement(
           "div",
           { className: "col-3" },

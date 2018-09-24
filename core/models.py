@@ -266,15 +266,31 @@ class Resource(models.Model):
 
     def get_absolute_url(self) -> str:
         return reverse('resource', kwargs={'url': self.url})
+    
+    @property
+    def has_metadata(self) -> bool:
+        for nomination in self.nominations.all():
+            for field in ['title', 'author', 'language', 'description']:
+                value = getattr(nomination, field)
+                if value and value is not '':
+                    return True
+            for field in ['tags', 'subject_headings']:
+                if getattr(nomination, field).count() > 0:
+                    return True
+
+        for imported_record in self.imported_records.all():
+            for value_list in imported_record.metadata.values():
+                if len(value_list) > 0:
+                    return True
+        
+        return False
 
     @property
     def name(self):
         return str(self)
 
     def resource_record_count(self) -> int:
-        return (
-            self.nominations.count()
-        )
+        return self.nominations.count() + self.imported_records.count()
 
 
 @reversion.register

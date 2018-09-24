@@ -20,6 +20,8 @@ class TestNominationDetailView:
         response = client.get(nomination.get_absolute_url())
         tree = html.fromstring(response.content)
 
+        # claim_urls = {c.get_absolute_url() for c in nomination.claims.all()}
+
         for claim in nomination.claims.all():
             url = claim.get_absolute_url()
             assert len(tree.xpath(f'//a[@href="{url}"]')) == 1

@@ -75,10 +75,11 @@ class ResourceNominationSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Nomination
-        fields = ['source', 'metadata']
+        fields = ['source', 'metadata', 'url']
 
     source = NominationProjectSerializer(source='project')
     metadata = NominationMDSerialier(source='*')
+    url = serializers.URLField(source='get_absolute_url')
 
 
 class ArchiveOrgSerializer(serializers.ModelSerializer):
@@ -92,9 +93,10 @@ class ArchiveOrgSerializer(serializers.ModelSerializer):
 class ArchiveResourceSerializer(serializers.ModelSerializer):
     class Meta:
         model = ImportedRecord
-        fields = ['source', 'metadata']
+        fields = ['source', 'metadata', 'url']
     
     source = ArchiveOrgSerializer(source='organization', required=True, many=False)
+    url = serializers.URLField(source='get_absolute_url')
 
 
 class ResourceSerializer(serializers.ModelSerializer):

@@ -7874,12 +7874,22 @@ footer {
   padding-left: 2rem;
   padding-right: 2rem;
   padding-top: 0;
-  padding-bottom: 0.2rem;
+  padding-bottom: 0.4rem;
   z-index: 1000;
   background-color: white; }
+  footer a {
+    padding: 0 .5rem; }
   footer hr {
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.4rem;
     margin-top: 0; }
+  footer #contact-us-link {
+    text-transform: uppercase;
+    background-color: #343A40;
+    border-radius: .5rem .5rem 0rem 0rem;
+    color: #DDE1A0;
+    font-weight: 500;
+    margin: -15px;
+    padding: .5rem .8rem .2rem .8rem; }
 
 .nav-infotabs {
   background: #D9E7E3;

@@ -54,6 +54,6 @@ def show_toolbar(request):
 
 DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': 'cobweb.settings.debug.show_toolbar',
-    'INTERCEPT_REDIRECTS': False,
+    # 'INTERCEPT_REDIRECTS': False,
     'DISABLE_PANELS': DEBUG_TOOLBAR_PANELS,
 }

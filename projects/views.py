@@ -8,6 +8,7 @@ from django.views.generic import CreateView, DetailView, UpdateView
 from extra_views import InlineFormSetView
 from reversion.views import RevisionMixin
 
+from api.serializers import ResourceSerializer
 from core.models import Resource
 from core.views import CobwebBaseIndexView, FormMessageMixin
 from projects import forms, models
@@ -66,7 +67,7 @@ class ProjectView(FormMessageMixin, RevisionMixin, django_tables2.SingleTableMix
     template_name = 'projects/project.html'
     form_class = forms.ProjectForm
     table_class = NominationTable
-    
+
     def get_context_data(self, **kwargs):
         if 'select_tab' not in kwargs:
             kwargs['show_noms'] = True if len(self.request.GET) > 0 else False
@@ -107,6 +108,15 @@ class NominationUpdateView(FormMessageMixin, RevisionMixin,
     form_class = forms.NominationForm
     template_name = 'generic_form.html'
     table_class = ClaimTable
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.object.resource.has_metadata:
+            context['react_data'] = {
+                'user': self.request.user.username,
+                'resource': ResourceSerializer(self.object.resource).data,
+            }
+        return context
 
     def get_form_kwargs(self):
         """Return the keyword arguments for instantiating the form."""

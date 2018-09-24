@@ -21,14 +21,14 @@ class SourceButton extends React.Component {
   }
 
   handleClick() {
-    this.props.togglerCallback(this.props.source.url)
+    this.props.togglerCallback(this.props.url)
   }
 
   render() {
     return ([
       <span className={this.props.selected ? 'source-toggler selected' : 'source-toggler'}
-            onClick={this.handleClick}>{this.props.source.name}</span>,
-      <a href={this.props.source.url}>[view]</a>
+            onClick={this.handleClick} key='main'>{this.props.source.name}</span>,
+      <a href={this.props.url} key='view'>[view]</a>
     ]);
   }
 }
@@ -73,13 +73,10 @@ class Resource extends React.Component {
     super(props);
   
     this.state = {
-      is_selected: new Map(
-        [...props.resource.nominations, ...props.resource.imported_records]
-        .map(x => [x.source.url, true])
-      )
+      selectedSource: null
     };
 
-    this.toggleSource = this.toggleSource.bind(this);
+    this.setSource = this.setSource.bind(this);
     this.mergedMD = this.mergedMD.bind(this);
     this.get_all_records = this.get_all_records.bind(this);
     this.get_selected_records = this.get_selected_records.bind(this);
@@ -91,44 +88,45 @@ class Resource extends React.Component {
   }
 
   get_selected_records() {
-    return _.chain(this.get_all_records())
-            .map(r => this.state.is_selected.get(r.source.url) ? r : null)
-            .compact()
-            .value();
+    var all_records = this.get_all_records();
+    return (this.state.selectedSource == null) ? all_records
+           : _.filter(all_records, r => (r.url == this.state.selectedSource), this);
   }
-
+  
   mergedMD() {
     var records = this.get_selected_records();
-
+    
     var keys = _.chain(records)
-                .map(r => Object.keys(r.metadata))
-                .flatten()
-                .uniq()
-                .value();
-
+    .map(r => Object.keys(r.metadata))
+    .flatten()
+    .uniq()
+    .value();
+    
     var merged = new Map
     keys.forEach(key => {
       merged.set(
         key, 
         _.chain(records)
-         .map(r => r.metadata[key])
-         .flatten()
-         .compact()
-         .countBy(value => ((typeof value === 'string') ? value : value.name))
-         .toPairs()
-         .map(([value, n]) => ({value: value, n: n}))
-         .sortBy('n')
-         .reverse()
-         .map(v => v.value)
-         .value()
-      );
-    });
-    return merged;
-  }
-
-  toggleSource(sourceURL) {
-    var newState = this.state;
-    newState.is_selected.set(sourceURL, !(this.state.is_selected.get(sourceURL)));
+        .map(r => r.metadata[key])
+        .flatten()
+        .compact()
+        .countBy(value => ((typeof value === 'string') ? value : value.name))
+        .toPairs()
+        .map(([value, n]) => ({value: value, n: n}))
+        .sortBy('n')
+        .reverse()
+        .map(v => v.value)
+        .value()
+        );
+      });
+      return merged;
+    }
+    
+    setSource(sourceURL) {
+      var newState = {
+        selectedSource: (sourceURL == this.state.selectedSource)
+                      ? none : sourceURL
+      };
     this.setState((state, props) => newState);
   }
 
@@ -137,11 +135,12 @@ class Resource extends React.Component {
     if (this.props.resource.nominations) {
       source_selectors.push(...[
         <h3 key='nominations-h3'>Nominations</h3>,
-        <ul>
+        <ul key='nominations-list'>
           {this.props.resource.nominations.map(n => (
-            <li key={n.source.url} href={n.source.url}>
-              <SourceButton togglerCallback={this.toggleSource} source={n.source} 
-                            selected={this.state.is_selected.get(n.source.url)} />
+            <li key={n.url.hashCode()}>
+              <SourceButton togglerCallback={this.setSource} source={n.source}
+                            selected={(n.url == this.state.selectedSource)}
+                            url={n.url} />
             </li>
           ))}
         </ul>
@@ -150,11 +149,12 @@ class Resource extends React.Component {
     if (this.props.resource.imported_records) {
       source_selectors.push(...[
         <h3 key='imported_records-h3'>External Holdings</h3>,
-        <ul>
+        <ul key='imported_records-list'>
           {this.props.resource.imported_records.map(n => (
-            <li key={n.source.url} href={n.source.url}>
-              <SourceButton togglerCallback={this.toggleSource} source={n.source} 
-                            selected={this.state.is_selected.get(n.source.url)} />
+            <li key={n.url.hashCode()}>
+              <SourceButton togglerCallback={this.setSource} source={n.source}
+                            selected={(n.url == this.state.selectedSource)}
+                            url={n.url} />
             </li>
           ))}
         </ul>
@@ -162,9 +162,9 @@ class Resource extends React.Component {
     }
 
     return [
-      <h2 className="mt-1 mb-3">Resource URL: {this.props.resource.url}</h2>,
+      <h2 className="mt-1 mb-3" key="header">Resource URL: {this.props.resource.url}</h2>,
 
-      <div className="row">
+      <div className="row" key="body">
         <div className="col-3">{source_selectors}</div>
         <div className="col">
           <Metadata md_map={this.mergedMD()} />
