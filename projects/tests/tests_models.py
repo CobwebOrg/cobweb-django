@@ -44,11 +44,11 @@ class TestProjectModel:
         project.administrators.add(admin_user)
 
         for nomination_policy, user, result in (
-            ('Open', blacklisted_user, False),
-            ('Open', anon_user, True),
-            ('Open', random_user, True),
-            ('Open', nominator_user, True),
-            ('Open', admin_user, True),
+            ('Public', blacklisted_user, False),
+            ('Public', anon_user, True),
+            ('Public', random_user, True),
+            ('Public', nominator_user, True),
+            ('Public', admin_user, True),
 
             ('Cobweb Users', anon_user, False),
             ('Cobweb Users', blacklisted_user, False),

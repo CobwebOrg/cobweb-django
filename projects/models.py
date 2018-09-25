@@ -85,7 +85,7 @@ class Project(models.Model):
             return False
         else:
             return (user in self.nominators.all()
-                    or self.nomination_policy == 'Open'
+                    or self.nomination_policy == 'Public'
                     or (self.nomination_policy == 'Cobweb Users' and user.is_authenticated))
     
     @property
