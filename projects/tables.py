@@ -1,9 +1,9 @@
-from django.utils.html import format_html
 import django_tables2
+from django.utils.html import format_html
 from django_tables2.utils import Accessor
 
 from core.tables import CobwebBaseTable
-from projects.models import Project, Nomination, Claim
+from projects.models import Claim, Nomination, Project
 
 
 class ProjectTable(CobwebBaseTable):
