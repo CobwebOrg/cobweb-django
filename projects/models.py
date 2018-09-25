@@ -198,6 +198,19 @@ class Nomination(models.Model):
     def __repr__(self) -> str:
         return f'<Nomination {self.name} project={self.project}>'
 
+    def can_claim(self, user: AbstractBaseUser) -> bool:
+        """
+        Return True if user can make a *new* claim on the object.
+
+        Can be false if either the user is not affiliated with a claiming
+        organization, or if the user's organization has already claimed self.
+        """
+        return (
+            hasattr(user, 'organization')
+            and (user.organization is not None)
+            and (self.claims.filter(organization=user.organization).count() == 0)
+        )
+
     def get_absolute_url(self) -> str:
         return reverse(
             'nomination_update',

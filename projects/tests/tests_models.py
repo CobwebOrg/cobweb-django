@@ -67,10 +67,25 @@ class TestProjectModel:
 
 
 @pytest.mark.django_db
-def test_nomination_model():
-    nomination = NominationFactory()
-    assert isinstance(nomination, Nomination)
-    assert isinstance(str(nomination), str)
+class TestNominationModel:
+
+    def test_nomination_creation(self):
+        nomination = NominationFactory()
+        assert isinstance(nomination, Nomination)
+        assert isinstance(str(nomination), str)
+
+    def test_can_claim(self):
+        nomination = NominationFactory()
+        assert nomination.can_claim(AnonymousUser()) is False
+
+        user = UserFactory(organization=None)
+        assert nomination.can_claim(user) is False
+
+        user.organization = OrganizationFactory()
+        assert nomination.can_claim(user) is True
+
+        nomination.claims.add(ClaimFactory(organization=user.organization))
+        assert nomination.can_claim(user) is False
 
 
 @pytest.mark.django_db

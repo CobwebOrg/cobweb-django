@@ -158,9 +158,11 @@ class NominationUpdateView(FormMessageMixin, RevisionMixin,
 
     def get_table_kwargs(self):
         kwargs = super().get_table_kwargs()
-        if self.request.user.is_authenticated and self.request.user.can_claim():
+        if self.object.can_claim(self.request.user):
             kwargs['new_item_link'] = self.get_object().get_claim_url()
-        kwargs.update({'exclude': ('nomination',)})
+        kwargs.update({
+            'exclude': ['nomination'],
+        })
         return kwargs
 
     def get_project(self):
@@ -241,7 +243,7 @@ class ClaimCreateView(UserPassesTestMixin, ClaimFormMixin, CreateView):
     success_message = "Nomination successfully claimed"
 
     def test_func(self):
-        return self.request.user.is_authenticated and self.request.user.can_claim()
+        return self.get_nomination().can_claim(self.request.user)
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
