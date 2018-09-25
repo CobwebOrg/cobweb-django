@@ -199,19 +199,19 @@ class NominationForm(forms.ModelForm):
 
                 Row(
                     Pane(
+                        Row(Column(HTML('<h4>About the resource</h4>'))),
+                        resource_info(editable=editable, instance=self.instance),
+                        css_class='col-6',
+                    ),
+                    Pane(
                         Row(Column(HTML('<h4>About the nomination</h4>'))),
                         nomination_info(editable=editable),
+                        form_buttons(**form_buttons_kwargs),
                         HTML("""
                             {% load render_table from django_tables2 %}
                             <h4 class="mt-3">Claims</h4>
                             {% render_table table %}
                         """ if table else ''),
-                        css_class='col-6',
-                    ),
-                    Pane(
-                        Row(Column(HTML('<h4>About the resource</h4>'))),
-                        resource_info(editable=editable, instance=self.instance),
-                        form_buttons(**form_buttons_kwargs),
                         css_class='col-6',
                     ),
                     css_class='flex-grow-1',
