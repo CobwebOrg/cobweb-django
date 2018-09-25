@@ -286,7 +286,7 @@ class Claim(models.Model):
         choices=[(x, x) for x in ("one time", "twice daily", "daily", "weekly",
                                   "monthly", "quarterly", "annually")]
     )
-        
+
     follow_links = models.IntegerField(null=True, blank=True, choices=[(1, 1), (2, 2)])
     page_scope = models.CharField(
         null=True, blank=True, max_length=50,

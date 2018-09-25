@@ -132,40 +132,45 @@ class Resource extends React.Component {
 
   render() {
     var source_selectors = [];
-    if (this.props.resource.nominations) {
-      source_selectors.push(...[
-        <h3 key='nominations-h3'>Nominations</h3>,
-        <ul key='nominations-list'>
-          {this.props.resource.nominations.map(n => (
-            <li key={n.url.hashCode()}>
-              <SourceButton togglerCallback={this.setSource} source={n.source}
-                            selected={(n.url == this.state.selectedSource)}
-                            url={n.url} />
-            </li>
-          ))}
-        </ul>
-      ]);
-    }
-    if (this.props.resource.imported_records) {
-      source_selectors.push(...[
-        <h3 key='imported_records-h3'>External Holdings</h3>,
-        <ul key='imported_records-list'>
-          {this.props.resource.imported_records.map(n => (
-            <li key={n.url.hashCode()}>
-              <SourceButton togglerCallback={this.setSource} source={n.source}
-                            selected={(n.url == this.state.selectedSource)}
-                            url={n.url} />
-            </li>
-          ))}
-        </ul>
-      ]);
+
+    var sidebar = '';
+    if (!this.props.hide_sidebar) {
+      if (this.props.resource.nominations) {
+        source_selectors.push(...[
+          <h3 key='nominations-h3'>Nominations</h3>,
+          <ul key='nominations-list'>
+            {this.props.resource.nominations.map(n => (
+              <li key={n.url.hashCode()}>
+                <SourceButton togglerCallback={this.setSource} source={n.source}
+                              selected={(n.url == this.state.selectedSource)}
+                              url={n.url} />
+              </li>
+            ))}
+          </ul>
+        ]);
+      }
+      if (this.props.resource.imported_records) {
+        source_selectors.push(...[
+          <h3 key='imported_records-h3'>External Holdings</h3>,
+          <ul key='imported_records-list'>
+            {this.props.resource.imported_records.map(n => (
+              <li key={n.url.hashCode()}>
+                <SourceButton togglerCallback={this.setSource} source={n.source}
+                              selected={(n.url == this.state.selectedSource)}
+                              url={n.url} />
+              </li>
+            ))}
+          </ul>
+        ]);
+      }
+      sidebar = <div className="col-3">{source_selectors}</div>
     }
 
     return [
       <h2 className="mt-1 mb-3" key="header">Resource URL: {this.props.resource.url}</h2>,
 
       <div className="row" key="body">
-        <div className="col-3">{source_selectors}</div>
+        {sidebar}
         <div className="col">
           <Metadata md_map={this.mergedMD()} />
         </div>

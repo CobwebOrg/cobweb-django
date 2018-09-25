@@ -111,7 +111,7 @@ def nomination_info(editable=False):
         FormSection(crawl_scope_fields(editable=editable)),
     )
 
-def resource_info(editable=False, instance: Optional[Resource]=None):
+def resource_info(editable=False, react_data=None):
     edit_form = Layout(
         HField('resource', edit=editable),
         HField('title', edit=editable),
@@ -120,18 +120,14 @@ def resource_info(editable=False, instance: Optional[Resource]=None):
         Field('language', edit=editable),
     )
 
-    if (instance and hasattr(instance, 'resource') and instance.resource.has_metadata):
+    if react_data:
         return info_tabs(
             InfoTab(title='All metadata',
                     content=HTML("""
                         {% load react %}
-                        {% react_render component="components.Resource" props=react_data %}
-
-                        {% block load_react_script %}
-                        {% react_print %}
-                        {% endblock %}
+                        {% react_render component="components.Resource" props=form.react_data %}
                     """)),
-            InfoTab(title="This project's submission",
+            InfoTab(title="From this nomination",
                     content=edit_form),
         )
     else:
@@ -154,9 +150,12 @@ class NominationForm(forms.ModelForm):
 
     resource = forms.URLField(widget=ResourceInput, initial='http://')
 
-    def __init__(self, *args, table=None, editable=False, tabbed=False, instance=None,
-                 **kwargs):
+    def __init__(self, *args, react_data=None, table=None, editable=False,
+                 tabbed=False, instance=None, **kwargs):
         super().__init__(*args, instance=instance, **kwargs)
+        self.react_data = react_data
+        print(react_data)
+
         self.helper = FormHelper(self)
 
         if hasattr(self.instance, 'pk') and self.instance.pk is not None:
@@ -187,7 +186,7 @@ class NominationForm(forms.ModelForm):
                 InfoTab(title='About the nomination',
                         content=nomination_info(editable=editable)),
                 InfoTab(title='About the resource',
-                        content=resource_info(editable=editable, instance=self.instance)),
+                        content=resource_info(editable=editable)),
             )
         else:
             self.helper.layout = Layout(
@@ -200,7 +199,7 @@ class NominationForm(forms.ModelForm):
                 Row(
                     Pane(
                         Row(Column(HTML('<h4>About the resource</h4>'))),
-                        resource_info(editable=editable, instance=self.instance),
+                        resource_info(editable=editable, react_data=react_data),
                         css_class='col-6',
                     ),
                     Pane(

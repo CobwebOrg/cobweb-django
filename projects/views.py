@@ -109,22 +109,15 @@ class NominationUpdateView(FormMessageMixin, RevisionMixin,
     template_name = 'generic_form.html'
     table_class = ClaimTable
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if self.object.resource.has_metadata:
-            context['react_data'] = {
-                'user': self.request.user.username,
-                'resource': ResourceSerializer(self.object.resource).data,
-            }
-        return context
-
     def get_form_kwargs(self):
         """Return the keyword arguments for instantiating the form."""
         kwargs = super().get_form_kwargs()
+
         kwargs.update({
             'editable': self.get_object().is_admin(self.request.user),
             'tabbed': False,
         })
+
         if 'data' in kwargs:
             assert kwargs['data']['resource'] == self.kwargs['url']
             kwargs['data'] = kwargs['data'].copy()
@@ -133,6 +126,15 @@ class NominationUpdateView(FormMessageMixin, RevisionMixin,
                 'nominated_by': self.request.user.id,  # works bc MultiValueDict magic...
             })
         kwargs['table'] = self.get_table()
+
+        # If there's metadata about the resource, data for the react component
+        if self.object.resource.has_metadata:
+            kwargs['react_data'] = {
+                'user': self.request.user.username,
+                'hide_sidebar': True,
+                'resource': ResourceSerializer(self.object.resource).data,
+            }
+
         return kwargs
 
     def get_object(self, queryset=None):
@@ -258,6 +260,8 @@ class ClaimCreateView(UserPassesTestMixin, ClaimFormMixin, CreateView):
                 crawl_frequency=nomination.crawl_frequency,
                 follow_links=nomination.follow_links,
                 page_scope=nomination.page_scope,
+                ignore_robots_txt=nomination.ignore_robots_txt,
+                rights_considerations=nomination.rights_considerations,
             ),
         })
         return kwargs
