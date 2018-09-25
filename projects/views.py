@@ -96,9 +96,9 @@ class ProjectView(FormMessageMixin, RevisionMixin, django_tables2.SingleTableMix
 
         if not (self.request.user.is_authenticated and self.request.user.can_claim()):
             kwargs.update({'exclude': ('claim_link',)})
-        
+
         kwargs.update({'exclude': ['project']})
-        
+
         return kwargs
 
 
@@ -182,14 +182,14 @@ class NominationCreateView(FormMessageMixin, UserPassesTestMixin,
             'nominated_by': (self.request.user,),
             'project': self.get_project().pk,
         }
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
             'project': self.get_project(),
         })
         return context
-    
+
     def get_form_kwargs(self):
         form_kwargs = super().get_form_kwargs()
         form_kwargs.update({
@@ -279,15 +279,6 @@ class ClaimUpdateView(ClaimFormMixin, UpdateView):
         nomination = self.get_nomination()
         kwargs.update({
             'editable': self.object.is_admin(self.request.user),
-            'instance': models.Claim(
-                nomination=nomination,
-                organization=self.request.user.organization,
-                crawl_start_date = nomination.crawl_start_date,
-                crawl_end_date = nomination.crawl_end_date,
-                crawl_frequency = nomination.crawl_frequency,
-                follow_links = nomination.follow_links,
-                page_scope = nomination.page_scope,
-            ),
         })
         return kwargs
 

@@ -87,15 +87,15 @@ class Project(models.Model):
             return (user in self.nominators.all()
                     or self.nomination_policy == 'Public'
                     or (self.nomination_policy == 'Cobweb Users' and user.is_authenticated))
-    
+
     @property
     def nominations_unclaimed(self) -> QuerySet:
         return self.nominations.filter(claims=None)
-    
+
     @property
     def n_unclaimed(self) -> int:
         return self.nominations_unclaimed.count()
-    
+
     @property
     def nominations_claimed(self) -> QuerySet:
         return self.nominations.annotate(
@@ -105,7 +105,7 @@ class Project(models.Model):
     @property
     def n_claimed(self) -> int:
         return self.nominations_claimed.count()
-    
+
     @property
     def nominations_held(self) -> QuerySet:
         return self.nominations.annotate(
@@ -115,14 +115,14 @@ class Project(models.Model):
     @property
     def n_held(self) -> int:
         return self.nominations_held.count()
-    
+
     @property
     def name(self):
         return self.title
 
     def __str__(self):
         return self.title
-    
+
     def __repr__(self):
         return f'Project(pk={self.pk}, title={self.title})'
 
@@ -131,7 +131,7 @@ class Project(models.Model):
 class Nomination(models.Model):
     class Meta:
         unique_together = ('resource', 'project')
-        
+
     resource = models.ForeignKey(
         'core.Resource',
         on_delete=models.PROTECT,
@@ -309,4 +309,4 @@ class Claim(models.Model):
         return self.nomination.project
 
     def is_admin(self, user: AbstractBaseUser) -> bool:
-        return self.organization.is_admin(user) or self.nomination.is_admin(user)
+        return self.organization.is_admin(user)  # or self.nomination.is_admin(user)

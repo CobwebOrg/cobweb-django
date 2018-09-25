@@ -74,11 +74,10 @@ class User(AbstractUser):
         return f'<User {self.username}>'
 
     def can_claim(self, organization=None) -> bool:
-        return True
-        # if organization:
-        #     return self.organization == organization
-        # else:
-        #     return self.organization is not None
+        if organization:
+            return self.organization == organization
+        else:
+            return self.organization is not None
 
     def get_absolute_url(self) -> str:
         return reverse('user', kwargs={'username': self.username})

@@ -104,23 +104,13 @@ class TestClaimModel:
         assert ClaimFactory(nomination=nomination).get_resource_set() == project
 
     def test_is_admin(self):
-        """Claim.is_admin(user) returns true for Claim's Project and Organization admins."""
+        """Claim.is_admin(user) returns true for Claim's Organization admins."""
 
         claim = ClaimFactory()
         assert claim.is_admin(AnonymousUser()) is False
 
         user = UserFactory()
-        claim.nomination.project.nomination_policy = 'Cobweb Users'
-        assert claim.is_admin(user) is True
-        claim.nomination.project.nomination_policy = 'Restricted'
         assert claim.is_admin(user) is False
 
-        claim.nomination.project.administrators.add(user)
-        assert claim.is_admin(user) is True
-
-        claim.nomination.project.administrators.remove(user)
         claim.organization.administrators.add(user)
-        assert claim.is_admin(user) is True
-
-        claim.nomination.project.administrators.add(user)
         assert claim.is_admin(user) is True
