@@ -97,6 +97,8 @@ CRAWL_SCOPE_FIELD_NAMES = [
     'crawl_frequency',
     'follow_links',
     'page_scope',
+    'ignore_robots_txt',
+    'rights_considerations',
 ]
 
 def nomination_info(editable=False):

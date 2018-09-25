@@ -173,13 +173,19 @@ class Nomination(models.Model):
     crawl_end_date = models.DateField(null=True, blank=True)
     crawl_frequency = models.CharField(
         null=True, blank=True, max_length=50,
-        choices=[(x, x) for x in ('Hourly', 'Daily', 'Weekly', 'Monthly')]
+        choices=[(x, x) for x in ("one time", "twice daily", "daily", "weekly",
+                                  "monthly", "quarterly", "annually")]
     )
-    follow_links = models.IntegerField(null=True, blank=True)
+        
+    follow_links = models.IntegerField(null=True, blank=True, choices=[(1, 1), (2, 2)])
     page_scope = models.CharField(
         null=True, blank=True, max_length=50,
-        choices=[(x, x) for x in ('Page', 'Site', 'Domain')]
+        choices=[(x, x) for x in ('Page', 'Domain')]
     )
+
+    ignore_robots_txt = models.BooleanField(verbose_name="ignore 'robots.txt'",
+                                            default=False)
+    rights_considerations = models.TextField(null=True, blank=True)
 
     notes = GenericRelation('core.Note')
 
@@ -273,17 +279,23 @@ class Claim(models.Model):
 
     # CRAWL SCOPE - SIMPLE FIELDS
     # TODO: more complicated data w/ linked model
-    crawl_frequency = models.CharField(
-        null=True, blank=True, max_length=50,
-        choices=[(x, x) for x in ('Hourly', 'Daily', 'Weekly', 'Monthly')]
-    )
     crawl_start_date = models.DateField(null=True, blank=True)
     crawl_end_date = models.DateField(null=True, blank=True)
-    follow_links = models.IntegerField(null=True, blank=True)
-    page_scope = models.CharField(
-        null=True, blank=True, default='Site', max_length=50,
-        choices=[(x, x) for x in ('Page', 'Site', 'Domain')]
+    crawl_frequency = models.CharField(
+        null=True, blank=True, max_length=50,
+        choices=[(x, x) for x in ("one time", "twice daily", "daily", "weekly",
+                                  "monthly", "quarterly", "annually")]
     )
+        
+    follow_links = models.IntegerField(null=True, blank=True, choices=[(1, 1), (2, 2)])
+    page_scope = models.CharField(
+        null=True, blank=True, max_length=50,
+        choices=[(x, x) for x in ('Page', 'Domain')]
+    )
+
+    ignore_robots_txt = models.BooleanField(verbose_name="ignore 'robots.txt'",
+                                            default=False)
+    rights_considerations = models.TextField(null=True, blank=True)
 
 
     notes = GenericRelation('core.Note')
