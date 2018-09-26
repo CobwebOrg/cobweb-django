@@ -162,7 +162,6 @@ class OrganizationForm(ModelForm):
                 'confirm_text': 'Click the submit button to create this organization or click on cancel to return to Cobweb without saving.',
             }
 
-        print(form_buttons_kwargs, form_title)
         self.helper.layout = Layout(
             Div(
                 form_title,

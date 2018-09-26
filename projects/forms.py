@@ -154,7 +154,6 @@ class NominationForm(forms.ModelForm):
                  tabbed=False, instance=None, **kwargs):
         super().__init__(*args, instance=instance, **kwargs)
         self.react_data = react_data
-        print(react_data)
 
         self.helper = FormHelper(self)
 
