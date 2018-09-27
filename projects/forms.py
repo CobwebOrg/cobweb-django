@@ -104,8 +104,6 @@ CRAWL_SCOPE_FIELD_NAMES = [
 def nomination_info(editable=False):
     return Layout(
         FormSection(
-            Field('project', type='hidden'),
-            Field('nominated_by', type='hidden'),
             Row(Column(Field('rationale', edit=editable))),
         ),
         FormSection(crawl_scope_fields(editable=editable)),
@@ -137,7 +135,7 @@ class NominationForm(forms.ModelForm):
     class Meta:
         model = Nomination
         fields = (['resource', 'title', 'description', 'tags', 'language',
-                   'project', 'nominated_by', 'rationale']
+                   'project', 'rationale']
                   + CRAWL_SCOPE_FIELD_NAMES)
         widgets = {
             'tags': autocomplete.ModelSelect2Multiple(
