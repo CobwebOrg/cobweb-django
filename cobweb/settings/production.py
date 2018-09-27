@@ -139,7 +139,7 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
-HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+HAYSTACK_SIGNAL_PROCESSOR = 'core.signal_processor.CobwebSignalProcessor'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases

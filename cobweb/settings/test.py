@@ -8,17 +8,17 @@ from cobweb.settings.production import *
 DEBUG = False
 TESTING = True
 
-INSTALLED_APPS += ('behave_django',)
-
 
 CRISPY_FAIL_SILENTLY = False
 
-ALLOWED_HOSTS += ('test',)
+# ALLOWED_HOSTS += ('test',)
 
-DATABASES['default']['NAME'] = 'test_postgres'
+# DATABASES['default']['NAME'] = 'test_postgres'
 
-# Turn off automatic solr indexing when we add to the test db
-try:
-    del(HAYSTACK_SIGNAL_PROCESSOR)
-except NameError:
-    pass
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+        'URL': 'http://solr-test:8983/solr/cobweb',
+        'ADMIN_URL': 'http://solr:8983/solr/admin/cores',
+    },
+}

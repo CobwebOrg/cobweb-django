@@ -10,10 +10,11 @@
             "request": "launch",
             "program": "${workspaceFolder}/manage.py",
             "args": [
-                "runserver",
-                "127.0.0.1:8008",
-                "--noreload",
-                "--nothreading"
+                "shell_plus",
+                // "runserver",
+                // "127.0.0.1:8008",
+                // "--noreload",
+                // "--nothreading"
             ],
             "django": true
         },

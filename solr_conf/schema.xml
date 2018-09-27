@@ -81,15 +81,17 @@
     <field name="django_ct" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="django_id" type="string" indexed="true" stored="true" multiValued="false"/>
     
-    <field name="text" type="text_en" indexed="true" stored="true" multiValued="false" />
-    
     <field name="name" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="text" type="text_en" indexed="true" stored="true" multiValued="false" />
     
     <field name="slug" type="text_en" indexed="true" stored="true" multiValued="false" />
     
-    <field name="full_name" type="text_en" indexed="true" stored="true" multiValued="false" />
+    <field name="cobweb_url" type="text_en" indexed="true" stored="true" multiValued="false" />
     
     <field name="short_name" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="administrators" type="text_en" indexed="true" stored="true" multiValued="false" />
     
     <field name="address" type="text_en" indexed="true" stored="true" multiValued="false" />
     
@@ -99,11 +101,21 @@
     
     <field name="email_address" type="text_en" indexed="true" stored="true" multiValued="false" />
     
+    <field name="contact" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="parent_organization" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
     <field name="description" type="text_en" indexed="true" stored="true" multiValued="false" />
     
     <field name="identifier" type="text_en" indexed="true" stored="true" multiValued="false" />
     
     <field name="title" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="language" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="tags" type="text_en" indexed="true" stored="true" multiValued="true" />
+    
+    <field name="subject_headings" type="text_en" indexed="true" stored="true" multiValued="true" />
     
     <field name="username" type="text_en" indexed="true" stored="true" multiValued="false" />
     
@@ -112,6 +124,8 @@
     <field name="last_name" type="text_en" indexed="true" stored="true" multiValued="false" />
     
     <field name="email" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="organization" type="text_en" indexed="true" stored="true" multiValued="false" />
     
     <field name="professional_title" type="text_en" indexed="true" stored="true" multiValued="false" />
     
@@ -123,21 +137,27 @@
     
     <field name="has_holding" type="boolean" indexed="true" stored="true" multiValued="false" />
     
-    <field name="crawl_frequency" type="text_en" indexed="true" stored="true" multiValued="false" />
-    
     <field name="crawl_start_date" type="date" indexed="true" stored="true" multiValued="false" />
     
     <field name="crawl_end_date" type="date" indexed="true" stored="true" multiValued="false" />
     
+    <field name="crawl_frequency" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
     <field name="follow_links" type="long" indexed="true" stored="true" multiValued="false" />
     
     <field name="page_scope" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="ignore_robots_txt" type="boolean" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="rights_considerations" type="text_en" indexed="true" stored="true" multiValued="false" />
     
     <field name="project_pk" type="long" indexed="true" stored="true" multiValued="false" />
     
     <field name="status" type="text_en" indexed="true" stored="true" multiValued="false" />
     
     <field name="nomination_policy" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="nominators" type="text_en" indexed="true" stored="true" multiValued="false" />
     
     <field name="impact_factor" type="long" indexed="true" stored="true" multiValued="false" />
     

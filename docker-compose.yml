@@ -14,6 +14,17 @@ services:
       - cobweb
       - /opt/solr/server/solr/configsets/cobweb
 
+  solr-test:
+    build:
+      context: .
+      dockerfile: Dockerfile.solr
+    image: andrewwallace/cobweb_solr:latest
+    entrypoint:
+      - docker-entrypoint.sh
+      - solr-precreate
+      - cobweb
+      - /opt/solr/server/solr/configsets/cobweb
+
   db:
     image: postgres
     volumes:
@@ -34,7 +45,6 @@ services:
       - solr
     working_dir: /code
     environment:
-      DJANGO_SETTINGS_MODULE: "cobweb.settings.debug"
       DJANGO_STATIC_ROOT: "/staticfiles"
       DEBUG: "true"
       TEST: "false"

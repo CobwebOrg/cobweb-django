@@ -1,7 +1,16 @@
 {{ object.url }}
 
-{% for data in object.data.values %}
-    {% for datum in data %
-        datum
-    {% endfor %}
+{% for nomination in object.nominations.all %}
+  {{nomination.title}}
+  {{nomination.author}}
+  {{nomination.language}}
+  {{nomination.description}}
+  {{nomination.tags|join:'\n'}}
+  {{nomination.subject_headings|join:'\n'}}
+{% endfor %}
+
+{% for imported_record in object.imported_records.all %}
+  {% for value_list in imported_record.metadata.values %}
+    {{value_list|join:'\n'}}
+  {% endfor %}
 {% endfor %}
