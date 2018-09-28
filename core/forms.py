@@ -151,11 +151,28 @@ class OrganizationForm(ModelForm):
             }
         else:
             new = True
-            self.fields['slug'].label = "Choose a URL"
-            slug_field = PrependedAppendedText(
-                'slug',
-                prepended_text='http://cobwebarchive.org/org/',
-            )
+            self.fields['slug'].label = "Choose a Cobweb URL"
+            slug_field = HTML("""
+                <div id="div_id_slug row" class="form-group">
+                    <label for="id_slug" class="col-3 col-form-label requiredField">
+                        Cobweb URL<span class="asteriskField">*</span>
+                    </label>
+                    <div class="col">
+                        {% include 'bootstrap4/layout/form_help_toggler.html' %}
+                        <span class="input-group">
+                            <span class="input-group-prepend">
+                                <span class="input-group-text">
+                                    http://cobwebarchive.org/org/
+                                </span>
+                            </span>
+                            <input type="text" name="slug" maxlength="50"
+                                class="textinput textInput form-control"
+                                required="" id="id_slug">
+                        </span>
+                        {% include 'bootstrap4/layout/help_text_and_errors.html' %}
+                    </div>
+                </div>
+            """)
             form_title = HTML('<h2>New organization</h2>')
             form_buttons_kwargs = {
                 'confirm_title': 'Save new organization',
@@ -189,6 +206,8 @@ class OrganizationForm(ModelForm):
                 ),
             ),
         )
+
+        self.helper.help_text_inline = False
 
 
 class SearchForm(haystack.forms.SearchForm):

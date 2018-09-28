@@ -5,6 +5,7 @@ from django.db import models
 from django.db.models.query import QuerySet
 from django.urls import reverse
 
+import help_text
 from cobweb import settings
 
 
@@ -13,12 +14,18 @@ class Project(models.Model):
     """Django ORM model for a Cobweb project."""
     
     title = models.CharField(max_length=500, unique=True)
-    description = models.TextField(null=True, blank=False)
+    description = models.TextField(null=True, blank=False,
+                                   help_text=help_text.PROJECT_DESCRIPTION)
+    collecting_scope = models.TextField(
+        null=True, blank=False,
+        help_text=help_text.PROJECT_COLLECTING_SCOPE,
+        )
 
     administrators = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         related_name='projects_administered',
         verbose_name='administrators',
+        help_text=help_text.PROJECT_ADMINS,
     )
 
     nomination_policy = models.CharField(
@@ -37,12 +44,14 @@ class Project(models.Model):
     nominators = models.ManyToManyField(
         settings.AUTH_USER_MODEL, blank=True,
         related_name='projects_nominating',
+        help_text='PROJECT_NOMINATORS',
     )
 
     nominator_blacklist = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         blank=True,
         related_name='projects_blacklisted',
+        help_text='PROJECT_NOMINATOR_BLACKLIST',
     )
 
     status = models.CharField(
@@ -63,7 +72,7 @@ class Project(models.Model):
         return self.nominations.exclude(claims=None).count()
     
 
-    tags = models.ManyToManyField('core.Tag', blank=True)
+    tags = models.ManyToManyField('core.Tag', blank=True, help_text=help_text.TAGS)
     subject_headings = models.ManyToManyField('core.SubjectHeading',
                                               blank=True)
 

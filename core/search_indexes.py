@@ -55,6 +55,7 @@ class OrganizationIndex(indexes.SearchIndex, indexes.Indexable):
     cobweb_url = indexes.CharField(model_attr='get_absolute_url', indexed=True, stored=True)
 
     short_name = indexes.CharField(model_attr='short_name', null=True, indexed=True, stored=True)
+    full_name = indexes.CharField(model_attr='full_name', null=True, indexed=True, stored=True)
     administrators = indexes.CharField(indexed=True, null=True, stored=True)
     address = indexes.CharField(model_attr='address', null=True, indexed=True, stored=True)
     telephone_number = indexes.CharField(model_attr='telephone_number', null=True, indexed=True, stored=True)
@@ -70,6 +71,9 @@ class OrganizationIndex(indexes.SearchIndex, indexes.Indexable):
 
     description = indexes.CharField(model_attr='description', null=True, indexed=True, stored=True)
     identifier = indexes.CharField(model_attr='identifier', null=True, indexed=True, stored=True)
+
+    n_claimed = indexes.IntegerField(model_attr='n_claimed', indexed=True, stored=True)
+    n_held = indexes.IntegerField(model_attr='n_held', indexed=True, stored=True)
 
     def get_model(self):
         return Organization

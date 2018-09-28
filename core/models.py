@@ -1,13 +1,14 @@
 """Miscelaneous Cobweb models. Could be a few apps, but why bother..."""
 
-from itertools import chain
 from collections.abc import Iterable
+from itertools import chain
 from typing import Dict, List, NewType
 
 import reversion
 from django.db import models
 from django.forms.models import model_to_dict
 from django.urls import reverse
+from django.utils.functional import cached_property
 from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
@@ -16,6 +17,7 @@ from surt import handyurl
 from surt.DefaultIAURLCanonicalizer import canonicalize
 
 import cobweb.types as typ
+import help_text
 
 
 def normalize_url(url: typ.URL) -> typ.NormalizedURL:
@@ -89,7 +91,8 @@ class User(AbstractUser):
 @reversion.register()
 class Organization(models.Model):
 
-    slug = models.SlugField(max_length=50, null=False, unique=True)
+    slug = models.SlugField(max_length=50, null=False, unique=True,
+                            help_text=help_text.ORGANIZATION_PROFILE)
 
     full_name = models.CharField(max_length=2000, unique=True,
                                  verbose_name="full legal name")
@@ -131,6 +134,22 @@ class Organization(models.Model):
         # TODO: actuall implement functional requirement
         # (this is just a placeholder)
         return self.claims.count() + self.claims.filter(has_holding=True).count()
+
+    @cached_property
+    def claims_held(self):
+        return self.claims.filter(has_holding=True)
+
+    @cached_property
+    def claims_claimed(self):
+        return self.claims.filter(has_holding=False)
+
+    @property
+    def n_held(self):
+        return self.claims_held.count()
+
+    @property
+    def n_claimed(self):
+        return self.claims_claimed.count()
 
     def __repr__(self) -> str:
         return f"<Organization '{self.name}'>"

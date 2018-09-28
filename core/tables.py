@@ -33,14 +33,35 @@ class UserTable(CobwebBaseTable):
 
 
 class OrganizationTable(CobwebBaseTable):
-    full_name = django_tables2.LinkColumn(verbose_name='Full name',
-                                          viewname='organization',
-                                          kwargs={'slug': Accessor('object.slug')})
-
     class Meta(CobwebBaseTable.Meta):
         model = Organization
-        fields = ('full_name', )
+        fields = ('name', 'n_claimed', 'n_held')
         empty_text = "No organizations."
+
+    name = django_tables2.LinkColumn(verbose_name='Full name',
+                                     viewname='organization',
+                                     kwargs={'slug': Accessor('object.slug')})
+
+    n_claimed = django_tables2.Column(
+        verbose_name='Claimed',
+        attrs={'cell': {'class': 'text-center'}},
+    )
+    n_held = django_tables2.Column(
+        verbose_name='Held',
+        attrs={'cell': {'class': 'text-center'}},
+    )
+
+    def render_claimed_nominations(self, value):
+        if value == 0:
+            return ''
+        else:
+            return format_html('<span class="badge-claimed">{}</span>', value)
+
+    def render_held_nominations(self, value):
+        if value == 0:
+            return ''
+        else:
+            return format_html('<span class="badge-held">{}</span>', value)
 
 
 class ResourceTable(CobwebBaseTable):
