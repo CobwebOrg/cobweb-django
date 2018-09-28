@@ -19,9 +19,9 @@ class ProjectForm(forms.ModelForm):
         """Metaclass for options."""
 
         model = Project
-        fields = ['title', 'description', 'status', 'administrators',
-                  'nomination_policy', 'nominators', 'nominator_blacklist',
-                  'tags']
+        fields = ['title', 'description', 'collecting_scope', 'status',
+                  'administrators', 'nomination_policy', 'nominators',
+                  'nominator_blacklist', 'tags']
         widgets = {
             'title': forms.TextInput,
             'administrators': autocomplete.ModelSelect2Multiple(
@@ -68,6 +68,7 @@ class ProjectForm(forms.ModelForm):
 
             FormSection(
                 Row(Column(HField('description', edit=editable))),
+                HField('collecting_scope', edit=editable),
 
                 Row(
                     Field('status', edit=editable, wrapper_class='col-md-5'),

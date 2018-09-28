@@ -1,6 +1,3 @@
-# TODO: help text in crispy field template
-
-# TODO: help text in model
 CLAIM_HELD = """
     Check here to indicate that your organization has both made this claim to
     capture the nominated URL and that you have successfully captured it.
@@ -24,16 +21,13 @@ N_UNCLAIMED = """
     claimed for capture by any collecting organization.
     """
 
-# TODO: help text in model
 NOMINATION_RATIONALE = """
     Describe why you think this particular resource should be included with
     this project.
     """
 
-# TODO: help text in model
-ORGANIZATION_PROFILE = "Choose a Cobweb URL for your organization."
+ORGANIZATION_PROFILE = "Choose a URL for your organization's profile on Cobweb."
 
-# TODO: help text in model
 PROJECT_ADMINS = """
     Enter names of registered Cobweb users who can edit and manage project
     information. Names can include more than one word, separated by spaces and
@@ -42,33 +36,28 @@ PROJECT_ADMINS = """
     users.
     """
 
-# TODO: model help text
 PROJECT_DESCRIPTION = """
     Describe the intended content (such as a theme, topic, or event it is
     intended to document) and goals of this project.
     """
 
-# TODO: model help text
 PROJECT_COLLECTING_SCOPE = """
     As applicable, describe the scope and approach that this project is
     intended to take (such as collecting for defined time frame).
     """
 
-# TODO: help text in model
 PROJECT_NOMINATORS = """
     Enter names of selected Cobweb users who can nominate to projects with a
     restricted nomination policy. Names can include more than one word,
     separated by spaces and ending with a hard return for entry.
     """
 
-# TODO: model help text
 PROJECT_NOMINATOR_BLACKLIST = """
     Enter names of Cobweb users who cannot nominate to this project. Names can
     include more than one word, separated by spaces and ending with a hard
     return for entry.
     """
 
-# TODO: help text in many models (search for tag fields)
 TAGS = """
     Enter or choose brief descriptive terms. Descriptive terms can include more
     than one word, separated by spaces and ending with a hard return for entry.

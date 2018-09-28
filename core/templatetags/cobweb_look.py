@@ -10,6 +10,7 @@ from django.utils.html import format_html, mark_safe  # , conditional_escape
 from django.utils.safestring import mark_safe
 from haystack.models import SearchResult
 
+import help_text
 from core.models import User
 from projects.models import Project, Nomination, Claim
 from core.models import Resource
@@ -92,6 +93,11 @@ def icon(item):
     return mark_safe(
         format_html('<span title="{}" class="fas {}"></span>', *format_args)
     )
+
+
+@register.inclusion_tag('help_text/more_info.html')
+def more_info(help_topic: str):
+    return {'help_text': getattr(help_text, help_topic)}
 
 
 @register.inclusion_tag('summary.html')

@@ -19,11 +19,15 @@ fontawesome.library.add(solid);
 //   this.style.height = (this.scrollHeight) + 'px';
 // });
 
-// Enable tooltips
+// Enable tooltips and popovers
 
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
-})
+});
+
+$(function () {
+  $('[data-toggle="popover"]').popover()
+});
 
 window.$$ = $; // Expose *this* jquery to browser console - $ gets overloaded
 window.Dashboard = Dashboard;

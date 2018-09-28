@@ -157,7 +157,7 @@ class Nomination(models.Model):
     language = models.ForeignKey('languages_plus.Language', null=True, blank=True,
                                  on_delete=models.PROTECT)
     description = models.TextField(null=True, blank=True)
-    tags = models.ManyToManyField('core.Tag', blank=True)
+    tags = models.ManyToManyField('core.Tag', blank=True, help_text=help_text.TAGS)
     subject_headings = models.ManyToManyField('core.SubjectHeading', blank=True)
     
     # TODO: setup required - see https://github.com/cordery/django-languages-plus
@@ -174,7 +174,8 @@ class Nomination(models.Model):
 
     nominated_by = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
 
-    rationale = models.TextField(null=True, blank=True)
+    rationale = models.TextField(null=True, blank=True,
+                                 help_text=help_text.NOMINATION_RATIONALE)
 
     # CRAWL SCOPE - SIMPLE FIELDS
     # TODO: more complicated data w/ linked model
@@ -278,7 +279,8 @@ class Claim(models.Model):
     # STATUS
     active = models.BooleanField(default=True)
     deleted = models.BooleanField(default=False)
-    has_holding = models.BooleanField(default=False)
+    has_holding = models.BooleanField(default=False, verbose_name="held",
+                                      help_text=help_text.CLAIM_HELD)
 
     imported_record = models.ForeignKey('webarchives.ImportedRecord', null=True, blank=True,
                                         on_delete=models.SET_NULL, related_name='claims')

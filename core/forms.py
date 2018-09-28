@@ -152,27 +152,8 @@ class OrganizationForm(ModelForm):
         else:
             new = True
             self.fields['slug'].label = "Choose a Cobweb URL"
-            slug_field = HTML("""
-                <div id="div_id_slug row" class="form-group">
-                    <label for="id_slug" class="col-3 col-form-label requiredField">
-                        Cobweb URL<span class="asteriskField">*</span>
-                    </label>
-                    <div class="col">
-                        {% include 'bootstrap4/layout/form_help_toggler.html' %}
-                        <span class="input-group">
-                            <span class="input-group-prepend">
-                                <span class="input-group-text">
-                                    http://cobwebarchive.org/org/
-                                </span>
-                            </span>
-                            <input type="text" name="slug" maxlength="50"
-                                class="textinput textInput form-control"
-                                required="" id="id_slug">
-                        </span>
-                        {% include 'bootstrap4/layout/help_text_and_errors.html' %}
-                    </div>
-                </div>
-            """)
+            slug_field = PrependedAppendedText('slug', prepended_text='http://cobwebarchive.org/org/')
+            
             form_title = HTML('<h2>New organization</h2>')
             form_buttons_kwargs = {
                 'confirm_title': 'Save new organization',
@@ -187,11 +168,11 @@ class OrganizationForm(ModelForm):
             Row(
                 Pane(
                     slug_field,
-                    HField('full_name', edit=editable),
-                    HField('short_name', edit=editable),
-                    HField('administrators', edit=editable),
-                    HField('parent_organization', edit=editable),
-                    HField('description', edit=editable),
+                    Field('full_name', edit=editable),
+                    Field('short_name', edit=editable),
+                    Field('administrators', edit=editable),
+                    Field('parent_organization', edit=editable),
+                    Field('description', edit=editable),
                     css_class='col-6'
                 ),
                 Pane(

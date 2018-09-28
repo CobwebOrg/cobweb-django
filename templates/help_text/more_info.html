@@ -1,3 +1,5 @@
-<span type="button" class="fas fa-info-circle" title="more information"
-        data-container="body" data-toggle="popover" data-placement="bottom"
-        data-content='{% include help_template_name %}'></span>
+<a type="button" aria-label="More Information"
+   data-container="body" data-toggle="popover" data-placement="bottom"
+   data-content='{{help_text}}'>
+    <span class="fas fa-info-circle text-link-color"></span>
+</span>

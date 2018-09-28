@@ -1,7 +1,9 @@
 import django_tables2
-from django.utils.html import format_html
+from django.template.loader import get_template
+from django.utils.html import format_html, mark_safe
 from django_tables2.utils import Accessor
 
+import help_text
 from core.tables import CobwebBaseTable
 from projects.models import Claim, Nomination, Project
 
@@ -20,15 +22,21 @@ class ProjectTable(CobwebBaseTable):
         kwargs={'pk': Accessor('pk')},
     )
     unclaimed_nominations = django_tables2.Column(
-        verbose_name='Unclaimed',
+        verbose_name=mark_safe('Unclaimed ')
+            + get_template('help_text/more_info.html')
+            .render(context={'help_text': help_text.N_UNCLAIMED}),
         attrs={'cell': {'class': 'text-center'}},
     )
     claimed_nominations = django_tables2.Column(
-        verbose_name='Claimed',
+        verbose_name=mark_safe('Claimed ')
+            + get_template('help_text/more_info.html')
+            .render(context={'help_text': help_text.N_CLAIMED}),
         attrs={'cell': {'class': 'text-center'}},
     )
     held_nominations = django_tables2.Column(
-        verbose_name='Held',
+        verbose_name=mark_safe('Held ')
+            + get_template('help_text/more_info.html')
+            .render(context={'help_text': help_text.N_HELD}),
         attrs={'cell': {'class': 'text-center'}},
     )
 
@@ -64,15 +72,21 @@ class UserProjectsTable(ProjectTable):
                    'held_nominations']
 
     n_unclaimed = django_tables2.Column(
-        verbose_name='Unclaimed',
+        verbose_name=mark_safe('Unclaimed ')
+            + get_template('help_text/more_info.html')
+            .render(context={'help_text': help_text.N_UNCLAIMED}),
         attrs={'cell': {'class': 'text-center'}},
     )
     n_claimed = django_tables2.Column(
-        verbose_name='Claimed',
+        verbose_name=mark_safe('Claimed ')
+            + get_template('help_text/more_info.html')
+            .render(context={'help_text': help_text.N_CLAIMED}),
         attrs={'cell': {'class': 'text-center'}},
     )
     n_held = django_tables2.Column(
-        verbose_name='Held',
+        verbose_name=mark_safe('Held ')
+            + get_template('help_text/more_info.html')
+            .render(context={'help_text': help_text.N_HELD}),
         attrs={'cell': {'class': 'text-center'}},
     )
 
@@ -104,8 +118,7 @@ class NominationColumn(django_tables2.LinkColumn):
         return record.name
     
     def render_link(self, uri, record, value, attrs=None):
-        import pdb; pdb.set_trace()
-        return super().render_link(self, uri, record, value, attrs=None)
+        return super().render_link(uri, record, value, attrs=None)
 
 class NominationTable(CobwebBaseTable):
     """django_tables2.Table object for lists of nominations."""

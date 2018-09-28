@@ -1,1 +1,1 @@
-{"status":"done","chunks":{"main":[{"name":"main-ba341426b14024734562.js","path":"/code/assets/bundles/main-ba341426b14024734562.js"}]},"error":"ModuleBuildError","message":"Module build failed: SyntaxError: Unexpected token (181:7)\n\n  179 | }\n  180 | \n> 181 | export default Resource;\n      |        ^\n  182 | \n"}
+{"status":"done","chunks":{"main":[{"name":"main-7a771d239ece7cac064f.js","path":"/code/assets/bundles/main-7a771d239ece7cac064f.js"}]}}
