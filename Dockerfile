@@ -9,6 +9,7 @@ RUN ["pipenv", "install", "--system", "--ignore-pipfile"]
 COPY . /code/
 
 FROM base as production
+ENV DJANGO_SETTINGS_MODULE cobweb.settings
 RUN ["python3", "manage.py", "collectstatic"]
 CMD ["python3", "scripts/start-production.py"]
 
