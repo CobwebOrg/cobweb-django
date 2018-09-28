@@ -33,7 +33,6 @@
   --user: #f3f0f4;
   --user-dark: #7B6382;
   --error: #D34233;
-  --link: #35968D;
   --unclaimed: #D34233;
   --claimed: #E4CD53;
   --held: #AAC066;
@@ -1421,18 +1420,6 @@ pre {
   .table .table-error:hover > th {
     background-color: #e8b3ae; }
 
-.table-link,
-.table-link > th,
-.table-link > td {
-  background-color: #c1dddb; }
-
-.table-hover .table-link:hover, .table .table-link:hover {
-  background-color: #b1d4d1; }
-  .table-hover .table-link:hover > td, .table .table-link:hover > td,
-  .table-hover .table-link:hover > th,
-  .table .table-link:hover > th {
-    background-color: #b1d4d1; }
-
 .table-unclaimed,
 .table-unclaimed > th,
 .table-unclaimed > td {
@@ -2226,27 +2213,6 @@ fieldset:disabled a.btn {
     .btn-error:not(:disabled):not(.disabled):active:focus, .btn-error:not(:disabled):not(.disabled).active:focus, .show > .btn-error.dropdown-toggle:focus {
       box-shadow: 0 0 0 0.2rem rgba(211, 66, 51, 0.5); }
 
-.btn-link, .nav-infotabs .nav-link {
-  color: #f8f9fa;
-  background-color: #35968D;
-  border-color: #35968D; }
-  .btn-link:hover, .nav-infotabs .nav-link:hover {
-    color: #f8f9fa;
-    background-color: #2b7a72;
-    border-color: #28706a; }
-  .btn-link:focus, .nav-infotabs .nav-link:focus, .btn-link.focus, .nav-infotabs .focus.nav-link {
-    box-shadow: 0 0 0 0.2rem rgba(53, 150, 141, 0.5); }
-  .btn-link.disabled, .nav-infotabs .disabled.nav-link, .nav-infotabs .nav-link.active, .btn-link:disabled, .nav-infotabs .nav-link:disabled {
-    color: #f8f9fa;
-    background-color: #35968D;
-    border-color: #35968D; }
-  .btn-link:not(:disabled):not(.disabled):active, .nav-infotabs .nav-link:not(:disabled):not(.disabled):active, .btn-link:not(:disabled):not(.disabled).active, .nav-infotabs .nav-link:not(:disabled):not(.disabled).active, .show > .btn-link.dropdown-toggle, .nav-infotabs .show > .dropdown-toggle.nav-link {
-    color: #f8f9fa;
-    background-color: #28706a;
-    border-color: #246761; }
-    .btn-link:not(:disabled):not(.disabled):active:focus, .nav-infotabs .nav-link:not(:disabled):not(.disabled):active:focus, .btn-link:not(:disabled):not(.disabled).active:focus, .nav-infotabs .nav-link:not(:disabled):not(.disabled).active:focus, .show > .btn-link.dropdown-toggle:focus, .nav-infotabs .show > .dropdown-toggle.nav-link:focus {
-      box-shadow: 0 0 0 0.2rem rgba(53, 150, 141, 0.5); }
-
 .btn-unclaimed {
   color: #f8f9fa;
   background-color: #D34233;
@@ -2624,27 +2590,6 @@ fieldset:disabled a.btn {
     border-color: #D34233; }
     .btn-outline-error:not(:disabled):not(.disabled):active:focus, .btn-outline-error:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-error.dropdown-toggle:focus {
       box-shadow: 0 0 0 0.2rem rgba(211, 66, 51, 0.5); }
-
-.btn-outline-link {
-  color: #35968D;
-  background-color: transparent;
-  background-image: none;
-  border-color: #35968D; }
-  .btn-outline-link:hover {
-    color: #f8f9fa;
-    background-color: #35968D;
-    border-color: #35968D; }
-  .btn-outline-link:focus, .btn-outline-link.focus {
-    box-shadow: 0 0 0 0.2rem rgba(53, 150, 141, 0.5); }
-  .btn-outline-link.disabled, .nav-infotabs .btn-outline-link.nav-link.active, .btn-outline-link:disabled {
-    color: #35968D;
-    background-color: transparent; }
-  .btn-outline-link:not(:disabled):not(.disabled):active, .btn-outline-link:not(:disabled):not(.disabled).active, .show > .btn-outline-link.dropdown-toggle {
-    color: #f8f9fa;
-    background-color: #35968D;
-    border-color: #35968D; }
-    .btn-outline-link:not(:disabled):not(.disabled):active:focus, .btn-outline-link:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-link.dropdown-toggle:focus {
-      box-shadow: 0 0 0 0.2rem rgba(53, 150, 141, 0.5); }
 
 .btn-outline-unclaimed {
   color: #D34233;
@@ -4157,14 +4102,6 @@ header .navbar-pages .navbar-nav .nav-link.active {
     text-decoration: none;
     background-color: #ae3225; }
 
-.badge-link {
-  color: #f8f9fa;
-  background-color: #35968D; }
-  .badge-link[href]:hover, .badge-link[href]:focus {
-    color: #f8f9fa;
-    text-decoration: none;
-    background-color: #28706a; }
-
 .badge-unclaimed {
   color: #f8f9fa;
   background-color: #D34233; }
@@ -4359,15 +4296,6 @@ header .navbar-pages .navbar-nav .nav-link.active {
     border-top-color: #e8b3ae; }
   .alert-error .alert-link, .messages .error .alert-link {
     color: #451511; }
-
-.alert-link {
-  color: #1c4e49;
-  background-color: #d1e5e4;
-  border-color: #c1dddb; }
-  .alert-link hr {
-    border-top-color: #b1d4d1; }
-  .alert-link .alert-link {
-    color: #0f2826; }
 
 .alert-unclaimed {
   color: #6e221b;
@@ -4653,17 +4581,6 @@ header .navbar-pages .navbar-nav .nav-link.active {
     color: #f8f9fa;
     background-color: #6e221b;
     border-color: #6e221b; }
-
-.list-group-item-link {
-  color: #1c4e49;
-  background-color: #c1dddb; }
-  .list-group-item-link.list-group-item-action:hover, .list-group-item-link.list-group-item-action:focus {
-    color: #1c4e49;
-    background-color: #b1d4d1; }
-  .list-group-item-link.list-group-item-action.active {
-    color: #f8f9fa;
-    background-color: #1c4e49;
-    border-color: #1c4e49; }
 
 .list-group-item-unclaimed {
   color: #6e221b;
@@ -5365,14 +5282,6 @@ button.bg-error:hover,
 button.bg-error:focus {
   background-color: #ae3225 !important; }
 
-.bg-link {
-  background-color: #35968D !important; }
-
-a.bg-link:hover, a.bg-link:focus,
-button.bg-link:hover,
-button.bg-link:focus {
-  background-color: #28706a !important; }
-
 .bg-unclaimed {
   background-color: #D34233 !important; }
 
@@ -5477,9 +5386,6 @@ button.bg-held:focus {
 
 .border-error {
   border-color: #D34233 !important; }
-
-.border-link {
-  border-color: #35968D !important; }
 
 .border-unclaimed {
   border-color: #D34233 !important; }
@@ -7794,12 +7700,6 @@ a.text-user-dark:hover, a.text-user-dark:focus {
 
 a.text-error:hover, a.text-error:focus {
   color: #ae3225 !important; }
-
-.text-link {
-  color: #35968D !important; }
-
-a.text-link:hover, a.text-link:focus {
-  color: #28706a !important; }
 
 .text-unclaimed, .summary .n-unclaimed {
   color: #D34233 !important; }
