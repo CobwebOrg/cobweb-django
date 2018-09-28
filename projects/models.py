@@ -195,7 +195,8 @@ class Nomination(models.Model):
 
     ignore_robots_txt = models.BooleanField(verbose_name="ignore 'robots.txt'",
                                             default=False)
-    rights_considerations = models.TextField(null=True, blank=True)
+    rights_considerations = models.TextField(verbose_name="access considerations",
+                                             null=True, blank=True)
 
     notes = GenericRelation('core.Note')
 
@@ -306,7 +307,8 @@ class Claim(models.Model):
 
     ignore_robots_txt = models.BooleanField(verbose_name="ignore 'robots.txt'",
                                             default=False)
-    rights_considerations = models.TextField(null=True, blank=True)
+    rights_considerations = models.TextField(verbose_name="access considerations",
+                                             null=True, blank=True)
 
 
     notes = GenericRelation('core.Note')
