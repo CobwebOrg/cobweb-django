@@ -99,7 +99,6 @@ CRAWL_SCOPE_FIELD_NAMES = [
     'follow_links',
     'page_scope',
     'ignore_robots_txt',
-    'rights_considerations',
 ]
 
 def nomination_info(editable=False):
@@ -117,6 +116,7 @@ def resource_info(editable=False, react_data=None):
         HField('description', edit=editable),
         Field('tags', edit=editable),
         Field('language', edit=editable),
+        Field('rights_considerations', edit=editable)
     )
 
     if react_data:
@@ -136,7 +136,7 @@ class NominationForm(forms.ModelForm):
     class Meta:
         model = Nomination
         fields = (['resource', 'title', 'description', 'tags', 'language',
-                   'project', 'rationale']
+                   'rights_considerations', 'project', 'rationale']
                   + CRAWL_SCOPE_FIELD_NAMES)
         widgets = {
             'tags': autocomplete.ModelSelect2Multiple(

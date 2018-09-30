@@ -159,6 +159,8 @@ class Nomination(models.Model):
     description = models.TextField(null=True, blank=True)
     tags = models.ManyToManyField('core.Tag', blank=True, help_text=help_text.TAGS)
     subject_headings = models.ManyToManyField('core.SubjectHeading', blank=True)
+    rights_considerations = models.TextField(verbose_name="access considerations",
+                                             null=True, blank=True)
     
     # TODO: setup required - see https://github.com/cordery/django-languages-plus
     
@@ -195,8 +197,6 @@ class Nomination(models.Model):
 
     ignore_robots_txt = models.BooleanField(verbose_name="ignore 'robots.txt'",
                                             default=False)
-    rights_considerations = models.TextField(verbose_name="access considerations",
-                                             null=True, blank=True)
 
     notes = GenericRelation('core.Note')
 
@@ -307,8 +307,6 @@ class Claim(models.Model):
 
     ignore_robots_txt = models.BooleanField(verbose_name="ignore 'robots.txt'",
                                             default=False)
-    rights_considerations = models.TextField(verbose_name="access considerations",
-                                             null=True, blank=True)
 
 
     notes = GenericRelation('core.Note')

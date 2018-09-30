@@ -97,7 +97,6 @@ def crawl_scope_fields(editable: bool=False) -> FormSection:
             css_class='form-group form-inline',
         ),
         Field('ignore_robots_txt', edit=editable),
-        Field('rights_considerations', edit=editable),
     )
 
 
