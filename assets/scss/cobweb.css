@@ -7917,7 +7917,7 @@ footer {
 .md_item_label::after {
   content: ':'; }
 
-.col-form-label, form-control-label {
+.col-form-label, .form-control-label {
   font-weight: 600; }
 
 .form-section + .form-section {
@@ -7926,6 +7926,9 @@ footer {
 
 .form-button-row {
   padding: 1rem 0; }
+
+textarea.form-control {
+  height: 8rem; }
 
 .messages li {
   list-style: none; }
@@ -7940,9 +7943,6 @@ footer {
 
 .btn-primary {
   font-weight: 600; }
-
-textarea {
-  resize: none; }
 
 h1, h2 {
   font-weight: 600;

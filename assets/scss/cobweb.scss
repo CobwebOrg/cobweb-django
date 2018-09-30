@@ -242,7 +242,7 @@ footer {
 
 // FORM STUFF
 
-.col-form-label, form-control-label {
+.col-form-label, .form-control-label {
   font-weight: 600;
 }
 
@@ -253,6 +253,10 @@ footer {
 
 .form-button-row {
   padding: 1rem 0;
+}
+
+textarea.form-control {
+  height: 8rem;
 }
 
 // MISC
@@ -281,7 +285,6 @@ footer {
   font-weight: 600;
 }
 
-textarea { resize: none; }
 
 h1, h2 {
   font-weight: 600;
