@@ -153,7 +153,7 @@ class OrganizationForm(ModelForm):
             new = True
             self.fields['slug'].label = "Choose a Cobweb URL"
             slug_field = PrependedAppendedText('slug', prepended_text='http://cobwebarchive.org/org/')
-            
+
             form_title = HTML('<h2>New organization</h2>')
             form_buttons_kwargs = {
                 'confirm_title': 'Save new organization',
@@ -196,11 +196,13 @@ class SearchForm(haystack.forms.SearchForm):
         if not self.is_valid():
             return self.no_query_found()
 
-        if not self.cleaned_data.get('q'):
+        raw_query =  self.cleaned_data.get('q')
+        if raw_query:
+            sqs = self.searchqueryset.auto_query(raw_query)
+        else:
             sqs = self.searchqueryset
             # return self.no_query_found()
 
-        sqs = self.searchqueryset.auto_query(self.cleaned_data['q'])
 
         if self.load_all:
             sqs = sqs.load_all()

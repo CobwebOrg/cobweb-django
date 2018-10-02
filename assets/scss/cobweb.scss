@@ -337,7 +337,7 @@ h2 + h3 {
 .badge-mid { @extend .badge-left, .badge-right ; }
 
 .datum {
-  @extend .mr-1, .mb-1, .badge, .border ;
+  @extend .mr-1, .mb-1, .badge, .badge-gray ;
 }
 
 .datum-tags, .datum-subject, .datum-language {

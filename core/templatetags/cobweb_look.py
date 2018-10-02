@@ -11,9 +11,9 @@ from django.utils.safestring import mark_safe
 from haystack.models import SearchResult
 
 import help_text
-from core.models import User
+from api.serializers import ResourceSerializer
+from core.models import User, Resource, Organization
 from projects.models import Project, Nomination, Claim
-from core.models import Resource
 
 
 register = template.Library()
@@ -102,7 +102,47 @@ def more_info(help_topic: str):
 
 @register.inclusion_tag('summary.html')
 def summary(item):
-    return {'obj': item}
+    if isinstance(item.object, Project):
+        summary_metadata = {
+            'description': [item.description] if item.description else [],
+            'tags': item.tags or [],
+            'nominations': [
+                format_html('<span class="badge badge-{kind}">{n}</span> {kind_cap}',
+                            n=getattr(item, f'{kind}_nominations'),
+                            kind=kind, kind_cap=kind[0].upper() + kind[1:])
+                for kind in ('unclaimed', 'claimed', 'held')
+                if getattr(item, f'{kind}_nominations') > 0
+            ],
+        }
+    elif isinstance(item.object, Resource):
+        summary_metadata = {
+            'title': [item.title] if item.title else [],
+            'description': [item.description] if item.description else [],
+            'tags': item.tags or [],
+            'subject': item.subject or [],
+        }
+    elif isinstance(item.object, Organization):
+        summary_metadata = {
+            'short_name': [item.short_name] if item.short_name else [],
+            'description': [item.description] if item.description else [],
+            'claims': [
+                format_html('<span class="badge badge-{kind}">{n}</span> {kind}',
+                            kind=kind, n=getattr(item, f'{kind}_nominations'))
+                for kind in ('claimed', 'held')
+                if getattr(item, f'n_{kind}') > 0
+            ],
+        }
+    else:
+        summary_metadata
+        for field in ('description', 'tags'):
+            try:
+                summary_metadata[field] = getattr(item, field)
+                if isinstance(summary_metadata[field], str) or not hasattr(item, __iter__):
+                    summary_metadata[field] = [summary_metadata[field]]
+            except AttributeError:
+                pass
+
+    return {'obj': item, 'summary_metadata': summary_metadata}
 
 
 @register.inclusion_tag('badge.html')
@@ -115,7 +155,7 @@ def badge(item):
 
 @register.inclusion_tag('project_count_badge.html')
 def project_count_badge(item):
-    assert type(item) is Project
+    assert isinstance(item, Project)
     nresources = item.nominations.count()
     n_unclaimed = item.nominations.filter(claims=None).count()
     return {'claimed': nresources-n_unclaimed, 'unclaimed': n_unclaimed}
@@ -123,7 +163,7 @@ def project_count_badge(item):
 
 @register.inclusion_tag('nomination_count_badge.html')
 def nomination_count_badge(item):
-    assert type(item) is Nomination
+    assert isinstance(item, Nomination)
     nclaims = item.claims.count()
     return {'nclaims': nclaims}
 

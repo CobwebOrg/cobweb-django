@@ -41,10 +41,7 @@ class CobwebSignalProcessor(signals.BaseSignalProcessor):
         update should be sent to & update the object on those backends.
         """
 
-        print(f"\n\n\n<<<CobwebSignalProcessor.handle_save>>>\nsender={sender}\nkwargs={kwargs}")
-
         for index_relation in MAPPING[sender]:
-            print(index_relation)
             if index_relation is None:
                 super().handle_save(sender, instance, **kwargs)
             else:
@@ -59,12 +56,12 @@ class CobwebSignalProcessor(signals.BaseSignalProcessor):
         delete should be sent to & delete the object on those backends.
         """
 
-        print(f"<<<CobwebSignalProcessor.handle_save>>>\nsender={sender}\nkwargs={kwargs}")
 
         for index_relation in MAPPING[sender]:
             if index_relation is None:
                 super().handle_delete(sender, instance, **kwargs)
             else:
+                related = instance
                 for attr_name in index_relation.split('.'):
-                    instance = getattr(instance, attr_name)
-                super().handle_save(type(instance), instance, **kwargs)
+                    related = getattr(related, attr_name)
+                super().handle_save(type(related), related, **kwargs)

@@ -4046,10 +4046,10 @@ header .navbar-pages .navbar-nav .nav-link.active {
     text-decoration: none;
     background-color: #1d2124; }
 
-.badge-gray {
+.badge-gray, .datum {
   color: #212529;
   background-color: #dddddd; }
-  .badge-gray[href]:hover, .badge-gray[href]:focus {
+  .badge-gray[href]:hover, [href].datum:hover, .badge-gray[href]:focus, [href].datum:focus {
     color: #212529;
     text-decoration: none;
     background-color: #c4c4c4; }
@@ -5312,7 +5312,7 @@ button.bg-held:focus {
 .bg-transparent {
   background-color: transparent !important; }
 
-.border, .datum, .big-model-icon, .pane {
+.border, .big-model-icon, .pane {
   border: 1px solid #dee2e6 !important; }
 
 .border-top {

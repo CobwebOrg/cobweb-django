@@ -135,27 +135,28 @@ class ResourceIndex(indexes.SearchIndex, indexes.Indexable):
                 languages.update(r.metadata['language'])
         return '\n'.join(x for x in languages if x)
 
-    def prepare_tags(self, obj: Resource) -> str:
+    def prepare_tags(self, obj: Resource) -> List[str]:
         tags = set()
         for nom in obj.nominations.all():
-            tags.update({t.name for t in nom.tags.all()})
+            tags.update([t.name for t in nom.tags.all()])
         for rec in obj.imported_records.all():
             try:
                 tags.update(rec.metadata['tags'])
             except KeyError:
                 pass
-        return ','.join(x for x in tags if x)
+        return list(tags)
+        # return ','.join(x for x in tags if x)
 
-    def prepare_subject_headings(self, obj: Resource) -> str:
-        subject_headings = set()
+    def prepare_subject_headings(self, obj: Resource) -> List[str]:
+        subject_headings: set = set()
         for nom in obj.nominations.all():
-            subject_headings.update({t.name for t in nom.subject_headings.all()})
+            subject_headings.update(t.name for t in nom.subject_headings.all())
         for rec in obj.imported_records.all():
             try:
                 subject_headings.update(rec.metadata['subject_headings'])
             except KeyError:
                 pass
-        return ','.join(x for x in subject_headings if x)
+        return list(subject_headings)
 
 
 

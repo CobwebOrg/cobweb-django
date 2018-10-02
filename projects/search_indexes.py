@@ -1,4 +1,5 @@
 # """SearchIndex classes for Django-haystack."""
+from typing import List
 
 from django.utils.html import format_html, mark_safe
 from haystack import indexes
@@ -22,8 +23,8 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     # nominator_blacklist
     status = indexes.CharField(model_attr='status', indexed=True, stored=True)
     impact_factor = indexes.IntegerField(model_attr='impact_factor', indexed=True, stored=True)
-    tags = indexes.CharField(indexed=True, null=True, stored=True)
-    subject_headings = indexes.CharField(indexed=True, null=True, stored=True)
+    tags = indexes.MultiValueField(indexed=True, null=True, stored=True)
+    subject_headings = indexes.MultiValueField(indexed=True, null=True, stored=True)
     # notes
 
     unclaimed_nominations = indexes.IntegerField(model_attr='n_unclaimed', indexed=True, stored=True)
@@ -42,11 +43,11 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     def prepare_nominators(self, obj: Project) -> str:
         return '\n'.join(user.get_absolute_url() for user in obj.nominators.all())
 
-    def prepare_tags(self, obj: Project) -> str:
-        return ','.join(tag.name for tag in obj.tags.all())
+    def prepare_tags(self, obj: Project) -> List[str]:
+        return [tag.name for tag in obj.tags.all()]
 
-    def prepare_subject_headings(self, obj: Project) -> str:
-        return ','.join(subject_heading.name for subject_heading in obj.subject_headings.all())
+    def prepare_subject_headings(self, obj: Project) -> List[str]:
+        return [subj.name for subj in obj.subject_headings.all()]
 
 
 class NominationIndex(indexes.SearchIndex, indexes.Indexable):
