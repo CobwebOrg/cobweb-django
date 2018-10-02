@@ -6,13 +6,13 @@ from core.models import Resource, Tag
 from projects.models import Project, Nomination, Claim
 
 
-class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
     # TODO: status
     queryset = User.objects.all()  # exclude(status='Deleted')
     serializer_class = serializers.UserSerializer
 
 
-class OrganizationViewSet(viewsets.ModelViewSet):
+class OrganizationViewSet(viewsets.ReadOnlyModelViewSet):
     # TODO: status
     queryset = Organization.objects.all()  # .exclude(status='Deleted')
     serializer_class = serializers.OrganizationSerializer
@@ -23,21 +23,21 @@ class ResourceViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.ResourceSerializer
 
 
-class TagViewSet(viewsets.ModelViewSet):
+class TagViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = serializers.TagSerializer
 
 
-class ProjectViewSet(viewsets.ModelViewSet):
+class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Project.objects.exclude(status='Deleted')
     serializer_class = serializers.ProjectSerializer
 
 
-class NominationViewSet(viewsets.ModelViewSet):
+class NominationViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Nomination.objects.exclude(deleted=True)
     serializer_class = serializers.NominationSerializer
 
 
-class ClaimViewSet(viewsets.ModelViewSet):
+class ClaimViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Claim.objects.exclude(deleted=True)
     serializer_class = serializers.ClaimSerializer
