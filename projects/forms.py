@@ -46,11 +46,13 @@ class ProjectForm(forms.ModelForm):
             ),
         }
 
-    def __init__(self, *args, editable=False,  **kwargs):
+    def __init__(self, *args, editable=False, request=None, **kwargs):
         """Initialize ProjectForm, adding crispy_forms helper and layout."""
 
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
+
+        user_authenticated = request and request.user.is_authenticated
 
         if hasattr(self.instance, 'pk') and self.instance.pk is not None:
             form_buttons_kwargs = {
@@ -72,7 +74,7 @@ class ProjectForm(forms.ModelForm):
 
                 Row(
                     Field('status', edit=editable, wrapper_class='col-md-5'),
-                    Field('administrators', edit=editable, wrapper_class='col-md-7'),
+                    Field('administrators', edit=editable, wrapper_class='col-md-7', show=user_authenticated),
                 ),
             ),
 
@@ -80,7 +82,7 @@ class ProjectForm(forms.ModelForm):
                 Row(
                     Column(Field('nomination_policy', edit=editable), css_class='col-md-5'),
                     Column(
-                        Field('nominators', edit=editable),
+                        Field('nominators', edit=editable, show=user_authenticated),
                         Field('nominator_blacklist', edit=editable, show=editable),
                         css_class='col-md-7'
                     ),
@@ -150,7 +152,7 @@ class NominationForm(forms.ModelForm):
     resource = forms.URLField(widget=ResourceInput, initial='http://')
 
     def __init__(self, *args, react_data=None, table=None, editable=False,
-                 tabbed=False, instance=None, **kwargs):
+                 request=None, tabbed=False, instance=None, **kwargs):
         super().__init__(*args, instance=instance, **kwargs)
         self.react_data = react_data
 
@@ -238,7 +240,7 @@ class ClaimForm(forms.ModelForm):
             'crawl_end_date': DateInput,
         }
 
-    def __init__(self, *args, editable=False, **kwargs) -> None:
+    def __init__(self, *args, editable=False, request=None, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
         self.fields['organization'].queryset = self.fields['organization'].queryset.filter(

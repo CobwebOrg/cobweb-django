@@ -76,7 +76,7 @@ class UserProfileForm(ModelForm):
         fields = ['first_name', 'last_name', 'email', 'url',
                   'organization', 'professional_title']
 
-    def __init__(self, *args, editable=True, **kwargs):
+    def __init__(self, *args, editable=True, request=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
 
@@ -121,9 +121,11 @@ class OrganizationForm(ModelForm):
             ),
         }
 
-    def __init__(self, *args, editable=False, **kwargs):
+    def __init__(self, *args, editable=False, request=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
+
+        user_authenticated = request and request.user.is_authenticated
 
         if hasattr(self.instance, 'pk') and self.instance.pk is not None:
             new = False
@@ -170,7 +172,7 @@ class OrganizationForm(ModelForm):
                     slug_field,
                     Field('full_name', edit=editable),
                     Field('short_name', edit=editable),
-                    Field('administrators', edit=editable),
+                    Field('administrators', edit=editable, show=user_authenticated),
                     Field('parent_organization', edit=editable),
                     Field('description', edit=editable),
                     css_class='col-6'
@@ -180,7 +182,7 @@ class OrganizationForm(ModelForm):
                     HField('telephone_number', edit=editable),
                     HField('url', edit=editable),
                     HField('email_address', edit=editable),
-                    HField('contact', edit=editable),
+                    HField('contact', edit=editable, show=user_authenticated),
                     # HField('identifier', edit=editable),
                     form_buttons(**form_buttons_kwargs) if editable else HTML(''),
                     css_class='col-6'

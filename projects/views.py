@@ -49,7 +49,10 @@ class ProjectCreateView(LoginRequiredMixin, FormMessageMixin, RevisionMixin,
     
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['editable'] = True
+        kwargs.update({
+            'editable': True,
+            'request': self.request,
+        })
         return kwargs
 
     def get_table_data(self):
@@ -80,6 +83,9 @@ class ProjectView(FormMessageMixin, RevisionMixin, django_tables2.SingleTableMix
             kwargs.update({
                 'editable': self.get_object().is_admin(self.request.user)
             })
+        kwargs.update({
+            'request': self.request,
+        })
         return kwargs
 
     def get_table_data(self):
@@ -116,6 +122,7 @@ class NominationUpdateView(FormMessageMixin, RevisionMixin,
         kwargs.update({
             'editable': self.get_object().is_admin(self.request.user),
             'tabbed': False,
+            'request': self.request,
         })
 
         if 'data' in kwargs:
@@ -199,6 +206,7 @@ class NominationCreateView(FormMessageMixin, UserPassesTestMixin,
         form_kwargs.update({
             'editable': True,
             'tabbed': False,
+            'request': self.request,
         })
         if 'data' in form_kwargs:
             form_kwargs['data'] = form_kwargs['data'].copy()
@@ -252,6 +260,7 @@ class ClaimCreateView(UserPassesTestMixin, ClaimFormMixin, CreateView):
         nomination = self.get_nomination()
         kwargs.update({
             'editable': True,
+            'request': self.request,
             'instance': models.Claim(
                 nomination=nomination,
                 organization=self.request.user.organization,
@@ -285,6 +294,7 @@ class ClaimUpdateView(ClaimFormMixin, UpdateView):
         nomination = self.get_nomination()
         kwargs.update({
             'editable': self.object.is_admin(self.request.user),
+            'request': self.request,
         })
         return kwargs
 

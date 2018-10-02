@@ -27,8 +27,9 @@ from projects.tables import ClaimTable, NominationTable, ProjectTable, UserProje
 
 class CobwebBaseIndexView(haystack.generic_views.SearchMixin,
                           django_tables2.SingleTableView):
-    template_name = 'generic_index.html'
+    django_ct: str
     queryset = None
+    template_name = 'generic_index.html'
 
     def get_queryset(self):
         if not self.queryset:
@@ -100,7 +101,7 @@ class UserCreateView(FormMessageMixin, RevisionMixin, generic.CreateView):
     form_class = SignUpForm
 
 
-class UserUpdateView(FormMessageMixin, RevisionMixin, generic.UpdateView):
+class UserUpdateView(LoginRequiredMixin, FormMessageMixin, RevisionMixin, generic.UpdateView):
     model = models.User
     template_name = "generic_form.html"
     form_class = UserProfileForm
@@ -114,7 +115,10 @@ class UserUpdateView(FormMessageMixin, RevisionMixin, generic.UpdateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['editable'] = (self.get_object() == self.request.user)
+        kwargs.update({
+            'editable': self.get_object() == self.request.user,
+            'request': self.request,
+        })
         return kwargs
 
 
@@ -156,7 +160,10 @@ class OrganizationCreateView(LoginRequiredMixin, FormMessageMixin, RevisionMixin
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['editable'] = True
+        kwargs.update({
+            'editable': True,
+            'request': self.request,
+        })
         return kwargs
 
 
@@ -168,7 +175,10 @@ class OrganizationView(FormMessageMixin, RevisionMixin, generic.UpdateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['editable'] = self.get_object().is_admin(self.request.user)
+        kwargs.update({
+            'editable': self.get_object().is_admin(self.request.user),
+            'request': self.request,
+        })
         return kwargs
 
 
