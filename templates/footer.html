@@ -4,8 +4,8 @@
     <hr>
     <div class="d-flex justify-content-end">
         <span class="float-left mr-auto">©2018 Regents of the University of California</span>
-        <a href="#">{% trans "About CobWeb" %}</a> <span class="mx-2">•</span>
-        <a href="#">{% trans "Terms of Use" %}</a> <span class="mx-2">•</span>
-        <a id="contact-us-link" href="#">{% trans "Contact Us" %}</a>
+        <a href="{% url 'about_cobweb' %}">{% trans "About CobWeb" %}</a> <span class="mx-2">•</span>
+        <a href="{% url 'terms_of_use' %}">{% trans "Terms of Use" %}</a> <span class="mx-2">•</span>
+        <a id="contact-us-link" href="{% url 'contact_us' %}">{% trans "Contact Us" %}</a>
     </div>
 </footer>

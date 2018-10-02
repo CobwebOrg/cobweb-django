@@ -120,6 +120,22 @@ urlpatterns = [
              extra_context={'terms': TERMS}
          ),
          name='glossary'),
+    path('about_cobweb',
+         TemplateView.as_view(template_name='static_pages/static_page.html',
+                              extra_context={'text': 'static_pages/about_cobweb.html'}),
+         name='about_cobweb'),
+    path('getting_started',
+         TemplateView.as_view(template_name='static_pages/static_page.html',
+                              extra_context={'text': 'static_pages/getting_started.html'}),
+         name='getting_started'),
+    path('terms_of_use',
+         TemplateView.as_view(template_name='static_pages/static_page.html',
+                              extra_context={'text': 'static_pages/terms_of_use.html'}),
+         name='terms_of_use'),
+    path('contact_us',
+         TemplateView.as_view(template_name='static_pages/static_page.html',
+                              extra_context={'text': 'static_pages/contact_us.html'}),
+         name='contact_us'),
 
     path('admin', admin.site.urls),
 ]

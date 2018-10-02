@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="row h-100">
+
+        <div class="col-6 h-100 p-5">
+          {% include text %}
+        </div>
+
+    <div class="col h-100 p-5 d-flex flex-column-reverse justify-content-end align-items-center">
+        <img src="{% static 'images/cobweb_logo_300.png' %}"
+             style="max-width: 70%; max-height: 70%" 
+             class="flex-shrink-1">
+    </div>
+
+  </div>
+{% endblock %}
