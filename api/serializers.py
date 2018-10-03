@@ -51,7 +51,7 @@ class NominationMDSerialier(serializers.ModelSerializer):
     """
     class Meta:
         model = Nomination
-        fields = ['title', 'author', 'language', 'description', 'tags', 'subject_headings']
+        fields = ['title', 'creator', 'language', 'description', 'tags', 'subject_headings']
 
     language = LanguageSerializer(required=False)
     tags = TagSerializer(required=False, many=True)

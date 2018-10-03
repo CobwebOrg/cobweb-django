@@ -2,7 +2,7 @@
 
 {% for nomination in object.nominations.all %}
   {{nomination.title}}
-  {{nomination.author}}
+  {{nomination.creator}}
   {{nomination.language}}
   {{nomination.description}}
   {{nomination.tags|join:'\n'}}

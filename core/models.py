@@ -264,7 +264,7 @@ class Resource(models.Model):
     title = models.CharField(max_length=200, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     tags = models.ManyToManyField(Tag, blank=True)  # crosswalk to <meta name="keywords">
-    author = models.CharField(max_length=200, null=True, blank=True)
+    creator = models.CharField(max_length=200, null=True, blank=True)
     language = models.ForeignKey('languages_plus.Language', null=True, blank=True,
                                  on_delete=models.PROTECT)
 
@@ -288,9 +288,9 @@ class Resource(models.Model):
     @property
     def has_metadata(self) -> bool:
         for nomination in self.nominations.all():
-            for field in ['title', 'author', 'language', 'description']:
+            for field in ['title', 'creator', 'language', 'description']:
                 value = getattr(nomination, field)
-                if value and value is not '':
+                if value and value != '':
                     return True
             for field in ['tags', 'subject_headings']:
                 if getattr(nomination, field).count() > 0:

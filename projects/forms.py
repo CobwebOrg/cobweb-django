@@ -116,9 +116,12 @@ def resource_info(editable=False, react_data=None):
     edit_form = Layout(
         HField('resource', edit=editable),
         HField('title', edit=editable),
-        HField('description', edit=editable),
+        Row(
+            Field('creator', edit=editable, wrapper_class='col'),
+            Field('language', edit=editable, wrapper_class='col-4'),
+        ),
+        Field('description', edit=editable),
         Field('tags', edit=editable),
-        Field('language', edit=editable),
     )
 
     if react_data:
@@ -138,7 +141,7 @@ class NominationForm(forms.ModelForm):
     class Meta:
         model = Nomination
         fields = (['resource', 'title', 'description', 'tags', 'language',
-                   'project', 'rationale']
+                   'creator', 'project', 'rationale']
                   + CRAWL_SCOPE_FIELD_NAMES)
         widgets = {
             'tags': autocomplete.ModelSelect2Multiple(

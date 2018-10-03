@@ -153,7 +153,7 @@ class Nomination(models.Model):
     # ABOUT THE RESOURCE
 
     title = models.CharField(max_length=200, null=True, blank=True)
-    author = models.CharField(max_length=200, null=True, blank=True)
+    creator = models.CharField(max_length=200, null=True, blank=True)
     language = models.ForeignKey('languages_plus.Language', null=True, blank=True,
                                  on_delete=models.PROTECT)
     description = models.TextField(null=True, blank=True)
