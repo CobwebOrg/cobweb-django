@@ -118,7 +118,6 @@ title_form_field = Field('title', wrapper_class="col-md-12")
 
 DEFAULT_TITLE = 'Save changes'
 DEFAULT_TEXT = "Click the submit button to save changes, or click cancel to return to Cobweb without Saving."
-
 def form_buttons(confirm_title=DEFAULT_TITLE, confirm_text=DEFAULT_TEXT) -> HTML:
     return HTML(f"""
         <div class="form-section form-button-row">
@@ -127,7 +126,7 @@ def form_buttons(confirm_title=DEFAULT_TITLE, confirm_text=DEFAULT_TEXT) -> HTML
                     <button type="reset" class="btn btn-light btn-outline-dark mr-1">
                         Cancel
                     </button>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#saveModal">
                         Submit
                     </button>
                 </div>
@@ -135,11 +134,11 @@ def form_buttons(confirm_title=DEFAULT_TITLE, confirm_text=DEFAULT_TEXT) -> HTML
         </div>
 
         <!-- Modal for Confirmation Dialog -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{confirm_title}</h5>
+                    <h5 class="modal-title" id="saveModalLabel">{confirm_title}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>

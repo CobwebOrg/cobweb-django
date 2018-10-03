@@ -3,8 +3,9 @@ from typing import Optional
 import django_tables2
 import haystack
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.urls import reverse
-from django.views.generic import CreateView, DetailView, UpdateView
+from django.urls import reverse_lazy
+from django.utils.html import format_html
+from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 from extra_views import InlineFormSetView
 from reversion.views import RevisionMixin
 
@@ -24,14 +25,14 @@ class ProjectIndexView(CobwebBaseIndexView):
         context_data = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated:
             context_data.update({
-                'new_item_link': reverse('project_create'),
+                'new_item_link': reverse_lazy('project_create'),
             })
         return context_data
     
     def get_table_kwargs(self):
         kwargs = super().get_table_kwargs()
         if self.request.user.is_authenticated:
-            kwargs.update({'new_item_link': reverse('project_create')})
+            kwargs.update({'new_item_link': reverse_lazy('project_create')})
         return kwargs
 
 
@@ -46,7 +47,7 @@ class ProjectCreateView(LoginRequiredMixin, FormMessageMixin, RevisionMixin,
         initial = super().get_initial()
         initial['administrators'] = {self.request.user.pk}
         return initial
-    
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs.update({
@@ -74,6 +75,16 @@ class ProjectView(FormMessageMixin, RevisionMixin, django_tables2.SingleTableMix
     def get_context_data(self, **kwargs):
         if 'select_tab' not in kwargs:
             kwargs['show_noms'] = True if len(self.request.GET) > 0 else False
+
+        if self.object.is_admin(self.request.user):
+            kwargs.update({
+                'delete_url': reverse_lazy('project_delete', kwargs=self.kwargs),
+                'delete_text': format_html("""
+                    <p>Are you sure you want to delete the project "{project}"?</p>
+                    <p>All associated nominations and claims will be deleted.</p>
+                """, project=self.object),
+            })
+
         return super().get_context_data(**kwargs)
     
     def get_form_kwargs(self):
@@ -81,7 +92,7 @@ class ProjectView(FormMessageMixin, RevisionMixin, django_tables2.SingleTableMix
         kwargs = super().get_form_kwargs()
         if hasattr(self, 'object'):
             kwargs.update({
-                'editable': self.get_object().is_admin(self.request.user)
+                'editable': self.get_object().is_admin(self.request.user),
             })
         kwargs.update({
             'request': self.request,
@@ -108,12 +119,34 @@ class ProjectView(FormMessageMixin, RevisionMixin, django_tables2.SingleTableMix
         return kwargs
 
 
+class ProjectDeleteView(UserPassesTestMixin, FormMessageMixin, DeleteView):
+    model = models.Project
+    success_url = reverse_lazy('project_list')
+    template_name = 'delete_confirm.html'
+    slug_field = 'slug'
+
+    def test_func(self):
+        return self.get_object().is_admin(self.request.user)
+
+
 class NominationUpdateView(FormMessageMixin, RevisionMixin,
                            django_tables2.SingleTableMixin, UpdateView):
     model = models.Nomination
     form_class = forms.NominationForm
     template_name = 'generic_form.html'
     table_class = ClaimTable
+
+    def get_context_data(self, **kwargs):
+        if self.object.project.is_admin(self.request.user):
+            kwargs.update({
+                'delete_url': reverse_lazy('nomination_delete', kwargs=self.kwargs),
+                'delete_text': format_html("""
+                    <p>Are you sure you want to delete the nomination of "{url}"
+                       to the project "{project}"?</p>
+                    <p>All associated claims will be deleted.</p>
+                """, project=self.object.project, url=self.object.resource.url),
+            })
+        return super().get_context_data(**kwargs)
 
     def get_form_kwargs(self):
         """Return the keyword arguments for instantiating the form."""
@@ -228,6 +261,28 @@ class NominationCreateView(FormMessageMixin, UserPassesTestMixin,
         return self.get_project().is_nominator(self.request.user)
 
 
+class NominationDeleteView(UserPassesTestMixin, FormMessageMixin, DeleteView):
+    model = models.Nomination
+    template_name = 'delete_confirm.html'
+
+    def get_object(self, queryset=None):
+        try:
+            obj = models.Nomination.objects.get(
+                project__pk=self.kwargs['project_pk'],
+                resource__url=self.kwargs['url'],
+            )
+        except queryset.model.DoesNotExist:
+            raise Http404(_("No %(verbose_name)s found matching the query") %
+                          {'verbose_name': queryset.model._meta.verbose_name})
+        return obj
+    
+    def get_success_url(self):
+        return self.object.project.get_absolute_url()
+
+    def test_func(self):
+        return self.get_object().project.is_admin(self.request.user)
+
+
 class ClaimFormMixin(FormMessageMixin, RevisionMixin):
     model = models.Claim
     template_name = 'projects/claim.html'
@@ -288,10 +343,20 @@ class ClaimCreateView(UserPassesTestMixin, ClaimFormMixin, CreateView):
 
 class ClaimUpdateView(ClaimFormMixin, UpdateView):
 
+    def get_context_data(self, **kwargs) -> dict:
+        if (self.object.nomination.project.is_admin(self.request.user)
+            or self.object.organization.is_admin(self.request.user)):
+            context = {
+                'delete_url': reverse_lazy('claim_delete', kwargs=self.kwargs),
+            }
+        else:
+            context = {}
+        context.update(kwargs)
+        return super().get_context_data(**context)  # type: ignore
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
 
-        nomination = self.get_nomination()
         kwargs.update({
             'editable': self.object.is_admin(self.request.user),
             'request': self.request,
@@ -305,3 +370,16 @@ class ClaimUpdateView(ClaimFormMixin, UpdateView):
 
     def get_success_message(self, cleaned_data):
         return f'Successfully updated claim of {self.object.nomination.resource}'
+
+
+class ClaimDeleteView(UserPassesTestMixin, FormMessageMixin, DeleteView):
+    model = models.Claim
+    template_name = 'delete_confirm.html'
+
+    def get_success_url(self):
+        return self.object.nomination.get_absolute_url()
+
+    def test_func(self):
+        obj = self.get_object()
+        return (obj.nomination.project.is_admin(self.request.user)
+                or obj.organization.is_admin(self.request.user))

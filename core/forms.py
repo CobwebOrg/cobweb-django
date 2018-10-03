@@ -81,7 +81,7 @@ class UserProfileForm(ModelForm):
         self.helper = FormHelper(self)
 
         self.helper.layout = Layout(
-            HTML('<h2>User profile: {{object.username}}</h2>'),
+            HTML('<h2>{% include "delete_button.html" %}User profile: {{object.username}}</h2>'),
             Row(
                 Pane(
                     Field('first_name', edit=editable),
@@ -146,7 +146,7 @@ class OrganizationForm(ModelForm):
                     </div>
                 </div>
             """)
-            form_title = HTML('<h2>Organization: {{organization}}</h2>')
+            form_title = HTML('<h2>{% include "delete_button.html" %}Organization: {{organization}}</h2>')
             form_buttons_kwargs = {
                 'confirm_title': 'Save changes',
                 'confirm_text': 'Click the submit button to save changes to this organization or click on cancel to return to Cobweb without saving.',

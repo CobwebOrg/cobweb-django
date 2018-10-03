@@ -4,5 +4,6 @@
 {% block window_title %}Cobweb: {{object.title}}{% endblock %}
 
 {% block content %}
-{% crispy form %}
+    {% include "delete_modal.html" %}
+    {% crispy form %}
 {% endblock %}

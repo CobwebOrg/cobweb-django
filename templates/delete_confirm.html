@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load model_name from cobweb_look %}
+
+{% block window_title %}Cobweb: Delete {{object}}?{% endblock %}
+
+{% block content %}
+    <form action="{{delete_url}}" method="delete">{% csrf_token %}
+        <h5>
+            {% if delete_confirm_title %}
+                {{delete_confirm_title}}
+            {% else %}
+                Delete {{object | model_name | capfirst}}?
+            {% endif %}
+        </h5>
+        {% if delete_confirm_text %}
+            {{delete_confirm_text}}
+        {% else %}
+            Are you sure you want to delete
+            {{object | model_name | capfirst}} {{object}}?
+        {% endif %}
+        <a class="btn btn-light btn-outline-dark mr-1"
+           href="{{object.get_absolute_url}}">Cancel</button>
+        <input name="submit" value="Delete" class="btn btn-primary"
+               id="submit-id-submit" type="submit">
+    </form>
+{% endblock %}

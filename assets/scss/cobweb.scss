@@ -285,6 +285,13 @@ textarea.form-control {
   font-weight: 600;
 }
 
+.btn-delete {
+  @extend .btn-light, .text-gray, .p-1 ;
+}
+
+.btn-delete:hover {
+  @extend .text-white ;
+}
 
 h1, h2 {
   font-weight: 600;

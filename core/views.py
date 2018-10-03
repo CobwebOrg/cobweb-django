@@ -2,14 +2,15 @@ import django_tables2
 import haystack
 from dal import autocomplete
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import LoginView as django_LoginView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.http import Http404
-from django.shortcuts import redirect, reverse
+from django.shortcuts import redirect
 from django.utils.html import format_html
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 from haystack.generic_views import SearchView as HaystackGenericSearchView
 from haystack.query import SearchQuerySet
@@ -54,6 +55,7 @@ class FormMessageMixin(SuccessMessageMixin):
     def get_success_message(self, cleaned_data):
         verb = (     'created' if isinstance(self, generic.CreateView)
                 else 'changed' if isinstance(self, generic.UpdateView)
+                else 'deleted' if isinstance(self, generic.DeleteView)
                 else 'saved')
         return f'Successfully {verb} {self.object._meta.verbose_name} {self.object}'
 
@@ -73,7 +75,7 @@ class DashboardView(LoginRequiredMixin,
     def get_table_kwargs(self):
         kwargs = super().get_table_kwargs()
         if self.request.user.is_authenticated:
-            kwargs.update({'new_item_link': reverse('project_create')})
+            kwargs.update({'new_item_link': reverse_lazy('project_create')})
         return kwargs
 
 
@@ -101,7 +103,8 @@ class UserCreateView(FormMessageMixin, RevisionMixin, generic.CreateView):
     form_class = SignUpForm
 
 
-class UserUpdateView(LoginRequiredMixin, FormMessageMixin, RevisionMixin, generic.UpdateView):
+class UserUpdateView(LoginRequiredMixin, FormMessageMixin, RevisionMixin,
+                     generic.UpdateView):
     model = models.User
     template_name = "generic_form.html"
     form_class = UserProfileForm
@@ -111,6 +114,12 @@ class UserUpdateView(LoginRequiredMixin, FormMessageMixin, RevisionMixin, generi
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['user'] = self.request.user
+        if self.get_object() == self.request.user:
+            context.update({
+                'delete_url': reverse_lazy('user_delete', kwargs=self.kwargs),
+                'delete_confirm_title': 'Delete your Cobweb account?',
+                'delete_confirm_text': 'Are your sure you want to delete your Cobweb account? This cannot be undone.',
+            })
         return context
 
     def get_form_kwargs(self):
@@ -120,6 +129,17 @@ class UserUpdateView(LoginRequiredMixin, FormMessageMixin, RevisionMixin, generi
             'request': self.request,
         })
         return kwargs
+
+
+class UserDeleteView(UserPassesTestMixin, FormMessageMixin, generic.DeleteView):
+    model = models.User
+    success_url = reverse_lazy('landing_page')
+    template_name = 'delete_confirm.html'
+    slug_field = 'username'
+    slug_url_kwarg = 'username'
+
+    def test_func(self):
+        return self.request.user == self.get_object()
 
 
 class UserAutocomplete(autocomplete.Select2QuerySetView):
@@ -148,7 +168,7 @@ class OrganizationIndexView(CobwebBaseIndexView):
     def get_table_kwargs(self):
         kwargs = super().get_table_kwargs()
         if self.request.user.is_authenticated:
-            kwargs.update({'new_item_link': reverse('organization_create')})
+            kwargs.update({'new_item_link': reverse_lazy('organization_create')})
         return kwargs
 
 
@@ -173,6 +193,15 @@ class OrganizationView(FormMessageMixin, RevisionMixin, generic.UpdateView):
     form_class = OrganizationForm
     slug_field = 'slug'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.request.user
+        if self.get_object().is_admin(self.request.user):
+            context.update({
+                'delete_url': reverse_lazy('organization_delete', kwargs=self.kwargs),
+            })
+        return context
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs.update({
@@ -180,6 +209,16 @@ class OrganizationView(FormMessageMixin, RevisionMixin, generic.UpdateView):
             'request': self.request,
         })
         return kwargs
+
+
+class OrganizationDeleteView(UserPassesTestMixin, FormMessageMixin, generic.DeleteView):
+    model = models.Organization
+    success_url = reverse_lazy('landing_page')
+    template_name = 'delete_confirm.html'
+    slug_field = 'slug'
+
+    def test_func(self):
+        return self.get_object().is_admin(self.request.user)
 
 
 class ResourceListView(CobwebBaseIndexView):
@@ -248,7 +287,7 @@ class ResourceView(generic.DetailView):
                 normalized_url = models.normalize_url(kwargs['url'])
                 if normalized_url != kwargs['url']:
                     return redirect(
-                        reverse('resource', kwargs={'url': normalized_url})
+                        reverse_lazy('resource', kwargs={'url': normalized_url})
                     )
             except ValidationError:
                 raise Http404("{} is not a valid URL".format(kwargs['url']))

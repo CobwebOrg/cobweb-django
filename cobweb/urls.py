@@ -38,12 +38,12 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
-    url(r'^search/',
-        haystack.views.SearchView(form_class=core.forms.SearchForm),
-        name='search'),
+    path('search/',
+         haystack.views.SearchView(form_class=core.forms.SearchForm),
+         name='search'),
 
-    url(r'^$', core.views.get_landing_page_view, name='landing_page'),
-    
+    path('', core.views.get_landing_page_view, name='landing_page'),
+
     path('dashboard', core.views.DashboardView.as_view(), name='dashboard'),
 
     # Auth: /login, /logout, /password_change, /password_reset, /reset
@@ -51,48 +51,60 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
 
     # User
+    path('user_list',
+         core.views.UserIndexView.as_view(),
+         name='user_list'),
+    path('user_create',
+         core.views.UserCreateView.as_view(),
+         name='user_create'),
     path('user/<slug:username>',
          core.views.UserUpdateView.as_view(),
          name='user'),
-    path('user_create',
-        core.views.UserCreateView.as_view(),
-        name='user_create'),
-    path('user_list',
-        core.views.UserIndexView.as_view(),
-        name='user_list'),
+    path('user_delete/<slug:username>',
+         core.views.UserDeleteView.as_view(),
+         name='user_delete'),
     path('user_autocomplete',
-        core.views.UserAutocomplete.as_view(),
-        name='user_autocomplete'),
-    
+         core.views.UserAutocomplete.as_view(),
+         name='user_autocomplete'),
+
     # Organization
     path('org/',
          core.views.OrganizationIndexView.as_view(),
          name='organization_list'),
-    path('org/<slug:slug>',
-         core.views.OrganizationView.as_view(),
-         name='organization'),
     path('org_create',
          core.views.OrganizationCreateView.as_view(),
          name='organization_create'),
+    path('org/<slug:slug>',
+         core.views.OrganizationView.as_view(),
+         name='organization'),
+    path('org_delete/<slug:slug>',
+         core.views.OrganizationDeleteView.as_view(),
+         name='organization_delete'),
 
     # Project
     path('proj/',
-        projects.views.ProjectIndexView.as_view(),
-        name='project_list'),
-    path('proj/<int:pk>',
-        projects.views.ProjectView.as_view(),
-        name='project'),
+         projects.views.ProjectIndexView.as_view(),
+         name='project_list'),
     path('proj_create',
-        projects.views.ProjectCreateView.as_view(),
-        name='project_create'),
+         projects.views.ProjectCreateView.as_view(),
+         name='project_create'),
+    path('proj/<int:pk>',
+         projects.views.ProjectView.as_view(),
+         name='project'),
+    path('proj_delete/<int:pk>',
+         projects.views.ProjectDeleteView.as_view(),
+         name='project_delete'),
 
     # Nomination
     path('proj/<int:project_pk>/nominate',
-        projects.views.NominationCreateView.as_view(),
-        name='nomination_create'),
+         projects.views.NominationCreateView.as_view(),
+         name='nomination_create'),
     path('proj/<int:project_pk>/<path:url>',
-        projects.views.NominationUpdateView.as_view(),
-        name='nomination_update'),
+         projects.views.NominationUpdateView.as_view(),
+         name='nomination_update'),
+    path('nom_delete/<int:project_pk>/<path:url>',
+         projects.views.NominationDeleteView.as_view(),
+         name='nomination_delete'),
 
     # Claim
     path('nomination/<int:nomination_pk>/claim',
@@ -101,6 +113,9 @@ urlpatterns = [
     path('claim/<int:pk>',
          projects.views.ClaimUpdateView.as_view(),
          name='claim'),
+    path('claim_delete/<int:pk>',
+         projects.views.ClaimDeleteView.as_view(),
+         name='claim_delete'),
 
     # Tags
     # path('tags/<int:pk>/',

@@ -7,8 +7,10 @@
 {% block title %}Cobweb: {{ claim }}{% endblock %}
 
 {% block content %}
+    {% include "delete_modal.html" %}
     <div class="row">
         <h2 class="col mt-1 mb-3">
+            {% include "delete_button.html" %}
             Claim nominated URL{% if object.nomination.resource %}: {{object.nomination.resource}}{% endif %}
         </h2>
     </div>

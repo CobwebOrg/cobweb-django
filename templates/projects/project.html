@@ -9,8 +9,10 @@
 
 {% block content %}
     <div class="row">
+        {% include "delete_modal.html" %}
         <h2 class="col mt-1 mb-3">
             {% if object.title %}
+                {% include "delete_button.html" %}
                 {% term "project" "capitalize" %}: {{object.title}}
             {% else %}
                 New {% term "project" %}
