@@ -14,8 +14,13 @@ MAPPING = {
     Organization: [None],
     # Resource: [Resource],  # don't think I'm storing anything there
     Project: [None],
-    Nomination: ['project', 'resource'],
-    # Claim: ['nomination.project'],
+    Nomination: [None, 'project', 'resource'],
+    Claim: [
+        'nomination.project',
+        'nomination.resource',
+        'organization',
+        'nomination',
+    ],
     # ImportedRecord: [Resource],  # makes the sync take too long: do it manually after
 }
 

@@ -73,9 +73,6 @@ class NominationIndex(indexes.SearchIndex, indexes.Indexable):
 
     def index_queryset(self, using=None):
         return self.get_model().objects.exclude(deleted__exact=True)
-    
-    def update_object(self):
-        super().update_object()
 
 
 class ClaimIndex(indexes.ModelSearchIndex, indexes.Indexable):
