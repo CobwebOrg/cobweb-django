@@ -76,6 +76,7 @@ class FormSection(Div):
 
 def crawl_scope_fields(editable: bool=False) -> FormSection:
     return FormSection(
+        Field('intended_crawling_tool', edit=editable),
         Row(
             Column(Field('crawl_start_date', placeholder='YYYY-MM-DD',  edit=editable),
                    css_class='col-4'),

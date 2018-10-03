@@ -186,7 +186,13 @@ class Nomination(models.Model):
         choices=[(x, x) for x in ("one time", "twice daily", "daily", "weekly",
                                   "monthly", "quarterly", "annually")]
     )
-        
+
+    intended_crawling_tool = models.CharField(
+        null=True, blank=True, max_length=50,
+        choices=[(x, x) for x in ("Archive-It", "Brozzler", "Heritrix 1",
+                                  "Heritrix 3", "Webrecorder", "Other")],
+    )
+
     follow_links = models.IntegerField(null=True, blank=True, choices=[(1, 1), (2, 2)])
     page_scope = models.CharField(
         null=True, blank=True, max_length=50,
@@ -297,6 +303,12 @@ class Claim(models.Model):
         null=True, blank=True, max_length=50,
         choices=[(x, x) for x in ("one time", "twice daily", "daily", "weekly",
                                   "monthly", "quarterly", "annually")]
+    )
+
+    intended_crawling_tool = models.CharField(
+        null=True, blank=True, max_length=50,
+        choices=[(x, x) for x in ("Archive-It", "Brozzler", "Heritrix 1",
+                                  "Heritrix 3", "Webrecorder", "Other")],
     )
 
     follow_links = models.IntegerField(null=True, blank=True, choices=[(1, 1), (2, 2)])

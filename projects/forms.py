@@ -98,6 +98,7 @@ CRAWL_SCOPE_FIELD_NAMES = [
     'crawl_start_date',
     'crawl_end_date',
     'crawl_frequency',
+    'intended_crawling_tool',
     'follow_links',
     'page_scope',
     'ignore_robots_txt',
