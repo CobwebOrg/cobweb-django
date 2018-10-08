@@ -20,13 +20,23 @@ class UserAdmin(VersionAdmin, auth.admin.UserAdmin):
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
+    search_fields = ['first_name', 'last_name', 'email']
     inlines = (NoteInline,)
 
 
 @admin.register(models.Organization)
 class OrganizationAdmin(VersionAdmin):
-    pass
-    # inlines = [APIEndpointInline, NoteInline]
+    fieldsets = (
+        (None, {'fields': ('slug', 'full_name', 'short_name',
+                           'parent_organization', 'description')}),
+        ('People', {'fields': ('administrators', 'contact')}),
+        ('Contact', {'fields': ('address', 'telephone_number', 'url', 'email_address',
+                                'identifier')}),
+    )
+    autocomplete_fields = ['parent_organization', 'administrators', 'contact']
+    search_fields = ['slug', 'short_name', 'full_name']
+    readonly_fields = ['slug', 'identifier']
+    inlines = [APIEndpointInline, NoteInline]
 
 
 @admin.register(models.Note)
@@ -37,10 +47,14 @@ class NoteAdmin(VersionAdmin):
 @admin.register(models.Tag)
 class TagAdmin(VersionAdmin):
     model = models.Tag
+    search_fields = ['Name']
     # inlines = [ ProjectInline ]
 
 
 @admin.register(models.Resource)
 class ResourceAdmin(VersionAdmin):
     model = models.Resource
+    fields = ['url']
+    readonly_fields = ['url']
     inlines = (NominationInline, NoteInline)
+    autocomplete_fields = ['language']

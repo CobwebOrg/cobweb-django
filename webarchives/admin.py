@@ -8,16 +8,18 @@ class APIEndpointInline(admin.TabularInline):
     model = models.APIEndpoint
     extra = 0
     show_change_link = True
-
-    fields = ('__all__',)
-    # readonly_fields = fields
+    fields = ['organization', 'url', 'last_updated']
+    autocomplete_fields = ['organization']
+    readonly_fields = ['last_updated']
 
 @admin.register(models.APIEndpoint)
 class APIEndpointAdmin(admin.ModelAdmin):
-    pass
-    # fields = ['location', 'organization', 'last_updated', 'importer_class_name']
-    # readonly_fields = ['last_updated']
+    fields = ['organization', 'url', 'last_updated']
+    autocomplete_fields = ['organization']
+    readonly_fields = ['last_updated']
 
 @admin.register(models.ImportedRecord)
 class ImportedRecordAdmin(admin.ModelAdmin):
-    pass
+    fields = ['source_feed', 'identifier', 'metadata', 'record_type',
+              'resource', 'parents']
+    readonly_fields = fields
