@@ -10,7 +10,7 @@ COPY . /code/
 
 FROM base as production
 ENV DJANGO_SETTINGS_MODULE cobweb.settings
-RUN ["python3", "manage.py", "collectstatic"]
+RUN COBWEB_SECRET_KEY='abcdefghijklmnopqrstuvwxyz' python3 manage.py collectstatic
 CMD ["python3", "scripts/start-production.py"]
 
 FROM base as dev

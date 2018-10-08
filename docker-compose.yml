@@ -45,6 +45,7 @@ services:
       - solr
     working_dir: /code
     environment:
+      COBWEB_SECRET_KEY: 'abcdefghijklmnopqrstuvwxyz'
       DJANGO_STATIC_ROOT: "/staticfiles"
       DEBUG: "true"
       TEST: "false"
@@ -77,6 +78,8 @@ services:
       context: .
       target: production
     image: andrewwallace/cobweb:latest
+    environment:
+      COBWEB_SECRET_KEY: 'abcdefghijklmnopqrstuvwxyz'
     command: "echo 'Built production web image. Bye!'"
 
 

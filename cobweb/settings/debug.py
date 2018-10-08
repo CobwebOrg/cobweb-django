@@ -20,9 +20,6 @@ CRISPY_FAIL_SILENTLY = False
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = '/email_dump'
 
-if not SECRET_KEY:
-    SECRET_KEY = 'abcdefghijklmnopqrstuvwxyz'
-
 # Django Debug Toolbar
 
 INSTALLED_APPS += [

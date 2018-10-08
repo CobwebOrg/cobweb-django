@@ -18,7 +18,7 @@ BASE_DIR = str(path)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # cf. https://gist.github.com/ndarville/3452907
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('COBWEB_SECRET_KEY')
 
 # Guess DEBUG and TESTING, but these should be set in settings/[environment].py
 

@@ -15,9 +15,6 @@ CRISPY_FAIL_SILENTLY = False
 
 # DATABASES['default']['NAME'] = 'test_postgres'
 
-if not SECRET_KEY:
-    SECRET_KEY = 'abcdefghijklmnopqrstuvwxyz'
-
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
