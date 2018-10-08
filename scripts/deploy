@@ -1,12 +1,15 @@
 #! /usr/bin/env sh
 
+SERVER=${1:-cobwebdev}
+
+git push &
+
 docker-compose build
 docker-compose push
 
-git push &
-scp docker-compose.production.yml cobwebdev:~/docker-compose.production.yml &
-scp docker-compose.production.secrets.yml cobwebdev:~/docker-compose.production.secrets.yml &
+scp docker-compose.production.yml "$SERVER":~/docker-compose.production.yml &
+scp docker-compose.production.secrets.yml "$SERVER":~/docker-compose.production.secrets.yml
 
-ssh cobwebdev docker pull andrewwallace/cobweb_solr:latest
-ssh cobwebdev docker pull andrewwallace/cobweb:latest
-ssh cobwebdev docker stack deploy -c docker-compose.production.yml -c docker-compose.production.secrets.yml cobweb
+ssh "$SERVER" docker pull andrewwallace/cobweb_solr:latest
+ssh "$SERVER" docker pull andrewwallace/cobweb:latest
+ssh "$SERVER" docker stack deploy -c docker-compose.production.yml -c docker-compose.production.secrets.yml cobweb
