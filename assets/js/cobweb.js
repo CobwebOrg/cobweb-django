@@ -8,6 +8,8 @@ import 'bootstrap';
 import fontawesome from '@fortawesome/fontawesome';
 import solid from '@fortawesome/fontawesome-free-solid';
 
+import Select from 'react-select';
+
 fontawesome.library.add(solid);
 
 // Enable tooltips and popovers
@@ -25,5 +27,6 @@ window.Dashboard = Dashboard;
 window.ReactDOM = ReactDOM;
 window.React = React;
 window.components = {
-  Resource: Resource
+  Resource: Resource,
+  Select: Select
 };
