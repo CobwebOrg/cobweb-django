@@ -54,10 +54,6 @@ class User(AbstractUser):
 
     notes = GenericRelation('Note')
 
-    # @property
-    # def projects(self):
-    #     return 
-
     @property
     def impact_factor(self):
         # TODO: actuall implement functional requirement
@@ -218,7 +214,7 @@ class Tag(models.Model):
         return self.title
     
     def __repr__(self):
-        return f'<Tag self.title>'
+        return f'Tag(title="{self.title}")'
 
 
 class SubjectHeading(models.Model):
@@ -236,7 +232,7 @@ class SubjectHeading(models.Model):
         return self.title
 
     def __repr__(self):
-        return f'<SubjectHeading {self.title}>'
+        return f'SubjectHeading(title="{self.title}")'
 
 
 MDDict = NewType('MDDict', Dict[str, List[str]])
@@ -271,7 +267,7 @@ class Resource(models.Model):
     notes = GenericRelation(Note)
 
     def __repr__(self):
-        return f'<Resource {self.url}>'
+        return f'Resource(url="{self.url}")'
 
     def __str__(self):
         return self.url
@@ -358,4 +354,4 @@ class CrawlScope(models.Model):
         return self.title
     
     def __repr__(self):
-        return f'<CrawlScope self.title>'
+        return f'CrawlScope(title="{self.title}")'

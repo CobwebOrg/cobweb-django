@@ -35,8 +35,7 @@ class ImportedRecord(models.Model):
     source_feed = models.ForeignKey('APIEndpoint', on_delete=models.CASCADE)
     identifier = models.CharField(max_length=2000, unique=True)
     metadata = JSONField(default=dict)
-    
-    
+
     record_type = models.CharField(max_length=2000)
     resource = models.ForeignKey('core.Resource', on_delete=models.PROTECT,
                                  null=True, blank=True,
@@ -139,9 +138,9 @@ class APIEndpoint(PolymorphicModel):
 
     def __str__(self):
         return self.url
-    
+
     def __repr__(self):
-        return f'<APIEndpoint self.url>'
+        return f'{type(self).__name__}(url="{self.url}")'
 
 
 class OAIPMHEndpoint(APIEndpoint):
