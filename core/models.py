@@ -52,6 +52,8 @@ class User(AbstractUser):
     # Preferences
     get_notification_emails = models.BooleanField(default=True)
 
+    terms_accepted = models.BooleanField(default=False)
+
     notes = GenericRelation('Note')
 
     @property

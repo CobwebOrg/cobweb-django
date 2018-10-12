@@ -1,15 +1,11 @@
-from copy import deepcopy
-
 import haystack.forms
 from crispy_forms.helper import FormHelper
 from dal import autocomplete
-from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.forms import ModelForm, CharField, inlineformset_factory, Form, HiddenInput
-from django.forms.models import model_to_dict
+from django.forms import ModelForm, BooleanField
 
 from core.layout import *
-from core.models import User, Organization, Resource
+from core.models import User, Organization
 
 
 class LoginForm(AuthenticationForm):
@@ -42,7 +38,9 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email']
+        fields = ['username', 'first_name', 'last_name', 'email', 'terms_accepted']
+
+    terms_accepted = BooleanField(required=True)
 
     def __init__(self, *args, edit=True, **kwargs):
         super().__init__(*args, **kwargs)
@@ -54,18 +52,17 @@ class SignUpForm(UserCreationForm):
                     Field('first_name', edit=edit),
                     Field('last_name', edit=edit),
                     Field('email', edit=edit),
-                    # HTML('[[TERMS OF USE]]'),
                     css_class='col-6',
                 ),
                 Column(
                     Field('username', edit=edit),
                     Field('password1', edit=edit),
                     Field('password2', edit=edit),
-
-                    FORM_BUTTONS,
                     css_class='col-6',
                 )
-            )
+            ),
+            Field('terms_accepted', edit=edit, template='core/accept_terms.html'),
+            FORM_BUTTONS,
         )
 
 
