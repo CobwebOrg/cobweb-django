@@ -89,7 +89,7 @@ class ProjectForm(forms.ModelForm):
                 ),
             ),
 
-            FormSection(Row(Column(Field('tags', edit=editable)))),
+            FormSection(select_field('tags', editable=editable)),
 
             form_buttons(**form_buttons_kwargs) if editable else HTML(''),
         )
@@ -122,7 +122,7 @@ def resource_info(editable=False, react_data=None):
             Field('language', edit=editable, wrapper_class='col-4'),
         ),
         Field('description', edit=editable),
-        Field('tags', edit=editable),
+        select_field('tags', editable=editable),
     )
 
     if react_data:

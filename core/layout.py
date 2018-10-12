@@ -227,6 +227,17 @@ def info_tabs(*tabs: InfoTab) -> LayoutObject:
     )
 
 
+def select_field(field_name='tags', editable=False):
+    return Layout(
+        Field(field_name, edit=editable),
+        HTML("""<p>
+            This functionality is under development.
+            Should you have any issues with this functionality,
+            please <a href="mailto:cobwebarchive@gmail.com">contact us</a>.
+        </p>""" if editable else ''),
+    )
+
+
 class BaseHeader(Layout):
     def __init__(self, *args, **kwargs):
         super().__init__(HTML(f'<h{self.n}>'), *
