@@ -2,8 +2,7 @@
 .git
 .gitignore
 
-# Django SECRET_KEY
-secret.txt
+docker-compose*.yml
 staticfiles
 
 # node stuff
