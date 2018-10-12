@@ -18,6 +18,7 @@ def test_new_user_form():
         'email': fake.email(),
         'password1': 't3stpassw0rd',
         'password2': 't3stpassw0rd',
+        'terms_accepted': True,
     })
 
     assert test_form.is_valid()
