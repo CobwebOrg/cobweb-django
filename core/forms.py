@@ -169,7 +169,7 @@ class OrganizationForm(ModelForm):
                     slug_field,
                     Field('full_name', edit=editable),
                     Field('short_name', edit=editable),
-                    Field('administrators', edit=editable, show=user_authenticated),
+                    select_field('administrators', edit=editable, show=user_authenticated),
                     Field('parent_organization', edit=editable),
                     Field('description', edit=editable),
                     css_class='col-6'

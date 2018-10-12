@@ -227,14 +227,14 @@ def info_tabs(*tabs: InfoTab) -> LayoutObject:
     )
 
 
-def select_field(field_name='tags', editable=False):
+def select_field(field_name='tags', **field_kwargs):
     return Layout(
-        Field(field_name, edit=editable),
+        Field(field_name, **field_kwargs),
         HTML("""<p>
             This functionality is under development.
             Should you have any issues with this functionality,
             please <a href="mailto:cobwebarchive@gmail.com">contact us</a>.
-        </p>""" if editable else ''),
+        </p>"""),
     )
 
 
