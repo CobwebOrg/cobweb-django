@@ -17,7 +17,7 @@ class Project(models.Model):
     description = models.TextField(null=True, blank=False,
                                    help_text=help_text.PROJECT_DESCRIPTION)
     collecting_scope = models.TextField(
-        null=True, blank=False,
+        null=True, blank=True,
         help_text=help_text.PROJECT_COLLECTING_SCOPE,
         )
 
@@ -44,14 +44,14 @@ class Project(models.Model):
     nominators = models.ManyToManyField(
         settings.AUTH_USER_MODEL, blank=True,
         related_name='projects_nominating',
-        help_text='PROJECT_NOMINATORS',
+        help_text=help_text.PROJECT_NOMINATORS,
     )
 
     nominator_blacklist = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         blank=True,
         related_name='projects_blacklisted',
-        help_text='PROJECT_NOMINATOR_BLACKLIST',
+        help_text=help_text.PROJECT_NOMINATOR_BLACKLIST,
     )
 
     status = models.CharField(
