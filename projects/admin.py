@@ -8,7 +8,9 @@ from projects.admin_inlines import NominationInline
 
 @admin.register(Project)
 class ProjectAdmin(VersionAdmin):
-    inlines = [NominationInline, NoteInline]
+    autocomplete_fields = ['administrators', 'nominator_orgs', 'nominators',
+                           'nominator_blacklist', 'tags', 'subject_headings']
+    # inlines = [NominationInline, NoteInline]
 
 
 @admin.register(Nomination)

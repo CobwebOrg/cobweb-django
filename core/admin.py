@@ -51,6 +51,13 @@ class TagAdmin(VersionAdmin):
     # inlines = [ ProjectInline ]
 
 
+@admin.register(models.SubjectHeading)
+class SubjectHeadingAdmin(VersionAdmin):
+    model = models.SubjectHeading
+    search_fields = ['Name']
+    # inlines = [ ProjectInline ]
+
+
 @admin.register(models.Resource)
 class ResourceAdmin(VersionAdmin):
     model = models.Resource
