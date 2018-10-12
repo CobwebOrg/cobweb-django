@@ -34,10 +34,10 @@ class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class NominationViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Nomination.objects.exclude(deleted=True)
+    queryset = Nomination.objects.all()
     serializer_class = serializers.NominationSerializer
 
 
 class ClaimViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Claim.objects.exclude(deleted=True)
+    queryset = Claim.objects.all()
     serializer_class = serializers.ClaimSerializer

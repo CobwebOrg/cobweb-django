@@ -170,8 +170,6 @@ class Nomination(models.Model):
     def needs_claim(self):
         return self.claims.count() == 0
 
-    deleted = models.BooleanField(default=False)
-
     nominated_by = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
 
     rationale = models.TextField(null=True, blank=True,
@@ -259,9 +257,7 @@ class Nomination(models.Model):
 
     @property
     def status(self) -> str:
-        if self.deleted:
-            return 'deleted'
-        elif self.needs_claim:
+        if self.needs_claim:
             return 'unclaimed'
         elif not self.has_holding:
             return 'claimed'
@@ -284,8 +280,6 @@ class Claim(models.Model):
                                      null=False, blank=False, on_delete=models.PROTECT)
 
     # STATUS
-    active = models.BooleanField(default=True)
-    deleted = models.BooleanField(default=False)
     has_holding = models.BooleanField(default=False, verbose_name="held",
                                       help_text=help_text.CLAIM_HELD)
 

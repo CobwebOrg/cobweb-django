@@ -59,7 +59,6 @@ class NominationIndex(indexes.SearchIndex, indexes.Indexable):
 
     status = indexes.CharField(model_attr='status', indexed=True, stored=True)
     # needs_claim = indexes.BooleanField(model_attr='needs_claim', indexed=True, stored=True)
-    # deleted = indexes.(model_attr='deleted', indexed=True, stored=True)
     # nominated_by = indexes.MultiValueField(model_attr='nominated_by', indexed=True, stored=True)
     # rationale = indexes.(model_attr='rationale', indexed=True, stored=True)
     # suggested_crawl_frequency = indexes.(model_attr='suggested_crawl_frequency', indexed=True, stored=True)
@@ -72,7 +71,7 @@ class NominationIndex(indexes.SearchIndex, indexes.Indexable):
         return Nomination
 
     def index_queryset(self, using=None):
-        return self.get_model().objects.exclude(deleted__exact=True)
+        return self.get_model().objects.all()
 
 
 class ClaimIndex(indexes.ModelSearchIndex, indexes.Indexable):
@@ -85,4 +84,4 @@ class ClaimIndex(indexes.ModelSearchIndex, indexes.Indexable):
                                          indexed=True, stored=True)
 
     def index_queryset(self, using=None):
-        return self.get_model().objects.filter(deleted__exact=False)
+        return self.get_model().objects.all()

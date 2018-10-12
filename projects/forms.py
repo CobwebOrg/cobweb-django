@@ -239,7 +239,7 @@ class NominationForm(forms.ModelForm):
 class ClaimForm(forms.ModelForm):
     class Meta:
         model = Claim
-        fields = (['nomination', 'organization', 'active', 'has_holding']
+        fields = (['nomination', 'organization', 'has_holding']
                   + CRAWL_SCOPE_FIELD_NAMES)
         widgets = {
             'tags': autocomplete.ModelSelect2Multiple(
@@ -271,9 +271,11 @@ class ClaimForm(forms.ModelForm):
                 Hidden('nomination', value=self.initial['nomination']),
             )), css_class='form-group'),
             FormSection(
-                Row(Column(HField('organization', edit=editable))),
-                Row(Column(Field('active', edit=editable), css_class='col-6'),
-                    Column(Field('has_holding', edit=editable), css_class='col-6')),
+                Row(
+                    Column(Field('organization', edit=editable), css_class="col-8"),
+                    Column(Field('has_holding', edit=editable)),
+                    css_class="d-flex flex-row align-items-center",
+                )
             ),
             crawl_scope_fields(editable=editable),
             form_buttons(
