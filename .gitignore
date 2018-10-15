@@ -10,6 +10,8 @@ node_modules/
 # SASS
 .sass-cache
 
+.vscode/
+
 # PyCharm
 .idea/
 
