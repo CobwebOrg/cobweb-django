@@ -1,8 +1,0 @@
-{{ object.resource.url }}
-
-{% if object.description %}{{object.description}}{% endif %}
-
-{{object.tags.all|join:', '}}
-
-{% for values in object.metadata.values %}{{values|join:', '}}
-{% endfor %}
