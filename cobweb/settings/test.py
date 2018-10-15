@@ -2,12 +2,14 @@
 Test-specific settings for Cobweb django site. Common settings are in base.py
 """
 
-from cobweb.settings.production import *
-
-
 DEBUG = False
 TESTING = True
 
+
+from cobweb.settings.production import *
+
+
+SECRET_KEY: str = SECRET_KEY or 'abcdefghijklmnopqrstuvwxyz'
 
 CRISPY_FAIL_SILENTLY = False
 

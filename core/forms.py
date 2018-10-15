@@ -1,3 +1,5 @@
+import re
+
 import haystack.forms
 from crispy_forms.helper import FormHelper
 from dal import autocomplete
@@ -189,19 +191,36 @@ class OrganizationForm(ModelForm):
 
         self.helper.help_text_inline = False
 
+# cf. https://daringfireball.net/2010/07/improved_regex_for_matching_urls
+URL_REGEX = '''(?i)\b((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))'''
+
+def quote_urls(query_string):
+    segments = query_string.split('"')
+
+    # only change the odd-numbered segments - evens are inside quotes
+    for i in range(0, len(segments), 2):
+        little_segments = segments[i].split("'")
+
+        # same thing w/ single quotes
+        for j in range(0, len(little_segments), 2):
+            little_segments[j] = re.sub(URL_REGEX, '"$1"', little_segments[j])
+
+        segments[i] = "'".join(little_segments)
+    return '"'.join(segments)
 
 class SearchForm(haystack.forms.SearchForm):
+    def clean_q(self):
+        self.cleaned_data['q'] = quote_urls(
+            self.cleaned_data['q'].get('q') or ''
+        )
+
     def search(self):
         if not self.is_valid():
             return self.no_query_found()
 
-        raw_query =  self.cleaned_data.get('q')
+        raw_query = self.cleaned_data.get('q')
         if raw_query:
             sqs = self.searchqueryset.auto_query(raw_query)
-        else:
-            sqs = self.searchqueryset
-            # return self.no_query_found()
-
 
         if self.load_all:
             sqs = sqs.load_all()

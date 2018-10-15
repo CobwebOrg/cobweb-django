@@ -1,5 +1,4 @@
 {
-    "python.pythonPath": "/Users/andy/.local/share/virtualenvs/cobweb-django-gzHky_-W/bin/python",
     "files.exclude": {
         "node_modules/": true,
         ".mypy_cache": true,
@@ -8,5 +7,9 @@
         ".git": true,
         ".pytest_cache": true,
         "assets/bundles": true
-    }
+    },
+    "python.autoComplete.addBrackets": true,
+    "python.unitTest.pyTestEnabled": true,
+    "python.venvPath": "/Users/andy/.local/share/virtualenvs",
+    "python.pythonPath": "/Users/andy/.local/share/virtualenvs/cobweb-django-gzHky_-W/bin/python"
 }
