@@ -137,10 +137,6 @@
     
     <field name="nomination_pk" type="long" indexed="true" stored="true" multiValued="false" />
     
-    <field name="active" type="boolean" indexed="true" stored="true" multiValued="false" />
-    
-    <field name="deleted" type="boolean" indexed="true" stored="true" multiValued="false" />
-    
     <field name="has_holding" type="boolean" indexed="true" stored="true" multiValued="false" />
     
     <field name="crawl_start_date" type="date" indexed="true" stored="true" multiValued="false" />
@@ -148,6 +144,8 @@
     <field name="crawl_end_date" type="date" indexed="true" stored="true" multiValued="false" />
     
     <field name="crawl_frequency" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
+    <field name="intended_crawling_tool" type="text_en" indexed="true" stored="true" multiValued="false" />
     
     <field name="follow_links" type="long" indexed="true" stored="true" multiValued="false" />
     
