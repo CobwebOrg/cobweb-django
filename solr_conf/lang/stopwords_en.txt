@@ -18,6 +18,10 @@
 stopworda
 stopwordb
 
+# aw
+http
+https
+
 # Standard english stop words taken from Lucene's StopAnalyzer
 a
 an
