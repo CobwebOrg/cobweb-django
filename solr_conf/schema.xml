@@ -93,7 +93,7 @@
     
     <field name="full_name" type="text_en" indexed="true" stored="true" multiValued="false" />
     
-    <field name="administrators" type="text_en" indexed="true" stored="true" multiValued="false" />
+    <field name="administrators" type="text_en" indexed="true" stored="true" multiValued="true" />
     
     <field name="address" type="text_en" indexed="true" stored="true" multiValued="false" />
     
@@ -161,7 +161,7 @@
     
     <field name="nomination_policy" type="text_en" indexed="true" stored="true" multiValued="false" />
     
-    <field name="nominators" type="text_en" indexed="true" stored="true" multiValued="false" />
+    <field name="nominators" type="text_en" indexed="true" stored="true" multiValued="true" />
     
     <field name="impact_factor" type="long" indexed="true" stored="true" multiValued="false" />
     

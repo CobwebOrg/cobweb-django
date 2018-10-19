@@ -64,13 +64,18 @@ class DashboardView(LoginRequiredMixin,
                     django_tables2.SingleTableMixin,
                     generic.TemplateView):
 
-    table_class = UserProjectsTable
+    table_class = ProjectTable
     template_name = 'dashboard.html'
 
     def get_table_data(self):
-        return Project.objects.filter(
-            Q(administrators=self.request.user)
-        )
+        return (
+                SearchQuerySet()
+                .filter(django_ct__exact='projects.project')
+                .filter(administrators__exact=self.request.user.get_absolute_url())
+            )
+        # return Project.objects.filter(
+        #     Q(administrators=self.request.user)
+        # )
     
     def get_table_kwargs(self):
         kwargs = super().get_table_kwargs()

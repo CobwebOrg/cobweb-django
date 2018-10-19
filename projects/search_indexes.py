@@ -15,11 +15,11 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
 
     title = indexes.CharField(model_attr='title', indexed=True, stored=True)
     description = indexes.CharField(model_attr='description', indexed=True, stored=True)
-    administrators = indexes.CharField(indexed=True, null=True, stored=True)
+    administrators = indexes.MultiValueField(indexed=True, null=True, stored=True)
     
     nomination_policy = indexes.CharField(model_attr='nomination_policy', indexed=True, stored=True)
     # nominator_orgs
-    nominators = indexes.CharField(indexed=True, null=True, stored=True)
+    nominators = indexes.MultiValueField(indexed=True, null=True, stored=True)
     # nominator_blacklist
     status = indexes.CharField(model_attr='status', indexed=True, stored=True)
     impact_factor = indexes.IntegerField(model_attr='impact_factor', indexed=True, stored=True)
@@ -37,11 +37,11 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
     def index_queryset(self, using=None):
         return self.get_model().objects.exclude(status='Deleted')
 
-    def prepare_administrators(self, obj: Project) -> str:
-        return '\n'.join(user.get_absolute_url() for user in obj.administrators.all())
+    def prepare_administrators(self, obj: Project) -> List[str]:
+        return [user.get_absolute_url() for user in obj.administrators.all()]
 
-    def prepare_nominators(self, obj: Project) -> str:
-        return '\n'.join(user.get_absolute_url() for user in obj.nominators.all())
+    def prepare_nominators(self, obj: Project) -> List[str]:
+        return [user.get_absolute_url for user in obj.nominators.all()]
 
     def prepare_tags(self, obj: Project) -> List[str]:
         return [tag.name for tag in obj.tags.all()]
