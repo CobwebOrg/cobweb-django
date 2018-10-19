@@ -89,7 +89,7 @@ class ProjectForm(forms.ModelForm):
                 ),
             ),
 
-            FormSection(select_field('tags', editable=editable)),
+            FormSection(select_field('tags', edit=editable)),
 
             form_buttons(**form_buttons_kwargs) if editable else HTML(''),
         )
