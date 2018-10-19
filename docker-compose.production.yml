@@ -19,7 +19,7 @@ services:
     networks:
       - cobwebnet
   db:
-    image: postgres
+    image: postgres:10
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
