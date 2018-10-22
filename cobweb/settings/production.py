@@ -22,6 +22,13 @@ SECRET_KEY = os.environ.get('COBWEB_SECRET_KEY')
 
 # Guess DEBUG and TESTING, but these should be set in settings/[environment].py
 
+# A list of all the people who get code error notifications.
+# cf. https://docs.djangoproject.com/en/2.1/ref/settings/#admins
+ADMINS = [
+    ('Andy', os.environ.get('ANDY_COBWEB_EMAIL')),
+]
+
+
 DEBUG = False
 CRISPY_FAIL_SILENTLY = True
 TESTING = False
