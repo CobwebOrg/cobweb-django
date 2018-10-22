@@ -7,8 +7,7 @@ git push &
 docker-compose build
 docker-compose push
 
-scp docker-compose.production.yml "$SERVER":~/docker-compose.production.yml &
-scp docker-compose.production.secrets.yml "$SERVER":~/docker-compose.production.secrets.yml
+scp docker-compose.production* "$SERVER":~/
 
 ssh "$SERVER" "docker pull andrewwallace/cobweb_solr:latest && \
                docker pull andrewwallace/cobweb:latest && \
