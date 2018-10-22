@@ -7,8 +7,6 @@ services:
       - "80:80"
     depends_on:
       - web
-    volumes:
-      - ./nginx_conf:/etc/nginx/conf.d
     deploy:
       resources:
         limits:
