@@ -180,11 +180,11 @@ class NominationUpdateView(FormMessageMixin, RevisionMixin,
     def get_object(self, queryset=None):
         try:
             # Get the single item from the filtered queryset
-            obj =  models.Nomination.objects.get(
+            obj =  (queryset or models.Nomination.objects).get(
                 project__pk=self.kwargs['project_pk'],
                 resource__url=self.kwargs['url'],
             )
-        except queryset.model.DoesNotExist:
+        except  self.model.DoesNotExist:
             raise Http404(_("No %(verbose_name)s found matching the query") %
                         {'verbose_name': queryset.model._meta.verbose_name})
         return obj
