@@ -82,6 +82,12 @@ services:
       COBWEB_SECRET_KEY: 'abcdefghijklmnopqrstuvwxyz'
     command: "echo 'Built production web image. Bye!'"
 
+  nginx:
+    build:
+      context: .
+      target: nginx
+    image: andrewwallace/cobweb_nginx:latest
+    command: "echo 'Built production nginx image. Bye!'"
 
 volumes:
   postgres_data:

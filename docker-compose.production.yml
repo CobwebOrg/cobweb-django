@@ -1,39 +1,25 @@
 version: '3.6'
 
 services:
-  solr:
-    image: andrewwallace/cobweb_solr:latest
-    # volumes:
-    #   - solr_data:/opt/solr/server/solr/mycores
-    entrypoint:
-      - docker-entrypoint.sh
-      - solr-precreate
-      - cobweb
-      - /opt/solr/server/solr/configsets/cobweb
+  nginx:
+    image: andrewwallace/cobweb_nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+    volumes:
+      - ./nginx_conf:/etc/nginx/conf.d
     deploy:
-      replicas: 1
       resources:
         limits:
           cpus: "0.5"
-          memory: 2G
+          memory: 500MB
     networks:
       - cobwebnet
-  db:
-    image: postgres:10
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - cobwebnet
-    deploy:
-      replicas: 1
-      resources:
-        limits:
-          cpus: "1"
-          memory: 2G
   web:
     image: andrewwallace/cobweb:latest
-    ports:
-      - "80:8000"
+    # ports:
+    #   - "8000:8000"
     depends_on:
       - db
       - solr
@@ -68,6 +54,35 @@ services:
         condition: none
     networks:
       - cobwebnet
+  solr:
+    image: andrewwallace/cobweb_solr:latest
+    # volumes:
+    #   - solr_data:/opt/solr/server/solr/mycores
+    entrypoint:
+      - docker-entrypoint.sh
+      - solr-precreate
+      - cobweb
+      - /opt/solr/server/solr/configsets/cobweb
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 2G
+    networks:
+      - cobwebnet
+  db:
+    image: postgres:10
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - cobwebnet
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "1"
+          memory: 2G
 volumes:
   postgres_data:
   # solr_data:
