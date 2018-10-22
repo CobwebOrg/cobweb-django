@@ -27,6 +27,7 @@ django-polymorphic = "*"
 django-extra-views = "*"
 pyyaml = "*"
 django-react-templatetags = "*"
+whitenoise = "*"
 
 [dev-packages]
 pytest = "*"
