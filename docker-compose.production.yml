@@ -5,8 +5,11 @@ services:
     image: andrewwallace/cobweb_nginx
     ports:
       - "80:80"
+      - "443:443"
     depends_on:
       - web
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
     deploy:
       resources:
         limits:
