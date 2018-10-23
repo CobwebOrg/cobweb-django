@@ -179,4 +179,4 @@ class ClaimTable(CobwebBaseTable):
         {% else %}
             <span class="badge-claimed">Claimed</span>
         {% endif %}
-    """, verbose_name="Claim type")
+    """, verbose_name="Claim type", orderable=False)
