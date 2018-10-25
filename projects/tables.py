@@ -161,7 +161,7 @@ class ClaimTable(CobwebBaseTable):
 
     class Meta(CobwebBaseTable.Meta):
         model = Claim
-        fields = ('claim_type', 'nomination', 'organization', 'link')
+        fields = ('has_holding', 'nomination', 'organization', 'link')
         empty_text = "No Claims."
 
     nomination = django_tables2.LinkColumn(viewname='nomination',
@@ -173,10 +173,10 @@ class ClaimTable(CobwebBaseTable):
         verbose_name='',
     )
 
-    claim_type = django_tables2.TemplateColumn("""
+    has_holding = django_tables2.TemplateColumn("""
         {% if record.has_holding %}
             <span class="badge-held">Held</span>
         {% else %}
             <span class="badge-claimed">Claimed</span>
         {% endif %}
-    """, verbose_name="Claim type", orderable=False)
+    """, verbose_name="Claim type", orderable=True)
