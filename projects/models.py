@@ -12,7 +12,10 @@ from cobweb import settings
 @reversion.register()
 class Project(models.Model):
     """Django ORM model for a Cobweb project."""
-    
+
+    slug = models.SlugField(max_length=50, null=True, blank=False, unique=True,
+                            help_text=help_text.PROJECT_SLUG)
+
     title = models.CharField(max_length=500, unique=True)
     description = models.TextField(null=True, blank=False,
                                    help_text=help_text.PROJECT_DESCRIPTION)

@@ -58,6 +58,8 @@ PROJECT_NOMINATOR_BLACKLIST = """
     return for entry.
     """
 
+PROJECT_SLUG = "Choose a URL for your project's profile on Cobweb."
+
 TAGS = """
     Enter or choose brief descriptive terms. Descriptive terms can include more
     than one word, separated by spaces and ending with a hard return for entry.
