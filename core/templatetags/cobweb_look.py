@@ -127,7 +127,7 @@ def summary(item):
             'description': [item.description] if item.description else [],
             'claims': [
                 format_html('<span class="badge badge-{kind}">{n}</span> {kind}',
-                            kind=kind, n=getattr(item, f'{kind}_nominations'))
+                            kind=kind, n=getattr(item, f'n_{kind}'))
                 for kind in ('claimed', 'held')
                 if getattr(item, f'n_{kind}') > 0
             ],
