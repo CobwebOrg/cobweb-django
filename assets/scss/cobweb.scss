@@ -345,18 +345,19 @@ h2 + h3 {
 
 .datum {
   @extend .mr-1, .mb-1, .badge, .badge-gray ;
-}
 
-.datum-tags, .datum-subject, .datum-language {
-  @extend .badge, .badge-pill, .badge-info ;
-
-  display: inline-block;
+  display: run-in;
   font-size: .65rem;
   font-weight: 700;
   line-height: 1;
   padding: 0.4em 0.5em;
   vertical-align: baseline;
-  white-space: no-wrap;
+}
+
+.datum-line {
+  text-align: left;
+  white-space: normal;
+  word-wrap: break-word;
 }
 
 .big-model-icon{

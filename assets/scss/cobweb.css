@@ -3960,7 +3960,7 @@ header .navbar-pages .navbar-nav .nav-link.active {
   border-top-right-radius: 0.2rem;
   border-bottom-right-radius: 0.2rem; }
 
-.badge, .badge-unclaimed, .badge-claimed, .badge-held, .datum, .datum-tags, .datum-subject, .datum-language {
+.badge, .badge-unclaimed, .badge-claimed, .badge-held, .datum {
   display: inline-block;
   padding: 0.25em 0.4em;
   font-size: 75%;
@@ -3970,14 +3970,14 @@ header .navbar-pages .navbar-nav .nav-link.active {
   white-space: nowrap;
   vertical-align: baseline;
   border-radius: 0.25rem; }
-  .badge:empty, .badge-unclaimed:empty, .badge-claimed:empty, .badge-held:empty, .datum:empty, .datum-tags:empty, .datum-subject:empty, .datum-language:empty {
+  .badge:empty, .badge-unclaimed:empty, .badge-claimed:empty, .badge-held:empty, .datum:empty {
     display: none; }
 
-.btn .badge, .btn .badge-unclaimed, .btn .badge-claimed, .btn .badge-held, .btn .datum, .btn .datum-tags, .btn .datum-subject, .btn .datum-language {
+.btn .badge, .btn .badge-unclaimed, .btn .badge-claimed, .btn .badge-held, .btn .datum {
   position: relative;
   top: -1px; }
 
-.badge-pill, .badge-unclaimed, .badge-claimed, .badge-held, .datum-tags, .datum-subject, .datum-language {
+.badge-pill, .badge-unclaimed, .badge-claimed, .badge-held {
   padding-right: 0.6em;
   padding-left: 0.6em;
   border-radius: 10rem; }
@@ -4006,10 +4006,10 @@ header .navbar-pages .navbar-nav .nav-link.active {
     text-decoration: none;
     background-color: #93ac47; }
 
-.badge-info, .datum-tags, .datum-subject, .datum-language {
+.badge-info {
   color: #212529;
   background-color: #AAC066; }
-  .badge-info[href]:hover, [href].datum-tags:hover, [href].datum-subject:hover, [href].datum-language:hover, .badge-info[href]:focus, [href].datum-tags:focus, [href].datum-subject:focus, [href].datum-language:focus {
+  .badge-info[href]:hover, .badge-info[href]:focus {
     color: #212529;
     text-decoration: none;
     background-color: #93ac47; }
@@ -7793,7 +7793,7 @@ a.text-held:hover, .summary a.n-held:hover, a.text-held:focus, .summary a.n-held
   .navbar {
     display: none; }
 
-  .badge, .badge-unclaimed, .badge-claimed, .badge-held, .datum, .datum-tags, .datum-subject, .datum-language {
+  .badge, .badge-unclaimed, .badge-claimed, .badge-held, .datum {
     border: 1px solid #000000; }
 
   .table {
@@ -8000,14 +8000,18 @@ h2 + h3 {
   border-bottom-left-radius: 0;
   margin-left: 0; }
 
-.datum-tags, .datum-subject, .datum-language {
-  display: inline-block;
+.datum {
+  display: run-in;
   font-size: .65rem;
   font-weight: 700;
   line-height: 1;
   padding: 0.4em 0.5em;
-  vertical-align: baseline;
-  white-space: no-wrap; }
+  vertical-align: baseline; }
+
+.datum-line {
+  text-align: left;
+  white-space: normal;
+  word-wrap: break-word; }
 
 .big-model-icon {
   font-size: 2em; }
