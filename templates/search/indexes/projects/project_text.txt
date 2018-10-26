@@ -4,8 +4,8 @@
 {{object.subject_headings.all|join:', '}}
 
 {{object.status}}
-{{object.administrators.all|join:', '}}
-{{object.nominators.all|join:', '}}
+{{object.administrators.all|join:'\n'}}
+{{object.nominators.all|join:'\n'}}
 
 {% for nomination in object.nominations.all %}
 	{% include 'search/indexes/projects/nomination_text.txt' with object=nomination %}

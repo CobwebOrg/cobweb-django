@@ -1,12 +1,7 @@
 {{ object.url }}
 
 {% for nomination in object.nominations.all %}
-  {{nomination.title}}
-  {{nomination.creator}}
-  {{nomination.language}}
-  {{nomination.description}}
-  {{nomination.tags|join:'\n'}}
-  {{nomination.subject_headings|join:'\n'}}
+	{% include 'search/indexes/projects/nomination_text.txt' with object=nomination %}
 {% endfor %}
 
 {% for imported_record in object.imported_records.all %}

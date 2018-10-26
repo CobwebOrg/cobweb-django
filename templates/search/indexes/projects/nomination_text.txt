@@ -3,6 +3,6 @@
 
 {{object.title}}
 {{object.description}}
-{{object.tags.all|join:', '}}
-{{object.subject_headings.all|join:', '}}
+{{object.tags.all|join:'\n'}}
+{{object.subject_headings.all|join:'\n'}}
 {{object.language}}
