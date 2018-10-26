@@ -32,7 +32,7 @@ class Project(models.Model):
         max_length=12, default='Public', choices=(
             ('Public', "Public: anyone can nominate, even if they're not logged in."),
             ('Cobweb users', 'Cobweb users: anyone with a Cobweb account can nominate.'),
-            ('Restricted', 'Restricted: only selected users and organizations can nominate.'),
+            ('Restricted', 'Restricted: only selected users can nominate.'),
         )
     )
 
