@@ -2,7 +2,7 @@ from pathlib import Path
 
 from django.conf import settings
 
-from core.models import Resource, Tag, User
+from core.models import Resource, Tag, User, normalize_url
 from projects.models import Project, Nomination
 
 FAKE_NEWS_PROJECT = Project.objects.get_or_create(
@@ -17,7 +17,7 @@ FAKE_NEWS_PROJECT = Project.objects.get_or_create(
 
 def import_fake_news(proj, data):
     for (url, tags) in data.items():
-        res = Resource.objects.get_or_create(url=url)[0]
+        res = Resource.objects.get_or_create(url=normalize_url(url))[0]
         (nom, created) = Nomination.objects.get_or_create(project=proj, resource=res)
         for tag in tags:
             nom.tags.add(Tag.objects.get_or_create(title=tag)[0])
