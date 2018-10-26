@@ -54,6 +54,9 @@ class User(AbstractUser):
 
     terms_accepted = models.BooleanField(default=False)
 
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     notes = GenericRelation('Note')
 
     @property
@@ -122,6 +125,9 @@ class Organization(models.Model):
         "Archive-It.org Identifier",
         null=True, blank=True, unique=True, editable=False
     )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     @property
     def name(self):

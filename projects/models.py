@@ -66,6 +66,9 @@ class Project(models.Model):
         )
     )
 
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     @property
     def impact_factor(self) -> int:
         # TODO: Fix this stub – not sure I understand the FRs...
@@ -202,6 +205,9 @@ class Nomination(models.Model):
     rights_considerations = models.TextField(verbose_name="access considerations",
                                              null=True, blank=True)
 
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     notes = GenericRelation('core.Note')
 
     @property
@@ -316,6 +322,9 @@ class Claim(models.Model):
     rights_considerations = models.TextField(verbose_name="access considerations",
                                              null=True, blank=True)
 
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     notes = GenericRelation('core.Note')
 

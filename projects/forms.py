@@ -92,6 +92,8 @@ class ProjectForm(forms.ModelForm):
             FormSection(select_field('tags', edit=editable)),
 
             form_buttons(**form_buttons_kwargs) if editable else HTML(''),
+
+            TIMESTAMPS,
         )
 
 CRAWL_SCOPE_FIELD_NAMES = [
@@ -216,6 +218,7 @@ class NominationForm(forms.ModelForm):
                         Row(Column(HTML('<h4>About the nomination</h4>'))),
                         nomination_info(editable=editable),
                         form_buttons(**form_buttons_kwargs),
+                        TIMESTAMPS,
                         HTML("""
                             {% load render_table from django_tables2 %}
                             <h4 class="mt-3">Claims</h4>
@@ -282,4 +285,5 @@ class ClaimForm(forms.ModelForm):
                 confirm_title='Claim nominated URL',
                 confirm_text='Click the claim button to claim the nominated URL to the project or cancel to return to Cobweb',
             ) if editable else HTML(''),
+            TIMESTAMPS,
         )

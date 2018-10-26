@@ -226,7 +226,6 @@ def info_tabs(*tabs: InfoTab) -> LayoutObject:
         ),
     )
 
-
 def select_field(field_name='tags', **field_kwargs):
     return Layout(
         Field(field_name, **field_kwargs),
@@ -236,6 +235,13 @@ def select_field(field_name='tags', **field_kwargs):
             please <a href="mailto:cobwebarchive@gmail.com">contact us</a>.
         </p>"""),
     )
+
+TIMESTAMPS = HTML("""
+    <small class="d-flex flex-row justify-content-between">
+        <div>Created {{object.created_at}}</div>
+        <div>Last updated {{object.updated_at}}</div>
+    </small>
+""")
 
 
 class BaseHeader(Layout):
