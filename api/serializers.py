@@ -98,6 +98,16 @@ class ArchiveResourceSerializer(serializers.ModelSerializer):
     source = ArchiveOrgSerializer(source='organization', required=True, many=False)
     url = serializers.URLField(source='get_absolute_url')
 
+    def to_representation(self, instance):
+        """Wraps each value of self.data.metadata in a set."""
+
+        data = super().to_representation(instance)
+        try:
+            del data['metadata']['publisher']
+        except KeyError:
+            pass
+        return data
+
 
 class ResourceSerializer(serializers.ModelSerializer):
     class Meta:
