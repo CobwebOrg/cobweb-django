@@ -40,8 +40,6 @@
 			</div>
 		</div> {% endcomment %}
 
-
-		<a class="nav-link text-uppercase text-ltprimary" href="{% url 'resource_list' %}">{% term_plural 'resource' %}</a>
 		
 		<a class="nav-link text-uppercase text-ltprimary" href="{% url 'project_list' %}">{% term_plural 'project' %}</a>
 		
@@ -49,6 +47,8 @@
 		   href="{% url 'organization_list' %}">
 			{% trans "Organizations" %}
 		</a>
+
+		<a class="nav-link text-uppercase text-ltprimary" href="{% url 'resource_list' %}">{% term_plural 'resource' %}</a>
 		
 		<form id="searchform" action="{% url 'search' %}" method="get" accept-charset="utf-8">
 			<div class="input-group">
