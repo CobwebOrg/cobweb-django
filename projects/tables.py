@@ -171,6 +171,7 @@ class ClaimTable(CobwebBaseTable):
     link = django_tables2.TemplateColumn(
         '<a href={{record.get_absolute_url}} class="linklet">[details]</a>',
         verbose_name='',
+        orderable=False,
     )
 
     has_holding = django_tables2.TemplateColumn("""
