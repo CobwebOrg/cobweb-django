@@ -161,6 +161,8 @@
     
     <field name="project_pk" type="long" indexed="true" stored="true" multiValued="false" />
     
+    <field name="project_slug" type="text_en" indexed="true" stored="true" multiValued="false" />
+    
     <field name="status" type="text_en" indexed="true" stored="true" multiValued="false" />
     
     <field name="nomination_policy" type="text_en" indexed="true" stored="true" multiValued="false" />

@@ -13,7 +13,7 @@ from cobweb import settings
 class Project(models.Model):
     """Django ORM model for a Cobweb project."""
 
-    slug = models.SlugField(max_length=50, null=True, blank=False, unique=True,
+    slug = models.SlugField(max_length=50, null=False, unique=True,
                             help_text=help_text.PROJECT_SLUG)
 
     title = models.CharField(max_length=500, unique=True)
@@ -85,10 +85,10 @@ class Project(models.Model):
     notes = GenericRelation('core.Note', blank=True)
 
     def get_absolute_url(self) -> str:
-        return reverse('project', kwargs={'pk': self.pk})
+        return reverse('project', kwargs={'slug': self.slug})
 
     def get_add_nomination_url(self) -> str:
-        return reverse('nomination_create', kwargs={'project_pk': self.pk})
+        return reverse('nomination_create', kwargs={'project_slug': self.slug})
 
     def is_admin(self, user: AbstractBaseUser) -> bool:
         return user in self.administrators.all()
@@ -244,13 +244,12 @@ class Nomination(models.Model):
     def get_absolute_url(self) -> str:
         return reverse(
             'nomination_update',
-            kwargs={'project_pk': self.project.pk, 'url': self.resource.url},
+            kwargs={'project_slug': self.project.slug, 'url': self.resource.url},
         )
 
     def get_edit_url(self) -> str:
         return reverse('nomination_update', kwargs={
-            # 'pk': self.pk,
-            'project_pk': self.project.pk,
+            'project_slug': self.project.slug,
             'url': self.resource.url,
         })
 

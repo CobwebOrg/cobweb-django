@@ -12,6 +12,7 @@ class ProjectIndex(indexes.SearchIndex, indexes.Indexable):
 
     name = indexes.CharField(model_attr='name', indexed=True, stored=True)
     text = indexes.CharField(document=True, use_template=True, stored=False)
+    slug = indexes.CharField(model_attr='slug', indexed=True, stored=True)
 
     title = indexes.CharField(model_attr='title', indexed=True, stored=True)
     description = indexes.CharField(model_attr='description', indexed=True, stored=True)
@@ -55,6 +56,8 @@ class NominationIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=False)
 
     project_pk = indexes.IntegerField(model_attr='project__pk', indexed=True, stored=True)
+    project_slug = indexes.CharField(model_attr='project__slug', indexed=True, stored=True)
+
     url = indexes.CharField(model_attr='resource__url')
 
     status = indexes.CharField(model_attr='status', indexed=True, stored=True)

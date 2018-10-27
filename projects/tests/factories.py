@@ -1,4 +1,5 @@
-from factory import DjangoModelFactory, Faker, SubFactory
+from factory import DjangoModelFactory, Faker, LazyAttribute, SubFactory
+from django.utils.text import slugify
 
 from core.tests.factories import OrganizationFactory
 from projects.models import Project, Nomination, Claim
@@ -9,6 +10,7 @@ class ProjectFactory(DjangoModelFactory):
     class Meta:
         model = Project
 
+    slug = LazyAttribute(lambda proj: slugify(proj.title)[:50])
     title = Faker('sentence')
     description = Faker('paragraph')
 

@@ -24,7 +24,7 @@ class OrganizationFactory(factory.DjangoModelFactory):
     class Meta:
         model = Organization
 
-    slug = factory.LazyAttribute(lambda org: slugify(org.full_name))
+    slug = factory.LazyAttribute(lambda org: slugify(org.full_name)[:50])
     full_name = factory.Faker('company')
     address = factory.Faker('address')
     description = factory.Faker('paragraph')

@@ -19,7 +19,7 @@ class ProjectForm(forms.ModelForm):
         """Metaclass for options."""
 
         model = Project
-        fields = ['title', 'description', 'collecting_scope', 'status',
+        fields = ['slug', 'title', 'description', 'collecting_scope', 'status',
                   'administrators', 'nomination_policy', 'nominators',
                   'nominator_blacklist', 'tags']
         widgets = {
@@ -55,17 +55,39 @@ class ProjectForm(forms.ModelForm):
         user_authenticated = request and request.user.is_authenticated
 
         if hasattr(self.instance, 'pk') and self.instance.pk is not None:
+            new = False
+            slug_field = HTML("""
+                <div id="div_slug" class="row form-group">
+                    <label for="id_url" class="col-md-2 col-form-label form-control-label">
+                        URL
+                    </label>
+                    <input type="text" name="slug" maxlength="50" id="id_slug"
+                        class="textinput textInput form-control" hidden
+                        value="{{object.slug}}">
+                    <div class="col-md w-100">
+                        <div class="input-group">
+                            <input type="text" name="slug" maxlength="50" id="id_url"
+                                class="textinput textInput form-control" disabled
+                                value="http://cobwebarchive.org{{object.get_absolute_url}}">
+                        </div>
+                    </div>
+                </div>
+            """)
             form_buttons_kwargs = {
                 'confirm_title': 'Save changes',
                 'confirm_text': 'Click the submit button to save changes to this project or click on cancel to return to Cobweb without saving.',
             }
         else:
+            new = True
+            self.fields['slug'].label = "Choose a Cobweb URL"
+            slug_field = PrependedAppendedText('slug', prepended_text='http://cobwebarchive.org/proj/')
             form_buttons_kwargs = {
                 'confirm_title': 'Add new project',
                 'confirm_text': 'Click the submit button to add this project to Cobweb or click on cancel to return to Cobweb without saving.',
             }
 
         self.helper.layout = Layout(
+            slug_field,
             HField('title', edit=editable),
 
             FormSection(

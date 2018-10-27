@@ -19,7 +19,7 @@ class ProjectTable(CobwebBaseTable):
 
     title = django_tables2.LinkColumn(
         viewname='project',
-        kwargs={'pk': Accessor('pk')},
+        kwargs={'slug': Accessor('slug')},
     )
     unclaimed_nominations = django_tables2.Column(
         verbose_name=mark_safe('Unclaimed ')
@@ -70,6 +70,11 @@ class UserProjectsTable(ProjectTable):
                   'n_claimed', 'n_held')
         exclude = ['unclaimed_nominations', 'claimed_nominations',
                    'held_nominations']
+
+    title = django_tables2.LinkColumn(
+        viewname='project',
+        kwargs={'slug': Accessor('slug')},
+    )
 
     n_unclaimed = django_tables2.Column(
         verbose_name=mark_safe('Unclaimed ')
@@ -131,14 +136,14 @@ class NominationTable(CobwebBaseTable):
 
     name = django_tables2.LinkColumn(
         viewname='nomination_update',
-        kwargs={'project_pk': Accessor('project_pk'),
+        kwargs={'project_slug': Accessor('project_slug'),
                 'url': Accessor('url')},
         verbose_name='Nomination',
     )
 
     project = django_tables2.LinkColumn(
         viewname='nomination_update',
-        kwargs={'project_pk': Accessor('project_id'),
+        kwargs={'project_slug': Accessor('project_slug'),
                 'url': Accessor('resource.url')},
         verbose_name='In project',
     )
@@ -150,7 +155,7 @@ class NominationTable(CobwebBaseTable):
     
     # claim_link = django_tables2.LinkColumn(
     #     viewname='nomination_update',
-    #     kwargs={'project_pk': Accessor('project_pk'),
+    #     kwargs={'project_slug': Accessor('project_slug'),
     #             'url': Accessor('url')},
     #     text='[claim]', verbose_name='', orderable=False,
     # )

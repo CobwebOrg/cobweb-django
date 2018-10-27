@@ -3,6 +3,7 @@ from typing import Optional
 import django_tables2
 import haystack
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import Http404
 from django.urls import reverse_lazy
 from django.utils.html import format_html
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
@@ -71,6 +72,7 @@ class ProjectView(FormMessageMixin, RevisionMixin, django_tables2.SingleTableMix
     template_name = 'projects/project.html'
     form_class = forms.ProjectForm
     table_class = NominationTable
+    slug_field = 'slug'
 
     def get_context_data(self, **kwargs):
         if 'select_tab' not in kwargs:
@@ -181,11 +183,11 @@ class NominationUpdateView(FormMessageMixin, RevisionMixin,
         try:
             # Get the single item from the filtered queryset
             obj =  (queryset or models.Nomination.objects).get(
-                project__pk=self.kwargs['project_pk'],
+                project__slug=self.kwargs['project_slug'],
                 resource__url=self.kwargs['url'],
             )
         except  self.model.DoesNotExist:
-            raise Http404(_("No %(verbose_name)s found matching the query") %
+            raise Http404("No %(verbose_name)s found matching the query" %
                         {'verbose_name': queryset.model._meta.verbose_name})
         return obj
 
@@ -209,7 +211,7 @@ class NominationUpdateView(FormMessageMixin, RevisionMixin,
 
     def get_project(self):
         if not (hasattr(self, '_project') and isinstance(self._project, models.Project)):
-          self._project = models.Project.objects.get(pk=self.kwargs['project_pk'])
+          self._project = models.Project.objects.get(slug=self.kwargs['project_slug'])
         return self._project
     
 
@@ -244,14 +246,14 @@ class NominationCreateView(FormMessageMixin, UserPassesTestMixin,
         if 'data' in form_kwargs:
             form_kwargs['data'] = form_kwargs['data'].copy()
             form_kwargs['data'].update({
-                'project': self.kwargs['project_pk'],
+                'project': self.get_project().pk,
                 'nominated_by': self.request.user.id,  # works bc MultiValueDict magic...
             })
         return form_kwargs
 
     def get_project(self):
         if not (hasattr(self, '_project') and isinstance(self._project, models.Project)):
-            self._project = models.Project.objects.get(pk=self.kwargs['project_pk'])
+            self._project = models.Project.objects.get(slug=self.kwargs['project_slug'])
         return self._project
 
     def get_success_message(self, cleaned_data):
@@ -268,11 +270,11 @@ class NominationDeleteView(UserPassesTestMixin, FormMessageMixin, DeleteView):
     def get_object(self, queryset=None):
         try:
             obj = models.Nomination.objects.get(
-                project__pk=self.kwargs['project_pk'],
+                project__slug=self.kwargs['project_slug'],
                 resource__url=self.kwargs['url'],
             )
         except queryset.model.DoesNotExist:
-            raise Http404(_("No %(verbose_name)s found matching the query") %
+            raise Http404("No %(verbose_name)s found matching the query" %
                           {'verbose_name': queryset.model._meta.verbose_name})
         return obj
     
