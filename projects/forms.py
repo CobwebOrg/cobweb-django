@@ -146,7 +146,7 @@ def resource_info(editable=False, react_data=None):
             Field('language', edit=editable, wrapper_class='col-4'),
         ),
         Field('description', edit=editable),
-        select_field('tags', editable=editable),
+        select_field('tags', edit=editable),
     )
 
     if react_data:
