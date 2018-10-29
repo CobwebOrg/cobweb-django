@@ -187,7 +187,7 @@ class NominationUpdateView(FormMessageMixin, RevisionMixin,
                 resource__url=self.kwargs['url'],
             )
         except self.model.DoesNotExist:
-            raise Http404(f"{queryset.model._meta.verbose_name} not found")
+            raise Http404(f"{self.model._meta.verbose_name} not found")
         return obj
 
     def get_success_message(self, cleaned_data):
