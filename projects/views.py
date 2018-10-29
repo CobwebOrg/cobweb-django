@@ -164,7 +164,7 @@ class NominationUpdateView(FormMessageMixin, RevisionMixin,
             assert kwargs['data']['resource'] == self.kwargs['url']
             kwargs['data'] = kwargs['data'].copy()
             kwargs['data'].update({
-                'project': self.kwargs['project_pk'],
+                'project': self.get_project().id,
                 'nominated_by': self.request.user.id,  # works bc MultiValueDict magic...
             })
         kwargs['table'] = self.get_table()
