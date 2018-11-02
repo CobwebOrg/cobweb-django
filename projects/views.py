@@ -209,9 +209,12 @@ class NominationUpdateView(FormMessageMixin, RevisionMixin,
         return kwargs
 
     def get_project(self):
-        if not (hasattr(self, '_project') and isinstance(self._project, models.Project)):
-          self._project = models.Project.objects.get(slug=self.kwargs['project_slug'])
-        return self._project
+        try:
+            if not (hasattr(self, '_project') and isinstance(self._project, models.Project)):
+                self._project = models.Project.objects.get(slug=self.kwargs['project_slug'])
+            return self._project
+        except models.Project.DoesNotExist:
+            raise Http404(f"No such project: /proj/{self.kwargs['project_slug']}")
     
 
 class NominationCreateView(FormMessageMixin, UserPassesTestMixin,
@@ -251,9 +254,13 @@ class NominationCreateView(FormMessageMixin, UserPassesTestMixin,
         return form_kwargs
 
     def get_project(self):
-        if not (hasattr(self, '_project') and isinstance(self._project, models.Project)):
-            self._project = models.Project.objects.get(slug=self.kwargs['project_slug'])
-        return self._project
+        try:
+            if not (hasattr(self, '_project') and isinstance(self._project, models.Project)):
+                self._project = models.Project.objects.get(slug=self.kwargs['project_slug'])
+            return self._project
+        except models.Project.DoesNotExist:
+            raise Http404(f"No such project: /proj/{self.kwargs['project_slug']}")
+            
 
     def get_success_message(self, cleaned_data):
         return f'Successfully nominated {self.object.resource}'
@@ -272,7 +279,7 @@ class NominationDeleteView(UserPassesTestMixin, FormMessageMixin, DeleteView):
                 project__slug=self.kwargs['project_slug'],
                 resource__url=self.kwargs['url'],
             )
-        except queryset.model.DoesNotExist:
+        except models.Nomination.DoesNotExist:
             raise Http404("No %(verbose_name)s found matching the query" %
                           {'verbose_name': queryset.model._meta.verbose_name})
         return obj
