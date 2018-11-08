@@ -123,11 +123,15 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
         model = Project
         exclude = []
 
+    tags = TagSerializer(required=False, many=True)
+
 
 class NominationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Nomination
         exclude = []
+
+    tags = TagSerializer(required=False, many=True)
 
 
 class ClaimSerializer(serializers.HyperlinkedModelSerializer):
