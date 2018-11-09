@@ -134,7 +134,10 @@ def nomination_info(editable=False):
         FormSection(
             Row(Column(Field('rationale', edit=editable))),
         ),
-        FormSection(crawl_scope_fields(editable=editable)),
+        FormSection(
+            HTML("<h5>Suggested capture parameters</h5>"),
+            crawl_scope_fields(editable=editable),
+        ),
     )
 
 def resource_info(editable=False, react_data=None):
@@ -302,7 +305,10 @@ class ClaimForm(forms.ModelForm):
                     css_class="d-flex flex-row align-items-center",
                 )
             ),
-            crawl_scope_fields(editable=editable),
+            FormSection(
+                HTML("<h5>Intended capture parameters</h5>"),
+                crawl_scope_fields(editable=editable),
+            ),
             form_buttons(
                 confirm_title='Claim nominated URL',
                 confirm_text='Click the claim button to claim the nominated URL to the project or cancel to return to Cobweb',

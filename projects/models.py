@@ -193,6 +193,7 @@ class Nomination(models.Model):
 
     intended_crawling_tool = models.CharField(
         null=True, blank=True, max_length=50,
+        verbose_name="Crawling tool",
         choices=[(x, x) for x in ("Archive-It", "Brozzler", "Heritrix 1",
                                   "Heritrix 3", "Webrecorder", "Other")],
     )
@@ -309,6 +310,7 @@ class Claim(models.Model):
 
     intended_crawling_tool = models.CharField(
         null=True, blank=True, max_length=50,
+        verbose_name="Crawling tool",
         choices=[(x, x) for x in ("Archive-It", "Brozzler", "Heritrix 1",
                                   "Heritrix 3", "Webrecorder", "Other")],
     )
