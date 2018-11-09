@@ -123,7 +123,9 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
         model = Project
         exclude = []
 
+    language = LanguageSerializer(required=False)
     tags = TagSerializer(required=False, many=True)
+    subject_headings = TagSerializer(required=False, many=True)
 
 
 class NominationSerializer(serializers.HyperlinkedModelSerializer):
@@ -131,7 +133,9 @@ class NominationSerializer(serializers.HyperlinkedModelSerializer):
         model = Nomination
         exclude = []
 
+    language = LanguageSerializer(required=False)
     tags = TagSerializer(required=False, many=True)
+    subject_headings = TagSerializer(required=False, many=True)
 
 
 class ClaimSerializer(serializers.HyperlinkedModelSerializer):
