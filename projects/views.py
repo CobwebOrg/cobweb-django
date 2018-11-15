@@ -161,7 +161,6 @@ class NominationUpdateView(FormMessageMixin, RevisionMixin,
         })
 
         if 'data' in kwargs:
-            assert kwargs['data']['resource'] == self.kwargs['url']
             kwargs['data'] = kwargs['data'].copy()
             kwargs['data'].update({
                 'project': self.get_project().id,
