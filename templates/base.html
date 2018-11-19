@@ -6,50 +6,63 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <meta content="text/html">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-129440430-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
 
-    <link rel="stylesheet" type="text/css" href="{% static 'scss/cobweb.css' %}">
-    <title>{% block window_title %}Cobweb{% endblock %}</title>
-  </head>
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
 
-  <body>
-      {% include 'header.html' %}
+    gtag('config', 'UA-129440430-1');
+  </script>
 
-      <div id="cobweb-content">
-        {% if messages %}
-          <ul class="messages mt-3">
-            {% for message in messages %}
-              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
-                {{ message }}
-              </li>
-            {% endfor %}
-          </ul>
-        {% endif %}
+  <meta content="text/html">
 
-        {% block content %}{% endblock %}
-      </div>
+  <link rel="stylesheet" type="text/css" href="{% static 'scss/cobweb.css' %}">
+  <title>{% block window_title %}Cobweb{% endblock %}</title>
+</head>
 
-      {% include 'footer.html' %}
+<body>
+  {% include 'header.html' %}
+
+  <div id="cobweb-content">
+    {% if messages %}
+    <ul class="messages mt-3">
+      {% for message in messages %}
+      <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+        {{ message }}
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+  </div>
+
+  {% include 'footer.html' %}
 
 
-    <!-- Webpack bundle -->
-    {% render_bundle 'main' %}
-    
-    <script src="http://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-            crossorigin="anonymous"></script>
+  <!-- Webpack bundle -->
+  {% render_bundle 'main' %}
 
-    <!-- Form DOT Media -->
-    {{ form.media }}
-    
-    {% block load_react_script %}{% react_print %}{% endblock %}
-    <!-- End of base.html content -->
-  </body>
+  <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+
+  <!-- Form DOT Media -->
+  {{ form.media }}
+
+  {% block load_react_script %}{% react_print %}{% endblock %}
+  <!-- End of base.html content -->
+</body>
+
 </html>
