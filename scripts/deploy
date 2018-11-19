@@ -1,6 +1,6 @@
 #! /usr/bin/env sh
 
-SERVER=${1:-cobwebdev}
+SERVER=${1:-cobweb}
 
 git push &
 
