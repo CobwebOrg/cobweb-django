@@ -132,10 +132,11 @@ HAYSTACK_SIGNAL_PROCESSOR = 'core.signal_processor.CobwebSignalProcessor'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'HOST': 'db',
-        'PORT': 5432,
+        'NAME': os.environ.get('DB_NAME') or 'postgres',
+        'USER': os.environ.get('DB_USER') or 'postgres',
+        'PASSWORD': os.environ.get('DB_PASSWORD') or '',
+        'HOST': os.environ.get('DB_HOST') or 'db',
+        'PORT': os.environ.get('DB_PORT') or 5432,
     }
 }
 
@@ -180,7 +181,7 @@ USE_TZ = True
 
 
 try:
-    STATIC_ROOT = os.environ['DJANGO_STATIC_ROOT'] 
+    STATIC_ROOT = os.environ['DJANGO_STATIC_ROOT']
 except KeyError:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
