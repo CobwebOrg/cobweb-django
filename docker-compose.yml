@@ -46,6 +46,10 @@ services:
     working_dir: /code
     environment:
       COBWEB_SECRET_KEY: 'abcdefghijklmnopqrstuvwxyz'
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: ''
       DJANGO_STATIC_ROOT: "/staticfiles"
       DEBUG: "true"
       TEST: "false"
