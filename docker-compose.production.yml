@@ -1,4 +1,4 @@
-version: '3.6'
+version: "3.6"
 
 services:
   nginx:
@@ -25,9 +25,9 @@ services:
       - db
       - solr
     working_dir: /code
-    command: ['sh', '/code/scripts/start-production.sh']
+    command: ["sh", "/code/scripts/start-production.sh"]
     environment:
-      DEBUG: 'false'
+      DEBUG: "false"
     deploy:
       replicas: 1
       resources:
@@ -43,8 +43,8 @@ services:
       - solr
     working_dir: /code
     environment:
-      DEBUG: 'true'
-    command: ['sh', '/code/scripts/start-worker.sh']
+      DEBUG: "true"
+    command: ["sh", "/code/scripts/start-worker.sh"]
     deploy:
       replicas: 1
       resources:
@@ -72,18 +72,18 @@ services:
           memory: 2G
     networks:
       - cobwebnet
-  db:
-    image: postgres:10
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - cobwebnet
-    deploy:
-      replicas: 1
-      resources:
-        limits:
-          cpus: "1"
-          memory: 2G
+  # db:
+  #   image: postgres:10
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   networks:
+  #     - cobwebnet
+  #   deploy:
+  #     replicas: 1
+  #     resources:
+  #       limits:
+  #         cpus: "1"
+  #         memory: 2G
 volumes:
   postgres_data:
   # solr_data:
