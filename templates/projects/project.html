@@ -28,12 +28,12 @@
                 <div class="nav nav-tabs nav-infotabs mb-4" id="myTabs" role="tablist">
                     <a class="nav-link {% if not show_noms %}active{%endif%}"
                        id="summary-tab" data-toggle="tab" role="tab" aria-controls="summary"
-                       aria-selected="true" href="#summary">
+                       aria-selected="{% if show_noms %}false{% else %}true{% endif %}" href="#summary">
                        {% trans "Summary" %}
                     </a>
                     <a class="nav-link {% if show_noms %}active{%endif%}"
-                       id="nominations-tab" data-toggle="tab" role="tab"
-                       aria-controls="nominations" aria-selected="false" href="#nominations">
+                       id="nominations-tab" data-toggle="tab" role="tab" aria-controls="nominations"
+                       aria-selected="{% if show_noms %}true{% else %}false{% endif %}" href="#nominations">
                         {% term_plural 'nomination' 'capitalize' %}
                     </a>
                 </div>
