@@ -12,14 +12,17 @@ class APIEndpointInline(admin.TabularInline):
     autocomplete_fields = ['organization']
     readonly_fields = ['last_updated']
 
+
 @admin.register(models.APIEndpoint)
 class APIEndpointAdmin(admin.ModelAdmin):
     fields = ['organization', 'url', 'last_updated']
     autocomplete_fields = ['organization']
     readonly_fields = ['last_updated']
 
+
 @admin.register(models.ImportedRecord)
 class ImportedRecordAdmin(admin.ModelAdmin):
     fields = ['source_feed', 'identifier', 'metadata', 'record_type',
               'resource', 'parents']
+    search_fields = ['identifier']
     readonly_fields = fields

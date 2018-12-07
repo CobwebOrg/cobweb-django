@@ -8,6 +8,7 @@ from projects.admin_inlines import NominationInline
 
 @admin.register(Project)
 class ProjectAdmin(VersionAdmin):
+    search_fields = ['title', 'slug']
     autocomplete_fields = [
         'administrators',
         'nominator_orgs',
@@ -28,6 +29,7 @@ class NominationAdmin(VersionAdmin):
         'tags',
         'subject_headings',
     ]
+    search_fields = ['project', 'resource', 'title']
     inlines = [NoteInline]
 
 
@@ -37,6 +39,5 @@ class ClaimAdmin(VersionAdmin):
         'nomination',
         'organization',
         'imported_record',
-        'crawl_scope',
     ]
     inlines = [NoteInline]

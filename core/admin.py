@@ -63,5 +63,6 @@ class ResourceAdmin(VersionAdmin):
     model = models.Resource
     fields = ['url']
     readonly_fields = ['url']
+    search_fields = ['url']
     inlines = (NominationInline, NoteInline)
     autocomplete_fields = ['language']
