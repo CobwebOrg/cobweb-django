@@ -76,7 +76,7 @@ class ProjectView(FormMessageMixin, RevisionMixin, django_tables2.SingleTableMix
 
     def get_context_data(self, **kwargs):
         if 'select_tab' not in kwargs:
-            kwargs['show_noms'] = True if len(self.request.GET) > 0 else False
+            kwargs['show_noms'] = True  # if len(self.request.GET) > 0 else False
 
         if self.object.is_admin(self.request.user):
             kwargs.update({
