@@ -37,7 +37,6 @@ factory_boy = "*"
 hypothesis = {extras = ["django"]}
 pdbpp = "*"
 pytest-django = "*"
-pytest-splinter = "*"
 ansible = "*"
 ipython = "*"
 mypy = "*"

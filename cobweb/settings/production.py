@@ -67,7 +67,6 @@ INSTALLED_APPS = [
     'django_tables2',
     'haystack',
     'languages_plus',
-    'phonenumber_field',
     'polymorphic',
     'django_react_templatetags',
     'rest_framework',

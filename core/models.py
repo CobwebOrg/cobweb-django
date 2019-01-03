@@ -12,7 +12,6 @@ from django.utils.functional import cached_property
 from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
-from phonenumber_field.modelfields import PhoneNumberField
 from surt import handyurl
 from surt.DefaultIAURLCanonicalizer import canonicalize
 
