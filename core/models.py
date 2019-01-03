@@ -45,7 +45,8 @@ class User(AbstractUser):
     organization = models.ForeignKey('Organization', null=True, blank=True,
                                      related_name="affiliated_users",
                                      on_delete=models.SET_NULL)
-    professional_title = models.CharField(max_length=200, null=True, blank=True)
+    professional_title = models.CharField(
+        max_length=200, null=True, blank=True)
 
     url = NormalizedURLField(null=True, blank=True)
 
@@ -106,7 +107,7 @@ class Organization(models.Model):
     )
 
     address = models.TextField(null=True, blank=True)
-    telephone_number = PhoneNumberField(null=True, blank=True)
+    telephone_number = models.CharField(max_length=100, null=True, blank=True)
     url = NormalizedURLField(null=True, blank=True)
     email_address = models.EmailField(null=True, blank=True)
 
@@ -220,7 +221,7 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.title
-    
+
     def __repr__(self):
         return f'Tag(title="{self.title}")'
 
@@ -248,7 +249,7 @@ MultiMDDict = NewType('MultiMDDict', Dict[str, MDDict])
 
 
 class Resource(models.Model):
-    # surt = 
+    # surt =
     url = NormalizedURLField(max_length=1000, null=False, blank=False,
                              unique=True)
 
@@ -267,7 +268,8 @@ class Resource(models.Model):
 
     title = models.CharField(max_length=200, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    tags = models.ManyToManyField(Tag, blank=True)  # crosswalk to <meta name="keywords">
+    # crosswalk to <meta name="keywords">
+    tags = models.ManyToManyField(Tag, blank=True)
     creator = models.CharField(max_length=200, null=True, blank=True)
     language = models.ForeignKey('languages_plus.Language', null=True, blank=True,
                                  on_delete=models.PROTECT)
@@ -288,7 +290,7 @@ class Resource(models.Model):
 
     def get_absolute_url(self) -> str:
         return reverse('resource', kwargs={'url': self.url})
-    
+
     @property
     def has_metadata(self) -> bool:
         for nomination in self.nominations.all():
@@ -304,7 +306,7 @@ class Resource(models.Model):
             for value_list in imported_record.metadata.values():
                 if len(value_list) > 0:
                     return True
-        
+
         return False
 
     @property
@@ -327,7 +329,8 @@ class CrawlScope(models.Model):
     max_size = models.PositiveIntegerField(null=True, blank=True)
     max_resources = models.PositiveIntegerField(null=True, blank=True)
 
-    override_robot_exclusion = models.NullBooleanField(null=True, blank=True, default=False)
+    override_robot_exclusion = models.NullBooleanField(
+        null=True, blank=True, default=False)
 
     boundary_behavior = models.CharField(max_length=200, null=True, blank=True,
                                          choices=(('Page', 'Page'),
@@ -360,6 +363,6 @@ class CrawlScope(models.Model):
 
     def __str__(self):
         return self.title
-    
+
     def __repr__(self):
         return f'CrawlScope(title="{self.title}")'
