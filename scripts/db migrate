@@ -1,7 +1,0 @@
-(docker exec 97768fa993bb pg_dump -C -h localhost -U postgres postgres) | \
-psql \
-   --host=rds-cobweb-stg.cxbrwczuogzy.us-west-2.rds.amazonaws.com \
-   --port=5432 \
-   --username=cobwebadmin \
-   --password \
-   --dbname=cobwebstage
