@@ -29,9 +29,13 @@ router.register(r'projects', ProjectViewSet)
 router.register(r'nominations', NominationViewSet)
 router.register(r'claims', ClaimViewSet)
 
+
 class TestViewset(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.ArchiveResourceSerializer
-    queryset = webarchives.models.ImportedRecord.objects.filter(record_type='resource')
+    queryset = webarchives.models.ImportedRecord.objects.filter(
+        record_type='resource')
+
+
 router.register(r'test', TestViewset)
 
 urlpatterns = [
@@ -96,6 +100,9 @@ urlpatterns = [
          name='project_delete'),
 
     # Nomination
+    path('proj/<slug:project_slug>/nominations',
+         projects.views.NominationIndexView.as_view(),
+         name='nomination_index'),
     path('proj/<slug:project_slug>/nominate',
          projects.views.NominationCreateView.as_view(),
          name='nomination_create'),

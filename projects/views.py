@@ -15,7 +15,7 @@ from api.serializers import ResourceSerializer
 from core.models import Resource
 from core.views import CobwebBaseIndexView, FormMessageMixin
 from projects import forms, models
-from projects.tables import ClaimTable, NominationTable, ProjectTable
+from projects.tables import ClaimTable, NominationTable, NominationIndexTable, ProjectTable
 
 
 class ProjectIndexView(CobwebBaseIndexView):
@@ -67,7 +67,7 @@ class ProjectCreateView(LoginRequiredMixin, FormMessageMixin, RevisionMixin,
         return kwargs
 
 
-class ProjectView(FormMessageMixin, RevisionMixin, ExportMixin, django_tables2.SingleTableMixin,
+class ProjectView(FormMessageMixin, RevisionMixin, django_tables2.SingleTableMixin,
                   UpdateView):
     model = models.Project
     template_name = 'projects/project.html'
@@ -131,6 +131,16 @@ class ProjectDeleteView(UserPassesTestMixin, FormMessageMixin, DeleteView):
 
     def test_func(self):
         return self.get_object().is_admin(self.request.user)
+
+
+class NominationIndexView(ExportMixin, django_tables2.SingleTableView):
+    model = models.Nomination
+    table_class = NominationIndexTable
+    slug_field = 'slug'
+
+    def get_queryset(self):
+        return (models.Project.objects.get(slug=self.kwargs['project_slug'])
+                .nominations.all())
 
 
 class NominationUpdateView(FormMessageMixin, RevisionMixin,

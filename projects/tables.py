@@ -162,6 +162,23 @@ class NominationTable(CobwebBaseTable):
     # )
 
 
+class NominationIndexTable(django_tables2.Table):
+    """django_tables2.Table object for lists of nominations."""
+
+    class Meta(CobwebBaseTable.Meta):
+        model = Nomination
+        fields = ('project', 'resource.url', 'title', 'creator', 'language',
+                  'description', 'status', 'tags', 'claims')
+
+    claims = django_tables2.Column(verbose_name="Claiming organizations")
+
+    def value_claims(self, record):
+        return ', '.join([c.organization.slug for c in record.claims.all()])
+
+    def render_claims(self, record):
+        return self.value_claims(record)
+
+
 class ClaimTable(CobwebBaseTable):
     """django_tables2.Table object for lists of claims."""
 
