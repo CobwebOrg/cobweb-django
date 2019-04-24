@@ -23,20 +23,20 @@ class ProjectTable(CobwebBaseTable):
     )
     unclaimed_nominations = django_tables2.Column(
         verbose_name=mark_safe('Unclaimed ')
-            + get_template('help_text/more_info.html')
-            .render(context={'help_text': help_text.N_UNCLAIMED}),
+        + get_template('help_text/more_info.html')
+        .render(context={'help_text': help_text.N_UNCLAIMED}),
         attrs={'cell': {'class': 'text-center'}},
     )
     claimed_nominations = django_tables2.Column(
         verbose_name=mark_safe('Claimed ')
-            + get_template('help_text/more_info.html')
-            .render(context={'help_text': help_text.N_CLAIMED}),
+        + get_template('help_text/more_info.html')
+        .render(context={'help_text': help_text.N_CLAIMED}),
         attrs={'cell': {'class': 'text-center'}},
     )
     held_nominations = django_tables2.Column(
         verbose_name=mark_safe('Held ')
-            + get_template('help_text/more_info.html')
-            .render(context={'help_text': help_text.N_HELD}),
+        + get_template('help_text/more_info.html')
+        .render(context={'help_text': help_text.N_HELD}),
         attrs={'cell': {'class': 'text-center'}},
     )
 
@@ -78,20 +78,20 @@ class UserProjectsTable(ProjectTable):
 
     n_unclaimed = django_tables2.Column(
         verbose_name=mark_safe('Unclaimed ')
-            + get_template('help_text/more_info.html')
-            .render(context={'help_text': help_text.N_UNCLAIMED}),
+        + get_template('help_text/more_info.html')
+        .render(context={'help_text': help_text.N_UNCLAIMED}),
         attrs={'cell': {'class': 'text-center'}},
     )
     n_claimed = django_tables2.Column(
         verbose_name=mark_safe('Claimed ')
-            + get_template('help_text/more_info.html')
-            .render(context={'help_text': help_text.N_CLAIMED}),
+        + get_template('help_text/more_info.html')
+        .render(context={'help_text': help_text.N_CLAIMED}),
         attrs={'cell': {'class': 'text-center'}},
     )
     n_held = django_tables2.Column(
         verbose_name=mark_safe('Held ')
-            + get_template('help_text/more_info.html')
-            .render(context={'help_text': help_text.N_HELD}),
+        + get_template('help_text/more_info.html')
+        .render(context={'help_text': help_text.N_HELD}),
         attrs={'cell': {'class': 'text-center'}},
     )
 
@@ -120,21 +120,22 @@ class UserProjectsTable(ProjectTable):
 class NominationColumn(django_tables2.LinkColumn):
 
     def text(self, record):
-        return record.name
-    
+        return record.name + "\nHi!"
+
     def render_link(self, uri, record, value, attrs=None):
         return super().render_link(uri, record, value, attrs=None)
+
 
 class NominationTable(CobwebBaseTable):
     """django_tables2.Table object for lists of nominations."""
 
     class Meta(CobwebBaseTable.Meta):
         model = Nomination
-        fields = ('name', 'project', 'status')  #, 'claim_link')
+        fields = ('url', 'project', 'status')  # , 'claim_link')
         # exclude = ('project',)
         empty_text = "No nominations."
 
-    name = django_tables2.LinkColumn(
+    url = django_tables2.LinkColumn(
         viewname='nomination_update',
         kwargs={'project_slug': Accessor('project_slug'),
                 'url': Accessor('url')},
@@ -152,7 +153,7 @@ class NominationTable(CobwebBaseTable):
         '<span class="badge-{{record.status}}">{{record.status|capfirst}}</span>',
         attrs={'cell': {'class': 'text-center'}},
     )
-    
+
     # claim_link = django_tables2.LinkColumn(
     #     viewname='nomination_update',
     #     kwargs={'project_slug': Accessor('project_slug'),
@@ -170,9 +171,9 @@ class ClaimTable(CobwebBaseTable):
         empty_text = "No Claims."
 
     nomination = django_tables2.LinkColumn(viewname='nomination',
-                                    kwargs={'pk': Accessor('pk')})
+                                           kwargs={'pk': Accessor('pk')})
     organization = django_tables2.LinkColumn(viewname='organization',
-                                    kwargs={'slug': Accessor('organization.slug')})
+                                             kwargs={'slug': Accessor('organization.slug')})
     link = django_tables2.TemplateColumn(
         '<a href={{record.get_absolute_url}} class="linklet">[details]</a>',
         verbose_name='',
