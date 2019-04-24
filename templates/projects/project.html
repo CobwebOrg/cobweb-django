@@ -3,7 +3,7 @@
 {% load i18n %}
 {% load model_name from cobweb_look %}
 {% load jargon %}
-{% load render_table from django_tables2 %}
+{% load render_table export_url from django_tables2 %}
 
 {% block window_title %}Cobweb: {{object.title}}{% endblock %}
 
@@ -63,6 +63,7 @@
                     <div class="tab-pane fade {% if show_noms %} show active{%endif%}"
                          id="nominations" role="tabpanel" aria-labelledby="nominations-tab">
                         {% render_table table %}
+                        <a href='{% export_url "csv" %}'>Download as CSV</a>
                     </div>
                 </div>
             </div>

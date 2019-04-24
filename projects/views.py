@@ -7,6 +7,7 @@ from django.http import Http404
 from django.urls import reverse_lazy
 from django.utils.html import format_html
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
+from django_tables2.export.views import ExportMixin
 from extra_views import InlineFormSetView
 from reversion.views import RevisionMixin
 
@@ -29,7 +30,7 @@ class ProjectIndexView(CobwebBaseIndexView):
                 'new_item_link': reverse_lazy('project_create'),
             })
         return context_data
-    
+
     def get_table_kwargs(self):
         kwargs = super().get_table_kwargs()
         if self.request.user.is_authenticated:
@@ -66,7 +67,7 @@ class ProjectCreateView(LoginRequiredMixin, FormMessageMixin, RevisionMixin,
         return kwargs
 
 
-class ProjectView(FormMessageMixin, RevisionMixin, django_tables2.SingleTableMixin,
+class ProjectView(FormMessageMixin, RevisionMixin, ExportMixin, django_tables2.SingleTableMixin,
                   UpdateView):
     model = models.Project
     template_name = 'projects/project.html'
@@ -76,7 +77,8 @@ class ProjectView(FormMessageMixin, RevisionMixin, django_tables2.SingleTableMix
 
     def get_context_data(self, **kwargs):
         if 'select_tab' not in kwargs:
-            kwargs['show_noms'] = True  # if len(self.request.GET) > 0 else False
+            # if len(self.request.GET) > 0 else False
+            kwargs['show_noms'] = True
 
         if self.object.is_admin(self.request.user):
             kwargs.update({
@@ -88,7 +90,7 @@ class ProjectView(FormMessageMixin, RevisionMixin, django_tables2.SingleTableMix
             })
 
         return super().get_context_data(**kwargs)
-    
+
     def get_form_kwargs(self):
         """Return the keyword arguments for instantiating the form."""
         kwargs = super().get_form_kwargs()
@@ -164,7 +166,8 @@ class NominationUpdateView(FormMessageMixin, RevisionMixin,
             kwargs['data'] = kwargs['data'].copy()
             kwargs['data'].update({
                 'project': self.get_project().id,
-                'nominated_by': self.request.user.id,  # works bc MultiValueDict magic...
+                # works bc MultiValueDict magic...
+                'nominated_by': self.request.user.id,
             })
         kwargs['table'] = self.get_table()
 
@@ -181,7 +184,7 @@ class NominationUpdateView(FormMessageMixin, RevisionMixin,
     def get_object(self, queryset=None):
         try:
             # Get the single item from the filtered queryset
-            obj =  (queryset or self.get_queryset)().get(
+            obj = (queryset or self.get_queryset)().get(
                 project__slug=self.kwargs['project_slug'],
                 resource__url=self.kwargs['url'],
             )
@@ -191,7 +194,7 @@ class NominationUpdateView(FormMessageMixin, RevisionMixin,
 
     def get_success_message(self, cleaned_data):
         return f'Successfully saved changes to nomination of {self.object.resource}'
-    
+
     def get_table_data(self):
         return self.get_object().claims.all()
         # return (haystack.query.SearchQuerySet()
@@ -210,11 +213,13 @@ class NominationUpdateView(FormMessageMixin, RevisionMixin,
     def get_project(self):
         try:
             if not (hasattr(self, '_project') and isinstance(self._project, models.Project)):
-                self._project = models.Project.objects.get(slug=self.kwargs['project_slug'])
+                self._project = models.Project.objects.get(
+                    slug=self.kwargs['project_slug'])
             return self._project
         except models.Project.DoesNotExist:
-            raise Http404(f"No such project: /proj/{self.kwargs['project_slug']}")
-    
+            raise Http404(
+                f"No such project: /proj/{self.kwargs['project_slug']}")
+
 
 class NominationCreateView(FormMessageMixin, UserPassesTestMixin,
                            RevisionMixin, CreateView):
@@ -248,18 +253,20 @@ class NominationCreateView(FormMessageMixin, UserPassesTestMixin,
             form_kwargs['data'] = form_kwargs['data'].copy()
             form_kwargs['data'].update({
                 'project': self.get_project().pk,
-                'nominated_by': self.request.user.id,  # works bc MultiValueDict magic...
+                # works bc MultiValueDict magic...
+                'nominated_by': self.request.user.id,
             })
         return form_kwargs
 
     def get_project(self):
         try:
             if not (hasattr(self, '_project') and isinstance(self._project, models.Project)):
-                self._project = models.Project.objects.get(slug=self.kwargs['project_slug'])
+                self._project = models.Project.objects.get(
+                    slug=self.kwargs['project_slug'])
             return self._project
         except models.Project.DoesNotExist:
-            raise Http404(f"No such project: /proj/{self.kwargs['project_slug']}")
-            
+            raise Http404(
+                f"No such project: /proj/{self.kwargs['project_slug']}")
 
     def get_success_message(self, cleaned_data):
         return f'Successfully nominated {self.object.resource}'
@@ -282,7 +289,7 @@ class NominationDeleteView(UserPassesTestMixin, FormMessageMixin, DeleteView):
             raise Http404("No %(verbose_name)s found matching the query" %
                           {'verbose_name': queryset.model._meta.verbose_name})
         return obj
-    
+
     def get_success_url(self):
         return self.object.project.get_absolute_url()
 
@@ -341,7 +348,8 @@ class ClaimCreateView(UserPassesTestMixin, ClaimFormMixin, CreateView):
         """Get the nomination being claimed."""
 
         if self._nomination is None:
-            self._nomination = models.Nomination.objects.get(pk=self.kwargs['nomination_pk'])
+            self._nomination = models.Nomination.objects.get(
+                pk=self.kwargs['nomination_pk'])
         return self._nomination
 
     def get_success_message(self, cleaned_data):
@@ -352,7 +360,7 @@ class ClaimUpdateView(ClaimFormMixin, UpdateView):
 
     def get_context_data(self, **kwargs) -> dict:
         if (self.object.nomination.project.is_admin(self.request.user)
-            or self.object.organization.is_admin(self.request.user)):
+                or self.object.organization.is_admin(self.request.user)):
             context = {
                 'delete_url': reverse_lazy('claim_delete', kwargs=self.kwargs),
             }

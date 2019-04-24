@@ -28,6 +28,7 @@ django-extra-views = "*"
 pyyaml = "*"
 django-react-templatetags = "*"
 whitenoise = "*"
+tablib = "*"
 
 [dev-packages]
 pytest = "*"
